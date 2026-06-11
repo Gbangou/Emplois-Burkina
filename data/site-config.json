@@ -1,0 +1,15 @@
+{
+  "siteName": "JobFaso",
+  "baseUrl": "https://jobfaso.com",
+  "contactEmail": "contact@jobfaso.com",
+  "whatsappNumber": "",
+  "country": "Burkina Faso",
+  "defaultCity": "Ouagadougou",
+  "description": "Offres d'emploi, concours, stages, missions locales et alertes WhatsApp au Burkina Faso.",
+  "adsenseClient": "",
+  "social": {
+    "facebook": "",
+    "linkedin": "",
+    "whatsappChannel": ""
+  }
+}

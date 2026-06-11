@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Contact - JobFaso</title>
+    <meta name="description" content="Contacter JobFaso pour publier une offre, sponsoriser ou signaler une annonce." />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="index.html" aria-label="Accueil JobFaso">
+        <span class="brand-mark">JF</span>
+        <span><strong>JobFaso</strong><small>Contact</small></span>
+      </a>
+      <nav class="nav" aria-label="Navigation principale">
+        <a href="index.html">Accueil</a>
+        <a href="annonceurs.html">Annonceurs</a>
+        <a href="privacy.html">Confidentialite</a>
+      </nav>
+    </header>
+    <main>
+      <section class="page-hero compact">
+        <p class="eyebrow">Contact</p>
+        <h1>Publier, sponsoriser ou signaler une annonce.</h1>
+        <p class="lead">JobFaso doit rester utile, propre et fiable.</p>
+      </section>
+      <section class="section split">
+        <div>
+          <h2>Nous contacter</h2>
+          <p>
+            Les demandes commerciales, signalements et partenariats sont
+            captures dans l'admin local, puis pourront etre relies a la base de
+            donnees et au back-office.
+          </p>
+        </div>
+        <form class="form-card" id="contactForm" data-lead-type="contact">
+          <label>
+            Nom
+            <input name="name" required placeholder="Votre nom" />
+          </label>
+          <label>
+            Contact
+            <input name="contact" required placeholder="Telephone ou email" />
+          </label>
+          <label>
+            Objet
+            <select name="subject" required>
+              <option value="">Choisir</option>
+              <option>Publier une offre</option>
+              <option>Sponsoriser</option>
+              <option>Signaler une annonce</option>
+              <option>Partenariat</option>
+            </select>
+          </label>
+          <button type="submit">Envoyer</button>
+          <p class="form-note" id="contactMessage"></p>
+        </form>
+      </section>
+    </main>
+    <footer class="footer">
+      <strong>JobFaso</strong>
+      <span><a href="terms.html">Mentions legales</a></span>
+    </footer>
+    <script src="app.js"></script>
+  </body>
+</html>

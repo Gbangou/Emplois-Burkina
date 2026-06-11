@@ -1,0 +1,92 @@
+[
+  {
+    "id": "featured_job",
+    "name": "Annonce mise en avant",
+    "priceFcfa": 25000,
+    "billing": "one_time",
+    "audience": "recruteurs",
+    "includes": [
+      "publication prioritaire",
+      "badge mise en avant",
+      "diffusion WhatsApp ciblee",
+      "visibilite temporaire page accueil"
+    ]
+  },
+  {
+    "id": "category_sponsor",
+    "name": "Sponsor categorie",
+    "priceFcfa": 100000,
+    "billing": "monthly",
+    "audience": "sponsors",
+    "includes": [
+      "visibilite categorie",
+      "mention sponsorisee",
+      "placement newsletter",
+      "rapport simple"
+    ]
+  },
+  {
+    "id": "recruitment_campaign",
+    "name": "Campagne recrutement",
+    "priceFcfa": 150000,
+    "billing": "from",
+    "audience": "recruteurs",
+    "includes": [
+      "page campagne",
+      "formulaire candidature",
+      "diffusion multi-canal",
+      "export candidats"
+    ]
+  },
+  {
+    "id": "cv_pack_ai",
+    "name": "Pack CV IA",
+    "priceFcfa": 3000,
+    "billing": "one_time",
+    "audience": "candidats",
+    "includes": [
+      "CV optimise",
+      "lettre de motivation",
+      "conseils entretien"
+    ]
+  },
+  {
+    "id": "verified_trade_profile",
+    "name": "Profil artisan verifie",
+    "priceFcfa": 1500,
+    "billing": "monthly",
+    "audience": "professionnels terrain",
+    "includes": [
+      "fiche publique",
+      "badge verifie",
+      "mise en avant locale",
+      "demandes client"
+    ]
+  },
+  {
+    "id": "candidate_shortlist",
+    "name": "Shortlist candidat",
+    "priceFcfa": 25000,
+    "billing": "from",
+    "audience": "recruteurs",
+    "includes": [
+      "formulaire candidature",
+      "tri de base",
+      "export CSV",
+      "consentement candidat"
+    ]
+  },
+  {
+    "id": "market_report",
+    "name": "Rapport tendances emploi",
+    "priceFcfa": 50000,
+    "billing": "from",
+    "audience": "institutions",
+    "includes": [
+      "secteurs qui recrutent",
+      "villes actives",
+      "competences demandees",
+      "donnees agregees non personnelles"
+    ]
+  }
+]

@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin local - JobFaso</title>
+    <meta name="description" content="Tableau local de moderation et leads JobFaso." />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="index.html" aria-label="Accueil JobFaso">
+        <span class="brand-mark">JF</span>
+        <span>
+          <strong>JobFaso</strong>
+          <small>Admin local</small>
+        </span>
+      </a>
+      <nav class="nav" aria-label="Navigation principale">
+        <a href="index.html">Accueil</a>
+        <a href="annonceurs.html">Annonceurs</a>
+        <a href="docs/MASTER_PROMPT.md">Master prompt</a>
+      </nav>
+      <button id="exportLeadsButton" type="button">Exporter CSV</button>
+    </header>
+
+    <main>
+      <section class="page-hero compact">
+        <p class="eyebrow">Pilotage lancement</p>
+        <h1>Leads, moderation et valeur commerciale.</h1>
+        <p class="lead">
+          Cette page utilise le stockage local du navigateur. Elle sert a vendre
+          et tester le flux avant Supabase, CRM et paiement mobile money.
+        </p>
+      </section>
+
+      <section class="section band">
+        <div class="admin-panel">
+          <label>
+            Token admin serveur
+            <input id="adminTokenInput" type="password" placeholder="JOBFASO_ADMIN_TOKEN" autocomplete="off" />
+          </label>
+          <div class="admin-actions">
+            <button id="saveAdminTokenButton" type="button">Enregistrer le token</button>
+            <button id="loadServerAdminButton" class="secondary-button" type="button">Charger serveur</button>
+            <button id="runAutomationButton" class="secondary-button" type="button">Lancer automation</button>
+          </div>
+          <p class="form-note">
+            En production, configure `JOBFASO_ADMIN_TOKEN` cote serveur. Ne partage jamais ce token.
+          </p>
+        </div>
+        <div class="admin-summary" id="adminSummary">
+          <article><strong>0</strong><span>leads captures</span></article>
+          <article><strong>0 FCFA</strong><span>pipeline potentiel</span></article>
+          <article><strong>0</strong><span>offres a moderer</span></article>
+          <article><strong>0</strong><span>evenements suivis</span></article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <p class="eyebrow">CRM local</p>
+          <h2>Demandes recues</h2>
+          <p>
+            Utilise l'export CSV pour suivre les prospects dans Google Sheets,
+            Excel ou un CRM simple.
+          </p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Type</th>
+                <th>Nom</th>
+                <th>Contact</th>
+                <th>Valeur</th>
+              </tr>
+            </thead>
+            <tbody id="leadTable">
+              <tr><td colspan="5">Chargement...</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="admin-actions">
+          <button id="clearDemoDataButton" class="secondary-button" type="button">Effacer les donnees locales</button>
+        </div>
+      </section>
+
+      <section class="section band">
+        <div class="section-heading">
+          <p class="eyebrow">Moderation</p>
+          <h2>Offres a verifier avant diffusion</h2>
+        </div>
+        <div class="job-grid" id="adminJobsList"></div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <strong>JobFaso</strong>
+      <span>
+        <span id="leadCount">0</span> leads -
+        <span id="eventCount">0</span> evenements
+      </span>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "jobfaso",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "JobFaso - plateforme emploi, concours, alertes WhatsApp et monetisation recruteurs au Burkina Faso.",
+  "scripts": {
+    "start": "node server.mjs",
+    "dev": "node server.mjs",
+    "automate": "node scripts/run-automation.mjs",
+    "check": "node --check app.js && node --check server.mjs && node --check scripts/jobfaso-scraper.mjs && node --check scripts/curate-raw-items.mjs && node --check scripts/generate-seo-pages.mjs && node --check scripts/run-automation.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
