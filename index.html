@@ -3,15 +3,15 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>JobFaso - Alertes emplois et services au Burkina Faso</title>
+    <title>JobFaso - Offres d'emploi, concours et stages au Burkina Faso</title>
     <meta
       name="description"
-      content="JobFaso centralise les emplois, concours, stages et professionnels de metier au Burkina Faso."
+      content="Consultez des offres d'emploi, concours, stages et opportunites au Burkina Faso. Recherche par ville, domaine, source et alertes WhatsApp."
     />
-    <meta property="og:title" content="JobFaso - Alertes emplois et revenus au Burkina Faso" />
+    <meta property="og:title" content="JobFaso - Offres d'emploi au Burkina Faso" />
     <meta
       property="og:description"
-      content="Offres, concours, stages, missions locales et alertes WhatsApp pour le Burkina Faso."
+      content="Offres d'emploi, concours, stages et opportunites verifiees avec liens vers les sources officielles."
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
@@ -21,42 +21,35 @@
         <span class="brand-mark">JF</span>
         <span>
           <strong>JobFaso</strong>
-          <small>Alertes emploi Burkina</small>
+          <small>Emploi Burkina Faso</small>
         </span>
       </a>
       <nav class="nav" aria-label="Navigation principale">
         <a href="#offres">Offres</a>
-        <a href="#sources">Sources</a>
-        <a href="#systeme">Systeme</a>
-        <a href="#metiers">Metiers</a>
-        <a href="#seo">Guides</a>
-        <a href="#premium">Premium</a>
-        <a href="annonceurs.html">Annonceurs</a>
-        <a href="#publier">Publier</a>
+        <a href="#guides">Guides</a>
+        <a href="#alertes">Alertes</a>
+        <a href="contact.html">Contact</a>
       </nav>
-      <a class="nav-action" href="#alertes">Recevoir les alertes</a>
+      <a class="nav-action" href="#offres">Voir les offres</a>
     </header>
 
     <main id="top">
       <section class="hero">
         <div class="hero-copy">
-          <p class="eyebrow">Emplois, concours, stages et missions locales</p>
-          <h1>Trouver un revenu au Burkina doit devenir simple.</h1>
+          <p class="eyebrow">Recherche d'emploi au Burkina Faso</p>
+          <h1>Des opportunites claires, regroupees au meme endroit.</h1>
           <p class="lead">
-            JobFaso classe les opportunites par metier, ville, niveau et urgence,
-            puis envoie les meilleures alertes sur WhatsApp.
+            Consultez les offres, concours et stages recents. JobFaso indique la
+            source, la ville, la date de collecte et le lien de candidature afin
+            de vous aider a verifier avant de postuler.
           </p>
-          <div class="hero-actions" aria-label="Actions rapides">
-            <a class="nav-action" href="#alertes">Recevoir les alertes</a>
-            <a class="secondary-link on-dark" href="annonceurs.html">Publier ou sponsoriser</a>
-          </div>
           <form class="search-panel" id="quickSearch">
             <label>
-              <span>Que cherches-tu ?</span>
+              <span>Mot-cle</span>
               <input
                 id="searchInput"
                 type="search"
-                placeholder="IT manager, macon, stage, concours..."
+                placeholder="Ex: comptable, ONG, stage, concours..."
                 autocomplete="off"
               />
             </label>
@@ -74,41 +67,45 @@
             <button type="submit">Rechercher</button>
           </form>
         </div>
-        <aside class="hero-board" aria-label="Statistiques JobFaso">
-        <div>
-            <strong id="jobCount">0</strong>
-            <span>opportunites suivies</span>
-          </div>
+        <aside class="hero-board" aria-label="Indicateurs JobFaso">
           <div>
-            <strong id="sourceCount">0</strong>
-            <span>sources configurees</span>
+            <strong id="jobCount">0</strong>
+            <span>opportunites disponibles</span>
           </div>
           <div>
             <strong id="savedCount">0</strong>
             <span>offres sauvegardees</span>
           </div>
+          <div>
+            <strong>0 FCFA</strong>
+            <span>acces candidat</span>
+          </div>
         </aside>
       </section>
 
-      <section class="trust-strip" aria-label="Promesse JobFaso">
+      <section class="trust-strip" aria-label="Engagements JobFaso">
         <article>
-          <strong>Gratuit pour les candidats</strong>
-          <span>Offres essentielles, deadlines et liens sources accessibles.</span>
+          <strong>Sources indiquees</strong>
+          <span>Chaque fiche affiche le portail ou l'organisation d'origine.</span>
         </article>
         <article>
-          <strong>Verification humaine</strong>
-          <span>Les opportunites sensibles restent a moderer avant diffusion massive.</span>
+          <strong>Verification recommandee</strong>
+          <span>Postulez toujours depuis le lien officiel et refusez les frais suspects.</span>
         </article>
         <article>
-          <strong>Revenus des le lancement</strong>
-          <span>Annonces recruteurs, sponsors, CV, profils artisans et shortlists.</span>
+          <strong>Recherche gratuite</strong>
+          <span>Les candidats peuvent consulter les offres et sauvegarder leurs favoris.</span>
         </article>
       </section>
 
       <section class="section band" id="offres">
         <div class="section-heading">
-          <p class="eyebrow">Offres classees</p>
-          <h2>Opportunites a publier en premier</h2>
+          <p class="eyebrow">Offres disponibles</p>
+          <h2>Rechercher une opportunite</h2>
+          <p>
+            Filtrez par categorie, source ou ville. Ouvrez la fiche pour voir les
+            informations essentielles et acceder a la source officielle.
+          </p>
         </div>
         <div class="filters" aria-label="Filtres d'offres">
           <button class="filter-button active" data-category="">Toutes</button>
@@ -144,96 +141,15 @@
           <aside class="detail-panel" id="jobDetail" aria-live="polite"></aside>
         </div>
         <nav class="pagination" id="jobsPagination" aria-label="Pagination des offres"></nav>
-        <div class="sponsor-strip">
-          <div>
-            <p class="eyebrow">Emplacement sponsor</p>
-            <strong>Annoncez vos formations, services RH ou campagnes de recrutement ici.</strong>
-            <p class="muted">Format adapte aux centres de formation, cabinets RH, fintech, telecom et ecoles.</p>
-          </div>
-          <a class="secondary-link" href="annonceurs.html">Voir les tarifs</a>
-        </div>
       </section>
 
-      <section class="section" id="sources">
+      <section class="section" id="guides">
         <div class="section-heading">
-          <p class="eyebrow">Sources d'offres</p>
-          <h2>Sources emploi suivies au Burkina Faso et au Sahel</h2>
+          <p class="eyebrow">Conseils candidats</p>
+          <h2>Preparer une candidature serieuse</h2>
           <p>
-            JobFaso suit les portails emploi, concours officiels, ONG, cabinets
-            RH, medias et plateformes internationales liees au Burkina Faso.
-            Chaque offre doit etre verifiee avant publication.
-          </p>
-        </div>
-        <div class="source-metrics" id="sourceMetrics"></div>
-        <div class="source-grid" id="sourceGrid"></div>
-      </section>
-
-      <section class="section" id="systeme">
-        <div class="section-heading">
-          <p class="eyebrow">Comment ca marche</p>
-          <h2>Un site web d'abord, WhatsApp pour vendre, app mobile plus tard</h2>
-          <p>
-            JobFaso devient une chaine automatique : collecte des sources,
-            classement IA, validation humaine, publication, puis alertes
-            personnalisees.
-          </p>
-        </div>
-        <div class="workflow-grid">
-          <article>
-            <span>1</span>
-            <strong>Collecte</strong>
-            <p>Sources autorisees : portails emploi, concours, ONG, cabinets RH, pages carrieres.</p>
-          </article>
-          <article>
-            <span>2</span>
-            <strong>Nettoyage IA</strong>
-            <p>Extraction du titre, ville, deadline, niveau, salaire, categorie et risque d'arnaque.</p>
-          </article>
-          <article>
-            <span>3</span>
-            <strong>Moderation</strong>
-            <p>Validation humaine avant publication pour proteger la confiance et eviter les fausses offres.</p>
-          </article>
-          <article>
-            <span>4</span>
-            <strong>Distribution</strong>
-            <p>Publication web, SEO Google, alertes WhatsApp, groupes VIP, email et reseaux sociaux.</p>
-          </article>
-        </div>
-      </section>
-
-      <section class="section" id="metiers">
-        <div class="section-heading">
-          <p class="eyebrow">Marketplace locale</p>
-          <h2>Ne pas oublier les metiers qui gagnent chaque jour</h2>
-        </div>
-        <div class="trade-grid">
-          <article>
-            <span>Construction</span>
-            <strong>Macon, peintre, carreleur, menuisier</strong>
-          </article>
-          <article>
-            <span>Technique</span>
-            <strong>Electricien, plombier, mecanicien, frigoriste</strong>
-          </article>
-          <article>
-            <span>Services</span>
-            <strong>Chauffeur, vigile, nounou, cuisinier</strong>
-          </article>
-          <article>
-            <span>Numerique</span>
-            <strong>Developpeur, community manager, designer, support IT</strong>
-          </article>
-        </div>
-      </section>
-
-      <section class="section band" id="seo">
-        <div class="section-heading">
-          <p class="eyebrow">SEO programmatique</p>
-          <h2>Pages utiles pour etre visible sur Google</h2>
-          <p>
-            JobFaso genere des pages par categorie, ville et guide candidat afin
-            d'attirer du trafic qualifie sans copier les annonces completes.
+            Des pages pratiques pour ameliorer votre dossier, mieux comprendre
+            les concours et eviter les fausses offres.
           </p>
         </div>
         <div class="seo-link-grid">
@@ -250,11 +166,11 @@
 
       <section class="section split" id="alertes">
         <div>
-          <p class="eyebrow">Acquisition rapide</p>
-          <h2>Inscription aux alertes WhatsApp</h2>
+          <p class="eyebrow">Alertes emploi</p>
+          <h2>Recevoir les nouvelles opportunites</h2>
           <p>
-            Ce formulaire capture les premiers utilisateurs. Au debut, les demandes
-            peuvent etre traitees manuellement, puis automatisees avec n8n.
+            Indiquez votre domaine et votre ville. JobFaso pourra vous envoyer
+            les opportunites pertinentes et les rappels de deadline.
           </p>
         </div>
         <form class="form-card" id="alertForm" data-lead-type="alert">
@@ -281,89 +197,8 @@
             Ville preferee
             <input name="city" placeholder="Ouagadougou, Bobo, teletravail..." />
           </label>
-          <button type="submit">M'inscrire</button>
+          <button type="submit">Recevoir les alertes</button>
           <p class="form-note" id="alertMessage"></p>
-        </form>
-      </section>
-
-      <section class="section band" id="premium">
-        <div class="section-heading">
-          <p class="eyebrow">Revenus</p>
-          <h2>Les leviers pour gagner de l'argent</h2>
-        </div>
-        <div class="pricing-grid">
-          <article class="price-card">
-            <span>Gratuit</span>
-            <strong>0 FCFA</strong>
-            <p>Offres, concours, stages, deadlines et liens sources accessibles sans paiement.</p>
-          </article>
-          <article class="price-card highlighted">
-            <span>Sponsor categorie</span>
-            <strong>100 000 FCFA / mois</strong>
-            <p>Visibilite pour ecoles, formations, fintech, recruteurs et programmes jeunesse.</p>
-          </article>
-          <article class="price-card">
-            <span>Recruteur</span>
-            <strong>25 000 FCFA / annonce</strong>
-            <p>Publication, mise en avant, preselection et diffusion WhatsApp.</p>
-          </article>
-          <article class="price-card">
-            <span>Publicite</span>
-            <strong>AdSense + direct</strong>
-            <p>Publicites display, bannieres directes et formats sponsorises clairement marques.</p>
-          </article>
-          <article class="price-card">
-            <span>Pack CV</span>
-            <strong>3 000 FCFA</strong>
-            <p>Service optionnel : CV optimise, lettre IA, verification dossier et entretien.</p>
-          </article>
-          <article class="price-card">
-            <span>Artisan verifie</span>
-            <strong>1 500 FCFA / mois</strong>
-            <p>Profil public, badge verifie, demandes clients et mise en avant locale.</p>
-          </article>
-        </div>
-      </section>
-
-      <section class="section split" id="publier">
-        <div>
-          <p class="eyebrow">Offre ou profil</p>
-          <h2>Publier une opportunite</h2>
-          <p>
-            Ce bloc sert aux entreprises, cabinets RH et professionnels terrain.
-            La prochaine etape sera de connecter ces donnees a une base.
-          </p>
-        </div>
-        <form class="form-card" id="publishForm" data-lead-type="publish">
-          <label>
-            Type
-            <select name="type" required>
-              <option value="">Choisir</option>
-              <option>Je publie une offre</option>
-              <option>Je suis artisan/professionnel</option>
-            </select>
-          </label>
-          <label>
-            Titre
-            <input name="title" required placeholder="Ex: Recherche plombier a Ouaga" />
-          </label>
-          <label>
-            Contact
-            <input name="contact" required placeholder="Telephone ou email" />
-          </label>
-          <label>
-            Budget ou urgence
-            <select name="budget">
-              <option value="">Choisir</option>
-              <option>Gratuit / information</option>
-              <option>Annonce standard assistee - 10 000 FCFA</option>
-              <option>Mise en avant - 25 000 FCFA</option>
-              <option>Campagne recrutement - 150 000 FCFA+</option>
-              <option>Profil artisan verifie - 1 500 FCFA/mois</option>
-            </select>
-          </label>
-          <button type="submit">Envoyer</button>
-          <p class="form-note" id="publishMessage"></p>
         </form>
       </section>
     </main>
@@ -371,10 +206,10 @@
     <footer class="footer">
       <strong>JobFaso</strong>
       <span>
-        <a href="annonceurs.html">Annonceurs</a> -
         <a href="privacy.html">Confidentialite</a> -
         <a href="terms.html">Mentions legales</a> -
-        <a href="contact.html">Contact</a>
+        <a href="contact.html">Contact</a> -
+        <a href="annonceurs.html">Recruteurs</a>
       </span>
     </footer>
 

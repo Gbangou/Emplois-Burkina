@@ -307,7 +307,7 @@ function getFilteredJobs() {
 function renderJobCard(job) {
   const isActive = job.id === activeJobId;
   const isSaved = savedJobs.has(job.id);
-  const reviewLabel = job.status === "needs_review" ? "A verifier" : "Validee";
+  const reviewLabel = job.status === "needs_review" ? "Verification en cours" : "Source indiquee";
 
   return `
     <article class="job-card ${isActive ? "active" : ""}" data-job-id="${escapeHtml(job.id)}">
@@ -317,7 +317,7 @@ function renderJobCard(job) {
         <p class="muted">${escapeHtml(job.company || "Organisation non precisee")} - ${escapeHtml(job.city || "Burkina Faso")}</p>
       </div>
       <div class="job-meta">
-        <span class="pill">${escapeHtml(job.type || "A verifier")}</span>
+        <span class="pill">${escapeHtml(job.type || "Non precise")}</span>
         <span class="pill">${escapeHtml(job.salary || "Non communique")}</span>
         <span class="pill warning">${reviewLabel}</span>
       </div>
@@ -341,8 +341,8 @@ function renderDetail(job) {
     jobDetail.innerHTML = `
       <div class="empty-detail">
         <p class="eyebrow">Selection</p>
-        <h3>Choisis une opportunite</h3>
-        <p class="muted">La fiche detaillee affichera la source, le statut de moderation et les actions rapides.</p>
+        <h3>Selectionnez une opportunite</h3>
+        <p class="muted">La fiche affiche la ville, la deadline, la source et les actions utiles pour postuler.</p>
       </div>
     `;
     return;
@@ -363,7 +363,7 @@ function renderDetail(job) {
       <p class="muted">${escapeHtml(job.company || "Organisation non precisee")}</p>
       <dl class="detail-list">
         <div><dt>Ville</dt><dd>${escapeHtml(job.city || "Burkina Faso")}</dd></div>
-        <div><dt>Deadline</dt><dd>${escapeHtml(job.deadline || "A verifier")}</dd></div>
+        <div><dt>Deadline</dt><dd>${escapeHtml(job.deadline || "Non communiquee")}</dd></div>
         <div><dt>Source</dt><dd>${escapeHtml(job.sourceName || "JobFaso")}</dd></div>
         <div><dt>Collecte</dt><dd>${escapeHtml(displayDate(job.collectedAt))}</dd></div>
       </dl>
@@ -371,7 +371,7 @@ function renderDetail(job) {
         ${(job.tags || []).map((tag) => `<span class="pill">${escapeHtml(tag)}</span>`).join("")}
       </div>
       <p class="moderation-note">
-        Les offres marquees "A verifier" doivent etre controlees avant diffusion commerciale ou alerte massive.
+        Ne payez jamais de frais suspects pour postuler. Verifiez toujours les consignes depuis la source officielle.
       </p>
       <div class="detail-actions">
         ${sourceLink}
@@ -637,7 +637,7 @@ async function loadJobs() {
     jobs = fallbackJobs;
     if (resultsSummary) {
       resultsSummary.textContent =
-        "Mode demo actif. Pour charger data/curated-jobs.json, servir le dossier avec un serveur local.";
+        "Les offres locales sont affichees. Actualisez la page si la liste complete ne se charge pas.";
     }
   }
   hydrateSourceFilter();
@@ -722,13 +722,12 @@ function handleDemoForm(form, messageId, successText) {
     const kind = form.dataset.leadType || "contact";
     const lead = saveLead(kind, data);
 
-    console.table(data);
     if (message) {
-      message.textContent = `${successText} Reference locale: ${lead.id.slice(0, 8)}. Synchronisation serveur en cours.`;
+      message.textContent = successText;
     }
     syncLeadToServer(lead).then((serverId) => {
       if (message && serverId) {
-        message.textContent = `${successText} Reference serveur: ${serverId.slice(0, 8)}.`;
+        message.textContent = `${successText} Reference: ${serverId.slice(0, 8)}.`;
       }
     });
     form.reset();
@@ -739,7 +738,7 @@ if (alertForm) {
   handleDemoForm(
     alertForm,
     "#alertMessage",
-    "Inscription enregistree. Au lancement, ce flux ira vers WhatsApp Business et la base abonnes."
+    "Inscription enregistree. Vous serez contacte lorsque des opportunites correspondent a votre profil."
   );
 }
 
@@ -760,7 +759,7 @@ if (sponsorForm) {
 }
 
 if (contactForm) {
-  handleDemoForm(contactForm, "#contactMessage", "Message recu. Prochaine etape: envoi vers le back-office.");
+  handleDemoForm(contactForm, "#contactMessage", "Message recu. L'equipe JobFaso vous repondra des que possible.");
 }
 
 document.addEventListener("click", (event) => {
@@ -803,6 +802,8 @@ document.querySelector("#runAutomationButton")?.addEventListener("click", async 
   }
 });
 
-loadSources();
 loadJobs();
-loadServerAdminData();
+loadSources();
+if (leadTable || eventCount || adminSummary) {
+  loadServerAdminData();
+}
