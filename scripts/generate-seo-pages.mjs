@@ -88,6 +88,54 @@ const evergreenGuides = [
       "Gardez une copie numerique de chaque document important.",
     ],
   },
+  {
+    slug: "rediger-une-lettre-de-motivation",
+    title: "Rediger une lettre de motivation efficace",
+    description:
+      "Methode simple pour ecrire une lettre claire, courte et adaptee a l'offre visee.",
+    sections: [
+      "Commencez par le poste vise et la raison precise de votre candidature.",
+      "Montrez deux ou trois competences directement liees a l'offre.",
+      "Evitez les lettres longues : une page suffit dans la plupart des cas.",
+      "Relisez les noms, dates, contacts et pieces jointes avant l'envoi.",
+    ],
+  },
+  {
+    slug: "preparer-un-entretien-emploi",
+    title: "Preparer un entretien d'embauche",
+    description:
+      "Questions frequentes, attitude professionnelle et documents a preparer avant un entretien.",
+    sections: [
+      "Relisez l'offre, le site de l'organisation et les missions principales.",
+      "Preparez une presentation courte de votre parcours en une minute.",
+      "Donnez des exemples concrets pour prouver vos competences.",
+      "Preparez vos diplomes, attestations, CV et references dans un dossier propre.",
+    ],
+  },
+  {
+    slug: "documents-pour-postuler",
+    title: "Documents a preparer pour postuler",
+    description:
+      "Liste pratique des documents souvent demandes pour emplois, stages, ONG et concours.",
+    sections: [
+      "Gardez un CV PDF a jour, nomme clairement avec votre nom.",
+      "Scannez diplomes, attestations, CNIB ou passeport selon les exigences de l'offre.",
+      "Preparez une lettre de motivation modifiable rapidement.",
+      "Rangez vos documents dans un dossier cloud ou une cle USB pour eviter les pertes.",
+    ],
+  },
+  {
+    slug: "secteurs-qui-recrutent-burkina-faso",
+    title: "Secteurs qui recrutent au Burkina Faso",
+    description:
+      "Pistes pour suivre les secteurs actifs : ONG, administration, finance, IT, commerce, BTP et logistique.",
+    sections: [
+      "Les ONG et projets recrutent souvent des profils gestion, terrain, finance, suivi-evaluation et logistique.",
+      "Les entreprises privees recherchent des profils commerce, comptabilite, IT, maintenance et administration.",
+      "Les concours demandent une veille reguliere des communiques et deadlines officielles.",
+      "Les villes comme Ouagadougou et Bobo-Dioulasso concentrent beaucoup d'offres, mais les missions terrain restent importantes.",
+    ],
+  },
 ];
 
 function escapeHtml(value = "") {
@@ -158,7 +206,7 @@ function layout(config, page) {
       </a>
       <nav class="nav" aria-label="Navigation principale">
         <a href="../../index.html#offres">Offres</a>
-        <a href="../../annonceurs.html">Annonceurs</a>
+        <a href="../../annonceurs.html">Recruteurs</a>
         <a href="../guides/faire-un-cv-au-burkina-faso.html">Guides</a>
         <a href="../../contact.html">Contact</a>
       </nav>
@@ -179,7 +227,7 @@ function sponsorBlock() {
   return `<aside class="ad-rail" aria-label="Publicite et sponsors">
     <p class="eyebrow">Sponsor</p>
     <strong>Votre marque ici</strong>
-    <p> touchez les candidats actifs, recruteurs, jeunes diplomes et professionnels terrain.</p>
+    <p>Touchez les candidats actifs, jeunes diplomes et professionnels terrain.</p>
     <a class="secondary-link" href="../../annonceurs.html">Sponsoriser cette page</a>
   </aside>`;
 }
@@ -267,7 +315,7 @@ async function main() {
         </section>
         <section class="section content-with-rail">
           <article class="content-main">
-            <p class="moderation-note">Cette fiche resume une opportunite detectee automatiquement. Verifiez toujours la source officielle avant de postuler.</p>
+            <p class="moderation-note">Cette fiche resume une opportunite reperee par JobFaso. Verifiez toujours la source officielle avant de postuler.</p>
             <dl class="detail-list">
               <div><dt>Organisation</dt><dd>${escapeHtml(job.company || job.sourceName || "A verifier")}</dd></div>
               <div><dt>Ville</dt><dd>${escapeHtml(job.city || "Burkina Faso")}</dd></div>

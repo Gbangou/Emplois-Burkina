@@ -1,0 +1,48 @@
+{
+  "categories": [
+    [
+      "Bureau",
+      27
+    ],
+    [
+      "ONG",
+      3
+    ],
+    [
+      "Metier terrain",
+      2
+    ]
+  ],
+  "cities": [
+    [
+      "Burkina Faso",
+      23
+    ],
+    [
+      "Ouagadougou",
+      8
+    ],
+    [
+      "Bagassi",
+      1
+    ]
+  ],
+  "sources": [
+    [
+      "LeFaso.net Recrutement",
+      12
+    ],
+    [
+      "BFemploi",
+      7
+    ],
+    [
+      "Emploiburkina",
+      7
+    ],
+    [
+      "UNjobs Burkina Faso",
+      6
+    ]
+  ]
+}

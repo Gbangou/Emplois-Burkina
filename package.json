@@ -8,7 +8,8 @@
     "start": "node server.mjs",
     "dev": "node server.mjs",
     "automate": "node scripts/run-automation.mjs",
-    "check": "node --check app.js && node --check server.mjs && node --check scripts/jobfaso-scraper.mjs && node --check scripts/curate-raw-items.mjs && node --check scripts/generate-seo-pages.mjs && node --check scripts/run-automation.mjs"
+    "growth": "node scripts/generate-seo-pages.mjs && node scripts/generate-growth-assets.mjs",
+    "check": "node --check app.js && node --check server.mjs && node --check scripts/jobfaso-scraper.mjs && node --check scripts/curate-raw-items.mjs && node --check scripts/generate-seo-pages.mjs && node --check scripts/generate-growth-assets.mjs && node --check scripts/run-automation.mjs"
   },
   "engines": {
     "node": ">=20"

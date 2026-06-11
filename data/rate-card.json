@@ -39,15 +39,16 @@
     ]
   },
   {
-    "id": "cv_pack_ai",
-    "name": "Pack CV IA",
-    "priceFcfa": 3000,
-    "billing": "one_time",
-    "audience": "candidats",
+    "id": "cv_partner",
+    "name": "Partenaire CV et entretien",
+    "priceFcfa": 0,
+    "billing": "commission",
+    "audience": "partenaires services",
     "includes": [
-      "CV optimise",
-      "lettre de motivation",
-      "conseils entretien"
+      "leads qualifies",
+      "page guide sponsorisee",
+      "mention partenaire",
+      "commission par client confirme"
     ]
   },
   {

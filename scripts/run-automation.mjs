@@ -4,6 +4,7 @@ const steps = [
   ["Collecte des sources", "scripts/jobfaso-scraper.mjs"],
   ["Curation et nettoyage", "scripts/curate-raw-items.mjs"],
   ["Generation SEO", "scripts/generate-seo-pages.mjs"],
+  ["Generation croissance", "scripts/generate-growth-assets.mjs"],
 ];
 
 function runNodeScript(label, script) {

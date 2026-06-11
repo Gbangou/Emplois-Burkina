@@ -1,0 +1,32 @@
+[
+  {
+    "day": "Lundi",
+    "channel": "Site + Facebook + LinkedIn",
+    "action": "Publier le digest des 10 nouvelles opportunites avec lien vers JobFaso.",
+    "revenueHook": "Ajouter un encart sponsorise pour formation ou recruteur."
+  },
+  {
+    "day": "Mardi",
+    "channel": "Guide SEO",
+    "action": "Mettre en avant un guide candidat et 3 offres liees au theme.",
+    "revenueHook": "Proposer un partenaire CV, formation ou coaching."
+  },
+  {
+    "day": "Mercredi",
+    "channel": "Prospection recruteurs",
+    "action": "Contacter 10 recruteurs avec les categories les plus consultees.",
+    "revenueHook": "Vendre annonce prioritaire ou sponsor categorie."
+  },
+  {
+    "day": "Jeudi",
+    "channel": "WhatsApp / newsletter",
+    "action": "Envoyer un digest court par domaine avec consentement des abonnes.",
+    "revenueHook": "Inclure un seul sponsor clairement marque."
+  },
+  {
+    "day": "Vendredi",
+    "channel": "Rapport marche",
+    "action": "Publier une tendance agregee : villes, secteurs, sources, deadlines.",
+    "revenueHook": "Vendre rapport detaille aux ecoles, cabinets RH et formations."
+  }
+]

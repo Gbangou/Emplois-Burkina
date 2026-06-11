@@ -117,6 +117,18 @@
         </div>
         <div class="toolbar" aria-label="Outils de recherche">
           <label>
+            <span>Type</span>
+            <select id="typeFilter">
+              <option value="">Tous les types</option>
+              <option>CDI</option>
+              <option>CDD</option>
+              <option>Stage</option>
+              <option>Concours</option>
+              <option>Mission</option>
+              <option>Consultation</option>
+            </select>
+          </label>
+          <label>
             <span>Source</span>
             <select id="sourceFilter">
               <option value="">Toutes les sources</option>
@@ -164,6 +176,38 @@
         </div>
       </section>
 
+      <section class="section band" id="partenaires">
+        <div class="section-heading">
+          <p class="eyebrow">Partenaires utiles</p>
+          <h2>Services qui peuvent aider une candidature</h2>
+          <p>
+            Ces emplacements peuvent accueillir des formations, cabinets RH,
+            outils CV, telecoms ou services professionnels. Chaque contenu payant
+            doit rester clairement marque comme sponsorise.
+          </p>
+        </div>
+        <div class="partner-grid">
+          <article>
+            <span>Emplacement sponsorise</span>
+            <strong>Formation professionnelle</strong>
+            <p>Promouvoir une formation courte liee aux secteurs qui recrutent.</p>
+            <a class="secondary-link" href="annonceurs.html">Devenir partenaire</a>
+          </article>
+          <article>
+            <span>Emplacement sponsorise</span>
+            <strong>Service CV et entretien</strong>
+            <p>Recevoir des prospects qualifies sans faire payer l'acces aux offres.</p>
+            <a class="secondary-link" href="annonceurs.html">Proposer un service</a>
+          </article>
+          <article>
+            <span>Emplacement sponsorise</span>
+            <strong>Recrutement prioritaire</strong>
+            <p>Mettre en avant une offre urgente devant une audience ciblee.</p>
+            <a class="secondary-link" href="annonceurs.html">Publier une offre</a>
+          </article>
+        </div>
+      </section>
+
       <section class="section split" id="alertes">
         <div>
           <p class="eyebrow">Alertes emploi</p>
@@ -200,6 +244,20 @@
           <button type="submit">Recevoir les alertes</button>
           <p class="form-note" id="alertMessage"></p>
         </form>
+      </section>
+
+      <section class="section revenue-callout">
+        <div>
+          <p class="eyebrow">Pour recruteurs et partenaires</p>
+          <h2>Toucher une audience emploi sans bloquer l'acces candidat</h2>
+          <p>
+            Les revenus de JobFaso peuvent venir des offres mises en avant, des
+            sponsors de categories, des formations partenaires, des campagnes de
+            recrutement et des rapports agreges. Les chercheurs d'emploi gardent
+            l'acces gratuit aux opportunites.
+          </p>
+        </div>
+        <a class="nav-action" href="annonceurs.html">Voir les solutions</a>
       </section>
     </main>
 

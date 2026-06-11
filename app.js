@@ -78,6 +78,7 @@ const sourceCount = document.querySelector("#sourceCount");
 const savedCount = document.querySelector("#savedCount");
 const searchInput = document.querySelector("#searchInput");
 const cityFilter = document.querySelector("#cityFilter");
+const typeFilter = document.querySelector("#typeFilter");
 const sourceFilter = document.querySelector("#sourceFilter");
 const sortFilter = document.querySelector("#sortFilter");
 const savedOnlyFilter = document.querySelector("#savedOnlyFilter");
@@ -270,6 +271,7 @@ function hydrateSourceFilter() {
 function getFilteredJobs() {
   const query = normalize(searchInput?.value.trim());
   const city = cityFilter?.value || "";
+  const type = typeFilter?.value || "";
   const source = sourceFilter?.value || "";
   const savedOnly = Boolean(savedOnlyFilter?.checked);
   const sortMode = sortFilter?.value || "recent";
@@ -290,11 +292,12 @@ function getFilteredJobs() {
     );
     const matchesQuery = !query || haystack.includes(query);
     const matchesCity = !city || job.city === city || job.city === "Tout le Burkina" || job.city === "Burkina Faso";
+    const matchesType = !type || normalize(job.type).includes(normalize(type)) || normalize(job.category).includes(normalize(type));
     const matchesCategory = !activeCategory || job.category === activeCategory;
     const matchesSource = !source || job.sourceName === source;
     const matchesSaved = !savedOnly || savedJobs.has(job.id);
 
-    return matchesQuery && matchesCity && matchesCategory && matchesSource && matchesSaved;
+    return matchesQuery && matchesCity && matchesType && matchesCategory && matchesSource && matchesSaved;
   });
 
   return filtered.sort((a, b) => {
@@ -669,7 +672,7 @@ if (quickSearch) {
   });
 }
 
-[searchInput, cityFilter, sourceFilter, sortFilter, savedOnlyFilter].forEach((control) => {
+[searchInput, cityFilter, typeFilter, sourceFilter, sortFilter, savedOnlyFilter].forEach((control) => {
   control?.addEventListener("input", () => {
     resetJobsPage();
     renderJobs();
