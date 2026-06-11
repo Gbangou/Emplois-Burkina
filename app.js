@@ -100,6 +100,8 @@ const exportLeadsButton = document.querySelector("#exportLeadsButton");
 const clearDemoDataButton = document.querySelector("#clearDemoDataButton");
 const adminJobsList = document.querySelector("#adminJobsList");
 const adminSummary = document.querySelector("#adminSummary");
+const menuButton = document.querySelector(".menu-button");
+const mainNav = document.querySelector("#mainNav");
 
 function normalize(value = "") {
   return value
@@ -217,6 +219,21 @@ function displayDate(value) {
   }).format(date);
 }
 
+function slugify(value = "") {
+  return String(value)
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/&/g, " et ")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 90);
+}
+
+function getJobPagePath(job) {
+  return `pages/jobs/${slugify(job.title)}-${String(job.id).slice(0, 8)}.html`;
+}
+
 function updateSavedStorage() {
   localStorage.setItem("jobfaso.savedJobs", JSON.stringify([...savedJobs]));
   if (savedCount) savedCount.textContent = savedJobs.size;
@@ -329,6 +346,7 @@ function renderJobCard(job) {
       </div>
       <div class="job-actions">
         <button type="button" data-action="details" data-id="${escapeHtml(job.id)}">Voir</button>
+        <a class="secondary-link" href="${escapeHtml(getJobPagePath(job))}">Fiche</a>
         <button class="secondary-button" type="button" data-action="save" data-id="${escapeHtml(job.id)}">
           ${isSaved ? "Sauvegarde" : "Favori"}
         </button>
@@ -378,7 +396,9 @@ function renderDetail(job) {
       </p>
       <div class="detail-actions">
         ${sourceLink}
+        <a class="secondary-link" href="${escapeHtml(getJobPagePath(job))}">Fiche complete</a>
         <a class="secondary-link" href="${buildWhatsAppUrl(decodeURIComponent(whatsappText))}" target="_blank" rel="noopener" data-track="whatsapp_alert" data-track-label="${escapeHtml(job.title)}">Alerte WhatsApp</a>
+        <a class="secondary-link" href="contact.html">Signaler</a>
       </div>
     </div>
   `;
@@ -715,25 +735,55 @@ jobsList?.addEventListener("click", (event) => {
 
   activeJobId = id;
   renderJobs();
+  if (button?.dataset.action === "details" && window.matchMedia("(max-width: 900px)").matches) {
+    jobDetail?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
 });
 
+function validateLead(kind, data) {
+  const contact = data.phone || data.contact || data.email || "";
+  if (kind === "alert" && !/(\+?\d[\d\s.-]{6,})/.test(contact)) {
+    return "Ajoutez un numero WhatsApp valide.";
+  }
+  if (!Object.values(data).some((value) => String(value || "").trim())) {
+    return "Veuillez remplir les informations demandees.";
+  }
+  return "";
+}
+
+function setFormState(form, message, text, state = "info") {
+  if (!message) return;
+  message.textContent = text;
+  message.dataset.state = state;
+  form.dataset.state = state;
+}
+
 function handleDemoForm(form, messageId, successText) {
-  form.addEventListener("submit", (event) => {
+  form.addEventListener("submit", async (event) => {
     event.preventDefault();
     const message = document.querySelector(messageId);
     const data = Object.fromEntries(new FormData(form).entries());
     const kind = form.dataset.leadType || "contact";
+    const error = validateLead(kind, data);
+    if (error) {
+      setFormState(form, message, error, "error");
+      return;
+    }
+
+    const submitButton = form.querySelector("button[type='submit']");
+    submitButton?.setAttribute("disabled", "disabled");
+    setFormState(form, message, "Envoi en cours...", "info");
     const lead = saveLead(kind, data);
 
-    if (message) {
-      message.textContent = successText;
+    try {
+      const serverId = await syncLeadToServer(lead);
+      setFormState(form, message, serverId ? `${successText} Reference: ${serverId.slice(0, 8)}.` : successText, "success");
+      form.reset();
+    } catch {
+      setFormState(form, message, successText, "success");
+    } finally {
+      submitButton?.removeAttribute("disabled");
     }
-    syncLeadToServer(lead).then((serverId) => {
-      if (message && serverId) {
-        message.textContent = `${successText} Reference: ${serverId.slice(0, 8)}.`;
-      }
-    });
-    form.reset();
   });
 }
 
@@ -749,7 +799,7 @@ if (publishForm) {
   handleDemoForm(
     publishForm,
     "#publishMessage",
-    "Demande recue. Prochaine etape: moderation, facture et diffusion recruteur."
+    "Demande recue. L'equipe JobFaso vous recontactera avec les prochaines etapes."
   );
 }
 
@@ -757,7 +807,7 @@ if (sponsorForm) {
   handleDemoForm(
     sponsorForm,
     "#sponsorMessage",
-    "Demande commerciale recue. Prochaine etape: CRM, facture et paiement mobile money."
+    "Demande recue. L'equipe JobFaso vous proposera le format le plus adapte."
   );
 }
 
@@ -772,6 +822,18 @@ document.addEventListener("click", (event) => {
     label: tracked.dataset.trackLabel || tracked.textContent.trim(),
     href: tracked.href || "",
   });
+});
+
+menuButton?.addEventListener("click", () => {
+  const isOpen = menuButton.getAttribute("aria-expanded") === "true";
+  menuButton.setAttribute("aria-expanded", String(!isOpen));
+  mainNav?.classList.toggle("open", !isOpen);
+});
+
+mainNav?.addEventListener("click", (event) => {
+  if (!event.target.closest("a")) return;
+  menuButton?.setAttribute("aria-expanded", "false");
+  mainNav.classList.remove("open");
 });
 
 exportLeadsButton?.addEventListener("click", exportLeadsCsv);

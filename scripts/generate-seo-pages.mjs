@@ -204,7 +204,8 @@ function layout(config, page) {
         <span class="brand-mark">JF</span>
         <span><strong>JobFaso</strong><small>Emploi Burkina</small></span>
       </a>
-      <nav class="nav" aria-label="Navigation principale">
+      <button class="menu-button" type="button" aria-expanded="false" aria-controls="mainNav">Menu</button>
+      <nav class="nav" id="mainNav" aria-label="Navigation principale">
         <a href="../../index.html#offres">Offres</a>
         <a href="../../annonceurs.html">Recruteurs</a>
         <a href="../guides/faire-un-cv-au-burkina-faso.html">Guides</a>
@@ -224,11 +225,11 @@ function layout(config, page) {
 }
 
 function sponsorBlock() {
-  return `<aside class="ad-rail" aria-label="Publicite et sponsors">
-    <p class="eyebrow">Sponsor</p>
-    <strong>Votre marque ici</strong>
-    <p>Touchez les candidats actifs, jeunes diplomes et professionnels terrain.</p>
-    <a class="secondary-link" href="../../annonceurs.html">Sponsoriser cette page</a>
+  return `<aside class="ad-rail sponsor-panel" aria-label="Espace partenaire">
+    <p class="eyebrow">Partenaire</p>
+    <strong>Espace sponsorise disponible</strong>
+    <p>Formations, cabinets RH et services utiles peuvent toucher une audience qualifiee sans bloquer l'acces candidat.</p>
+    <a class="secondary-link" href="../../annonceurs.html">Demander cet emplacement</a>
   </aside>`;
 }
 
@@ -242,6 +243,71 @@ function jobCard(job) {
       <span class="pill">${escapeHtml(job.deadline || "Deadline a verifier")}</span>
     </div>
     <a class="secondary-link" href="../jobs/${slugify(job.title)}-${job.id.slice(0, 8)}.html">Voir la fiche</a>
+  </article>`;
+}
+
+function generatedJobPath(job) {
+  return `pages/jobs/${slugify(job.title)}-${job.id.slice(0, 8)}.html`;
+}
+
+function compactJobCards(jobs) {
+  return jobs
+    .slice(0, 4)
+    .map(
+      (job) => `<a class="mini-job" href="../../${generatedJobPath(job)}">
+        <strong>${escapeHtml(job.title)}</strong>
+        <span>${escapeHtml(job.company || job.sourceName || "Organisation")} - ${escapeHtml(job.city || "Burkina Faso")}</span>
+      </a>`
+    )
+    .join("");
+}
+
+function guideArticle(guide, jobs) {
+  return `<article class="content-main article-body guide-article">
+    <div class="guide-intro-card">
+      <p class="eyebrow">A faire maintenant</p>
+      <h2>Plan d'action</h2>
+      <p>Suivez ces etapes puis revenez aux offres pour postuler avec un dossier plus solide.</p>
+    </div>
+    <div class="step-list">
+      ${guide.sections
+        .map(
+          (section, index) => `<section class="step-item">
+            <span>${index + 1}</span>
+            <div>
+              <h3>${escapeHtml(section.split(".")[0])}</h3>
+              <p>${escapeHtml(section)}</p>
+            </div>
+          </section>`
+        )
+        .join("")}
+    </div>
+    <div class="checklist-card">
+      <h2>Checklist rapide</h2>
+      <ul>
+        <li>Verifier la deadline et la source officielle.</li>
+        <li>Adapter le CV au poste vise.</li>
+        <li>Nommer les fichiers proprement avant envoi.</li>
+        <li>Garder une copie de chaque candidature envoyee.</li>
+      </ul>
+    </div>
+    <div class="related-panel">
+      <div>
+        <p class="eyebrow">Offres recentes</p>
+        <h2>Passer a l'action</h2>
+      </div>
+      <div class="mini-job-grid">${compactJobCards(jobs)}</div>
+    </div>
+    <div class="action-panel">
+      <div>
+        <strong>Recevoir les nouvelles opportunites</strong>
+        <p>Ajoutez votre domaine et votre ville pour ne pas rater les prochaines deadlines.</p>
+      </div>
+      <div class="detail-actions">
+        <a class="nav-action" href="../../index.html#alertes">Recevoir les alertes</a>
+        <a class="secondary-link" href="../../index.html#offres">Voir les offres</a>
+      </div>
+    </div>
   </article>`;
 }
 
@@ -296,15 +362,14 @@ async function main() {
   await mkdir(GUIDES_DIR, { recursive: true });
 
   for (const job of jobs) {
-    const slug = `${slugify(job.title)}-${job.id.slice(0, 8)}.html`;
-    const path = `pages/jobs/${slug}`;
+    const path = generatedJobPath(job);
     urls.push(path);
     await writePage(config, path, {
       title: `${job.title} - ${job.city || "Burkina Faso"} | JobFaso`,
       description: `${job.title} chez ${job.company || job.sourceName || "une organisation"} au ${job.city || "Burkina Faso"}. Consultez la source officielle et recevez les alertes JobFaso.`,
       structuredData: jobStructuredData(config, job, path),
       body: `<main>
-        <section class="page-hero compact">
+        <section class="page-hero compact detail-hero">
           <p class="eyebrow">${escapeHtml(job.category || "Offre")}</p>
           <h1>${escapeHtml(job.title)}</h1>
           <p class="lead">${escapeHtml(job.company || job.sourceName || "Organisation")} - ${escapeHtml(job.city || "Burkina Faso")}</p>
@@ -314,7 +379,7 @@ async function main() {
           </div>
         </section>
         <section class="section content-with-rail">
-          <article class="content-main">
+          <article class="content-main article-body">
             <p class="moderation-note">Cette fiche resume une opportunite reperee par JobFaso. Verifiez toujours la source officielle avant de postuler.</p>
             <dl class="detail-list">
               <div><dt>Organisation</dt><dd>${escapeHtml(job.company || job.sourceName || "A verifier")}</dd></div>
@@ -325,9 +390,18 @@ async function main() {
             </dl>
             <h2>Conseil candidature</h2>
             <p>Preparez un CV clair, une lettre courte et verifiez que le poste correspond bien a votre profil avant d'envoyer vos documents.</p>
+            <div class="checklist-card">
+              <h2>Avant de postuler</h2>
+              <ul>
+                <li>Verifier le nom de l'organisation et le lien officiel.</li>
+                <li>Adapter votre CV au titre du poste.</li>
+                <li>Ne jamais payer de frais suspects pour candidater.</li>
+              </ul>
+            </div>
             <div class="detail-actions">
               <a class="nav-action" href="${escapeHtml(job.sourceUrl)}" target="_blank" rel="noopener">Ouvrir la source officielle</a>
-              <a class="secondary-link" href="../../annonceurs.html">Recruter avec JobFaso</a>
+              <a class="secondary-link" href="../../index.html#alertes">Recevoir les alertes</a>
+              <a class="secondary-link" href="../../contact.html">Signaler un probleme</a>
             </div>
           </article>
           ${sponsorBlock()}
@@ -355,7 +429,7 @@ async function main() {
         description: guide.intro,
       },
       body: `<main>
-        <section class="page-hero compact">
+        <section class="page-hero compact listing-hero">
           <p class="eyebrow">Categorie</p>
           <h1>${escapeHtml(guide.title)}</h1>
           <p class="lead">${escapeHtml(guide.intro)}</p>
@@ -384,7 +458,7 @@ async function main() {
         name: `Emploi ${city}`,
       },
       body: `<main>
-        <section class="page-hero compact">
+        <section class="page-hero compact listing-hero">
           <p class="eyebrow">Ville</p>
           <h1>Emploi ${escapeHtml(city)}</h1>
           <p class="lead">Offres recentes, sources utiles et alertes WhatsApp pour ${escapeHtml(city)}.</p>
@@ -413,19 +487,13 @@ async function main() {
         author: { "@type": "Organization", name: "JobFaso" },
       },
       body: `<main>
-        <section class="page-hero compact">
+        <section class="page-hero compact guide-hero">
           <p class="eyebrow">Guide candidat</p>
           <h1>${escapeHtml(guide.title)}</h1>
           <p class="lead">${escapeHtml(guide.description)}</p>
         </section>
         <section class="section content-with-rail">
-          <article class="content-main article-body">
-            ${guide.sections.map((section) => `<p>${escapeHtml(section)}</p>`).join("")}
-            <div class="detail-actions">
-              <a class="nav-action" href="../../index.html#alertes">Recevoir les alertes</a>
-              <a class="secondary-link" href="../../annonceurs.html">Publier une opportunite</a>
-            </div>
-          </article>
+          ${guideArticle(guide, jobs)}
           ${sponsorBlock()}
         </section>
       </main>`,

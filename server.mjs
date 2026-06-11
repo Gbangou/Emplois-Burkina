@@ -7,6 +7,7 @@ import { spawn } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
 const ROOT = fileURLToPath(new URL(".", import.meta.url));
+const ROOT_DIR = resolve(ROOT);
 const DATA_DIR = join(ROOT, "data", "runtime");
 const LEADS_FILE = join(DATA_DIR, "leads.json");
 const EVENTS_FILE = join(DATA_DIR, "events.json");
@@ -26,6 +27,7 @@ const publicPaths = new Set([
   "/sitemap.xml",
   "/robots.txt",
 ]);
+const publicDataPaths = new Set(["/data/curated-jobs.json", "/data/sources.json"]);
 
 const contentTypes = {
   ".html": "text/html; charset=utf-8",
@@ -55,7 +57,7 @@ function securityHeaders() {
       "form-action 'self'",
       "img-src 'self' data: https://images.unsplash.com",
       "style-src 'self' 'unsafe-inline'",
-      "script-src 'self' https://pagead2.googlesyndication.com",
+      "script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com",
       `connect-src ${connectSrc}`,
       "upgrade-insecure-requests",
     ].join("; "),
@@ -116,8 +118,16 @@ function isSafePath(pathname) {
 function resolvePublicPath(pathname) {
   const safePath = pathname === "/" ? "/index.html" : pathname;
   const normalized = normalize(safePath).replace(/^([/\\])+/, "");
-  const absolute = resolve(ROOT, normalized);
-  return absolute.startsWith(ROOT + sep) || absolute === ROOT ? absolute : "";
+  const absolute = resolve(ROOT_DIR, normalized);
+  return absolute.startsWith(ROOT_DIR + sep) || absolute === ROOT_DIR ? absolute : "";
+}
+
+function isPublicStaticPath(pathname) {
+  if (publicPaths.has(pathname)) return true;
+  if (publicDataPaths.has(pathname)) return true;
+  if (pathname.startsWith("/pages/") && pathname.endsWith(".html")) return true;
+  if (pathname === "/app.js" || pathname === "/styles.css") return true;
+  return false;
 }
 
 function safeEqual(a, b) {
@@ -318,6 +328,12 @@ async function handleApi(req, res, url) {
 async function serveStatic(req, res, url) {
   if (!isSafePath(url.pathname)) {
     send(res, 400, "Bad request", { "Content-Type": "text/plain; charset=utf-8" });
+    return;
+  }
+
+  const publicPathname = url.pathname === "/" ? "/" : url.pathname;
+  if (!isPublicStaticPath(publicPathname)) {
+    send(res, 404, "Not found", { "Content-Type": "text/plain; charset=utf-8" });
     return;
   }
 
