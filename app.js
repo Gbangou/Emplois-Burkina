@@ -244,12 +244,18 @@ function getSourceTypeLabel(type) {
 
 function getCollectionLabel(collection) {
   const labels = {
-    manual_only: "Manuel",
+    manual_only: "Controle manuel",
     official_link: "Lien officiel",
-    review_required: "A verifier",
+    review_required: "Verification requise",
   };
 
-  return labels[collection] || "A verifier";
+  return labels[collection] || "Verification requise";
+}
+
+function getSourceMonitoringLabel(source) {
+  if (source.collection === "manual_only") return "Controle humain";
+  if (source.collection === "official_link") return "Source officielle";
+  return source.priority <= 1 ? "Veille prioritaire" : "Veille reguliere";
 }
 
 function hydrateSourceFilter() {
@@ -462,10 +468,10 @@ function renderSourceDirectory() {
   const manualCount = sources.length - automaticCount;
 
   sourceMetrics.innerHTML = `
-    <article><strong>${sources.length}</strong><span>sources suivies</span></article>
-    <article><strong>${automaticCount}</strong><span>testables par script</span></article>
-    <article><strong>${manualCount}</strong><span>surveillance manuelle</span></article>
-    <article><strong>${Object.keys(sourceTypes).length}</strong><span>familles de sources</span></article>
+    <article><strong>${sources.length}</strong><span>sources surveillees</span></article>
+    <article><strong>${automaticCount}</strong><span>suivi automatise possible</span></article>
+    <article><strong>${manualCount}</strong><span>controle humain</span></article>
+    <article><strong>${Object.keys(sourceTypes).length}</strong><span>types de sources</span></article>
   `;
 
   sourceGrid.innerHTML = sources
@@ -481,7 +487,7 @@ function renderSourceDirectory() {
           </div>
           <div class="job-meta">
             <span class="pill">${getCollectionLabel(source.collection)}</span>
-            <span class="pill">Priorite ${escapeHtml(source.priority || "-")}</span>
+            <span class="pill">${getSourceMonitoringLabel(source)}</span>
           </div>
           <a class="secondary-link" href="${escapeHtml(source.url)}" target="_blank" rel="noopener">Ouvrir</a>
         </article>
