@@ -16,6 +16,7 @@ const AUTOMATION_STATE_FILE = join(DATA_DIR, "automation-state.json");
 const AUTOMATION_REPORT_FILE = join(DATA_DIR, "automation-report.json");
 const AUTOMATION_QUALITY_FILE = join(DATA_DIR, "automation-quality.json");
 const DATE_REVIEW_QUEUE_FILE = join(DATA_DIR, "date-review-queue.json");
+const DATE_OVERRIDES_FILE = join(DATA_DIR, "date-overrides.json");
 const PORT = Number(process.env.PORT || 8088);
 const NODE_ENV = process.env.NODE_ENV || "development";
 const ADMIN_TOKEN = process.env.JOBFASO_ADMIN_TOKEN || process.env.ADMIN_TOKEN || "";
@@ -351,6 +352,22 @@ function validateLead(payload) {
   };
 }
 
+function validIsoDate(value) {
+  if (!value || !/^\d{4}-\d{2}-\d{2}$/.test(String(value))) return "";
+  const date = new Date(`${value}T00:00:00Z`);
+  return Number.isNaN(date.getTime()) ? "" : value;
+}
+
+function dateLabel(value) {
+  const date = validIsoDate(value);
+  if (!date) return "";
+  return new Intl.DateTimeFormat("fr-FR", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  }).format(new Date(`${date}T00:00:00Z`));
+}
+
 async function appendEvent(type, payload = {}) {
   const events = await readJson(EVENTS_FILE, []);
   events.unshift({
@@ -554,6 +571,78 @@ async function handleApi(req, res, url) {
       leads: db.leads.length,
       events: db.events.length,
     });
+    return;
+  }
+
+  if (url.pathname === "/api/admin/jobs/date-override" && req.method === "POST") {
+    if (!requireAdmin(req, res)) return;
+    if (!sameOrigin(req)) {
+      sendJson(res, 403, { error: "Origine refusee." });
+      return;
+    }
+
+    try {
+      const payload = await readBody(req);
+      const jobId = cleanText(payload.jobId, 120);
+      const openingDate = validIsoDate(payload.openingDate);
+      const closingDate = validIsoDate(payload.closingDate);
+      const note = cleanText(payload.note, 500);
+
+      if (!jobId || !closingDate) {
+        sendJson(res, 400, { error: "jobId et closingDate YYYY-MM-DD sont requis." });
+        return;
+      }
+
+      const jobsFile = join(ROOT, "data", "curated-jobs.json");
+      const jobs = await readJson(jobsFile, []);
+      const index = jobs.findIndex((job) => job.id === jobId);
+      if (index === -1) {
+        sendJson(res, 404, { error: "Offre introuvable." });
+        return;
+      }
+
+      const job = jobs[index];
+      const nextOpeningDate = openingDate || job.openingDate || "";
+      jobs[index] = {
+        ...job,
+        openingDate: nextOpeningDate,
+        closingDate,
+        deadline: dateLabel(closingDate),
+        inconsistentDates: Boolean(nextOpeningDate && closingDate < nextOpeningDate),
+        dateVerifiedAt: new Date().toISOString(),
+      };
+      await writeFile(jobsFile, `${JSON.stringify(jobs, null, 2)}\n`, "utf8");
+
+      const overrides = await readJson(DATE_OVERRIDES_FILE, []);
+      overrides.unshift({
+        id: randomUUID(),
+        jobId,
+        title: job.title,
+        sourceName: job.sourceName,
+        openingDate: nextOpeningDate,
+        closingDate,
+        note,
+        createdAt: new Date().toISOString(),
+      });
+      await writeJson(DATE_OVERRIDES_FILE, overrides.slice(0, 1000));
+
+      await appendEvent("date_override_saved", { jobId, title: job.title, closingDate });
+      await runScript("scripts/generate-seo-pages.mjs");
+      await runScript("scripts/enhance-static-seo.mjs");
+      await runScript("scripts/generate-date-review-queue.mjs");
+      await runScript("scripts/automation-quality-gate.mjs");
+      await runScript("scripts/generate-automation-report.mjs");
+      await runScript("scripts/export-postgres-seed.mjs");
+      await syncLocalDb("date_override");
+
+      sendJson(res, 200, {
+        ok: true,
+        job: jobs[index],
+        remainingReview: (await readJson(DATE_REVIEW_QUEUE_FILE, [])).length,
+      });
+    } catch (error) {
+      sendJson(res, 500, { error: error.message || "Correction impossible." });
+    }
     return;
   }
 

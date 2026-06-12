@@ -879,7 +879,10 @@ async function loadAutomationStatus() {
                   <td>${escapeHtml(item.priority)}</td>
                   <td>${escapeHtml(item.title)}</td>
                   <td>${escapeHtml(item.sourceName)}</td>
-                  <td><a class="secondary-link" href="${escapeHtml(item.sourceUrl)}" target="_blank" rel="noopener">Verifier</a></td>
+                  <td>
+                    <a class="secondary-link" href="${escapeHtml(item.sourceUrl)}" target="_blank" rel="noopener">Verifier</a>
+                    <button class="secondary-button date-override-button" type="button" data-job-id="${escapeHtml(item.id)}">Corriger</button>
+                  </td>
                 </tr>
               `,
             )
@@ -1262,6 +1265,36 @@ document.querySelector("#syncDbButton")?.addEventListener("click", async () => {
     await loadAutomationStatus();
   } catch (error) {
     alert(error.message || "Impossible de synchroniser la DB locale.");
+  }
+});
+
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest(".date-override-button");
+  if (!button) return;
+
+  const closingDate = prompt("Date de cloture confirmee (YYYY-MM-DD)");
+  if (!closingDate) return;
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(closingDate.trim())) {
+    alert("Format attendu : YYYY-MM-DD");
+    return;
+  }
+
+  try {
+    button.disabled = true;
+    button.textContent = "Mise a jour...";
+    const result = await runAdminPost("/api/admin/jobs/date-override", {
+      jobId: button.dataset.jobId,
+      closingDate: closingDate.trim(),
+      note: "Correction admin depuis la file dates",
+    });
+    alert(`Date enregistree. Restant a verifier : ${result.remainingReview}`);
+    await loadJobs();
+    await loadAutomationStatus();
+  } catch (error) {
+    alert(error.message || "Impossible d'enregistrer la date.");
+  } finally {
+    button.disabled = false;
+    button.textContent = "Corriger";
   }
 });
 

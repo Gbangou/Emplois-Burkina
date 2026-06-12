@@ -176,6 +176,15 @@ La file de revue des dates consolide dans `data/runtime/date-review-queue.json`
 et `docs/DATE_REVIEW_QUEUE.md` les offres dont la date de cloture est absente
 ou incoherente. Elle est affichee dans l'admin pour accelerer la moderation.
 
+Depuis `admin.html`, le bouton `Corriger` de la file dates appelle
+`/api/admin/jobs/date-override`. La correction :
+
+- valide une date `YYYY-MM-DD` ;
+- met a jour `data/curated-jobs.json` ;
+- conserve une trace dans `data/runtime/date-overrides.json` ;
+- regenere pages SEO, metas statiques, file dates, quality gate, rapport,
+  seed PostgreSQL et DB locale.
+
 Etapes :
 
 1. collecte des sources ;
