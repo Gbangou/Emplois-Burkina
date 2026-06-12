@@ -1,6 +1,6 @@
 # Rapport automation JobFaso
 
-Genere le : 2026-06-12T14:08:54.902Z
+Genere le : 2026-06-12T14:36:59.984Z
 
 ## Resume
 
@@ -8,7 +8,7 @@ Genere le : 2026-06-12T14:08:54.902Z
 - Dernier succes : Aucun
 - Duree derniere run : 0s
 - Runs : 0 total, 0 succes, 0 echecs
-- Quality gate : warning (92 / 100)
+- Quality gate : warning (93 / 100)
 - Checks critiques en echec : 0
 - Warnings quality gate : 1
 - Sources : 38 (16 automatiques, 22 manuelles)
@@ -20,7 +20,10 @@ Genere le : 2026-06-12T14:08:54.902Z
 - Offres cloturant sous 7 jours : 0
 - Offres expirees : 0
 - Posts sociaux en file : 47
-- Dates en file de revue : 0
+- Dates en file de revue : 18
+- Score visibilite : 92 / 100
+- Cibles backlinks/partenariats : 43
+- URLs sitemap : 47
 - Erreurs scraper : 0
 - Taille seed SQL : 741098 octets
 

@@ -88,6 +88,8 @@ add(checks, "warning", "source_diversity", Object.keys(sourceCounts).length >= 3
 add(checks, "warning", "category_diversity", Object.keys(categoryCounts).length >= 4, `${Object.keys(categoryCounts).length} categories publiees`, "Continuer a capter informel, BTP, ONG, finance et logistique.");
 add(checks, "warning", "closing_dates", jobs.filter((job) => job.closingDate).length >= Math.ceil(jobs.length * 0.2), `${jobs.filter((job) => job.closingDate).length}/${jobs.length} avec date de cloture`, "Renforcer extraction detail et moderation dates.");
 add(checks, "warning", "social_queue", socialQueue.length >= Math.min(10, jobs.length), `${socialQueue.length} posts en file`, "Executer npm run social:queue.");
+add(checks, "warning", "visibility_engine", await exists(join(DATA_DIR, "growth", "visibility-report.json")), "rapport visibilite present", "Executer npm run visibility.");
+add(checks, "warning", "outreach_targets", await exists(join(DATA_DIR, "growth", "outreach-targets.json")), "cibles prospection presentes", "Executer npm run visibility.");
 add(checks, "info", "indexnow_urls", (await size(join(ROOT, "indexnow-urls.txt"))) > 0, `${await size(join(ROOT, "indexnow-urls.txt"))} octets`, "Executer npm run growth.");
 add(checks, "info", "llms_txt", await exists(join(ROOT, "llms.txt")), "llms.txt present", "Executer npm run growth.");
 add(checks, "info", "manifest", await exists(join(ROOT, "site.webmanifest")), "manifest present", "Executer npm run growth.");

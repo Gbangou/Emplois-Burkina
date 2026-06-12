@@ -1,0 +1,87 @@
+{
+  "generatedAt": "2026-06-12T14:36:02.521Z",
+  "score": 92,
+  "checks": [
+    {
+      "id": "domain",
+      "label": "Domaine public configure",
+      "ok": true,
+      "weight": 10,
+      "fix": "Configurer JOBFASO_BASE_URL et DNS."
+    },
+    {
+      "id": "contact",
+      "label": "Contact public visible",
+      "ok": true,
+      "weight": 10,
+      "fix": "Ajouter email et page contact."
+    },
+    {
+      "id": "trust_pages",
+      "label": "Pages confiance",
+      "ok": true,
+      "weight": 12,
+      "fix": "Garder privacy, terms, contacts et tarifs."
+    },
+    {
+      "id": "sitemap",
+      "label": "Sitemap riche",
+      "ok": true,
+      "weight": 12,
+      "fix": "Executer npm run growth."
+    },
+    {
+      "id": "robots",
+      "label": "Robots.txt propre",
+      "ok": true,
+      "weight": 8,
+      "fix": "Regenerer robots.txt."
+    },
+    {
+      "id": "content_depth",
+      "label": "Volume offres SEO",
+      "ok": true,
+      "weight": 12,
+      "fix": "Automatiser plus de sources fiables."
+    },
+    {
+      "id": "source_diversity",
+      "label": "Diversite des sources",
+      "ok": true,
+      "weight": 10,
+      "fix": "Ajouter partenaires/RSS/API autorises."
+    },
+    {
+      "id": "guides",
+      "label": "Contenus utiles hors offres",
+      "ok": true,
+      "weight": 8,
+      "fix": "Publier guides candidats originaux."
+    },
+    {
+      "id": "adsense",
+      "label": "AdSense pret a activer",
+      "ok": false,
+      "weight": 8,
+      "fix": "Ajouter adsenseClient apres approbation Google."
+    },
+    {
+      "id": "monetization",
+      "label": "Produits revenus definis",
+      "ok": true,
+      "weight": 10,
+      "fix": "Maintenir data/rate-card.json."
+    }
+  ],
+  "priorities": [
+    "Ajouter adsenseClient apres approbation Google."
+  ],
+  "totals": {
+    "jobs": 20,
+    "sources": 38,
+    "sitemapUrls": 47,
+    "rateProducts": 7,
+    "outreachTargets": 43,
+    "outreachTemplates": 3
+  }
+}

@@ -108,6 +108,8 @@ const dateReviewTable = document.querySelector("#dateReviewTable");
 const automationStatus = document.querySelector("#automationStatus");
 const analyticsSummary = document.querySelector("#analyticsSummary");
 const analyticsTable = document.querySelector("#analyticsTable");
+const visibilitySummary = document.querySelector("#visibilitySummary");
+const visibilityTable = document.querySelector("#visibilityTable");
 const employerCarousel = document.querySelector("#employerCarousel");
 const featuredJobsCarousel = document.querySelector("#featuredJobsCarousel");
 const profileCarousel = document.querySelector("#profileCarousel");
@@ -846,6 +848,7 @@ async function loadServerAdminData() {
     await loadSocialQueue();
     await loadAutomationStatus();
     await loadAnalyticsSummary();
+    await loadVisibilityEngine();
     return true;
   } catch {
     return false;
@@ -890,6 +893,44 @@ async function loadAnalyticsSummary() {
       `;
     }
     if (analyticsTable) analyticsTable.innerHTML = `<tr><td colspan="2">Token requis.</td></tr>`;
+  }
+}
+
+async function loadVisibilityEngine() {
+  if (!visibilitySummary && !visibilityTable) return;
+
+  try {
+    const { report = {}, targets = [] } = await fetchAdminJson("/api/admin/growth/visibility");
+    const totals = report.totals || {};
+    if (visibilitySummary) {
+      visibilitySummary.innerHTML = `
+        <article><strong>${escapeHtml(report.score ?? 0)}/100</strong><span>score visibilite</span></article>
+        <article><strong>${escapeHtml(totals.outreachTargets || targets.length || 0)}</strong><span>cibles partenaires</span></article>
+        <article><strong>${escapeHtml(totals.sitemapUrls || 0)}</strong><span>URLs sitemap</span></article>
+        <article><strong>${escapeHtml(totals.rateProducts || 0)}</strong><span>produits revenus</span></article>
+      `;
+    }
+
+    if (visibilityTable) {
+      visibilityTable.innerHTML = targets.length
+        ? targets
+            .slice(0, 12)
+            .map(
+              (target) => `
+                <tr>
+                  <td>${escapeHtml(target.name)}<br><span class="muted">${escapeHtml(target.type)}</span></td>
+                  <td>${escapeHtml(target.angle)}</td>
+                </tr>
+              `,
+            )
+            .join("")
+        : `<tr><td colspan="2">Aucune cible generee.</td></tr>`;
+    }
+  } catch {
+    if (visibilitySummary) {
+      visibilitySummary.innerHTML = `<article><strong>Token</strong><span>requis pour la visibilite</span></article>`;
+    }
+    if (visibilityTable) visibilityTable.innerHTML = `<tr><td colspan="2">Token requis.</td></tr>`;
   }
 }
 
@@ -1347,6 +1388,20 @@ document.querySelector("#syncDbButton")?.addEventListener("click", async () => {
     await loadAutomationStatus();
   } catch (error) {
     alert(error.message || "Impossible de synchroniser la DB locale.");
+  }
+});
+
+document.querySelector("#generateVisibilityButton")?.addEventListener("click", async () => {
+  try {
+    const button = document.querySelector("#generateVisibilityButton");
+    button?.setAttribute("disabled", "disabled");
+    const result = await runAdminPost("/api/admin/growth/visibility");
+    alert(result.output || "Moteur de visibilite regenere.");
+    await loadVisibilityEngine();
+  } catch (error) {
+    alert(error.message || "Impossible de regenerer la visibilite.");
+  } finally {
+    document.querySelector("#generateVisibilityButton")?.removeAttribute("disabled");
   }
 });
 

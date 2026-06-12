@@ -64,6 +64,7 @@ Routes utiles :
 - `/api/events`
 - `/api/admin/db/sync`
 - `/api/admin/analytics/summary`
+- `/api/admin/growth/visibility`
 - `/api/admin/automation`
 - `/api/admin/social/queue`
 - `/api/admin/social/publish`
@@ -197,9 +198,10 @@ Etapes :
 4. generation SEO ;
 5. injection SEO pages statiques ;
 6. generation assets croissance ;
-7. export PostgreSQL `database/seed.sql` ;
-8. synchronisation DB locale ;
-9. preparation posts reseaux sociaux.
+7. generation moteur visibilite, AdSense readiness, backlinks et prospection ;
+8. export PostgreSQL `database/seed.sql` ;
+9. synchronisation DB locale ;
+10. preparation posts reseaux sociaux.
 
 Principes :
 
@@ -223,6 +225,23 @@ Commande complete :
 ```bash
 npm run growth
 ```
+
+Moteur de visibilite seul :
+
+```bash
+npm run visibility
+```
+
+Cette commande genere :
+
+- `data/growth/visibility-report.json` : score SEO/AdSense/monetisation ;
+- `data/growth/outreach-targets.json` : cibles backlinks, sources,
+  recruteurs, formations et sponsors ;
+- `data/growth/outreach-templates.json` : scripts de prospection ;
+- `docs/VISIBILITY_ENGINE.md` : rapport lisible et plan d'action.
+
+L'admin affiche ces donnees via `/api/admin/growth/visibility` et permet une
+regeneration manuelle avec le token serveur.
 
 Fichiers generes :
 
@@ -268,6 +287,7 @@ Canaux prevus :
 - leads formation/CV/coaching ;
 - rapports marche ;
 - file de posts sociaux automatisee.
+- moteur visibilite/backlinks/prospection automatise.
 
 Scripts sociaux :
 

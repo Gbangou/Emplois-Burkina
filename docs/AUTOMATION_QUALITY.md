@@ -1,8 +1,8 @@
 # Qualite automation JobFaso
 
-Genere le : 2026-06-12T14:08:54.909Z
+Genere le : 2026-06-12T14:36:54.794Z
 
-Score : 92/100
+Score : 93/100
 Statut : warning
 
 ## Checks
@@ -19,6 +19,8 @@ Statut : warning
 | warning | category_diversity | OK | 7 categories publiees | Continuer a capter informel, BTP, ONG, finance et logistique. |
 | warning | closing_dates | A corriger | 2/20 avec date de cloture | Renforcer extraction detail et moderation dates. |
 | warning | social_queue | OK | 47 posts en file | Executer npm run social:queue. |
+| warning | visibility_engine | OK | rapport visibilite present | Executer npm run visibility. |
+| warning | outreach_targets | OK | cibles prospection presentes | Executer npm run visibility. |
 | info | indexnow_urls | OK | 3145 octets | Executer npm run growth. |
 | info | llms_txt | OK | llms.txt present | Executer npm run growth. |
 | info | manifest | OK | manifest present | Executer npm run growth. |

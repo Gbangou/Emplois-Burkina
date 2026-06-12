@@ -643,6 +643,39 @@ async function handleApi(req, res, url) {
     return;
   }
 
+  if (url.pathname === "/api/admin/growth/visibility" && req.method === "GET") {
+    if (!requireAdmin(req, res)) return;
+    const [report, targets, templates] = await Promise.all([
+      readJson(join(ROOT, "data", "growth", "visibility-report.json"), {}),
+      readJson(join(ROOT, "data", "growth", "outreach-targets.json"), []),
+      readJson(join(ROOT, "data", "growth", "outreach-templates.json"), []),
+    ]);
+    sendJson(res, 200, {
+      report,
+      targets: targets.slice(0, 40),
+      templates,
+    });
+    return;
+  }
+
+  if (url.pathname === "/api/admin/growth/visibility" && req.method === "POST") {
+    if (!requireAdmin(req, res)) return;
+    if (!sameOrigin(req)) {
+      sendJson(res, 403, { error: "Origine refusee." });
+      return;
+    }
+
+    try {
+      const result = await runScript("scripts/generate-visibility-engine.mjs");
+      await appendEvent("visibility_engine_generated", {});
+      const report = await readJson(join(ROOT, "data", "growth", "visibility-report.json"), {});
+      sendJson(res, 200, { ok: true, output: result.stdout, report });
+    } catch (error) {
+      sendJson(res, 500, { error: error.message || "Generation visibilite impossible." });
+    }
+    return;
+  }
+
   if (url.pathname === "/api/admin/db/sync" && req.method === "POST") {
     if (!requireAdmin(req, res)) return;
     if (!sameOrigin(req)) {
@@ -718,6 +751,7 @@ async function handleApi(req, res, url) {
       await appendEvent("date_override_saved", { jobId, title: job.title, closingDate });
       await runScript("scripts/generate-seo-pages.mjs");
       await runScript("scripts/enhance-static-seo.mjs");
+      await runScript("scripts/generate-visibility-engine.mjs");
       await runScript("scripts/generate-date-review-queue.mjs");
       await runScript("scripts/automation-quality-gate.mjs");
       await runScript("scripts/generate-automation-report.mjs");

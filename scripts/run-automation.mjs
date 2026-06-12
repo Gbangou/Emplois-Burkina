@@ -13,6 +13,7 @@ const steps = [
   ["Generation SEO", "scripts/generate-seo-pages.mjs"],
   ["SEO pages statiques", "scripts/enhance-static-seo.mjs"],
   ["Generation croissance", "scripts/generate-growth-assets.mjs"],
+  ["Moteur visibilite", "scripts/generate-visibility-engine.mjs"],
   ["Export PostgreSQL", "scripts/export-postgres-seed.mjs"],
   ["Synchronisation DB locale", "scripts/sync-local-db.mjs"],
   ["Preparation reseaux sociaux", "scripts/generate-social-queue.mjs"],

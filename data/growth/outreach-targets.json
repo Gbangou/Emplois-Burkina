@@ -1,0 +1,346 @@
+[
+  {
+    "type": "commercial_partner",
+    "name": "Ecoles de formation professionnelle",
+    "url": "",
+    "priority": 1,
+    "angle": "Sponsor guides metiers, pages categories et posts WhatsApp.",
+    "ask": "Partenariat legal, marque, mesure par clics/leads, sans vente abusive de donnees personnelles."
+  },
+  {
+    "type": "source_partner",
+    "name": "BFemploi",
+    "url": "https://www.bfemploi.com/",
+    "priority": 1,
+    "angle": "Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire.",
+    "ask": "Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres."
+  },
+  {
+    "type": "source_partner",
+    "name": "Emploiburkina",
+    "url": "https://www.emploiburkina.com/",
+    "priority": 1,
+    "angle": "Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire.",
+    "ask": "Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres."
+  },
+  {
+    "type": "source_partner",
+    "name": "Afrique Emplois",
+    "url": "https://www.afriqueemplois.com/",
+    "priority": 1,
+    "angle": "Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire.",
+    "ask": "Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres."
+  },
+  {
+    "type": "source_partner",
+    "name": "HumanitaireHub",
+    "url": "https://humanitairehub.com/",
+    "priority": 1,
+    "angle": "Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire.",
+    "ask": "Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres."
+  },
+  {
+    "type": "source_partner",
+    "name": "UNjobs Burkina Faso",
+    "url": "https://unjobs.org/duty_stations/burkina-faso",
+    "priority": 1,
+    "angle": "Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire.",
+    "ask": "Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres."
+  },
+  {
+    "type": "source_partner",
+    "name": "ReliefWeb Burkina Faso",
+    "url": "https://reliefweb.int/jobs?advanced-search=%28C162%29",
+    "priority": 1,
+    "angle": "Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire.",
+    "ask": "Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres."
+  },
+  {
+    "type": "source_partner",
+    "name": "eConcours Pro",
+    "url": "https://econcours-pro.gov.bf/",
+    "priority": 1,
+    "angle": "Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire.",
+    "ask": "Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres."
+  },
+  {
+    "type": "revenue_product",
+    "name": "Annonce mise en avant",
+    "url": "",
+    "priority": 1,
+    "angle": "25 000 FCFA - publication prioritaire, badge mise en avant, diffusion WhatsApp ciblee, visibilite temporaire page accueil.",
+    "ask": "Trouver 5 clients potentiels pour le produit Annonce mise en avant."
+  },
+  {
+    "type": "commercial_partner",
+    "name": "Cabinets RH et recruteurs",
+    "url": "",
+    "priority": 2,
+    "angle": "Annonces premium, shortlist candidats et rapport marche.",
+    "ask": "Partenariat legal, marque, mesure par clics/leads, sans vente abusive de donnees personnelles."
+  },
+  {
+    "type": "category_sponsor",
+    "name": "Sponsor categorie Bureau",
+    "url": "",
+    "priority": 2,
+    "angle": "Vendre une visibilite utile sur la categorie Bureau.",
+    "ask": "Sponsor mensuel, bannieres natives marquees, lien suivi et rapport de performance."
+  },
+  {
+    "type": "source_partner",
+    "name": "Travail Burkina",
+    "url": "https://www.travail-burkina.com/",
+    "priority": 2,
+    "angle": "Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire.",
+    "ask": "Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres."
+  },
+  {
+    "type": "source_partner",
+    "name": "RMO Job Center",
+    "url": "https://www.rmo-jobcenter.com/fr/nos-offres-emploi.html",
+    "priority": 2,
+    "angle": "Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire.",
+    "ask": "Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres."
+  },
+  {
+    "type": "source_partner",
+    "name": "Impactpool Burkina Faso",
+    "url": "https://www.impactpool.org/search?countries=Burkina%20Faso",
+    "priority": 2,
+    "angle": "Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire.",
+    "ask": "Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres."
+  },
+  {
+    "type": "source_partner",
+    "name": "Devex Burkina Faso",
+    "url": "https://www.devex.com/jobs/search?filter%5Bcountries%5D%5B%5D=Burkina%20Faso",
+    "priority": 2,
+    "angle": "Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire.",
+    "ask": "Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres."
+  },
+  {
+    "type": "source_partner",
+    "name": "UN Talent Burkina Faso",
+    "url": "https://untalent.org/jobs/in-anything/contract-all/burkina-faso",
+    "priority": 2,
+    "angle": "Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire.",
+    "ask": "Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres."
+  },
+  {
+    "type": "source_partner",
+    "name": "UNICEF Careers Burkina Faso",
+    "url": "https://jobs.unicef.org/en-us/search/?search-keyword=Burkina%20Faso",
+    "priority": 2,
+    "angle": "Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire.",
+    "ask": "Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres."
+  },
+  {
+    "type": "source_partner",
+    "name": "UNDP Jobs Burkina Faso",
+    "url": "https://estm.fa.em2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1/requisitions?keyword=Burkina",
+    "priority": 2,
+    "angle": "Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire.",
+    "ask": "Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres."
+  },
+  {
+    "type": "revenue_product",
+    "name": "Sponsor categorie",
+    "url": "",
+    "priority": 2,
+    "angle": "100 000 FCFA - visibilite categorie, mention sponsorisee, placement newsletter, rapport simple.",
+    "ask": "Trouver 5 clients potentiels pour le produit Sponsor categorie."
+  },
+  {
+    "type": "commercial_partner",
+    "name": "Centres CV et coaching entretien",
+    "url": "",
+    "priority": 3,
+    "angle": "Leads qualifies avec commission par client confirme.",
+    "ask": "Partenariat legal, marque, mesure par clics/leads, sans vente abusive de donnees personnelles."
+  },
+  {
+    "type": "category_sponsor",
+    "name": "Sponsor categorie BTP et chantier",
+    "url": "",
+    "priority": 3,
+    "angle": "Vendre une visibilite utile sur la categorie BTP et chantier.",
+    "ask": "Sponsor mensuel, bannieres natives marquees, lien suivi et rapport de performance."
+  },
+  {
+    "type": "source_partner",
+    "name": "IUCN Careers Burkina Faso",
+    "url": "https://www.iucn.org/about/jobs",
+    "priority": 3,
+    "angle": "Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire.",
+    "ask": "Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres."
+  },
+  {
+    "type": "source_partner",
+    "name": "NRC Careers",
+    "url": "https://www.nrc.no/jobs/",
+    "priority": 3,
+    "angle": "Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire.",
+    "ask": "Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres."
+  },
+  {
+    "type": "source_partner",
+    "name": "DRC Careers",
+    "url": "https://drc.ngo/about-us/careers/vacancies/",
+    "priority": 3,
+    "angle": "Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire.",
+    "ask": "Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres."
+  },
+  {
+    "type": "source_partner",
+    "name": "Plan International Careers",
+    "url": "https://jobs.plan-international.org/",
+    "priority": 3,
+    "angle": "Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire.",
+    "ask": "Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres."
+  },
+  {
+    "type": "source_partner",
+    "name": "Save the Children Careers",
+    "url": "https://www.savethechildren.net/careers",
+    "priority": 3,
+    "angle": "Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire.",
+    "ask": "Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres."
+  },
+  {
+    "type": "source_partner",
+    "name": "Action Contre la Faim Careers",
+    "url": "https://recrutement.actioncontrelafaim.org/",
+    "priority": 3,
+    "angle": "Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire.",
+    "ask": "Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres."
+  },
+  {
+    "type": "source_partner",
+    "name": "Humanity & Inclusion Careers",
+    "url": "https://www.hi.org/en/jobs",
+    "priority": 3,
+    "angle": "Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire.",
+    "ask": "Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres."
+  },
+  {
+    "type": "source_partner",
+    "name": "FHI 360 Careers",
+    "url": "https://www.fhi360.org/careers/",
+    "priority": 3,
+    "angle": "Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire.",
+    "ask": "Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres."
+  },
+  {
+    "type": "source_partner",
+    "name": "World Vision Careers",
+    "url": "https://www.wvi.org/careers",
+    "priority": 3,
+    "angle": "Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire.",
+    "ask": "Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres."
+  },
+  {
+    "type": "source_partner",
+    "name": "Catholic Relief Services Careers",
+    "url": "https://www.crs.org/about/careers",
+    "priority": 3,
+    "angle": "Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire.",
+    "ask": "Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres."
+  },
+  {
+    "type": "revenue_product",
+    "name": "Campagne recrutement",
+    "url": "",
+    "priority": 3,
+    "angle": "150 000 FCFA - page campagne, formulaire candidature, diffusion multi-canal, export candidats.",
+    "ask": "Trouver 5 clients potentiels pour le produit Campagne recrutement."
+  },
+  {
+    "type": "commercial_partner",
+    "name": "Operateurs telecom et fintech",
+    "url": "",
+    "priority": 4,
+    "angle": "Campagnes utiles pour candidats, data et mobile money.",
+    "ask": "Partenariat legal, marque, mesure par clics/leads, sans vente abusive de donnees personnelles."
+  },
+  {
+    "type": "category_sponsor",
+    "name": "Sponsor categorie Finance et administration",
+    "url": "",
+    "priority": 4,
+    "angle": "Vendre une visibilite utile sur la categorie Finance et administration.",
+    "ask": "Sponsor mensuel, bannieres natives marquees, lien suivi et rapport de performance."
+  },
+  {
+    "type": "revenue_product",
+    "name": "Partenaire CV et entretien",
+    "url": "",
+    "priority": 4,
+    "angle": "Sur devis - leads qualifies, page guide sponsorisee, mention partenaire, commission par client confirme.",
+    "ask": "Trouver 5 clients potentiels pour le produit Partenaire CV et entretien."
+  },
+  {
+    "type": "commercial_partner",
+    "name": "Associations artisans et BTP",
+    "url": "",
+    "priority": 5,
+    "angle": "Profils terrain verifies et pages metiers locales.",
+    "ask": "Partenariat legal, marque, mesure par clics/leads, sans vente abusive de donnees personnelles."
+  },
+  {
+    "type": "category_sponsor",
+    "name": "Sponsor categorie ONG",
+    "url": "",
+    "priority": 5,
+    "angle": "Vendre une visibilite utile sur la categorie ONG.",
+    "ask": "Sponsor mensuel, bannieres natives marquees, lien suivi et rapport de performance."
+  },
+  {
+    "type": "revenue_product",
+    "name": "Profil artisan verifie",
+    "url": "",
+    "priority": 5,
+    "angle": "1 500 FCFA - fiche publique, badge verifie, mise en avant locale, demandes client.",
+    "ask": "Trouver 5 clients potentiels pour le produit Profil artisan verifie."
+  },
+  {
+    "type": "category_sponsor",
+    "name": "Sponsor categorie Metiers terrain et informels",
+    "url": "",
+    "priority": 6,
+    "angle": "Vendre une visibilite utile sur la categorie Metiers terrain et informels.",
+    "ask": "Sponsor mensuel, bannieres natives marquees, lien suivi et rapport de performance."
+  },
+  {
+    "type": "revenue_product",
+    "name": "Shortlist candidat",
+    "url": "",
+    "priority": 6,
+    "angle": "25 000 FCFA - formulaire candidature, tri de base, export CSV, consentement candidat.",
+    "ask": "Trouver 5 clients potentiels pour le produit Shortlist candidat."
+  },
+  {
+    "type": "category_sponsor",
+    "name": "Sponsor categorie Commerce et vente",
+    "url": "",
+    "priority": 7,
+    "angle": "Vendre une visibilite utile sur la categorie Commerce et vente.",
+    "ask": "Sponsor mensuel, bannieres natives marquees, lien suivi et rapport de performance."
+  },
+  {
+    "type": "revenue_product",
+    "name": "Rapport tendances emploi",
+    "url": "",
+    "priority": 7,
+    "angle": "50 000 FCFA - secteurs qui recrutent, villes actives, competences demandees, donnees agregees non personnelles.",
+    "ask": "Trouver 5 clients potentiels pour le produit Rapport tendances emploi."
+  },
+  {
+    "type": "category_sponsor",
+    "name": "Sponsor categorie Transport et logistique",
+    "url": "",
+    "priority": 8,
+    "angle": "Vendre une visibilite utile sur la categorie Transport et logistique.",
+    "ask": "Sponsor mensuel, bannieres natives marquees, lien suivi et rapport de performance."
+  }
+]

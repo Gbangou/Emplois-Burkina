@@ -54,7 +54,7 @@ function markdownTable(rows) {
   return ["| Nom | Total |", "| --- | ---: |", ...rows.map((row) => `| ${row.name} | ${row.count} |`)].join("\n");
 }
 
-const [sources, rawItems, jobs, scraperReport, automationState, qualityGate, dateReviewQueue, socialQueue] = await Promise.all([
+const [sources, rawItems, jobs, scraperReport, automationState, qualityGate, dateReviewQueue, socialQueue, visibilityReport] = await Promise.all([
   readJson(join(DATA_DIR, "sources.json"), []),
   readJson(join(DATA_DIR, "raw-items.json"), []),
   readJson(join(DATA_DIR, "curated-jobs.json"), []),
@@ -63,6 +63,7 @@ const [sources, rawItems, jobs, scraperReport, automationState, qualityGate, dat
   readJson(join(RUNTIME_DIR, "automation-quality.json"), {}),
   readJson(join(RUNTIME_DIR, "date-review-queue.json"), []),
   readJson(join(DATA_DIR, "social", "queue.json"), []),
+  readJson(join(DATA_DIR, "growth", "visibility-report.json"), {}),
 ]);
 
 const closingSoon = jobs
@@ -105,6 +106,9 @@ const report = {
     expired: expired.length,
     socialQueue: socialQueue.length,
     dateReviewQueue: dateReviewQueue.length,
+    visibilityScore: visibilityReport.score ?? null,
+    outreachTargets: visibilityReport.totals?.outreachTargets || 0,
+    sitemapUrls: visibilityReport.totals?.sitemapUrls || 0,
     scraperErrors: scraperReport.errorCount || 0,
     seedSqlBytes: await fileSize(join(ROOT, "database", "seed.sql")),
   },
@@ -148,6 +152,9 @@ Genere le : ${report.generatedAt}
 - Offres expirees : ${report.totals.expired}
 - Posts sociaux en file : ${report.totals.socialQueue}
 - Dates en file de revue : ${report.totals.dateReviewQueue}
+- Score visibilite : ${report.totals.visibilityScore ?? "-"} / 100
+- Cibles backlinks/partenariats : ${report.totals.outreachTargets}
+- URLs sitemap : ${report.totals.sitemapUrls}
 - Erreurs scraper : ${report.totals.scraperErrors}
 - Taille seed SQL : ${report.totals.seedSqlBytes} octets
 
