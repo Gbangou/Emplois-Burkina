@@ -16,6 +16,7 @@ const steps = [
   ["Export PostgreSQL", "scripts/export-postgres-seed.mjs"],
   ["Synchronisation DB locale", "scripts/sync-local-db.mjs"],
   ["Preparation reseaux sociaux", "scripts/generate-social-queue.mjs"],
+  ["Rapport automation", "scripts/generate-automation-report.mjs"],
 ];
 
 async function runNodeScript(label, script, completedSteps) {

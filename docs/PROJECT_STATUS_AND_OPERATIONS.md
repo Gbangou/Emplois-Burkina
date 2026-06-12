@@ -140,10 +140,20 @@ Healthcheck :
 npm run automate:health
 ```
 
+Rapport sans relancer toute la collecte :
+
+```bash
+npm run automate:report
+```
+
 Le daemon ecrit son etat dans `data/runtime/automation-state.json` :
 `status`, `lastSuccessAt`, `lastError`, `durationMs`, `nextRunAt`,
 `latestSteps`. Le fichier est visible dans l'admin via
 `/api/admin/automation/status`.
+
+Le rapport consolide dans `data/runtime/automation-report.json` et
+`docs/AUTOMATION_REPORT.md` : totaux, erreurs scraper, offres sans date de
+cloture, deadlines proches, categories, villes, sources et taille du seed SQL.
 
 Etapes :
 

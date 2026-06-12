@@ -830,6 +830,8 @@ async function loadAutomationStatus() {
   try {
     const status = await fetchAdminJson("/api/admin/automation/status");
     const state = status.automationState || {};
+    const report = status.automationReport || {};
+    const totals = report.totals || {};
     const duration = state.durationMs ? `${Math.round(state.durationMs / 1000)}s` : "-";
     automationStatus.innerHTML = `
       <article><strong>${escapeHtml(status.sources)}</strong><span>sources configurees</span></article>
@@ -838,6 +840,10 @@ async function loadAutomationStatus() {
       <article><strong>${escapeHtml(status.needsReview)}</strong><span>a moderer</span></article>
       <article><strong>${escapeHtml(state.status || "idle")}</strong><span>etat automation</span></article>
       <article><strong>${escapeHtml(duration)}</strong><span>duree derniere run</span></article>
+      <article><strong>${escapeHtml(totals.scraperErrors ?? "-")}</strong><span>erreurs scraper</span></article>
+      <article><strong>${escapeHtml(totals.missingClosingDate ?? "-")}</strong><span>dates a completer</span></article>
+      <article><strong>${escapeHtml(totals.closingSoon ?? "-")}</strong><span>deadlines proches</span></article>
+      <article><strong>${escapeHtml(totals.seedSqlBytes ? `${Math.round(totals.seedSqlBytes / 1024)} KB` : "-")}</strong><span>seed PostgreSQL</span></article>
     `;
     if (state.lastSuccessAt) {
       automationStatus.insertAdjacentHTML(

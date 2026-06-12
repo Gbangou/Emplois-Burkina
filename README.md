@@ -107,6 +107,12 @@ Healthcheck :
 npm run automate:health
 ```
 
+Rapport automation :
+
+```bash
+npm run automate:report
+```
+
 Variables utiles :
 
 ```bash

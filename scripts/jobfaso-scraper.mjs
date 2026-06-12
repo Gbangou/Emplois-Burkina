@@ -4,6 +4,7 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 const ROOT = new URL("../", import.meta.url);
 const SOURCES_FILE = new URL("data/sources.json", ROOT);
 const OUTPUT_FILE = new URL("data/raw-items.json", ROOT);
+const REPORT_FILE = new URL("data/runtime/scraper-report.json", ROOT);
 const ROBOTS_CACHE = new Map();
 const USER_AGENT = process.env.JOBFASO_CRAWLER_AGENT || "JobFasoBot/0.1 (+contact: contact@jobfaso.com)";
 const DETAIL_LIMIT_PER_SOURCE = Number(process.env.JOBFASO_DETAIL_LIMIT || 18);
@@ -392,7 +393,24 @@ async function main() {
   }
 
   await mkdir(new URL("data/", ROOT), { recursive: true });
+  await mkdir(new URL("data/runtime/", ROOT), { recursive: true });
   await writeFile(OUTPUT_FILE, `${JSON.stringify(uniqueItems, null, 2)}\n`, "utf8");
+  await writeFile(
+    REPORT_FILE,
+    `${JSON.stringify(
+      {
+        generatedAt: new Date().toISOString(),
+        sources: sources.length,
+        collectedItems: allItems.length,
+        uniqueItems: uniqueItems.length,
+        errorCount: errors.length,
+        errors,
+      },
+      null,
+      2
+    )}\n`,
+    "utf8"
+  );
 
   console.log(`Total unique: ${uniqueItems.length}`);
   console.log(`Sources en erreur: ${errors.length}/${sources.length}`);
