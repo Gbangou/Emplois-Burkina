@@ -15,6 +15,7 @@ const LOCAL_DB_FILE = join(DATA_DIR, "local-db.json");
 const AUTOMATION_STATE_FILE = join(DATA_DIR, "automation-state.json");
 const AUTOMATION_REPORT_FILE = join(DATA_DIR, "automation-report.json");
 const AUTOMATION_QUALITY_FILE = join(DATA_DIR, "automation-quality.json");
+const DATE_REVIEW_QUEUE_FILE = join(DATA_DIR, "date-review-queue.json");
 const PORT = Number(process.env.PORT || 8088);
 const NODE_ENV = process.env.NODE_ENV || "development";
 const ADMIN_TOKEN = process.env.JOBFASO_ADMIN_TOKEN || process.env.ADMIN_TOKEN || "";
@@ -465,7 +466,7 @@ async function handleApi(req, res, url) {
 
   if (url.pathname === "/api/admin/automation/status" && req.method === "GET") {
     if (!requireAdmin(req, res)) return;
-    const [jobs, sources, rawItems, events, automationState, automationReport, automationQuality] = await Promise.all([
+    const [jobs, sources, rawItems, events, automationState, automationReport, automationQuality, dateReviewQueue] = await Promise.all([
       readJson(join(ROOT, "data", "curated-jobs.json"), []),
       readJson(join(ROOT, "data", "sources.json"), []),
       readJson(join(ROOT, "data", "raw-items.json"), []),
@@ -473,6 +474,7 @@ async function handleApi(req, res, url) {
       readJson(AUTOMATION_STATE_FILE, {}),
       readJson(AUTOMATION_REPORT_FILE, {}),
       readJson(AUTOMATION_QUALITY_FILE, {}),
+      readJson(DATE_REVIEW_QUEUE_FILE, []),
     ]);
     const lastJobDate = jobs
       .map((job) => new Date(job.collectedAt || 0).getTime())
@@ -488,6 +490,7 @@ async function handleApi(req, res, url) {
       automationState,
       automationReport,
       automationQuality,
+      dateReviewQueue: dateReviewQueue.slice(0, 30),
       latestEvents: events.slice(0, 10),
     });
     return;

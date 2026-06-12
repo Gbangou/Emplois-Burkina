@@ -119,6 +119,12 @@ Quality gate :
 npm run automate:quality
 ```
 
+File de revue des dates :
+
+```bash
+npm run dates:queue
+```
+
 Variables utiles :
 
 ```bash

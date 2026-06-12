@@ -54,13 +54,14 @@ function markdownTable(rows) {
   return ["| Nom | Total |", "| --- | ---: |", ...rows.map((row) => `| ${row.name} | ${row.count} |`)].join("\n");
 }
 
-const [sources, rawItems, jobs, scraperReport, automationState, qualityGate, socialQueue] = await Promise.all([
+const [sources, rawItems, jobs, scraperReport, automationState, qualityGate, dateReviewQueue, socialQueue] = await Promise.all([
   readJson(join(DATA_DIR, "sources.json"), []),
   readJson(join(DATA_DIR, "raw-items.json"), []),
   readJson(join(DATA_DIR, "curated-jobs.json"), []),
   readJson(join(RUNTIME_DIR, "scraper-report.json"), {}),
   readJson(join(RUNTIME_DIR, "automation-state.json"), {}),
   readJson(join(RUNTIME_DIR, "automation-quality.json"), {}),
+  readJson(join(RUNTIME_DIR, "date-review-queue.json"), []),
   readJson(join(DATA_DIR, "social", "queue.json"), []),
 ]);
 
@@ -103,6 +104,7 @@ const report = {
     closingSoon: closingSoon.length,
     expired: expired.length,
     socialQueue: socialQueue.length,
+    dateReviewQueue: dateReviewQueue.length,
     scraperErrors: scraperReport.errorCount || 0,
     seedSqlBytes: await fileSize(join(ROOT, "database", "seed.sql")),
   },
@@ -145,6 +147,7 @@ Genere le : ${report.generatedAt}
 - Offres cloturant sous 7 jours : ${report.totals.closingSoon}
 - Offres expirees : ${report.totals.expired}
 - Posts sociaux en file : ${report.totals.socialQueue}
+- Dates en file de revue : ${report.totals.dateReviewQueue}
 - Erreurs scraper : ${report.totals.scraperErrors}
 - Taille seed SQL : ${report.totals.seedSqlBytes} octets
 

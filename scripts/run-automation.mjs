@@ -16,6 +16,7 @@ const steps = [
   ["Export PostgreSQL", "scripts/export-postgres-seed.mjs"],
   ["Synchronisation DB locale", "scripts/sync-local-db.mjs"],
   ["Preparation reseaux sociaux", "scripts/generate-social-queue.mjs"],
+  ["File revue dates", "scripts/generate-date-review-queue.mjs"],
   ["Quality gate", "scripts/automation-quality-gate.mjs"],
   ["Rapport automation", "scripts/generate-automation-report.mjs"],
 ];

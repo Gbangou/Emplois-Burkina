@@ -152,6 +152,12 @@ Quality gate sans relancer toute la collecte :
 npm run automate:quality
 ```
 
+File de revue des dates :
+
+```bash
+npm run dates:queue
+```
+
 Le daemon ecrit son etat dans `data/runtime/automation-state.json` :
 `status`, `lastSuccessAt`, `lastError`, `durationMs`, `nextRunAt`,
 `latestSteps`. Le fichier est visible dans l'admin via
@@ -165,6 +171,10 @@ Le quality gate consolide dans `data/runtime/automation-quality.json` et
 `docs/AUTOMATION_QUALITY.md` : seuil minimum de sources/offres/items, coherence
 sitemap/pages, seed SQL, diversite des sources/categories et dates de cloture.
 En mode strict, une erreur critique fait echouer le pipeline.
+
+La file de revue des dates consolide dans `data/runtime/date-review-queue.json`
+et `docs/DATE_REVIEW_QUEUE.md` les offres dont la date de cloture est absente
+ou incoherente. Elle est affichee dans l'admin pour accelerer la moderation.
 
 Etapes :
 

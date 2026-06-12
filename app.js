@@ -104,6 +104,7 @@ const menuButton = document.querySelector(".menu-button");
 const mainNav = document.querySelector("#mainNav");
 const socialQueueTable = document.querySelector("#socialQueueTable");
 const socialAdminMessage = document.querySelector("#socialAdminMessage");
+const dateReviewTable = document.querySelector("#dateReviewTable");
 const automationStatus = document.querySelector("#automationStatus");
 const employerCarousel = document.querySelector("#employerCarousel");
 const featuredJobsCarousel = document.querySelector("#featuredJobsCarousel");
@@ -867,10 +868,31 @@ async function loadAutomationStatus() {
         `<article><strong>${escapeHtml(displayDate(status.lastCollectedAt))}</strong><span>derniere collecte</span></article>`
       );
     }
+    if (dateReviewTable) {
+      const queue = status.dateReviewQueue || [];
+      dateReviewTable.innerHTML = queue.length
+        ? queue
+            .slice(0, 12)
+            .map(
+              (item) => `
+                <tr>
+                  <td>${escapeHtml(item.priority)}</td>
+                  <td>${escapeHtml(item.title)}</td>
+                  <td>${escapeHtml(item.sourceName)}</td>
+                  <td><a class="secondary-link" href="${escapeHtml(item.sourceUrl)}" target="_blank" rel="noopener">Verifier</a></td>
+                </tr>
+              `,
+            )
+            .join("")
+        : `<tr><td colspan="4">Aucune date a verifier.</td></tr>`;
+    }
   } catch {
     automationStatus.innerHTML = `
       <article><strong>Token</strong><span>requis pour lire le pipeline</span></article>
     `;
+    if (dateReviewTable) {
+      dateReviewTable.innerHTML = `<tr><td colspan="4">Token requis pour lire la file.</td></tr>`;
+    }
   }
 }
 

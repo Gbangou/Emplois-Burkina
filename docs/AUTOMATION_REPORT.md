@@ -1,6 +1,6 @@
 # Rapport automation JobFaso
 
-Genere le : 2026-06-12T14:04:26.382Z
+Genere le : 2026-06-12T14:08:54.902Z
 
 ## Resume
 
@@ -20,6 +20,7 @@ Genere le : 2026-06-12T14:04:26.382Z
 - Offres cloturant sous 7 jours : 0
 - Offres expirees : 0
 - Posts sociaux en file : 47
+- Dates en file de revue : 0
 - Erreurs scraper : 0
 - Taille seed SQL : 741098 octets
 
