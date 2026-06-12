@@ -91,11 +91,21 @@ Commande :
 npm run db:sync
 ```
 
+Export PostgreSQL/Supabase :
+
+```bash
+npm run db:export
+```
+
+Cette commande genere `database/seed.sql` depuis les JSON locaux. Appliquer
+d'abord `database/schema.sql`, puis `database/seed.sql`.
+
 Etat verifie :
 
 - 20 offres publiques ;
 - 38 sources configurees ;
 - 394 items bruts ;
+- 47 pages SEO exportables ;
 - categories exposees via `/api/platform`.
 
 ## Scraping et sources
@@ -225,7 +235,8 @@ URLs locales :
 ## Prochaines etapes propres
 
 1. Migrer vers PostgreSQL/Supabase avec `database/schema.sql`.
-2. Ajouter import JSON -> PostgreSQL pour sources, raw items et jobs.
+2. Appliquer `database/seed.sql` pour initialiser sources, raw items, jobs et
+   pages SEO.
 3. Ajouter interface de moderation persistante.
 4. Ajouter comptes recruteurs.
 5. Ajouter paiements mobile money.
