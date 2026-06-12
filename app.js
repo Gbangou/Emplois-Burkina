@@ -955,6 +955,7 @@ async function loadAutomationStatus() {
       <article><strong>${escapeHtml(totals.missingClosingDate ?? "-")}</strong><span>dates a completer</span></article>
       <article><strong>${escapeHtml(totals.closingSoon ?? "-")}</strong><span>deadlines proches</span></article>
       <article><strong>${escapeHtml(totals.seedSqlBytes ? `${Math.round(totals.seedSqlBytes / 1024)} KB` : "-")}</strong><span>seed PostgreSQL</span></article>
+      <article><strong>${escapeHtml(status.sqlite?.enabled ? `${Math.round((status.sqlite.bytes || 0) / 1024)} KB` : "-")}</strong><span>SQLite locale</span></article>
       <article><strong>${escapeHtml(quality.score ?? "-")}/100</strong><span>score qualite</span></article>
       <article><strong>${escapeHtml(quality.failedCritical ?? "-")}</strong><span>checks critiques</span></article>
       <article><strong>${escapeHtml(quality.failedWarnings ?? "-")}</strong><span>warnings qualite</span></article>
@@ -1388,6 +1389,21 @@ document.querySelector("#syncDbButton")?.addEventListener("click", async () => {
     await loadAutomationStatus();
   } catch (error) {
     alert(error.message || "Impossible de synchroniser la DB locale.");
+  }
+});
+
+document.querySelector("#syncSqliteButton")?.addEventListener("click", async () => {
+  try {
+    const button = document.querySelector("#syncSqliteButton");
+    button?.setAttribute("disabled", "disabled");
+    const result = await runAdminPost("/api/admin/db/sqlite/sync");
+    const sizeKb = Math.round((result.sqlite?.bytes || 0) / 1024);
+    alert(`SQLite synchronisee : ${sizeKb} KB.`);
+    await loadAutomationStatus();
+  } catch (error) {
+    alert(error.message || "Impossible de synchroniser SQLite.");
+  } finally {
+    document.querySelector("#syncSqliteButton")?.removeAttribute("disabled");
   }
 });
 

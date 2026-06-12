@@ -20,6 +20,7 @@ Synchroniser la base locale runtime :
 
 ```bash
 npm run db:sync
+npm run db:sqlite
 ```
 
 Le serveur reconstruit aussi cette base automatiquement au premier appel API.
@@ -41,11 +42,12 @@ curl http://127.0.0.1:8088/api/platform
 - Documentation produit, architecture, monetisation et politique de collecte.
 - Script de collecte extensible : `scripts/jobfaso-scraper.mjs`.
 - Schema PostgreSQL de depart : `database/schema.sql`.
+- Base SQLite locale : `data/runtime/jobfaso.sqlite` generee hors Git.
 - Pages publiques pretes pour confiance et monetisation :
   `annonceurs.html`, `privacy.html`, `terms.html`, `contact.html`.
 - Mini back-office local pour le pre-lancement : `admin.html`.
 - API dynamique : `/api/jobs`, `/api/platform`, `/api/db/status`.
-- Base locale runtime : `data/runtime/local-db.json` generee hors Git.
+- Base locale runtime : `data/runtime/local-db.json` et `data/runtime/jobfaso.sqlite` generees hors Git.
 
 ## Vision concrete
 

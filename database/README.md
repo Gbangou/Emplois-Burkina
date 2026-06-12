@@ -1,18 +1,28 @@
-# Base PostgreSQL JobFaso
+# Bases de donnees JobFaso
 
-Ce dossier contient la base cible pour migrer JobFaso des fichiers JSON locaux
-vers PostgreSQL, Supabase ou Neon.
+JobFaso fonctionne en local avec une base SQLite generee dans `data/runtime/`
+et dispose aussi d'un schema PostgreSQL/Supabase pour la production cloud.
 
 ## Fichiers
 
 - `schema.sql` : tables, colonnes et index.
 - `seed.sql` : donnees exportees depuis les JSON locaux.
+- `data/runtime/jobfaso.sqlite` : vraie base locale generee, ignoree par Git.
 
 `seed.sql` est regenerable :
 
 ```bash
 npm run db:export
 ```
+
+La base SQLite locale est regenerable :
+
+```bash
+npm run db:sqlite
+```
+
+Elle contient les tables `sources`, `jobs`, `raw_items`, `rate_cards`,
+`leads`, `page_events`, `site_config` et `sync_metadata`.
 
 ## Ordre d'application
 
@@ -43,4 +53,11 @@ copier/coller `seed.sql`.
 npm run check
 node scripts/check-schema.mjs
 npm run db:export
+npm run db:sqlite
+```
+
+Pour inspecter rapidement SQLite :
+
+```bash
+node -e "import('node:sqlite').then(({DatabaseSync})=>{const db=new DatabaseSync('data/runtime/jobfaso.sqlite'); console.log(db.prepare('select count(*) as jobs from jobs').get()); db.close();})"
 ```

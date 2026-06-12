@@ -109,6 +109,7 @@ const report = {
     visibilityScore: visibilityReport.score ?? null,
     outreachTargets: visibilityReport.totals?.outreachTargets || 0,
     sitemapUrls: visibilityReport.totals?.sitemapUrls || 0,
+    sqliteBytes: await fileSize(join(RUNTIME_DIR, "jobfaso.sqlite")),
     scraperErrors: scraperReport.errorCount || 0,
     seedSqlBytes: await fileSize(join(ROOT, "database", "seed.sql")),
   },
@@ -155,6 +156,7 @@ Genere le : ${report.generatedAt}
 - Score visibilite : ${report.totals.visibilityScore ?? "-"} / 100
 - Cibles backlinks/partenariats : ${report.totals.outreachTargets}
 - URLs sitemap : ${report.totals.sitemapUrls}
+- Taille SQLite locale : ${report.totals.sqliteBytes} octets
 - Erreurs scraper : ${report.totals.scraperErrors}
 - Taille seed SQL : ${report.totals.seedSqlBytes} octets
 

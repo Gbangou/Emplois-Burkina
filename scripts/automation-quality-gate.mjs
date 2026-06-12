@@ -84,6 +84,7 @@ add(checks, "critical", "jobs_minimum", jobs.length >= 10, `${jobs.length} offre
 add(checks, "critical", "sitemap_exists", Boolean(sitemap), `${sitemapUrlList.length} URLs sitemap`, "Executer npm run growth.");
 add(checks, "critical", "sitemap_files_exist", missingSitemapFiles.length === 0, `${missingSitemapFiles.length} fichiers sitemap manquants`, "Regenerer les pages SEO.");
 add(checks, "critical", "seed_exists", (await size(join(ROOT, "database", "seed.sql"))) > 1000, `${await size(join(ROOT, "database", "seed.sql"))} octets`, "Executer npm run db:export.");
+add(checks, "critical", "sqlite_exists", (await size(join(RUNTIME_DIR, "jobfaso.sqlite"))) > 1000, `${await size(join(RUNTIME_DIR, "jobfaso.sqlite"))} octets`, "Executer npm run db:sqlite.");
 add(checks, "warning", "source_diversity", Object.keys(sourceCounts).length >= 3, `${Object.keys(sourceCounts).length} sources publiees`, "Ameliorer les sources actives si le catalogue depend trop d'un site.");
 add(checks, "warning", "category_diversity", Object.keys(categoryCounts).length >= 4, `${Object.keys(categoryCounts).length} categories publiees`, "Continuer a capter informel, BTP, ONG, finance et logistique.");
 add(checks, "warning", "closing_dates", jobs.filter((job) => job.closingDate).length >= Math.ceil(jobs.length * 0.2), `${jobs.filter((job) => job.closingDate).length}/${jobs.length} avec date de cloture`, "Renforcer extraction detail et moderation dates.");

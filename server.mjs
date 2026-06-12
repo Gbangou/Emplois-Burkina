@@ -12,6 +12,7 @@ const DATA_DIR = join(ROOT, "data", "runtime");
 const LEADS_FILE = join(DATA_DIR, "leads.json");
 const EVENTS_FILE = join(DATA_DIR, "events.json");
 const LOCAL_DB_FILE = join(DATA_DIR, "local-db.json");
+const SQLITE_DB_FILE = join(DATA_DIR, "jobfaso.sqlite");
 const AUTOMATION_STATE_FILE = join(DATA_DIR, "automation-state.json");
 const AUTOMATION_REPORT_FILE = join(DATA_DIR, "automation-report.json");
 const AUTOMATION_QUALITY_FILE = join(DATA_DIR, "automation-quality.json");
@@ -303,6 +304,30 @@ async function readLocalDb() {
   return syncLocalDb("bootstrap");
 }
 
+async function sqliteStatus() {
+  try {
+    const info = await stat(SQLITE_DB_FILE);
+    return {
+      enabled: true,
+      path: "data/runtime/jobfaso.sqlite",
+      bytes: info.size,
+      updatedAt: info.mtime.toISOString(),
+    };
+  } catch {
+    return {
+      enabled: false,
+      path: "data/runtime/jobfaso.sqlite",
+      bytes: 0,
+      updatedAt: "",
+    };
+  }
+}
+
+async function syncSqliteDirect() {
+  const { syncSqliteDb } = await import("./scripts/sync-sqlite-db.mjs");
+  return syncSqliteDb();
+}
+
 async function readBody(req) {
   const chunks = [];
   let size = 0;
@@ -490,6 +515,7 @@ async function handleApi(req, res, url) {
       events: db.events.length,
       rateCards: db.rateCards.length,
       withClosingDate: db.stats.withClosingDate,
+      sqlite: await sqliteStatus(),
     });
     return;
   }
@@ -549,6 +575,7 @@ async function handleApi(req, res, url) {
       automationQuality,
       dateReviewQueue: dateReviewQueue.slice(0, 30),
       latestEvents: events.slice(0, 10),
+      sqlite: await sqliteStatus(),
     });
     return;
   }
@@ -696,6 +723,27 @@ async function handleApi(req, res, url) {
     return;
   }
 
+  if (url.pathname === "/api/admin/db/sqlite/sync" && req.method === "POST") {
+    if (!requireAdmin(req, res)) return;
+    if (!sameOrigin(req)) {
+      sendJson(res, 403, { error: "Origine refusee." });
+      return;
+    }
+
+    try {
+      const result = await syncSqliteDirect();
+      await appendEvent("sqlite_synced", { by: "admin" });
+      sendJson(res, 200, {
+        ok: true,
+        output: result.message,
+        sqlite: await sqliteStatus(),
+      });
+    } catch (error) {
+      sendJson(res, 500, { error: error.message || "Synchronisation SQLite impossible." });
+    }
+    return;
+  }
+
   if (url.pathname === "/api/admin/jobs/date-override" && req.method === "POST") {
     if (!requireAdmin(req, res)) return;
     if (!sameOrigin(req)) {
@@ -757,6 +805,7 @@ async function handleApi(req, res, url) {
       await runScript("scripts/generate-automation-report.mjs");
       await runScript("scripts/export-postgres-seed.mjs");
       await syncLocalDb("date_override");
+      await syncSqliteDirect();
 
       sendJson(res, 200, {
         ok: true,

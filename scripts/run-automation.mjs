@@ -16,6 +16,7 @@ const steps = [
   ["Moteur visibilite", "scripts/generate-visibility-engine.mjs"],
   ["Export PostgreSQL", "scripts/export-postgres-seed.mjs"],
   ["Synchronisation DB locale", "scripts/sync-local-db.mjs"],
+  ["Synchronisation SQLite", "scripts/sync-sqlite-db.mjs"],
   ["Preparation reseaux sociaux", "scripts/generate-social-queue.mjs"],
   ["File revue dates", "scripts/generate-date-review-queue.mjs"],
   ["Quality gate", "scripts/automation-quality-gate.mjs"],

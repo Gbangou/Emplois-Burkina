@@ -15,7 +15,7 @@ JobFaso est une web app emploi pour le Burkina Faso :
 - pages SEO indexables par ville, categorie, guide et fiche offre ;
 - alertes candidats, leads recruteurs et espaces sponsorises ;
 - analytics anonymisees pour mesurer audience, clics sponsorises et pipeline ;
-- base locale fonctionnelle en developpement, puis migration PostgreSQL/Supabase.
+- base locale SQLite fonctionnelle en developpement, puis migration PostgreSQL/Supabase.
 
 ## Frontend
 
@@ -63,6 +63,7 @@ Routes utiles :
 - `/api/leads`
 - `/api/events`
 - `/api/admin/db/sync`
+- `/api/admin/db/sqlite/sync`
 - `/api/admin/analytics/summary`
 - `/api/admin/growth/visibility`
 - `/api/admin/automation`
@@ -88,13 +89,24 @@ Fichiers de donnees :
 - `data/raw-items.json` : resultats bruts de collecte.
 - `data/curated-jobs.json` : offres nettoyees et publiees localement.
 - `data/rate-card.json` : offres commerciales.
-- `data/runtime/local-db.json` : base locale generee hors Git.
+- `data/runtime/local-db.json` : cache applicatif local genere hors Git.
+- `data/runtime/jobfaso.sqlite` : vraie base SQLite locale generee hors Git.
 
 Commande :
 
 ```bash
 npm run db:sync
 ```
+
+Base SQLite locale :
+
+```bash
+npm run db:sqlite
+```
+
+L'admin peut aussi lancer `/api/admin/db/sqlite/sync` via le bouton
+`Synchroniser SQLite`. Le statut `/api/db/status` expose la taille et la date
+de mise a jour de `data/runtime/jobfaso.sqlite`.
 
 Export PostgreSQL/Supabase :
 
@@ -111,6 +123,7 @@ Etat verifie :
 - 38 sources configurees ;
 - 394 items bruts ;
 - 47 pages SEO exportables ;
+- base SQLite locale regenerable ;
 - categories exposees via `/api/platform`.
 
 ## Scraping et sources
@@ -200,8 +213,9 @@ Etapes :
 6. generation assets croissance ;
 7. generation moteur visibilite, AdSense readiness, backlinks et prospection ;
 8. export PostgreSQL `database/seed.sql` ;
-9. synchronisation DB locale ;
-10. preparation posts reseaux sociaux.
+9. synchronisation cache JSON local ;
+10. synchronisation SQLite locale ;
+11. preparation posts reseaux sociaux.
 
 Principes :
 
@@ -306,6 +320,7 @@ Le mode live depend des variables :
 ```bash
 npm run check
 npm run db:sync
+npm run db:sqlite
 npm run growth
 npm start
 npm run automate:health
@@ -324,12 +339,12 @@ URLs locales :
 
 ## Prochaines etapes propres
 
-1. Migrer vers PostgreSQL/Supabase avec `database/schema.sql`.
-2. Appliquer `database/seed.sql` pour initialiser sources, raw items, jobs et
+1. Brancher l'app serveur sur SQLite pour les lectures/ecritures dynamiques.
+2. Migrer vers PostgreSQL/Supabase avec `database/schema.sql`.
+3. Appliquer `database/seed.sql` pour initialiser sources, raw items, jobs et
    pages SEO.
-3. Ajouter interface de moderation persistante.
-4. Ajouter comptes recruteurs.
-5. Ajouter paiements mobile money.
-6. Ajouter tracking clics/vues/conversions.
+4. Ajouter interface de moderation persistante.
+5. Ajouter comptes recruteurs.
+6. Ajouter paiements mobile money.
 7. Ajouter validation automatique de liens morts et dates expirees.
 8. Brancher Search Console/Bing apres deploiement.
