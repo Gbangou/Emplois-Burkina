@@ -122,6 +122,29 @@ Pipeline :
 npm run automate
 ```
 
+Mode automatique continu :
+
+```bash
+npm run automate:daemon
+```
+
+Variables utiles :
+
+- `JOBFASO_AUTOMATION_INTERVAL_MINUTES=360` : intervalle entre deux runs.
+- `JOBFASO_AUTOMATION_RUN_ON_START=false` : demarrer le daemon sans run immediat.
+- `JOBFASO_AUTOMATION_MAX_AGE_HOURS=30` : seuil healthcheck.
+
+Healthcheck :
+
+```bash
+npm run automate:health
+```
+
+Le daemon ecrit son etat dans `data/runtime/automation-state.json` :
+`status`, `lastSuccessAt`, `lastError`, `durationMs`, `nextRunAt`,
+`latestSteps`. Le fichier est visible dans l'admin via
+`/api/admin/automation/status`.
+
 Etapes :
 
 1. collecte des sources ;
@@ -130,7 +153,9 @@ Etapes :
 4. generation SEO ;
 5. injection SEO pages statiques ;
 6. generation assets croissance ;
-7. preparation posts reseaux sociaux.
+7. export PostgreSQL `database/seed.sql` ;
+8. synchronisation DB locale ;
+9. preparation posts reseaux sociaux.
 
 Principes :
 
@@ -219,6 +244,7 @@ npm run check
 npm run db:sync
 npm run growth
 npm start
+npm run automate:health
 ```
 
 URLs locales :

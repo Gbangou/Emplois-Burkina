@@ -95,6 +95,26 @@ node scripts/run-automation.mjs
 Ce script collecte, nettoie, genere les pages SEO dans `pages/`, puis met a jour
 `sitemap.xml` et `robots.txt`.
 
+Mode automatique continu :
+
+```bash
+npm run automate:daemon
+```
+
+Healthcheck :
+
+```bash
+npm run automate:health
+```
+
+Variables utiles :
+
+```bash
+JOBFASO_AUTOMATION_INTERVAL_MINUTES=360
+JOBFASO_AUTOMATION_RUN_ON_START=false
+JOBFASO_AUTOMATION_MAX_AGE_HOURS=30
+```
+
 Variables utiles pour la collecte :
 
 ```bash

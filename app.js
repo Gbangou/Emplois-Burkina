@@ -829,12 +829,28 @@ async function loadAutomationStatus() {
 
   try {
     const status = await fetchAdminJson("/api/admin/automation/status");
+    const state = status.automationState || {};
+    const duration = state.durationMs ? `${Math.round(state.durationMs / 1000)}s` : "-";
     automationStatus.innerHTML = `
       <article><strong>${escapeHtml(status.sources)}</strong><span>sources configurees</span></article>
       <article><strong>${escapeHtml(status.rawItems)}</strong><span>items bruts collectes</span></article>
       <article><strong>${escapeHtml(status.curatedJobs)}</strong><span>offres curees</span></article>
       <article><strong>${escapeHtml(status.needsReview)}</strong><span>a moderer</span></article>
+      <article><strong>${escapeHtml(state.status || "idle")}</strong><span>etat automation</span></article>
+      <article><strong>${escapeHtml(duration)}</strong><span>duree derniere run</span></article>
     `;
+    if (state.lastSuccessAt) {
+      automationStatus.insertAdjacentHTML(
+        "beforeend",
+        `<article><strong>${escapeHtml(displayDate(state.lastSuccessAt))}</strong><span>dernier succes</span></article>`
+      );
+    }
+    if (state.nextRunAt) {
+      automationStatus.insertAdjacentHTML(
+        "beforeend",
+        `<article><strong>${escapeHtml(displayDate(state.nextRunAt))}</strong><span>prochain passage</span></article>`
+      );
+    }
     if (status.lastCollectedAt) {
       automationStatus.insertAdjacentHTML(
         "beforeend",
