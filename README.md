@@ -160,6 +160,7 @@ Le script cree `indexnow-key.txt` localement et soumet les URLs de
 
 ## Documents importants
 
+- `docs/PROJECT_STATUS_AND_OPERATIONS.md`
 - `docs/PLAN.md`
 - `docs/MASTER_PROMPT.md`
 - `docs/LAUNCH_PLAN.md`

@@ -15,7 +15,7 @@
     "social:queue": "node scripts/generate-social-queue.mjs",
     "social:dry": "node scripts/publish-social.mjs",
     "social:publish": "node scripts/publish-social.mjs --live",
-    "check": "node --check app.js && node --check server.mjs && node --check scripts/jobfaso-scraper.mjs && node --check scripts/curate-raw-items.mjs && node --check scripts/generate-seo-pages.mjs && node --check scripts/enhance-static-seo.mjs && node --check scripts/generate-growth-assets.mjs && node --check scripts/generate-social-queue.mjs && node --check scripts/publish-social.mjs && node --check scripts/sync-local-db.mjs && node --check scripts/submit-indexnow.mjs && node --check scripts/run-automation.mjs"
+    "check": "node --check app.js && node --check server.mjs && node --check scripts/jobfaso-scraper.mjs && node --check scripts/curate-raw-items.mjs && node --check scripts/generate-seo-pages.mjs && node --check scripts/enhance-static-seo.mjs && node --check scripts/generate-growth-assets.mjs && node --check scripts/generate-social-queue.mjs && node --check scripts/publish-social.mjs && node --check scripts/sync-local-db.mjs && node --check scripts/submit-indexnow.mjs && node --check scripts/check-schema.mjs && node --check scripts/run-automation.mjs && node scripts/check-schema.mjs"
   },
   "engines": {
     "node": ">=20"

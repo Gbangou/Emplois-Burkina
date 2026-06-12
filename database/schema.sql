@@ -5,6 +5,8 @@ create table if not exists sources (
   type text not null,
   priority integer not null default 3,
   collection text not null default 'review_required',
+  include_url text[] not null default '{}',
+  exclude_url text[] not null default '{}',
   robots_status text not null default 'unknown',
   terms_status text not null default 'unknown',
   partnership_status text not null default 'none',
@@ -24,11 +26,15 @@ create table if not exists raw_items (
   company text,
   city text,
   deadline text,
+  opening_date date,
+  closing_date date,
+  inconsistent_dates boolean not null default false,
   url text not null,
   category text not null default 'A classer',
   status text not null default 'needs_review',
   excerpt text,
   canonical_url text,
+  detail_extracted_at timestamptz,
   risk_score integer not null default 0,
   confidence_score integer not null default 0,
   collected_at timestamptz not null default now()
@@ -43,9 +49,14 @@ create table if not exists jobs (
   category text not null,
   job_type text,
   salary text,
-  deadline date,
+  opening_date date,
+  closing_date date,
+  deadline_label text,
   source_url text not null,
+  canonical_url text,
   summary text,
+  tags text[] not null default '{}',
+  confidence_score integer not null default 0,
   risk_score integer not null default 0,
   status text not null default 'draft',
   published_at timestamptz,
@@ -60,6 +71,41 @@ create table if not exists moderation_events (
   action text not null,
   reason text,
   actor_name text,
+  created_at timestamptz not null default now()
+);
+
+create table if not exists source_runs (
+  id uuid primary key default gen_random_uuid(),
+  source_id text references sources(id),
+  status text not null default 'started',
+  items_found integer not null default 0,
+  error_message text,
+  started_at timestamptz not null default now(),
+  finished_at timestamptz
+);
+
+create table if not exists seo_pages (
+  path text primary key,
+  title text not null,
+  description text,
+  page_type text not null,
+  canonical_url text not null,
+  lastmod date not null default current_date,
+  changefreq text not null default 'weekly',
+  priority numeric(2,1) not null default 0.7,
+  is_indexable boolean not null default true,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+create table if not exists indexing_submissions (
+  id uuid primary key default gen_random_uuid(),
+  engine text not null,
+  url text not null,
+  status text not null default 'queued',
+  response_code integer,
+  response_body text,
+  submitted_at timestamptz,
   created_at timestamptz not null default now()
 );
 
@@ -181,6 +227,16 @@ create table if not exists lead_events (
   created_at timestamptz not null default now()
 );
 
+create table if not exists page_events (
+  id uuid primary key default gen_random_uuid(),
+  event_type text not null,
+  page_path text,
+  job_id uuid references jobs(id),
+  source_id text references sources(id),
+  payload jsonb not null default '{}',
+  created_at timestamptz not null default now()
+);
+
 create table if not exists whatsapp_broadcasts (
   id uuid primary key default gen_random_uuid(),
   segment text not null,
@@ -204,8 +260,14 @@ create table if not exists alerts (
 
 create index if not exists jobs_status_category_idx on jobs(status, category);
 create index if not exists jobs_city_idx on jobs(city);
+create index if not exists jobs_closing_date_idx on jobs(closing_date);
 create index if not exists raw_items_status_idx on raw_items(status);
+create index if not exists raw_items_source_idx on raw_items(source_id);
 create index if not exists subscribers_phone_idx on subscribers(phone);
 create index if not exists employer_orders_status_idx on employer_orders(status);
 create index if not exists campaigns_status_idx on campaigns(status);
 create index if not exists lead_events_status_idx on lead_events(status);
+create index if not exists source_runs_source_idx on source_runs(source_id, started_at desc);
+create index if not exists seo_pages_indexable_idx on seo_pages(is_indexable, page_type);
+create index if not exists indexing_submissions_status_idx on indexing_submissions(status, engine);
+create index if not exists page_events_type_idx on page_events(event_type, created_at desc);
