@@ -113,6 +113,12 @@ Rapport automation :
 npm run automate:report
 ```
 
+Quality gate :
+
+```bash
+npm run automate:quality
+```
+
 Variables utiles :
 
 ```bash

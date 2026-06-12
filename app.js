@@ -831,6 +831,7 @@ async function loadAutomationStatus() {
     const status = await fetchAdminJson("/api/admin/automation/status");
     const state = status.automationState || {};
     const report = status.automationReport || {};
+    const quality = status.automationQuality || report.quality || {};
     const totals = report.totals || {};
     const duration = state.durationMs ? `${Math.round(state.durationMs / 1000)}s` : "-";
     automationStatus.innerHTML = `
@@ -844,6 +845,9 @@ async function loadAutomationStatus() {
       <article><strong>${escapeHtml(totals.missingClosingDate ?? "-")}</strong><span>dates a completer</span></article>
       <article><strong>${escapeHtml(totals.closingSoon ?? "-")}</strong><span>deadlines proches</span></article>
       <article><strong>${escapeHtml(totals.seedSqlBytes ? `${Math.round(totals.seedSqlBytes / 1024)} KB` : "-")}</strong><span>seed PostgreSQL</span></article>
+      <article><strong>${escapeHtml(quality.score ?? "-")}/100</strong><span>score qualite</span></article>
+      <article><strong>${escapeHtml(quality.failedCritical ?? "-")}</strong><span>checks critiques</span></article>
+      <article><strong>${escapeHtml(quality.failedWarnings ?? "-")}</strong><span>warnings qualite</span></article>
     `;
     if (state.lastSuccessAt) {
       automationStatus.insertAdjacentHTML(

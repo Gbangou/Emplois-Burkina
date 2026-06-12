@@ -54,12 +54,13 @@ function markdownTable(rows) {
   return ["| Nom | Total |", "| --- | ---: |", ...rows.map((row) => `| ${row.name} | ${row.count} |`)].join("\n");
 }
 
-const [sources, rawItems, jobs, scraperReport, automationState, socialQueue] = await Promise.all([
+const [sources, rawItems, jobs, scraperReport, automationState, qualityGate, socialQueue] = await Promise.all([
   readJson(join(DATA_DIR, "sources.json"), []),
   readJson(join(DATA_DIR, "raw-items.json"), []),
   readJson(join(DATA_DIR, "curated-jobs.json"), []),
   readJson(join(RUNTIME_DIR, "scraper-report.json"), {}),
   readJson(join(RUNTIME_DIR, "automation-state.json"), {}),
+  readJson(join(RUNTIME_DIR, "automation-quality.json"), {}),
   readJson(join(DATA_DIR, "social", "queue.json"), []),
 ]);
 
@@ -83,6 +84,12 @@ const report = {
     successCount: automationState.successCount || 0,
     failureCount: automationState.failureCount || 0,
     lastError: automationState.lastError || "",
+  },
+  quality: {
+    status: qualityGate.status || "unknown",
+    score: qualityGate.score ?? null,
+    failedCritical: qualityGate.failedCritical || 0,
+    failedWarnings: qualityGate.failedWarnings || 0,
   },
   totals: {
     sources: sources.length,
@@ -126,6 +133,9 @@ Genere le : ${report.generatedAt}
 - Dernier succes : ${report.automation.lastSuccessAt || "Aucun"}
 - Duree derniere run : ${Math.round(report.automation.durationMs / 1000)}s
 - Runs : ${report.automation.runCount} total, ${report.automation.successCount} succes, ${report.automation.failureCount} echecs
+- Quality gate : ${report.quality.status} (${report.quality.score ?? "-"} / 100)
+- Checks critiques en echec : ${report.quality.failedCritical}
+- Warnings quality gate : ${report.quality.failedWarnings}
 - Sources : ${report.totals.sources} (${report.totals.automaticSources} automatiques, ${report.totals.manualSources} manuelles)
 - Items bruts : ${report.totals.rawItems}
 - Offres : ${report.totals.jobs}

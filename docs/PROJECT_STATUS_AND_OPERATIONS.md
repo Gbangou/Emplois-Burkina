@@ -146,6 +146,12 @@ Rapport sans relancer toute la collecte :
 npm run automate:report
 ```
 
+Quality gate sans relancer toute la collecte :
+
+```bash
+npm run automate:quality
+```
+
 Le daemon ecrit son etat dans `data/runtime/automation-state.json` :
 `status`, `lastSuccessAt`, `lastError`, `durationMs`, `nextRunAt`,
 `latestSteps`. Le fichier est visible dans l'admin via
@@ -154,6 +160,11 @@ Le daemon ecrit son etat dans `data/runtime/automation-state.json` :
 Le rapport consolide dans `data/runtime/automation-report.json` et
 `docs/AUTOMATION_REPORT.md` : totaux, erreurs scraper, offres sans date de
 cloture, deadlines proches, categories, villes, sources et taille du seed SQL.
+
+Le quality gate consolide dans `data/runtime/automation-quality.json` et
+`docs/AUTOMATION_QUALITY.md` : seuil minimum de sources/offres/items, coherence
+sitemap/pages, seed SQL, diversite des sources/categories et dates de cloture.
+En mode strict, une erreur critique fait echouer le pipeline.
 
 Etapes :
 

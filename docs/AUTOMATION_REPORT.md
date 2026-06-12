@@ -1,6 +1,6 @@
 # Rapport automation JobFaso
 
-Genere le : 2026-06-12T13:58:39.029Z
+Genere le : 2026-06-12T14:04:26.382Z
 
 ## Resume
 
@@ -8,6 +8,9 @@ Genere le : 2026-06-12T13:58:39.029Z
 - Dernier succes : Aucun
 - Duree derniere run : 0s
 - Runs : 0 total, 0 succes, 0 echecs
+- Quality gate : warning (92 / 100)
+- Checks critiques en echec : 0
+- Warnings quality gate : 1
 - Sources : 38 (16 automatiques, 22 manuelles)
 - Items bruts : 394
 - Offres : 20
