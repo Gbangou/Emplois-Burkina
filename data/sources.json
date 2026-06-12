@@ -299,13 +299,13 @@
   {
     "id": "lefaso-recrutement",
     "name": "LeFaso.net Recrutement",
-    "url": "https://lefaso.net/",
+    "url": "https://emploi.lefaso.net/",
     "type": "media",
     "priority": 3,
     "collection": "review_required",
-    "includeUrl": ["recrutement", "emploi", "concours", "communique", "stage"],
-    "excludeUrl": ["forum", "commentaire"],
-    "notes": "Media national. Utile pour communiques et concours, mais moderation stricte."
+    "includeUrl": ["emploi.lefaso.net", ".html"],
+    "excludeUrl": ["forum", "commentaire", "spip.php", "contactez-nous"],
+    "notes": "Section emploi dediee de LeFaso.net. Extraire titre, depot, cloture et contenu, puis moderer strictement."
   },
   {
     "id": "burkina24-emploi",

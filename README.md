@@ -16,6 +16,21 @@ npm start
 Puis ouvrir `http://127.0.0.1:8088`. Configure `JOBFASO_ADMIN_TOKEN`
 en production pour activer l'admin serveur.
 
+Synchroniser la base locale runtime :
+
+```bash
+npm run db:sync
+```
+
+Le serveur reconstruit aussi cette base automatiquement au premier appel API.
+Pour verifier l'etat cote backend :
+
+```bash
+curl http://127.0.0.1:8088/api/health
+curl http://127.0.0.1:8088/api/db/status
+curl http://127.0.0.1:8088/api/platform
+```
+
 ## Ce que le MVP contient
 
 - Recherche d'opportunites par mot-cle et ville.
@@ -29,6 +44,8 @@ en production pour activer l'admin serveur.
 - Pages publiques pretes pour confiance et monetisation :
   `annonceurs.html`, `privacy.html`, `terms.html`, `contact.html`.
 - Mini back-office local pour le pre-lancement : `admin.html`.
+- API dynamique : `/api/jobs`, `/api/platform`, `/api/db/status`.
+- Base locale runtime : `data/runtime/local-db.json` generee hors Git.
 
 ## Vision concrete
 
@@ -77,6 +94,18 @@ node scripts/run-automation.mjs
 
 Ce script collecte, nettoie, genere les pages SEO dans `pages/`, puis met a jour
 `sitemap.xml` et `robots.txt`.
+
+Variables utiles pour la collecte :
+
+```bash
+JOBFASO_CRAWLER_AGENT="JobFasoBot/0.1 (+contact: contact@jobfaso.com)"
+JOBFASO_DETAIL_LIMIT=18
+JOBFASO_REQUEST_DELAY_MS=350
+```
+
+Les sources qui bloquent la collecte ou imposent des limites sont conservees
+dans le journal de pipeline. Le site publie uniquement les donnees obtenues
+proprement et affiche les dates de cloture quand elles sont disponibles.
 
 ## Prochaines etapes recommandees
 

@@ -18,15 +18,15 @@ JobFaso doit rester gratuit pour les chercheurs d'emploi. Les revenus viennent d
 
 | Element | Volume |
 | --- | ---: |
-| Bureau | 27 |
+| Bureau | 9 |
+| Concours | 8 |
 | ONG | 3 |
-| Metier terrain | 2 |
 
 ## Opportunites par ville
 
 | Element | Volume |
 | --- | ---: |
-| Burkina Faso | 23 |
+| Burkina Faso | 11 |
 | Ouagadougou | 8 |
 | Bagassi | 1 |
 
@@ -34,10 +34,11 @@ JobFaso doit rester gratuit pour les chercheurs d'emploi. Les revenus viennent d
 
 | Element | Volume |
 | --- | ---: |
-| LeFaso.net Recrutement | 12 |
-| BFemploi | 7 |
+| BFemploi | 8 |
 | Emploiburkina | 7 |
-| UNjobs Burkina Faso | 6 |
+| HumanitaireHub | 2 |
+| UNjobs Burkina Faso | 2 |
+| LeFaso.net Recrutement | 1 |
 
 ## Cadence automatique
 

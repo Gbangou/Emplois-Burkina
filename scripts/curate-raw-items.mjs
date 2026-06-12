@@ -17,7 +17,10 @@ const blockedTitles = [
   "plan du site",
   "se connecter",
   "les annonces",
+  "liste des annonces",
   "toutes les offres",
+  "commande d'annonces",
+  "les entreprises qui recrutent en ce moment",
   "offres de stages",
   "examens et concours",
   "administration",
@@ -59,9 +62,12 @@ const blockedTitles = [
   "closing soon",
   "duty stations",
   "organizations",
+  "la recherche d'emploi",
 ];
 
 const blockedTitlePatterns = [
+  /^comment\s+/,
+  /^\d+\s+regles?\s+/,
   /arbre de noel/,
   /arbre de no.l/,
   /cancer du sein/,
@@ -74,6 +80,9 @@ const blockedTitlePatterns = [
   /emplois actifs/,
   /pas encore inscrit/,
   /plus d.article/,
+  /la recherche d.?emploi/,
+  /reussir son entretien/,
+  /negocier une augmentation/,
   /se connecter/,
   /^ouagadougou \d+$/,
   /^[a-z\s.'&-]+ ouagadougou \d+$/,
@@ -81,6 +90,9 @@ const blockedTitlePatterns = [
 ];
 
 const nonBurkinaCountryPatterns = [
+  /\/burundi\//,
+  /\/centrafrique\//,
+  /\/offices\//,
   /\/benin\//,
   /\/cameroun\//,
   /\/congo\//,
@@ -93,6 +105,9 @@ const nonBurkinaCountryPatterns = [
   /\/togo\//,
   /country=(benin|cameroun|congo|gabon|guinee|mali|niger|senegal|togo)/,
 ];
+
+const nonBurkinaTextPattern =
+  /benin|burundi|cameroun|central african republic|centrafrique|congo|cote d'ivoire|cote-d-ivoire|gabon|guinee|mali|mauritanie|niger|nigeria|republique centrafricaine|senegal|togo/;
 
 function normalize(value) {
   return String(value || "")
@@ -116,6 +131,35 @@ function decodeHtml(value) {
     .replace(/&nbsp;/g, " ")
     .replace(/\s+/g, " ")
     .trim();
+}
+
+function validIsoDate(value) {
+  if (!value || !/^\d{4}-\d{2}-\d{2}$/.test(String(value))) return "";
+  const date = new Date(`${value}T00:00:00Z`);
+  return Number.isNaN(date.getTime()) ? "" : value;
+}
+
+function dateLabel(value) {
+  const date = validIsoDate(value);
+  if (!date) return "";
+  return new Intl.DateTimeFormat("fr-FR", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  }).format(new Date(`${date}T00:00:00Z`));
+}
+
+function normalizeDateFields(item) {
+  const openingDate = validIsoDate(item.openingDate) || validIsoDate(String(item.collectedAt || "").slice(0, 10));
+  const closingDate = validIsoDate(item.closingDate) || validIsoDate(item.deadline);
+  const inconsistentDates = Boolean(openingDate && closingDate && closingDate < openingDate);
+
+  return {
+    openingDate,
+    closingDate,
+    deadline: closingDate ? dateLabel(closingDate) : item.deadline || "A verifier",
+    inconsistentDates,
+  };
 }
 
 function inferCategory(item) {
@@ -147,7 +191,7 @@ function isLikelyCategoryPage(item) {
   const url = normalize(item.url);
   const exactBlocked = blockedTitles.some((blocked) => title === normalize(blocked) || title.includes(normalize(blocked)));
   const patternBlocked = blockedTitlePatterns.some((pattern) => pattern.test(title));
-  const categoryUrl = /\/category\/|\/offres-emploi\/?$|\/examens-concours\/?$|recherche-jobs-burkina-faso\?f%5b0%5d=|recherche-jobs-burkina-faso$/.test(url);
+  const categoryUrl = /\/category\/|\/offices\/|\/offres-emploi\/?$|\/examens-concours\/?$|recherche-jobs-burkina-faso\?f%5b0%5d=|recherche-jobs-burkina-faso$/.test(url);
   const genericRmoUrl = item.sourceId === "rmo-burkina" && !/offre|job|emploi/.test(url);
 
   return exactBlocked || patternBlocked || categoryUrl || genericRmoUrl;
@@ -157,7 +201,7 @@ function isOutsideBurkina(item) {
   const url = normalize(item.url);
   const text = normalize(`${item.title} ${item.excerpt}`);
   const urlOutside = nonBurkinaCountryPatterns.some((pattern) => pattern.test(url));
-  const textOutside = /benin|cameroun|congo|cote d'ivoire|cote-d-ivoire|gabon|guinee|mali|mauritanie|niger|nigeria|senegal|togo/.test(text);
+  const textOutside = nonBurkinaTextPattern.test(text);
   const textBurkina = /burkina|ouaga|ouagadougou|bobo|koudougou|ouahigouya|dori|kaya|bagassi/.test(text);
 
   return (urlOutside || textOutside) && !textBurkina;
@@ -190,20 +234,26 @@ function curate(items) {
     const category = inferCategory(item);
     const city = inferCity(item);
     const softKey = normalize(`${item.title} ${item.company || item.sourceName} ${city}`).replace(/[^a-z0-9]+/g, "");
+    const dateFields = normalizeDateFields(item);
 
     if (softSeen.has(softKey)) continue;
+    if (dateFields.inconsistentDates) continue;
 
     seen.add(item.id);
     softSeen.add(softKey);
+
     curated.push({
       id: item.id,
       title: decodeHtml(item.title),
       company: item.company || item.sourceName,
       city,
       category,
-      type: category === "Concours" ? "Concours" : "A verifier",
+      type: item.type || (category === "Concours" ? "Concours" : "A verifier"),
       salary: "Non communique",
-      deadline: item.deadline || "A verifier",
+      deadline: dateFields.deadline,
+      openingDate: dateFields.openingDate,
+      closingDate: dateFields.closingDate,
+      inconsistentDates: dateFields.inconsistentDates,
       sourceName: item.sourceName,
       sourceUrl: item.url,
       canonicalUrl: item.url,
@@ -211,11 +261,46 @@ function curate(items) {
       confidenceScore: item.excerpt ? 70 : 45,
       tags: [category, item.sourceName].filter(Boolean),
       status: "needs_review",
+      excerpt: decodeHtml(item.excerpt || "").slice(0, 900),
       collectedAt: item.collectedAt,
     });
   }
 
-  return curated;
+  return diversifyBySource(curated);
+}
+
+function diversifyBySource(items) {
+  const buckets = new Map();
+  for (const item of items) {
+    const bucket = buckets.get(item.sourceName) || [];
+    bucket.push(item);
+    buckets.set(item.sourceName, bucket);
+  }
+
+  for (const bucket of buckets.values()) {
+    bucket.sort((a, b) => {
+      const dateA = a.closingDate || a.openingDate || String(a.collectedAt || "").slice(0, 10);
+      const dateB = b.closingDate || b.openingDate || String(b.collectedAt || "").slice(0, 10);
+      return dateB.localeCompare(dateA);
+    });
+  }
+
+  const diversified = [];
+  const sourceNames = [...buckets.keys()].sort((a, b) => a.localeCompare(b, "fr"));
+  let added = true;
+
+  while (added) {
+    added = false;
+    for (const sourceName of sourceNames) {
+      const next = buckets.get(sourceName)?.shift();
+      if (next) {
+        diversified.push(next);
+        added = true;
+      }
+    }
+  }
+
+  return diversified;
 }
 
 async function main() {

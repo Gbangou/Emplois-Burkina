@@ -11,6 +11,7 @@ const ROOT_DIR = resolve(ROOT);
 const DATA_DIR = join(ROOT, "data", "runtime");
 const LEADS_FILE = join(DATA_DIR, "leads.json");
 const EVENTS_FILE = join(DATA_DIR, "events.json");
+const LOCAL_DB_FILE = join(DATA_DIR, "local-db.json");
 const PORT = Number(process.env.PORT || 8088);
 const NODE_ENV = process.env.NODE_ENV || "development";
 const ADMIN_TOKEN = process.env.JOBFASO_ADMIN_TOKEN || process.env.ADMIN_TOKEN || "";
@@ -19,8 +20,12 @@ const BODY_LIMIT = 64 * 1024;
 const publicPaths = new Set([
   "/",
   "/index.html",
+  "/jobs.html",
+  "/conseils.html",
+  "/grille-tarifaire.html",
   "/annonceurs.html",
   "/contact.html",
+  "/contacts.html",
   "/privacy.html",
   "/terms.html",
   "/admin.html",
@@ -116,13 +121,41 @@ function isSafePath(pathname) {
 }
 
 function resolvePublicPath(pathname) {
-  const safePath = pathname === "/" ? "/index.html" : pathname;
+  const aliases = {
+    "/jobs/": "/jobs.html",
+    "/jobs": "/jobs.html",
+    "/toutes-les-offres-demploi/": "/jobs.html",
+    "/toutes-les-offres-demploi": "/jobs.html",
+    "/conseils/": "/conseils.html",
+    "/conseils": "/conseils.html",
+    "/grille-tarifaire/": "/grille-tarifaire.html",
+    "/grille-tarifaire": "/grille-tarifaire.html",
+    "/contacts/": "/contacts.html",
+    "/contacts": "/contacts.html",
+  };
+  const safePath = pathname === "/" ? "/index.html" : aliases[pathname] || pathname;
   const normalized = normalize(safePath).replace(/^([/\\])+/, "");
   const absolute = resolve(ROOT_DIR, normalized);
   return absolute.startsWith(ROOT_DIR + sep) || absolute === ROOT_DIR ? absolute : "";
 }
 
 function isPublicStaticPath(pathname) {
+  if (
+    [
+      "/jobs/",
+      "/jobs",
+      "/toutes-les-offres-demploi/",
+      "/toutes-les-offres-demploi",
+      "/conseils/",
+      "/conseils",
+      "/grille-tarifaire/",
+      "/grille-tarifaire",
+      "/contacts/",
+      "/contacts",
+    ].includes(pathname)
+  ) {
+    return true;
+  }
   if (publicPaths.has(pathname)) return true;
   if (publicDataPaths.has(pathname)) return true;
   if (pathname.startsWith("/pages/") && pathname.endsWith(".html")) return true;
@@ -174,6 +207,89 @@ async function readJson(file, fallback) {
 async function writeJson(file, value) {
   await mkdir(DATA_DIR, { recursive: true });
   await writeFile(file, `${JSON.stringify(value, null, 2)}\n`, "utf8");
+}
+
+function countBy(items, getter) {
+  return items.reduce((acc, item) => {
+    const key = getter(item) || "Autre";
+    acc[key] = (acc[key] || 0) + 1;
+    return acc;
+  }, {});
+}
+
+function publicConfig(config) {
+  return {
+    siteName: config.siteName,
+    baseUrl: config.baseUrl,
+    country: config.country,
+    defaultCity: config.defaultCity,
+    description: config.description,
+    hasWhatsApp: Boolean(config.whatsappNumber),
+    hasAdsense: Boolean(config.adsenseClient),
+    social: {
+      facebook: Boolean(config.social?.facebook),
+      linkedin: Boolean(config.social?.linkedin),
+      whatsappChannel: Boolean(config.social?.whatsappChannel),
+    },
+  };
+}
+
+function summarizeJobs(jobs) {
+  const sourceCounts = countBy(jobs, (job) => job.sourceName);
+  const categoryCounts = countBy(jobs, (job) => job.category);
+  const cityCounts = countBy(jobs, (job) => job.city);
+  return {
+    total: jobs.length,
+    withClosingDate: jobs.filter((job) => job.closingDate).length,
+    needsReview: jobs.filter((job) => job.status === "needs_review").length,
+    sources: Object.keys(sourceCounts).length,
+    categories: Object.entries(categoryCounts).sort((a, b) => b[1] - a[1]),
+    cities: Object.entries(cityCounts).sort((a, b) => b[1] - a[1]),
+    sourceCounts: Object.entries(sourceCounts).sort((a, b) => b[1] - a[1]),
+  };
+}
+
+async function buildLocalDb() {
+  const [config, jobs, sources, rateCards, rawItems, leads, events] = await Promise.all([
+    readJson(join(ROOT, "data", "site-config.json"), {}),
+    readJson(join(ROOT, "data", "curated-jobs.json"), []),
+    readJson(join(ROOT, "data", "sources.json"), []),
+    readJson(join(ROOT, "data", "rate-card.json"), []),
+    readJson(join(ROOT, "data", "raw-items.json"), []),
+    readJson(LEADS_FILE, []),
+    readJson(EVENTS_FILE, []),
+  ]);
+  const stats = summarizeJobs(jobs);
+  return {
+    version: 1,
+    generatedAt: new Date().toISOString(),
+    config: publicConfig(config),
+    jobs,
+    sources,
+    rateCards,
+    rawItemsCount: rawItems.length,
+    leads,
+    events,
+    stats,
+    monetization: {
+      publicAdSlots: ["homepage_featured", "category_sponsor", "job_detail_rail", "guide_sponsor"],
+      directSalesFirst: true,
+      adsenseReady: Boolean(config.adsenseClient),
+    },
+  };
+}
+
+async function syncLocalDb(reason = "sync") {
+  const db = await buildLocalDb();
+  db.lastSyncReason = reason;
+  await writeJson(LOCAL_DB_FILE, db);
+  return db;
+}
+
+async function readLocalDb() {
+  const db = await readJson(LOCAL_DB_FILE, null);
+  if (db?.version) return db;
+  return syncLocalDb("bootstrap");
 }
 
 async function readBody(req) {
@@ -236,6 +352,29 @@ async function appendEvent(type, payload = {}) {
   await writeJson(EVENTS_FILE, events.slice(0, 1000));
 }
 
+function runScript(script, args = []) {
+  return new Promise((resolve, reject) => {
+    const child = spawn(process.execPath, [script, ...args], {
+      cwd: ROOT,
+      shell: false,
+      stdio: ["ignore", "pipe", "pipe"],
+    });
+
+    let stdout = "";
+    let stderr = "";
+    child.stdout.on("data", (chunk) => {
+      stdout += chunk.toString();
+    });
+    child.stderr.on("data", (chunk) => {
+      stderr += chunk.toString();
+    });
+    child.on("exit", (code) => {
+      if (code === 0) resolve({ stdout: stdout.trim(), stderr: stderr.trim() });
+      else reject(new Error(stderr.trim() || stdout.trim() || `${script} failed with exit code ${code}`));
+    });
+  });
+}
+
 async function handleApi(req, res, url) {
   if (!rateLimit(req, res, "api", 120)) return;
 
@@ -246,20 +385,96 @@ async function handleApi(req, res, url) {
 
   if (url.pathname === "/api/config") {
     const config = await readJson(join(ROOT, "data", "site-config.json"), {});
+    sendJson(res, 200, publicConfig(config));
+    return;
+  }
+
+  if (url.pathname === "/api/platform" && req.method === "GET") {
+    const db = await readLocalDb();
+    const featuredJobs = db.jobs
+      .slice()
+      .sort((a, b) => Number(Boolean(b.closingDate)) - Number(Boolean(a.closingDate)))
+      .slice(0, 12);
     sendJson(res, 200, {
-      siteName: config.siteName,
-      baseUrl: config.baseUrl,
-      country: config.country,
-      description: config.description,
-      hasWhatsApp: Boolean(config.whatsappNumber),
-      hasAdsense: Boolean(config.adsenseClient),
+      config: db.config,
+      stats: db.stats,
+      jobs: db.jobs,
+      featuredJobs,
+      sources: db.stats.sourceCounts,
+      categories: db.stats.categories,
+      cities: db.stats.cities,
+      rateCards: db.rateCards,
+      monetization: db.monetization,
+      generatedAt: db.generatedAt,
+    });
+    return;
+  }
+
+  if (url.pathname === "/api/db/status" && req.method === "GET") {
+    const db = await readLocalDb();
+    sendJson(res, 200, {
+      ok: true,
+      generatedAt: db.generatedAt,
+      lastSyncReason: db.lastSyncReason,
+      jobs: db.jobs.length,
+      sources: db.sources.length,
+      rawItems: db.rawItemsCount,
+      leads: db.leads.length,
+      events: db.events.length,
+      rateCards: db.rateCards.length,
+      withClosingDate: db.stats.withClosingDate,
     });
     return;
   }
 
   if (url.pathname === "/api/jobs" && req.method === "GET") {
-    const jobs = await readJson(join(ROOT, "data", "curated-jobs.json"), []);
-    sendJson(res, 200, { jobs });
+    const db = await readLocalDb();
+    const jobs = db.jobs;
+    const query = cleanText(url.searchParams.get("q") || "", 100).toLowerCase();
+    const city = cleanText(url.searchParams.get("city") || "", 100);
+    const source = cleanText(url.searchParams.get("source") || "", 140);
+    const category = cleanText(url.searchParams.get("category") || "", 80);
+    const filtered = jobs.filter((job) => {
+      const haystack = [job.title, job.company, job.city, job.category, job.type, job.sourceName, ...(job.tags || [])]
+        .join(" ")
+        .toLowerCase();
+      return (
+        (!query || haystack.includes(query)) &&
+        (!city || job.city === city) &&
+        (!source || job.sourceName === source) &&
+        (!category || job.category === category)
+      );
+    });
+    sendJson(res, 200, {
+      jobs: filtered,
+      total: jobs.length,
+      sources: [...new Set(jobs.map((job) => job.sourceName).filter(Boolean))].length,
+      withClosingDate: jobs.filter((job) => job.closingDate).length,
+    });
+    return;
+  }
+
+  if (url.pathname === "/api/admin/automation/status" && req.method === "GET") {
+    if (!requireAdmin(req, res)) return;
+    const [jobs, sources, rawItems, events] = await Promise.all([
+      readJson(join(ROOT, "data", "curated-jobs.json"), []),
+      readJson(join(ROOT, "data", "sources.json"), []),
+      readJson(join(ROOT, "data", "raw-items.json"), []),
+      readJson(EVENTS_FILE, []),
+    ]);
+    const lastJobDate = jobs
+      .map((job) => new Date(job.collectedAt || 0).getTime())
+      .filter(Boolean)
+      .sort((a, b) => b - a)[0];
+
+    sendJson(res, 200, {
+      sources: sources.length,
+      rawItems: rawItems.length,
+      curatedJobs: jobs.length,
+      needsReview: jobs.filter((job) => job.status === "needs_review").length,
+      lastCollectedAt: lastJobDate ? new Date(lastJobDate).toISOString() : "",
+      latestEvents: events.slice(0, 10),
+    });
     return;
   }
 
@@ -282,6 +497,7 @@ async function handleApi(req, res, url) {
       leads.unshift(validation.lead);
       await writeJson(LEADS_FILE, leads.slice(0, 5000));
       await appendEvent("lead_created", { kind: validation.lead.kind, valueFcfa: validation.lead.valueFcfa });
+      await syncLocalDb("lead_created");
       sendJson(res, 201, { ok: true, id: validation.lead.id });
     } catch {
       sendJson(res, 400, { error: "Requete invalide." });
@@ -303,6 +519,26 @@ async function handleApi(req, res, url) {
     return;
   }
 
+  if (url.pathname === "/api/admin/db/sync" && req.method === "POST") {
+    if (!requireAdmin(req, res)) return;
+    if (!sameOrigin(req)) {
+      sendJson(res, 403, { error: "Origine refusee." });
+      return;
+    }
+
+    const db = await syncLocalDb("admin_sync");
+    await appendEvent("db_synced", { by: "admin" });
+    sendJson(res, 200, {
+      ok: true,
+      generatedAt: db.generatedAt,
+      jobs: db.jobs.length,
+      sources: db.sources.length,
+      leads: db.leads.length,
+      events: db.events.length,
+    });
+    return;
+  }
+
   if (url.pathname === "/api/admin/automation" && req.method === "POST") {
     if (!requireAdmin(req, res)) return;
     if (!sameOrigin(req)) {
@@ -318,7 +554,60 @@ async function handleApi(req, res, url) {
     });
     child.unref();
     await appendEvent("automation_started", { by: "admin" });
+    await syncLocalDb("automation_started");
     sendJson(res, 202, { ok: true, message: "Automation lancee en arriere-plan." });
+    return;
+  }
+
+  if (url.pathname === "/api/admin/social/queue" && req.method === "GET") {
+    if (!requireAdmin(req, res)) return;
+    const queue = await readJson(join(ROOT, "data", "social", "queue.json"), []);
+    const history = await readJson(join(ROOT, "data", "social", "history.json"), []);
+    sendJson(res, 200, {
+      queue: queue.slice(0, 50),
+      history: history.slice(0, 20),
+      configured: {
+        facebook: Boolean(process.env.FACEBOOK_PAGE_ID && process.env.FACEBOOK_PAGE_ACCESS_TOKEN),
+        webhook: Boolean(process.env.SOCIAL_WEBHOOK_URL),
+        live: process.env.SOCIAL_PUBLISH_LIVE === "true",
+      },
+    });
+    return;
+  }
+
+  if (url.pathname === "/api/admin/social/queue" && req.method === "POST") {
+    if (!requireAdmin(req, res)) return;
+    if (!sameOrigin(req)) {
+      sendJson(res, 403, { error: "Origine refusee." });
+      return;
+    }
+
+    try {
+      const result = await runScript("scripts/generate-social-queue.mjs");
+      await appendEvent("social_queue_generated", {});
+      sendJson(res, 200, { ok: true, output: result.stdout });
+    } catch (error) {
+      sendJson(res, 500, { error: error.message });
+    }
+    return;
+  }
+
+  if (url.pathname === "/api/admin/social/publish" && req.method === "POST") {
+    if (!requireAdmin(req, res)) return;
+    if (!sameOrigin(req)) {
+      sendJson(res, 403, { error: "Origine refusee." });
+      return;
+    }
+
+    try {
+      const payload = await readBody(req);
+      const args = payload.live ? ["--live"] : [];
+      const result = await runScript("scripts/publish-social.mjs", args);
+      await appendEvent("social_publish_requested", { live: Boolean(payload.live) });
+      sendJson(res, 200, { ok: true, output: result.stdout });
+    } catch (error) {
+      sendJson(res, 500, { error: error.message });
+    }
     return;
   }
 

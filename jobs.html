@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Toutes les offres d'emploi - JobFaso</title>
+    <meta
+      name="description"
+      content="Toutes les offres d'emploi, stages, concours et opportunites collectees par JobFaso au Burkina Faso."
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="index.html" aria-label="Accueil JobFaso">
+        <span class="brand-mark">JF</span>
+        <span><strong>JobFaso</strong><small>Toutes les offres</small></span>
+      </a>
+      <button class="menu-button" type="button" aria-expanded="false" aria-controls="mainNav">Menu</button>
+      <nav class="nav" id="mainNav" aria-label="Navigation principale">
+        <a href="jobs.html">Offres</a>
+        <a href="conseils.html">Conseils</a>
+        <a href="grille-tarifaire.html">Tarifs</a>
+        <a href="contacts.html">Contact</a>
+      </nav>
+      <a class="nav-action" href="annonceurs.html">Publier une offre</a>
+    </header>
+
+    <main>
+      <section class="page-hero listing-hero">
+        <p class="eyebrow">Offres d'emploi</p>
+        <h1>Trouvez rapidement les opportunites pertinentes.</h1>
+        <p class="lead">
+          Recherche par mot-cle, ville, type de contrat, source et favoris. Les
+          offres issues des crawlers restent marquees pour moderation tant
+          qu'elles n'ont pas ete validees.
+        </p>
+      </section>
+
+      <section class="section band" id="offres">
+        <div class="catalog-shell">
+          <aside class="catalog-sidebar">
+            <p class="eyebrow">Recherche</p>
+            <label>
+              <span>Mot-cle</span>
+              <input id="searchInput" type="search" placeholder="Poste, entreprise, domaine..." autocomplete="off" />
+            </label>
+            <label>
+              <span>Ville</span>
+              <select id="cityFilter">
+                <option value="">Tout le Burkina</option>
+                <option>Ouagadougou</option>
+                <option>Bobo-Dioulasso</option>
+                <option>Koudougou</option>
+                <option>Ouahigouya</option>
+                <option>Teletravail</option>
+              </select>
+            </label>
+            <label>
+              <span>Type</span>
+              <select id="typeFilter">
+                <option value="">Tous les types</option>
+                <option>CDI</option>
+                <option>CDD</option>
+                <option>Stage</option>
+                <option>Concours</option>
+                <option>Mission</option>
+                <option>Consultation</option>
+              </select>
+            </label>
+            <label>
+              <span>Source</span>
+              <select id="sourceFilter"><option value="">Toutes les sources</option></select>
+            </label>
+            <label>
+              <span>Tri</span>
+              <select id="sortFilter">
+                <option value="recent">Plus recentes</option>
+                <option value="title">Titre A-Z</option>
+                <option value="source">Source A-Z</option>
+              </select>
+            </label>
+            <label class="check-row">
+              <input id="savedOnlyFilter" type="checkbox" />
+              <span>Favoris seulement</span>
+            </label>
+          </aside>
+
+          <div class="catalog-main">
+            <div class="filters" aria-label="Filtres rapides">
+              <button class="filter-button active" data-category="">Toutes</button>
+              <button class="filter-button" data-category="Bureau">Bureau</button>
+              <button class="filter-button" data-category="ONG">ONG</button>
+              <button class="filter-button" data-category="Concours">Concours</button>
+              <button class="filter-button" data-category="Metier terrain">Metiers terrain</button>
+              <button class="filter-button" data-category="Stage">Stages</button>
+            </div>
+            <div class="results-summary" id="resultsSummary" aria-live="polite"></div>
+            <div class="job-layout">
+              <div class="job-grid" id="jobsList"></div>
+              <aside class="detail-panel" id="jobDetail" aria-live="polite"></aside>
+            </div>
+            <nav class="pagination" id="jobsPagination" aria-label="Pagination des offres"></nav>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <strong>JobFaso</strong>
+      <span><span id="jobCount">0</span> offres - <span id="savedCount">0</span> favoris</span>
+    </footer>
+    <script src="app.js"></script>
+  </body>
+</html>

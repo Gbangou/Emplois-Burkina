@@ -1,4 +1,4 @@
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, readdir, unlink, writeFile } from "node:fs/promises";
 
 const ROOT = new URL("../", import.meta.url);
 const JOBS_FILE = new URL("data/curated-jobs.json", ROOT);
@@ -172,6 +172,48 @@ function displayDate(value) {
   }).format(date);
 }
 
+function formatJobDate(value, fallback = "A verifier") {
+  if (!value) return fallback;
+  const date = new Date(`${String(value).slice(0, 10)}T00:00:00Z`);
+  if (Number.isNaN(date.getTime())) return fallback;
+  return displayDate(date.toISOString());
+}
+
+function daysUntil(value) {
+  if (!value) return null;
+  const target = new Date(`${String(value).slice(0, 10)}T23:59:59Z`);
+  if (Number.isNaN(target.getTime())) return null;
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return Math.ceil((target - today) / 86_400_000);
+}
+
+function deadlineState(job) {
+  if (job.inconsistentDates) {
+    return {
+      label: "Dates a verifier",
+      tone: "warning",
+      helper: "La source affiche des dates incoherentes. Verifiez avant de postuler.",
+    };
+  }
+
+  const days = daysUntil(job.closingDate);
+  if (days === null) return { label: "Cloture a verifier", tone: "neutral", helper: "Date de cloture non extraite." };
+  if (days < 0) return { label: "Expiree", tone: "danger", helper: `Cloturee depuis ${Math.abs(days)} jour${Math.abs(days) > 1 ? "s" : ""}.` };
+  if (days === 0) return { label: "Dernier jour", tone: "danger", helper: "La cloture est prevue aujourd'hui." };
+  if (days <= 3) return { label: `${days} jour${days > 1 ? "s" : ""} restant${days > 1 ? "s" : ""}`, tone: "warning", helper: "Deadline proche." };
+  return { label: `${days} jours restants`, tone: "success", helper: "Candidature encore ouverte." };
+}
+
+function timeline(job) {
+  const state = deadlineState(job);
+  return `<div class="job-timeline">
+    <div><span>Ouverture</span><strong>${escapeHtml(formatJobDate(job.openingDate))}</strong></div>
+    <div><span>Cloture</span><strong>${escapeHtml(formatJobDate(job.closingDate, job.deadline || "A verifier"))}</strong></div>
+    <div class="countdown ${state.tone}"><span>Countdown</span><strong>${escapeHtml(state.label)}</strong></div>
+  </div>`;
+}
+
 function absolute(config, path) {
   return `${config.baseUrl.replace(/\/$/, "")}/${path.replace(/^\//, "")}`;
 }
@@ -206,10 +248,10 @@ function layout(config, page) {
       </a>
       <button class="menu-button" type="button" aria-expanded="false" aria-controls="mainNav">Menu</button>
       <nav class="nav" id="mainNav" aria-label="Navigation principale">
-        <a href="../../index.html#offres">Offres</a>
+        <a href="../../jobs.html">Offres</a>
         <a href="../../annonceurs.html">Recruteurs</a>
-        <a href="../guides/faire-un-cv-au-burkina-faso.html">Guides</a>
-        <a href="../../contact.html">Contact</a>
+        <a href="../../conseils.html">Guides</a>
+        <a href="../../contacts.html">Contact</a>
       </nav>
       <a class="nav-action" href="../../annonceurs.html">Publier une offre</a>
     </header>
@@ -238,9 +280,10 @@ function jobCard(job) {
     <p class="eyebrow">${escapeHtml(job.category || "Opportunite")}</p>
     <h3>${escapeHtml(job.title)}</h3>
     <p class="muted">${escapeHtml(job.company || "Organisation")} - ${escapeHtml(job.city || "Burkina Faso")}</p>
+    ${timeline(job)}
     <div class="job-meta">
       <span class="pill">${escapeHtml(job.type || "A verifier")}</span>
-      <span class="pill">${escapeHtml(job.deadline || "Deadline a verifier")}</span>
+      <span class="pill">${escapeHtml(formatJobDate(job.closingDate, job.deadline || "Deadline a verifier"))}</span>
     </div>
     <a class="secondary-link" href="../jobs/${slugify(job.title)}-${job.id.slice(0, 8)}.html">Voir la fiche</a>
   </article>`;
@@ -260,6 +303,12 @@ function compactJobCards(jobs) {
       </a>`
     )
     .join("");
+}
+
+function relatedJobs(currentJob, jobs) {
+  return jobs
+    .filter((job) => job.id !== currentJob.id && (job.category === currentJob.category || job.sourceName !== currentJob.sourceName))
+    .slice(0, 8);
 }
 
 function guideArticle(guide, jobs) {
@@ -325,8 +374,9 @@ function jobStructuredData(config, job, path) {
       name: job.sourceName || "JobFaso",
       value: job.id,
     },
-    datePosted,
+    datePosted: job.openingDate || datePosted,
     employmentType: job.type && job.type !== "A verifier" ? job.type : "OTHER",
+    validThrough: job.closingDate || undefined,
     hiringOrganization: {
       "@type": "Organization",
       name: job.company || job.sourceName || "Organisation",
@@ -350,6 +400,20 @@ async function writePage(config, path, page) {
   await writeFile(file, layout(config, { ...page, path }), "utf8");
 }
 
+async function cleanupGeneratedDirectory(directory, urls, prefix) {
+  const expected = new Set(
+    urls
+      .filter((url) => url.startsWith(prefix))
+      .map((url) => url.slice(prefix.length))
+  );
+  const entries = await readdir(directory, { withFileTypes: true });
+
+  for (const entry of entries) {
+    if (!entry.isFile() || !entry.name.endsWith(".html") || expected.has(entry.name)) continue;
+    await unlink(new URL(entry.name, directory));
+  }
+}
+
 async function main() {
   const jobs = JSON.parse(await readFile(JOBS_FILE, "utf8"));
   const config = JSON.parse(await readFile(CONFIG_FILE, "utf8"));
@@ -363,6 +427,7 @@ async function main() {
 
   for (const job of jobs) {
     const path = generatedJobPath(job);
+    const similarJobs = relatedJobs(job, jobs);
     urls.push(path);
     await writePage(config, path, {
       title: `${job.title} - ${job.city || "Burkina Faso"} | JobFaso`,
@@ -370,7 +435,7 @@ async function main() {
       structuredData: jobStructuredData(config, job, path),
       body: `<main>
         <section class="page-hero compact detail-hero">
-          <p class="eyebrow">${escapeHtml(job.category || "Offre")}</p>
+          <p class="eyebrow"><a href="../../index.html">Accueil</a> / <a href="../../jobs.html">Offres</a> / ${escapeHtml(job.category || "Offre")}</p>
           <h1>${escapeHtml(job.title)}</h1>
           <p class="lead">${escapeHtml(job.company || job.sourceName || "Organisation")} - ${escapeHtml(job.city || "Burkina Faso")}</p>
           <div class="hero-actions">
@@ -381,13 +446,21 @@ async function main() {
         <section class="section content-with-rail">
           <article class="content-main article-body">
             <p class="moderation-note">Cette fiche resume une opportunite reperee par JobFaso. Verifiez toujours la source officielle avant de postuler.</p>
+            ${timeline(job)}
             <dl class="detail-list">
               <div><dt>Organisation</dt><dd>${escapeHtml(job.company || job.sourceName || "A verifier")}</dd></div>
               <div><dt>Ville</dt><dd>${escapeHtml(job.city || "Burkina Faso")}</dd></div>
-              <div><dt>Deadline</dt><dd>${escapeHtml(job.deadline || "A verifier")}</dd></div>
+              <div><dt>Date d'ouverture</dt><dd>${escapeHtml(formatJobDate(job.openingDate))}</dd></div>
+              <div><dt>Date de cloture</dt><dd>${escapeHtml(formatJobDate(job.closingDate, job.deadline || "A verifier"))}</dd></div>
+              <div><dt>Etat</dt><dd>${escapeHtml(deadlineState(job).helper)}</dd></div>
               <div><dt>Source</dt><dd>${escapeHtml(job.sourceName || "Source officielle")}</dd></div>
               <div><dt>Collecte</dt><dd>${escapeHtml(displayDate(job.collectedAt))}</dd></div>
             </dl>
+            ${
+              job.excerpt
+                ? `<h2>Extrait de l'offre</h2><p>${escapeHtml(job.excerpt)}</p>`
+                : `<h2>Resume</h2><p>Les informations detaillees doivent etre confirmees sur la source officielle avant envoi de candidature.</p>`
+            }
             <h2>Conseil candidature</h2>
             <p>Preparez un CV clair, une lettre courte et verifiez que le poste correspond bien a votre profil avant d'envoyer vos documents.</p>
             <div class="checklist-card">
@@ -401,7 +474,14 @@ async function main() {
             <div class="detail-actions">
               <a class="nav-action" href="${escapeHtml(job.sourceUrl)}" target="_blank" rel="noopener">Ouvrir la source officielle</a>
               <a class="secondary-link" href="../../index.html#alertes">Recevoir les alertes</a>
-              <a class="secondary-link" href="../../contact.html">Signaler un probleme</a>
+              <a class="secondary-link" href="../../contacts.html">Signaler un probleme</a>
+            </div>
+            <div class="related-panel">
+              <div>
+                <p class="eyebrow">Dans la meme rubrique</p>
+                <h2>Offres similaires</h2>
+              </div>
+              <div class="mini-job-grid">${compactJobCards(similarJobs)}</div>
             </div>
           </article>
           ${sponsorBlock()}
@@ -499,6 +579,10 @@ async function main() {
       </main>`,
     });
   }
+
+  await cleanupGeneratedDirectory(JOBS_DIR, urls, "pages/jobs/");
+  await cleanupGeneratedDirectory(CATEGORIES_DIR, urls, "pages/categories/");
+  await cleanupGeneratedDirectory(CITIES_DIR, urls, "pages/villes/");
 
   const today = new Date().toISOString().slice(0, 10);
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>

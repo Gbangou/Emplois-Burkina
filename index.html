@@ -3,137 +3,205 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>JobFaso - Offres d'emploi, concours et stages au Burkina Faso</title>
+    <title>JobFaso - Emploi, recrutement, concours et stages au Burkina Faso</title>
     <meta
       name="description"
-      content="Consultez des offres d'emploi, concours, stages et opportunites au Burkina Faso. Recherche par ville, domaine, source et alertes WhatsApp."
+      content="JobFaso centralise les offres d'emploi, concours, stages, profils et solutions de recrutement au Burkina Faso avec alertes WhatsApp et sources verifiees."
     />
-    <meta property="og:title" content="JobFaso - Offres d'emploi au Burkina Faso" />
+    <meta property="og:title" content="JobFaso - Emploi et recrutement au Burkina Faso" />
     <meta
       property="og:description"
-      content="Offres d'emploi, concours, stages et opportunites verifiees avec liens vers les sources officielles."
+      content="Moteur d'emploi mobile-first avec offres dynamiques, alertes WhatsApp, espaces recruteurs, sponsors et services candidats."
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body>
-    <header class="topbar">
+  <body class="portal-page">
+    <div class="utility-bar">
+      <span>Emploi, concours, stages et recrutement au Burkina Faso</span>
+      <nav aria-label="Acces rapides">
+        <a href="jobs.html">Accueil candidat</a>
+        <a href="annonceurs.html">Accueil recruteur</a>
+        <a href="grille-tarifaire.html">Packs annonces</a>
+        <a href="contacts.html">Contact</a>
+      </nav>
+    </div>
+
+    <header class="topbar portal-topbar">
       <a class="brand" href="#top" aria-label="Accueil JobFaso">
         <span class="brand-mark">JF</span>
         <span>
           <strong>JobFaso</strong>
-          <small>Emploi Burkina Faso</small>
+          <small>Le portail emploi Burkina</small>
         </span>
       </a>
       <button class="menu-button" type="button" aria-expanded="false" aria-controls="mainNav">Menu</button>
       <nav class="nav" id="mainNav" aria-label="Navigation principale">
-        <a href="#offres">Offres</a>
-        <a href="#guides">Guides</a>
+        <a href="jobs.html">Offres d'emploi</a>
+        <a href="conseils.html">Conseils</a>
+        <a href="grille-tarifaire.html">Tarifs</a>
+        <a href="#employeurs">Ils recrutent</a>
         <a href="#alertes">Alertes</a>
-        <a href="contact.html">Contact</a>
       </nav>
-      <a class="nav-action" href="#offres">Voir les offres</a>
+      <a class="nav-action" href="annonceurs.html">Publier une annonce</a>
     </header>
 
     <main id="top">
-      <section class="hero">
-        <div class="hero-copy">
-          <p class="eyebrow">Recherche d'emploi au Burkina Faso</p>
-          <h1>Des opportunites claires, regroupees au meme endroit.</h1>
-          <p class="lead">
-            Consultez les offres, concours et stages recents. JobFaso indique la
-            source, la ville, la date de collecte et le lien de candidature afin
-            de vous aider a verifier avant de postuler.
-          </p>
-          <form class="search-panel" id="quickSearch">
+      <section class="portal-hero">
+        <div class="portal-hero-inner">
+          <div class="hero-copy">
+            <p class="eyebrow">Moteur emploi Burkina Faso</p>
+            <h1>Trouvez votre futur job parmi les opportunites verifiees.</h1>
+            <p class="lead">
+              Offres d'emploi, concours, stages et missions collectes depuis
+              plusieurs sources, enrichis avec dates, compte a rebours,
+              categories, regions et liens officiels.
+            </p>
+          </div>
+
+          <form class="mega-search" id="quickSearch">
             <label>
-              <span>Mot-cle</span>
+              <span>Que recherchez-vous ?</span>
               <input
                 id="searchInput"
                 type="search"
-                placeholder="Ex: comptable, ONG, stage, concours..."
+                placeholder="Poste, entreprise, competence, concours..."
                 autocomplete="off"
               />
             </label>
             <label>
-              <span>Ville</span>
+              <span>Region</span>
               <select id="cityFilter">
-                <option value="">Tout le Burkina</option>
+                <option value="">Toutes les regions</option>
                 <option>Ouagadougou</option>
                 <option>Bobo-Dioulasso</option>
+                <option>Bagassi</option>
                 <option>Koudougou</option>
                 <option>Ouahigouya</option>
-                <option>Teletravail</option>
+                <option>Burkina Faso</option>
+              </select>
+            </label>
+            <label>
+              <span>Domaine</span>
+              <select id="typeFilter">
+                <option value="">Tous les domaines</option>
+                <option>Bureau</option>
+                <option>ONG</option>
+                <option>Concours</option>
+                <option>Stage</option>
+                <option>CDD</option>
+                <option>CDI</option>
               </select>
             </label>
             <button type="submit">Rechercher</button>
           </form>
+
+          <div class="hero-quick-actions">
+            <a href="jobs.html">Toutes les offres</a>
+            <a href="annonceurs.html">Publier une offre</a>
+            <a href="#alertes">Alerte WhatsApp</a>
+            <a href="#monetisation">Devenir sponsor</a>
+          </div>
         </div>
-        <aside class="hero-board" aria-label="Indicateurs JobFaso">
+      </section>
+
+      <section class="portal-stats" aria-label="Indicateurs JobFaso">
+        <article>
+          <strong id="jobCount">0</strong>
+          <span>offres publiques</span>
+        </article>
+        <article>
+          <strong id="sourceCount">0</strong>
+          <span>sources surveillees</span>
+        </article>
+        <article>
+          <strong id="savedCount">0</strong>
+          <span>favoris sauvegardes</span>
+        </article>
+        <article>
+          <strong>0 FCFA</strong>
+          <span>consultation candidat</span>
+        </article>
+      </section>
+
+      <section class="portal-section" id="employeurs">
+        <div class="portal-heading">
           <div>
-            <strong id="jobCount">0</strong>
-            <span>opportunites disponibles</span>
+            <p class="eyebrow">Ils recrutent</p>
+            <h2>Entreprises et sources actives</h2>
           </div>
+          <a class="secondary-link" href="annonceurs.html">Afficher votre logo</a>
+        </div>
+        <div class="carousel-shell">
+          <button class="carousel-arrow" type="button" data-carousel-prev="employerCarousel" aria-label="Precedent">‹</button>
+          <div class="logo-carousel" id="employerCarousel" aria-live="polite"></div>
+          <button class="carousel-arrow" type="button" data-carousel-next="employerCarousel" aria-label="Suivant">›</button>
+        </div>
+      </section>
+
+      <section class="portal-section featured-band">
+        <div class="portal-heading">
           <div>
-            <strong id="savedCount">0</strong>
-            <span>offres sauvegardees</span>
+            <p class="eyebrow">A la une</p>
+            <h2>Offres mises en avant</h2>
           </div>
-          <div>
-            <strong>0 FCFA</strong>
-            <span>acces candidat</span>
+          <a class="secondary-link" href="grille-tarifaire.html">Sponsoriser une offre</a>
+        </div>
+        <div class="carousel-shell">
+          <button class="carousel-arrow" type="button" data-carousel-prev="featuredJobsCarousel" aria-label="Precedent">‹</button>
+          <div class="featured-carousel" id="featuredJobsCarousel"></div>
+          <button class="carousel-arrow" type="button" data-carousel-next="featuredJobsCarousel" aria-label="Suivant">›</button>
+        </div>
+      </section>
+
+      <section class="portal-section discovery-grid">
+        <div>
+          <div class="portal-heading compact">
+            <div>
+              <p class="eyebrow">Emploi par metier</p>
+              <h2>Domaines populaires</h2>
+            </div>
           </div>
+          <div class="taxonomy-list" id="categoryStats"></div>
+        </div>
+        <div>
+          <div class="portal-heading compact">
+            <div>
+              <p class="eyebrow">Emploi par region</p>
+              <h2>Regions actives</h2>
+            </div>
+          </div>
+          <div class="taxonomy-list" id="regionStats"></div>
+        </div>
+        <aside class="income-panel">
+          <p class="eyebrow">Sponsorise</p>
+          <h2>Votre formation ici</h2>
+          <p>
+            Touchez les candidats qui cherchent un emploi, un concours ou une
+            reconversion. Placement mensuel, lien tracke et rapport de clics.
+          </p>
+          <a class="nav-action" href="grille-tarifaire.html">Voir les packs</a>
         </aside>
       </section>
 
-      <section class="trust-strip" aria-label="Engagements JobFaso">
-        <article>
-          <strong>Sources indiquees</strong>
-          <span>Chaque fiche affiche le portail ou l'organisation d'origine.</span>
-        </article>
-        <article>
-          <strong>Verification recommandee</strong>
-          <span>Postulez toujours depuis le lien officiel et refusez les frais suspects.</span>
-        </article>
-        <article>
-          <strong>Recherche gratuite</strong>
-          <span>Les candidats peuvent consulter les offres et sauvegarder leurs favoris.</span>
-        </article>
-      </section>
-
       <section class="section band" id="offres">
-        <div class="section-heading">
-          <p class="eyebrow">Offres disponibles</p>
-          <h2>Rechercher une opportunite</h2>
-          <p>
-            Filtrez par categorie, source ou ville. Ouvrez la fiche pour voir les
-            informations essentielles et acceder a la source officielle.
-          </p>
+        <div class="portal-heading">
+          <div>
+            <p class="eyebrow">Dernieres offres d'emploi</p>
+            <h2>Opportunites disponibles</h2>
+          </div>
+          <a class="secondary-link" href="jobs.html">Toutes les offres</a>
         </div>
         <div class="filters" aria-label="Filtres d'offres">
           <button class="filter-button active" data-category="">Toutes</button>
           <button class="filter-button" data-category="Bureau">Bureau</button>
           <button class="filter-button" data-category="ONG">ONG</button>
           <button class="filter-button" data-category="Concours">Concours</button>
-          <button class="filter-button" data-category="Metier terrain">Metiers terrain</button>
           <button class="filter-button" data-category="Stage">Stages</button>
         </div>
         <div class="toolbar" aria-label="Outils de recherche">
           <label>
-            <span>Type</span>
-            <select id="typeFilter">
-              <option value="">Tous les types</option>
-              <option>CDI</option>
-              <option>CDD</option>
-              <option>Stage</option>
-              <option>Concours</option>
-              <option>Mission</option>
-              <option>Consultation</option>
-            </select>
-          </label>
-          <label>
             <span>Source</span>
-            <select id="sourceFilter">
-              <option value="">Toutes les sources</option>
-            </select>
+            <select id="sourceFilter"><option value="">Toutes les sources</option></select>
           </label>
           <label>
             <span>Tri</span>
@@ -149,64 +217,49 @@
           </label>
         </div>
         <div class="results-summary" id="resultsSummary" aria-live="polite"></div>
-        <div class="job-layout">
+        <div class="job-layout portal-job-layout">
           <div class="job-grid" id="jobsList"></div>
           <aside class="detail-panel" id="jobDetail" aria-live="polite"></aside>
         </div>
         <nav class="pagination" id="jobsPagination" aria-label="Pagination des offres"></nav>
       </section>
 
-      <section class="section" id="guides">
-        <div class="section-heading">
-          <p class="eyebrow">Conseils candidats</p>
-          <h2>Preparer une candidature serieuse</h2>
-          <p>
-            Des pages pratiques pour ameliorer votre dossier, mieux comprendre
-            les concours et eviter les fausses offres.
-          </p>
+      <section class="portal-section cv-section">
+        <div class="portal-heading">
+          <div>
+            <p class="eyebrow">CVtheque</p>
+            <h2>Profils candidats recents</h2>
+          </div>
+          <a class="secondary-link" href="annonceurs.html">Demander une shortlist</a>
         </div>
-        <div class="seo-link-grid">
-          <a href="pages/categories/ong.html">Emplois ONG</a>
-          <a href="pages/categories/bureau.html">Emplois bureau</a>
-          <a href="pages/categories/metier-terrain.html">Metiers terrain</a>
-          <a href="pages/villes/ouagadougou.html">Emploi Ouagadougou</a>
-          <a href="pages/guides/faire-un-cv-au-burkina-faso.html">Faire un CV</a>
-          <a href="pages/guides/eviter-fausses-offres-emploi.html">Eviter les arnaques</a>
-          <a href="pages/guides/postuler-ong-burkina.html">Postuler ONG</a>
-          <a href="pages/guides/preparer-un-concours.html">Preparer un concours</a>
+        <div class="carousel-shell">
+          <button class="carousel-arrow" type="button" data-carousel-prev="profileCarousel" aria-label="Precedent">‹</button>
+          <div class="profile-carousel" id="profileCarousel"></div>
+          <button class="carousel-arrow" type="button" data-carousel-next="profileCarousel" aria-label="Suivant">›</button>
         </div>
       </section>
 
-      <section class="section band" id="partenaires">
-        <div class="section-heading">
-          <p class="eyebrow">Partenaires utiles</p>
-          <h2>Services qui peuvent aider une candidature</h2>
-          <p>
-            Ces emplacements peuvent accueillir des formations, cabinets RH,
-            outils CV, telecoms ou services professionnels. Chaque contenu payant
-            doit rester clairement marque comme sponsorise.
-          </p>
-        </div>
-        <div class="partner-grid">
-          <article>
-            <span>Emplacement sponsorise</span>
-            <strong>Formation professionnelle</strong>
-            <p>Promouvoir une formation courte liee aux secteurs qui recrutent.</p>
-            <a class="secondary-link" href="annonceurs.html">Devenir partenaire</a>
-          </article>
-          <article>
-            <span>Emplacement sponsorise</span>
-            <strong>Service CV et entretien</strong>
-            <p>Recevoir des prospects qualifies sans faire payer l'acces aux offres.</p>
-            <a class="secondary-link" href="annonceurs.html">Proposer un service</a>
-          </article>
-          <article>
-            <span>Emplacement sponsorise</span>
-            <strong>Recrutement prioritaire</strong>
-            <p>Mettre en avant une offre urgente devant une audience ciblee.</p>
-            <a class="secondary-link" href="annonceurs.html">Publier une offre</a>
-          </article>
-        </div>
+      <section class="portal-section monetization-grid" id="monetisation">
+        <article>
+          <span>AdSense + display</span>
+          <strong>Inventaire publicitaire</strong>
+          <p>Bannieres natives, rail sponsorise, emplacements guides et pages categories compatibles AdSense.</p>
+        </article>
+        <article>
+          <span>Recruteurs</span>
+          <strong>Annonces payantes</strong>
+          <p>Publication standard, mise en avant, diffusion WhatsApp et mini rapport de performance.</p>
+        </article>
+        <article>
+          <span>Partenaires</span>
+          <strong>Leads formation/CV</strong>
+          <p>Formations, services CV, coaching entretien, telecoms et banques avec tracking par campagne.</p>
+        </article>
+        <article>
+          <span>Data</span>
+          <strong>Rapports marche</strong>
+          <p>Tendances anonymisees sur metiers, villes, sources et competences demandees.</p>
+        </article>
       </section>
 
       <section class="section split" id="alertes">
@@ -246,29 +299,15 @@
           <p class="form-note" id="alertMessage"></p>
         </form>
       </section>
-
-      <section class="section revenue-callout">
-        <div>
-          <p class="eyebrow">Pour recruteurs et partenaires</p>
-          <h2>Toucher une audience emploi sans bloquer l'acces candidat</h2>
-          <p>
-            Les revenus de JobFaso peuvent venir des offres mises en avant, des
-            sponsors de categories, des formations partenaires, des campagnes de
-            recrutement et des rapports agreges. Les chercheurs d'emploi gardent
-            l'acces gratuit aux opportunites.
-          </p>
-        </div>
-        <a class="nav-action" href="annonceurs.html">Voir les solutions</a>
-      </section>
     </main>
 
-    <footer class="footer">
+    <footer class="footer portal-footer">
       <strong>JobFaso</strong>
       <span>
-        <a href="privacy.html">Confidentialite</a> -
-        <a href="terms.html">Mentions legales</a> -
-        <a href="contact.html">Contact</a> -
-        <a href="annonceurs.html">Recruteurs</a>
+        <a href="jobs.html">Offres</a> -
+        <a href="conseils.html">Conseils</a> -
+        <a href="grille-tarifaire.html">Tarifs</a> -
+        <a href="contacts.html">Contact</a>
       </span>
     </footer>
 

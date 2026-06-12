@@ -13,6 +13,11 @@ Contexte produit :
 
 - JobFaso est un site web mobile-first pour centraliser les emplois, concours,
   stages, missions locales et profils de metiers terrain au Burkina Faso.
+- JobFaso doit se comporter comme un vrai portail emploi moderne inspire des
+  meilleurs sites africains : moteur de recherche central, offres recentes,
+  entreprises qui recrutent, emploi par metier, emploi par region, CVtheque,
+  pages recruteurs, conseils candidats, carrousels dynamiques et emplacements
+  sponsorises.
 - Le produit doit rester gratuit pour consulter les informations essentielles :
   titre, recruteur, ville, deadline, lien source officiel et resume utile.
 - Le revenu doit venir des recruteurs, sponsors, services optionnels, formations
@@ -29,6 +34,18 @@ Construis JobFaso comme une plateforme professionnelle capable de generer du
 revenu rapidement, sans attendre une grosse application. A chaque decision,
 priorise ce qui peut apporter de l'argent, de la confiance ou de la distribution
 dans les 30 prochains jours.
+
+Direction UX actuelle :
+
+- Accueil type portail emploi : topbar candidat/recruteur, hero de recherche,
+  carrousel des sources/entreprises, carrousel des offres a la une, blocs
+  metiers, regions, dernieres offres, CVtheque illustrative et espace sponsor.
+- Listing offres : filtres rapides, sidebar de recherche, cards avec source,
+  ouverture, cloture, countdown, ville et lien source officiel.
+- Fiche offre : fil d'Ariane, date d'ouverture, date de cloture, countdown,
+  extrait court, checklist candidature, offres similaires et rail sponsorise.
+- Admin : pipeline collecte, moderation, leads, reseaux sociaux, exports et
+  etat des sources.
 
 Contraintes :
 
@@ -262,6 +279,25 @@ Tables ou collections a prevoir :
 - `whatsapp_broadcasts`
 
 ## Propositions monetisables prioritaires
+
+### Pack 0 : inventaire media et publicite
+
+Client : annonceur local, centre de formation, banque, telecom, cabinet RH,
+assurance, fintech, ecole, outil candidat.
+
+Prix indicatifs : 50 000 a 250 000 FCFA/mois selon l'emplacement.
+
+Livrable :
+
+- emplacement homepage ou categorie
+- rail sponsorise sur fiches offres
+- carrousel partenaire
+- lien tracke UTM
+- rapport clics/leads
+- compatibilite Google AdSense quand le trafic le permet
+
+Regle : les publicites directes et sponsors doivent etre vendus avant de
+dependre fortement d'AdSense.
 
 ### Pack 1 : annonce recruteur assistee
 

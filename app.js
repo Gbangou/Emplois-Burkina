@@ -102,6 +102,49 @@ const adminJobsList = document.querySelector("#adminJobsList");
 const adminSummary = document.querySelector("#adminSummary");
 const menuButton = document.querySelector(".menu-button");
 const mainNav = document.querySelector("#mainNav");
+const socialQueueTable = document.querySelector("#socialQueueTable");
+const socialAdminMessage = document.querySelector("#socialAdminMessage");
+const automationStatus = document.querySelector("#automationStatus");
+const employerCarousel = document.querySelector("#employerCarousel");
+const featuredJobsCarousel = document.querySelector("#featuredJobsCarousel");
+const profileCarousel = document.querySelector("#profileCarousel");
+const categoryStats = document.querySelector("#categoryStats");
+const regionStats = document.querySelector("#regionStats");
+
+const demoProfiles = [
+  {
+    code: "Profil N°003101",
+    title: "Assistant comptable",
+    experience: "2 ans",
+    education: "Bac+3 Finance",
+    city: "Ouagadougou",
+    skills: ["Sage", "Excel", "Fiscalite"],
+  },
+  {
+    code: "Profil N°003102",
+    title: "Technicien terrain",
+    experience: "5 ans",
+    education: "BEP / Maintenance",
+    city: "Bobo-Dioulasso",
+    skills: ["Maintenance", "HSE", "Logistique"],
+  },
+  {
+    code: "Profil N°003103",
+    title: "Charge de projet ONG",
+    experience: "4 ans",
+    education: "Master gestion projet",
+    city: "Ouagadougou",
+    skills: ["MEAL", "Reporting", "Anglais"],
+  },
+  {
+    code: "Profil N°003104",
+    title: "Developpeur web",
+    experience: "3 ans",
+    education: "Licence informatique",
+    city: "Teletravail",
+    skills: ["JavaScript", "API", "React"],
+  },
+];
 
 function normalize(value = "") {
   return value
@@ -219,6 +262,91 @@ function displayDate(value) {
   }).format(date);
 }
 
+function formatJobDate(value, fallback = "A verifier") {
+  if (!value) return fallback;
+  const date = new Date(`${String(value).slice(0, 10)}T00:00:00`);
+  if (Number.isNaN(date.getTime())) return fallback;
+  return new Intl.DateTimeFormat("fr-BF", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  }).format(date);
+}
+
+function daysUntil(value) {
+  if (!value) return null;
+  const target = new Date(`${String(value).slice(0, 10)}T23:59:59`);
+  if (Number.isNaN(target.getTime())) return null;
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return Math.ceil((target - today) / 86_400_000);
+}
+
+function deadlineState(job) {
+  if (job.inconsistentDates) {
+    return {
+      label: "Dates a verifier",
+      tone: "warning",
+      helper: "La source affiche des dates incoherentes.",
+    };
+  }
+
+  const days = daysUntil(job.closingDate);
+  if (days === null) {
+    return {
+      label: "Cloture a verifier",
+      tone: "neutral",
+      helper: "La date de cloture n'a pas encore ete extraite.",
+    };
+  }
+  if (days < 0) {
+    return {
+      label: "Expiree",
+      tone: "danger",
+      helper: `Cloturee depuis ${Math.abs(days)} jour${Math.abs(days) > 1 ? "s" : ""}.`,
+    };
+  }
+  if (days === 0) {
+    return {
+      label: "Dernier jour",
+      tone: "danger",
+      helper: "La cloture est prevue aujourd'hui.",
+    };
+  }
+  if (days <= 3) {
+    return {
+      label: `${days} jour${days > 1 ? "s" : ""} restant${days > 1 ? "s" : ""}`,
+      tone: "warning",
+      helper: "Deadline proche.",
+    };
+  }
+  return {
+    label: `${days} jours restants`,
+    tone: "success",
+    helper: "Candidature encore ouverte.",
+  };
+}
+
+function renderTimeline(job, compact = false) {
+  const state = deadlineState(job);
+  return `
+    <div class="job-timeline ${compact ? "compact" : ""}">
+      <div>
+        <span>Ouverture</span>
+        <strong>${escapeHtml(formatJobDate(job.openingDate))}</strong>
+      </div>
+      <div>
+        <span>Cloture</span>
+        <strong>${escapeHtml(formatJobDate(job.closingDate))}</strong>
+      </div>
+      <div class="countdown ${state.tone}">
+        <span>Countdown</span>
+        <strong>${escapeHtml(state.label)}</strong>
+      </div>
+    </div>
+  `;
+}
+
 function slugify(value = "") {
   return String(value)
     .toLowerCase()
@@ -243,6 +371,101 @@ function getSources() {
   return [...new Set(jobs.map((job) => job.sourceName).filter(Boolean))].sort((a, b) =>
     a.localeCompare(b, "fr")
   );
+}
+
+function initials(value = "") {
+  return value
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0])
+    .join("")
+    .toUpperCase();
+}
+
+function countBy(items, getter) {
+  return items.reduce((acc, item) => {
+    const key = getter(item) || "Autre";
+    acc[key] = (acc[key] || 0) + 1;
+    return acc;
+  }, {});
+}
+
+function renderTaxonomy(container, entries, baseHref) {
+  if (!container) return;
+  container.innerHTML = entries.length
+    ? entries
+        .map(
+          ([name, count]) => `
+            <a href="${baseHref}" data-taxonomy="${escapeHtml(name)}">
+              <span>${escapeHtml(name)}</span>
+              <strong>${count}</strong>
+            </a>
+          `
+        )
+        .join("")
+    : `<p class="muted">Les statistiques seront disponibles apres la prochaine collecte.</p>`;
+}
+
+function renderPortalWidgets() {
+  if (employerCarousel) {
+    const sourceCounts = Object.entries(countBy(jobs, (job) => job.sourceName))
+      .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], "fr"))
+      .slice(0, 16);
+    employerCarousel.innerHTML = sourceCounts
+      .map(
+        ([source, count]) => `
+          <article class="logo-card">
+            <span>${escapeHtml(initials(source))}</span>
+            <strong>${escapeHtml(source)}</strong>
+            <small>${count} offre${count > 1 ? "s" : ""}</small>
+          </article>
+        `
+      )
+      .join("");
+  }
+
+  if (featuredJobsCarousel) {
+    const featured = jobs
+      .slice()
+      .sort((a, b) => Number(Boolean(b.closingDate)) - Number(Boolean(a.closingDate)))
+      .slice(0, 10);
+    featuredJobsCarousel.innerHTML = featured.map(renderJobCard).join("");
+  }
+
+  if (categoryStats) {
+    renderTaxonomy(
+      categoryStats,
+      Object.entries(countBy(jobs, (job) => job.category)).sort((a, b) => b[1] - a[1]).slice(0, 10),
+      "jobs.html"
+    );
+  }
+
+  if (regionStats) {
+    renderTaxonomy(
+      regionStats,
+      Object.entries(countBy(jobs, (job) => job.city)).sort((a, b) => b[1] - a[1]).slice(0, 10),
+      "jobs.html"
+    );
+  }
+
+  if (profileCarousel) {
+    profileCarousel.innerHTML = demoProfiles
+      .map(
+        (profile) => `
+          <article class="profile-card">
+            <span>${escapeHtml(profile.code)}</span>
+            <strong>${escapeHtml(profile.title)}</strong>
+            <p>${escapeHtml(profile.experience)} - ${escapeHtml(profile.education)} - ${escapeHtml(profile.city)}</p>
+            <div class="tag-row">
+              ${profile.skills.map((skill) => `<span class="pill">${escapeHtml(skill)}</span>`).join("")}
+            </div>
+            <a class="secondary-link" href="annonceurs.html">Demander ce profil</a>
+          </article>
+        `
+      )
+      .join("");
+  }
 }
 
 function getSourceTypeLabel(type) {
@@ -303,6 +526,8 @@ function getFilteredJobs() {
         job.type,
         job.salary,
         job.deadline,
+        job.openingDate,
+        job.closingDate,
         job.sourceName,
         ...(job.tags || []),
       ].join(" ")
@@ -336,9 +561,10 @@ function renderJobCard(job) {
         <h3>${escapeHtml(job.title)}</h3>
         <p class="muted">${escapeHtml(job.company || "Organisation non precisee")} - ${escapeHtml(job.city || "Burkina Faso")}</p>
       </div>
+      ${renderTimeline(job, true)}
       <div class="job-meta">
         <span class="pill">${escapeHtml(job.type || "Non precise")}</span>
-        <span class="pill">${escapeHtml(job.salary || "Non communique")}</span>
+        <span class="pill">${escapeHtml(formatJobDate(job.closingDate, job.deadline || "A verifier"))}</span>
         <span class="pill warning">${reviewLabel}</span>
       </div>
       <div class="tag-row">
@@ -382,9 +608,12 @@ function renderDetail(job) {
       <p class="eyebrow">${escapeHtml(job.category || "Opportunite")}</p>
       <h3>${escapeHtml(job.title)}</h3>
       <p class="muted">${escapeHtml(job.company || "Organisation non precisee")}</p>
+      ${renderTimeline(job)}
       <dl class="detail-list">
         <div><dt>Ville</dt><dd>${escapeHtml(job.city || "Burkina Faso")}</dd></div>
-        <div><dt>Deadline</dt><dd>${escapeHtml(job.deadline || "Non communiquee")}</dd></div>
+        <div><dt>Date d'ouverture</dt><dd>${escapeHtml(formatJobDate(job.openingDate))}</dd></div>
+        <div><dt>Date de cloture</dt><dd>${escapeHtml(formatJobDate(job.closingDate, job.deadline || "Non communiquee"))}</dd></div>
+        <div><dt>Etat</dt><dd>${escapeHtml(deadlineState(job).helper)}</dd></div>
         <div><dt>Source</dt><dd>${escapeHtml(job.sourceName || "JobFaso")}</dd></div>
         <div><dt>Collecte</dt><dd>${escapeHtml(displayDate(job.collectedAt))}</dd></div>
       </dl>
@@ -584,9 +813,63 @@ async function loadServerAdminData() {
     writeStorageArray(LEADS_KEY, leads);
     writeStorageArray(EVENTS_KEY, events);
     renderAdmin();
+    await loadSocialQueue();
+    await loadAutomationStatus();
     return true;
   } catch {
     return false;
+  }
+}
+
+async function loadAutomationStatus() {
+  if (!automationStatus) return;
+
+  try {
+    const status = await fetchAdminJson("/api/admin/automation/status");
+    automationStatus.innerHTML = `
+      <article><strong>${escapeHtml(status.sources)}</strong><span>sources configurees</span></article>
+      <article><strong>${escapeHtml(status.rawItems)}</strong><span>items bruts collectes</span></article>
+      <article><strong>${escapeHtml(status.curatedJobs)}</strong><span>offres curees</span></article>
+      <article><strong>${escapeHtml(status.needsReview)}</strong><span>a moderer</span></article>
+    `;
+    if (status.lastCollectedAt) {
+      automationStatus.insertAdjacentHTML(
+        "beforeend",
+        `<article><strong>${escapeHtml(displayDate(status.lastCollectedAt))}</strong><span>derniere collecte</span></article>`
+      );
+    }
+  } catch {
+    automationStatus.innerHTML = `
+      <article><strong>Token</strong><span>requis pour lire le pipeline</span></article>
+    `;
+  }
+}
+
+async function loadSocialQueue() {
+  if (!socialQueueTable) return;
+
+  try {
+    const { queue, configured } = await fetchAdminJson("/api/admin/social/queue");
+    socialQueueTable.innerHTML = queue.length
+      ? queue
+          .slice(0, 20)
+          .map(
+            (item) => `
+              <tr>
+                <td>${escapeHtml(item.title)}</td>
+                <td>${escapeHtml(item.status)}</td>
+                <td>${escapeHtml(item.sourceName || "")}</td>
+              </tr>
+            `
+          )
+          .join("")
+      : `<tr><td colspan="3">Aucun post en attente.</td></tr>`;
+    if (socialAdminMessage) {
+      socialAdminMessage.textContent = `Facebook: ${configured.facebook ? "configure" : "non configure"} - Webhook: ${configured.webhook ? "configure" : "non configure"} - Live: ${configured.live ? "oui" : "non"}`;
+      socialAdminMessage.dataset.state = "info";
+    }
+  } catch {
+    socialQueueTable.innerHTML = `<tr><td colspan="3">Impossible de charger la file sociale.</td></tr>`;
   }
 }
 
@@ -652,18 +935,29 @@ function renderAdmin() {
 async function loadJobs() {
   if (!jobsList && !adminJobsList) return;
   try {
-    const response = await fetch("data/curated-jobs.json", { cache: "no-store" });
-    if (!response.ok) throw new Error("Impossible de charger les offres");
-    const loadedJobs = await response.json();
-    jobs = loadedJobs.length ? loadedJobs : fallbackJobs;
-  } catch (error) {
-    jobs = fallbackJobs;
-    if (resultsSummary) {
-      resultsSummary.textContent =
-        "Les offres locales sont affichees. Actualisez la page si la liste complete ne se charge pas.";
+    const apiResponse = await fetch("/api/jobs", { cache: "no-store" });
+    if (apiResponse.ok) {
+      const payload = await apiResponse.json();
+      jobs = payload.jobs?.length ? payload.jobs : fallbackJobs;
+    } else {
+      throw new Error("API jobs unavailable");
+    }
+  } catch {
+    try {
+      const response = await fetch("data/curated-jobs.json", { cache: "no-store" });
+      if (!response.ok) throw new Error("Impossible de charger les offres");
+      const loadedJobs = await response.json();
+      jobs = loadedJobs.length ? loadedJobs : fallbackJobs;
+    } catch (error) {
+      jobs = fallbackJobs;
+      if (resultsSummary) {
+        resultsSummary.textContent =
+          "Les offres locales sont affichees. Actualisez la page si la liste complete ne se charge pas.";
+      }
     }
   }
   hydrateSourceFilter();
+  renderPortalWidgets();
   renderJobs();
   renderAdmin();
 }
@@ -738,6 +1032,22 @@ jobsList?.addEventListener("click", (event) => {
   if (button?.dataset.action === "details" && window.matchMedia("(max-width: 900px)").matches) {
     jobDetail?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
+});
+
+featuredJobsCarousel?.addEventListener("click", (event) => {
+  const button = event.target.closest("button[data-action]");
+  const card = event.target.closest(".job-card");
+  const id = button?.dataset.id || card?.dataset.jobId;
+  if (!id) return;
+
+  if (button?.dataset.action === "save") {
+    if (savedJobs.has(id)) savedJobs.delete(id);
+    else savedJobs.add(id);
+  }
+
+  activeJobId = id;
+  renderJobs();
+  document.querySelector("#offres")?.scrollIntoView({ behavior: "smooth", block: "start" });
 });
 
 function validateLead(kind, data) {
@@ -836,6 +1146,18 @@ mainNav?.addEventListener("click", (event) => {
   mainNav.classList.remove("open");
 });
 
+document.addEventListener("click", (event) => {
+  const next = event.target.closest("[data-carousel-next]");
+  const prev = event.target.closest("[data-carousel-prev]");
+  const targetId = next?.dataset.carouselNext || prev?.dataset.carouselPrev;
+  if (!targetId) return;
+
+  const carousel = document.querySelector(`#${CSS.escape(targetId)}`);
+  if (!carousel) return;
+  const direction = next ? 1 : -1;
+  carousel.scrollBy({ left: direction * Math.max(280, carousel.clientWidth * 0.82), behavior: "smooth" });
+});
+
 exportLeadsButton?.addEventListener("click", exportLeadsCsv);
 
 clearDemoDataButton?.addEventListener("click", () => {
@@ -862,8 +1184,66 @@ document.querySelector("#runAutomationButton")?.addEventListener("click", async 
     });
     if (!response.ok) throw new Error("Automation refused");
     alert("Automation lancee cote serveur.");
+    await loadAutomationStatus();
   } catch {
     alert("Impossible de lancer l'automation. Verifie le token admin et le serveur dynamique.");
+  }
+});
+
+async function runAdminPost(path, body = {}) {
+  const response = await fetch(path, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${adminToken()}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+  const result = await response.json();
+  if (!response.ok) throw new Error(result.error || "Action refusee.");
+  return result;
+}
+
+document.querySelector("#syncDbButton")?.addEventListener("click", async () => {
+  try {
+    const result = await runAdminPost("/api/admin/db/sync");
+    alert(`DB locale synchronisee : ${result.jobs} offres, ${result.sources} sources.`);
+    await loadAutomationStatus();
+  } catch (error) {
+    alert(error.message || "Impossible de synchroniser la DB locale.");
+  }
+});
+
+document.querySelector("#generateSocialQueueButton")?.addEventListener("click", async () => {
+  try {
+    setFormState(document.body, socialAdminMessage, "Preparation des posts...", "info");
+    const result = await runAdminPost("/api/admin/social/queue");
+    setFormState(document.body, socialAdminMessage, result.output || "File preparee.", "success");
+    await loadSocialQueue();
+  } catch (error) {
+    setFormState(document.body, socialAdminMessage, error.message, "error");
+  }
+});
+
+document.querySelector("#dryRunSocialButton")?.addEventListener("click", async () => {
+  try {
+    setFormState(document.body, socialAdminMessage, "Test de publication...", "info");
+    const result = await runAdminPost("/api/admin/social/publish", { live: false });
+    setFormState(document.body, socialAdminMessage, result.output || "Dry-run termine.", "success");
+    await loadSocialQueue();
+  } catch (error) {
+    setFormState(document.body, socialAdminMessage, error.message, "error");
+  }
+});
+
+document.querySelector("#publishSocialButton")?.addEventListener("click", async () => {
+  try {
+    setFormState(document.body, socialAdminMessage, "Publication en cours...", "info");
+    const result = await runAdminPost("/api/admin/social/publish", { live: true });
+    setFormState(document.body, socialAdminMessage, result.output || "Publication terminee.", "success");
+    await loadSocialQueue();
+  } catch (error) {
+    setFormState(document.body, socialAdminMessage, error.message, "error");
   }
 });
 

@@ -2,21 +2,21 @@
   "categories": [
     [
       "Bureau",
-      27
+      9
+    ],
+    [
+      "Concours",
+      8
     ],
     [
       "ONG",
       3
-    ],
-    [
-      "Metier terrain",
-      2
     ]
   ],
   "cities": [
     [
       "Burkina Faso",
-      23
+      11
     ],
     [
       "Ouagadougou",
@@ -29,20 +29,24 @@
   ],
   "sources": [
     [
-      "LeFaso.net Recrutement",
-      12
-    ],
-    [
       "BFemploi",
-      7
+      8
     ],
     [
       "Emploiburkina",
       7
     ],
     [
+      "HumanitaireHub",
+      2
+    ],
+    [
       "UNjobs Burkina Faso",
-      6
+      2
+    ],
+    [
+      "LeFaso.net Recrutement",
+      1
     ]
   ]
 }

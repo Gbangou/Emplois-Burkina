@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Grille tarifaire - JobFaso</title>
+    <meta name="description" content="Tarifs JobFaso pour publier une offre, sponsoriser une categorie ou lancer une campagne de recrutement." />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="index.html" aria-label="Accueil JobFaso">
+        <span class="brand-mark">JF</span>
+        <span><strong>JobFaso</strong><small>Grille tarifaire</small></span>
+      </a>
+      <button class="menu-button" type="button" aria-expanded="false" aria-controls="mainNav">Menu</button>
+      <nav class="nav" id="mainNav" aria-label="Navigation principale">
+        <a href="jobs.html">Offres</a>
+        <a href="conseils.html">Conseils</a>
+        <a href="grille-tarifaire.html">Tarifs</a>
+        <a href="contacts.html">Contact</a>
+      </nav>
+      <a class="nav-action" href="contacts.html">Demander un devis</a>
+    </header>
+
+    <main>
+      <section class="page-hero">
+        <p class="eyebrow">Tarifs</p>
+        <h1>Une grille simple pour recruter et gagner en visibilite.</h1>
+        <p class="lead">
+          Les candidats consultent gratuitement les offres. Les revenus viennent
+          des recruteurs, sponsors, formations et services professionnels.
+        </p>
+      </section>
+
+      <section class="section band">
+        <div class="pricing-grid">
+          <article class="price-card highlighted">
+            <span>Publication prioritaire</span>
+            <strong>25 000 FCFA</strong>
+            <p>Correction, mise en avant accueil, page fiche et diffusion sociale.</p>
+          </article>
+          <article class="price-card">
+            <span>Publication standard</span>
+            <strong>10 000 FCFA</strong>
+            <p>Ajout manuel, verification de base et fiche publique.</p>
+          </article>
+          <article class="price-card">
+            <span>Sponsor categorie</span>
+            <strong>100 000 FCFA / mois</strong>
+            <p>Visibilite sur ONG, concours, stages, finance, IT ou metiers terrain.</p>
+          </article>
+          <article class="price-card">
+            <span>Campagne recrutement</span>
+            <strong>150 000 FCFA+</strong>
+            <p>Landing page, collecte de candidatures, shortlisting et reporting.</p>
+          </article>
+          <article class="price-card">
+            <span>Formation partenaire</span>
+            <strong>Commission</strong>
+            <p>Promotion d'une formation utile avec tracking des leads.</p>
+          </article>
+          <article class="price-card">
+            <span>Rapport marche</span>
+            <strong>50 000 FCFA+</strong>
+            <p>Analyse agregee des postes, villes, secteurs et competences demandees.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section split">
+        <div>
+          <p class="eyebrow">Demande commerciale</p>
+          <h2>Recevoir une proposition adaptee</h2>
+          <p>
+            Pour une offre urgente, une campagne multi-postes ou un partenariat,
+            envoyez le besoin et le budget indicatif.
+          </p>
+        </div>
+        <form class="form-card" id="sponsorForm" data-lead-type="sponsor">
+          <label>Organisation<input name="organization" required placeholder="Nom de l'organisation" /></label>
+          <label>Contact<input name="contact" required placeholder="Telephone ou email" /></label>
+          <label>
+            Besoin
+            <select name="need" required>
+              <option value="">Choisir</option>
+              <option>Publier une offre</option>
+              <option>Sponsoriser une categorie</option>
+              <option>Promouvoir une formation</option>
+              <option>Recruter avec preselection</option>
+            </select>
+          </label>
+          <label>Message<textarea name="message" rows="4" placeholder="Decrivez le besoin."></textarea></label>
+          <button type="submit">Envoyer</button>
+          <p class="form-note" id="sponsorMessage"></p>
+        </form>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <strong>JobFaso</strong>
+      <span><a href="annonceurs.html">Solutions recruteurs</a> - <a href="contacts.html">Contact</a></span>
+    </footer>
+    <script src="app.js"></script>
+  </body>
+</html>

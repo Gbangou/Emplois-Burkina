@@ -5,6 +5,7 @@ const steps = [
   ["Curation et nettoyage", "scripts/curate-raw-items.mjs"],
   ["Generation SEO", "scripts/generate-seo-pages.mjs"],
   ["Generation croissance", "scripts/generate-growth-assets.mjs"],
+  ["Preparation reseaux sociaux", "scripts/generate-social-queue.mjs"],
 ];
 
 function runNodeScript(label, script) {
