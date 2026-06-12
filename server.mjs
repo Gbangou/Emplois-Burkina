@@ -31,6 +31,10 @@ const publicPaths = new Set([
   "/admin.html",
   "/sitemap.xml",
   "/robots.txt",
+  "/llms.txt",
+  "/site.webmanifest",
+  "/indexnow-urls.txt",
+  "/indexnow-key.txt",
 ]);
 const publicDataPaths = new Set(["/data/curated-jobs.json", "/data/sources.json"]);
 
@@ -47,6 +51,7 @@ const contentTypes = {
   ".jpeg": "image/jpeg",
   ".webp": "image/webp",
   ".ico": "image/x-icon",
+  ".webmanifest": "application/manifest+json; charset=utf-8",
 };
 
 const rateBuckets = new Map();
@@ -159,6 +164,7 @@ function isPublicStaticPath(pathname) {
   if (publicPaths.has(pathname)) return true;
   if (publicDataPaths.has(pathname)) return true;
   if (pathname.startsWith("/pages/") && pathname.endsWith(".html")) return true;
+  if (pathname.startsWith("/assets/")) return true;
   if (pathname === "/app.js" || pathname === "/styles.css") return true;
   return false;
 }

@@ -1,0 +1,16 @@
+# JobFaso
+
+Offres d'emploi, concours, stages, missions locales et alertes WhatsApp au Burkina Faso.
+
+## Core pages
+- https://jobfaso.com/index.html
+- https://jobfaso.com/jobs.html
+- https://jobfaso.com/conseils.html
+- https://jobfaso.com/grille-tarifaire.html
+- https://jobfaso.com/contacts.html
+
+## Fresh job feeds
+- https://jobfaso.com/sitemap.xml
+- https://jobfaso.com/data/curated-jobs.json
+
+JobFaso aggregates public job opportunities, concours, internships and local missions in Burkina Faso. Candidates should always verify official sources before applying.

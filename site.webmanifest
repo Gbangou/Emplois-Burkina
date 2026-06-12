@@ -1,0 +1,15 @@
+{
+  "name": "JobFaso - Emploi Burkina Faso",
+  "short_name": "JobFaso",
+  "description": "Offres d'emploi, concours, stages, missions locales et alertes WhatsApp au Burkina Faso.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f7faf7",
+  "theme_color": "#0f6b3d",
+  "lang": "fr-BF",
+  "categories": [
+    "business",
+    "productivity"
+  ]
+}

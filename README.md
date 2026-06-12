@@ -120,6 +120,36 @@ veille `manual_only` : Facebook, LinkedIn posts, WhatsApp/Telegram et groupes
 artisans doivent passer par API autorisee, partenariat, formulaire de
 soumission ou validation admin avant publication.
 
+## SEO et indexation
+
+Generer toutes les pages SEO, metas sociales, sitemap, robots, manifest,
+`llms.txt` et liste IndexNow :
+
+```bash
+npm run growth
+```
+
+Fichiers publics importants :
+
+- `sitemap.xml` pour Google, Bing, Yandex et autres moteurs.
+- `robots.txt` avec lien sitemap et blocage des zones admin/API.
+- `llms.txt` pour les crawlers IA.
+- `site.webmanifest` pour l'identite web app.
+- `indexnow-urls.txt` pour la soumission rapide des URLs.
+
+Apres deploiement, ajoute le domaine dans Google Search Console et Bing
+Webmaster Tools, puis soumets `https://jobfaso.com/sitemap.xml`.
+
+Pour IndexNow :
+
+```bash
+$env:INDEXNOW_KEY="cle-indexnow-fournie-par-le-moteur"
+npm run seo:indexnow
+```
+
+Le script cree `indexnow-key.txt` localement et soumet les URLs de
+`indexnow-urls.txt`. La cle reste ignoree par Git.
+
 ## Prochaines etapes recommandees
 
 1. Remplacer les donnees demo par une base Supabase.

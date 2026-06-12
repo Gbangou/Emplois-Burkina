@@ -10,6 +10,9 @@ const CITIES_DIR = new URL("pages/villes/", ROOT);
 const GUIDES_DIR = new URL("pages/guides/", ROOT);
 const SITEMAP_FILE = new URL("sitemap.xml", ROOT);
 const ROBOTS_FILE = new URL("robots.txt", ROOT);
+const LLM_FILE = new URL("llms.txt", ROOT);
+const MANIFEST_FILE = new URL("site.webmanifest", ROOT);
+const INDEXNOW_FILE = new URL("indexnow-urls.txt", ROOT);
 
 const categoryGuides = {
   Bureau: {
@@ -248,6 +251,26 @@ function absolute(config, path) {
   return `${config.baseUrl.replace(/\/$/, "")}/${path.replace(/^\//, "")}`;
 }
 
+function seoImage(config) {
+  return `${config.baseUrl.replace(/\/$/, "")}/assets/jobfaso-og.svg`;
+}
+
+function baseOrganizationSchema(config) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: config.siteName || "JobFaso",
+    url: config.baseUrl,
+    email: config.contactEmail,
+    areaServed: config.country || "Burkina Faso",
+    sameAs: [config.social?.facebook, config.social?.linkedin, config.social?.whatsappChannel].filter(Boolean),
+  };
+}
+
+function withGraph(page, extra = []) {
+  return JSON.stringify([...(Array.isArray(page.structuredData) ? page.structuredData : [page.structuredData].filter(Boolean)), ...extra]);
+}
+
 function layout(config, page) {
   const canonical = absolute(config, page.path);
   const adsense = config.adsenseClient
@@ -261,14 +284,26 @@ function layout(config, page) {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>${escapeHtml(page.title)}</title>
     <meta name="description" content="${escapeHtml(page.description)}" />
+    <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" />
+    <meta name="theme-color" content="#0f6b3d" />
     <link rel="canonical" href="${escapeHtml(canonical)}" />
+    <link rel="alternate" hreflang="fr-BF" href="${escapeHtml(canonical)}" />
+    <link rel="alternate" hreflang="x-default" href="${escapeHtml(canonical)}" />
+    <link rel="manifest" href="../../site.webmanifest" />
     <meta property="og:title" content="${escapeHtml(page.title)}" />
     <meta property="og:description" content="${escapeHtml(page.description)}" />
     <meta property="og:url" content="${escapeHtml(canonical)}" />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content="${escapeHtml(page.ogType || "website")}" />
+    <meta property="og:locale" content="fr_BF" />
+    <meta property="og:site_name" content="${escapeHtml(config.siteName || "JobFaso")}" />
+    <meta property="og:image" content="${escapeHtml(seoImage(config))}" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="${escapeHtml(page.title)}" />
+    <meta name="twitter:description" content="${escapeHtml(page.description)}" />
+    <meta name="twitter:image" content="${escapeHtml(seoImage(config))}" />
     ${adsense}
     <link rel="stylesheet" href="../../styles.css" />
-    ${page.structuredData ? `<script type="application/ld+json">${JSON.stringify(page.structuredData)}</script>` : ""}
+    <script type="application/ld+json">${withGraph(page, [baseOrganizationSchema(config)])}</script>
   </head>
   <body>
     <header class="topbar">
@@ -447,7 +482,17 @@ async function cleanupGeneratedDirectory(directory, urls, prefix) {
 async function main() {
   const jobs = JSON.parse(await readFile(JOBS_FILE, "utf8"));
   const config = JSON.parse(await readFile(CONFIG_FILE, "utf8"));
-  const urls = ["index.html", "annonceurs.html", "contact.html", "privacy.html", "terms.html"];
+  const urls = [
+    "index.html",
+    "jobs.html",
+    "conseils.html",
+    "grille-tarifaire.html",
+    "annonceurs.html",
+    "contacts.html",
+    "contact.html",
+    "privacy.html",
+    "terms.html",
+  ];
 
   await mkdir(PAGES_DIR, { recursive: true });
   await mkdir(JOBS_DIR, { recursive: true });
@@ -463,6 +508,7 @@ async function main() {
       title: `${job.title} - ${job.city || "Burkina Faso"} | JobFaso`,
       description: `${job.title} chez ${job.company || job.sourceName || "une organisation"} au ${job.city || "Burkina Faso"}. Consultez la source officielle et recevez les alertes JobFaso.`,
       structuredData: jobStructuredData(config, job, path),
+      ogType: "article",
       body: `<main>
         <section class="page-hero compact detail-hero">
           <p class="eyebrow"><a href="../../index.html">Accueil</a> / <a href="../../jobs.html">Offres</a> / ${escapeHtml(job.category || "Offre")}</p>
@@ -622,6 +668,8 @@ ${urls
     (path) => `  <url>
     <loc>${absolute(config, path)}</loc>
     <lastmod>${today}</lastmod>
+    <changefreq>${path.startsWith("pages/jobs/") ? "daily" : "weekly"}</changefreq>
+    <priority>${path === "index.html" ? "1.0" : path === "jobs.html" ? "0.9" : path.startsWith("pages/jobs/") ? "0.8" : "0.7"}</priority>
   </url>`
   )
   .join("\n")}
@@ -629,7 +677,37 @@ ${urls
 `;
 
   await writeFile(SITEMAP_FILE, sitemap, "utf8");
-  await writeFile(ROBOTS_FILE, `User-agent: *\nAllow: /\n\nSitemap: ${absolute(config, "sitemap.xml")}\n`, "utf8");
+  await writeFile(
+    ROBOTS_FILE,
+    `User-agent: *\nAllow: /\nDisallow: /admin.html\nDisallow: /api/\nDisallow: /data/runtime/\nDisallow: /data/social/\n\nSitemap: ${absolute(config, "sitemap.xml")}\nHost: ${new URL(config.baseUrl).host}\n`,
+    "utf8"
+  );
+  await writeFile(
+    LLM_FILE,
+    `# ${config.siteName || "JobFaso"}\n\n${config.description}\n\n## Core pages\n- ${absolute(config, "index.html")}\n- ${absolute(config, "jobs.html")}\n- ${absolute(config, "conseils.html")}\n- ${absolute(config, "grille-tarifaire.html")}\n- ${absolute(config, "contacts.html")}\n\n## Fresh job feeds\n- ${absolute(config, "sitemap.xml")}\n- ${absolute(config, "data/curated-jobs.json")}\n\nJobFaso aggregates public job opportunities, concours, internships and local missions in Burkina Faso. Candidates should always verify official sources before applying.\n`,
+    "utf8"
+  );
+  await writeFile(
+    MANIFEST_FILE,
+    `${JSON.stringify(
+      {
+        name: `${config.siteName || "JobFaso"} - Emploi Burkina Faso`,
+        short_name: config.siteName || "JobFaso",
+        description: config.description,
+        start_url: "/",
+        scope: "/",
+        display: "standalone",
+        background_color: "#f7faf7",
+        theme_color: "#0f6b3d",
+        lang: "fr-BF",
+        categories: ["business", "productivity"],
+      },
+      null,
+      2
+    )}\n`,
+    "utf8"
+  );
+  await writeFile(INDEXNOW_FILE, `${urls.map((path) => absolute(config, path)).join("\n")}\n`, "utf8");
 
   console.log(`Generated SEO pages: ${urls.length}`);
   console.log(`Sitemap: ${SITEMAP_FILE.pathname}`);
