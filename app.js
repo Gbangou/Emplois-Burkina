@@ -106,6 +106,8 @@ const socialQueueTable = document.querySelector("#socialQueueTable");
 const socialAdminMessage = document.querySelector("#socialAdminMessage");
 const dateReviewTable = document.querySelector("#dateReviewTable");
 const automationStatus = document.querySelector("#automationStatus");
+const analyticsSummary = document.querySelector("#analyticsSummary");
+const analyticsTable = document.querySelector("#analyticsTable");
 const employerCarousel = document.querySelector("#employerCarousel");
 const featuredJobsCarousel = document.querySelector("#featuredJobsCarousel");
 const profileCarousel = document.querySelector("#profileCarousel");
@@ -168,6 +170,29 @@ function writeStorageArray(key, items) {
   localStorage.setItem(key, JSON.stringify(items));
 }
 
+function sendServerEvent(type, payload = {}) {
+  const eventPayload = {
+    type,
+    label: payload.label || "",
+    target: payload.href || payload.target || "",
+    path: window.location.pathname,
+    metadata: payload,
+  };
+  const body = JSON.stringify(eventPayload);
+
+  if (navigator.sendBeacon) {
+    const sent = navigator.sendBeacon("/api/events", new Blob([body], { type: "application/json" }));
+    if (sent) return;
+  }
+
+  fetch("/api/events", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body,
+    keepalive: true,
+  }).catch(() => {});
+}
+
 function recordEvent(type, payload = {}) {
   const events = readStorageArray(EVENTS_KEY);
   events.unshift({
@@ -177,6 +202,7 @@ function recordEvent(type, payload = {}) {
     createdAt: new Date().toISOString(),
   });
   writeStorageArray(EVENTS_KEY, events.slice(0, 250));
+  sendServerEvent(type, payload);
 }
 
 function formatFcfa(value) {
@@ -604,7 +630,7 @@ function renderDetail(job) {
   );
   const sourceLink =
     job.sourceUrl && job.sourceUrl !== "#"
-      ? `<a class="nav-action inline-action" href="${escapeHtml(job.sourceUrl)}" target="_blank" rel="noopener">Ouvrir la source</a>`
+      ? `<a class="nav-action inline-action" href="${escapeHtml(job.sourceUrl)}" target="_blank" rel="noopener" data-track="source_apply_click" data-track-label="${escapeHtml(job.title)}">Ouvrir la source</a>`
       : "";
 
   jobDetail.innerHTML = `
@@ -819,9 +845,51 @@ async function loadServerAdminData() {
     renderAdmin();
     await loadSocialQueue();
     await loadAutomationStatus();
+    await loadAnalyticsSummary();
     return true;
   } catch {
     return false;
+  }
+}
+
+async function loadAnalyticsSummary() {
+  if (!analyticsSummary && !analyticsTable) return;
+
+  try {
+    const summary = await fetchAdminJson("/api/admin/analytics/summary");
+    const events = summary.events || {};
+    const leads = summary.leads || {};
+
+    if (analyticsSummary) {
+      analyticsSummary.innerHTML = `
+        <article><strong>${escapeHtml(events.last7Days || 0)}</strong><span>evenements 7 jours</span></article>
+        <article><strong>${escapeHtml(events.sponsorSignals || 0)}</strong><span>signaux sponsor</span></article>
+        <article><strong>${escapeHtml(leads.last7Days || 0)}</strong><span>leads 7 jours</span></article>
+        <article><strong>${escapeHtml(formatFcfa(leads.pipelineValue || 0))}</strong><span>pipeline total</span></article>
+      `;
+    }
+
+    if (analyticsTable) {
+      analyticsTable.innerHTML = events.topTypes?.length
+        ? events.topTypes
+            .map(
+              ([type, count]) => `
+                <tr>
+                  <td>${escapeHtml(type)}</td>
+                  <td>${escapeHtml(count)}</td>
+                </tr>
+              `,
+            )
+            .join("")
+        : `<tr><td colspan="2">Aucun signal recent.</td></tr>`;
+    }
+  } catch {
+    if (analyticsSummary) {
+      analyticsSummary.innerHTML = `
+        <article><strong>Token</strong><span>requis pour les analytics</span></article>
+      `;
+    }
+    if (analyticsTable) analyticsTable.innerHTML = `<tr><td colspan="2">Token requis.</td></tr>`;
   }
 }
 
@@ -1034,6 +1102,11 @@ async function loadSources() {
 if (quickSearch) {
   quickSearch.addEventListener("submit", (event) => {
     event.preventDefault();
+    recordEvent("quick_search", {
+      label: searchInput?.value || "recherche accueil",
+      city: cityFilter?.value || "",
+      category: activeCategory,
+    });
     resetJobsPage();
     renderJobs();
     document.querySelector("#offres")?.scrollIntoView({ behavior: "smooth" });
@@ -1046,6 +1119,10 @@ if (quickSearch) {
     renderJobs();
   });
   control?.addEventListener("change", () => {
+    recordEvent("job_filter_changed", {
+      label: control.id || control.name || "filtre",
+      value: control.type === "checkbox" ? String(control.checked) : control.value,
+    });
     resetJobsPage();
     renderJobs();
   });
@@ -1056,6 +1133,7 @@ filterButtons.forEach((button) => {
     filterButtons.forEach((item) => item.classList.remove("active"));
     button.classList.add("active");
     activeCategory = button.dataset.category || "";
+    recordEvent("category_filter_clicked", { label: activeCategory || "Toutes" });
     resetJobsPage();
     renderJobs();
   });
@@ -1079,9 +1157,11 @@ jobsList?.addEventListener("click", (event) => {
   if (button?.dataset.action === "save") {
     if (savedJobs.has(id)) savedJobs.delete(id);
     else savedJobs.add(id);
+    recordEvent("job_saved", { label: id, saved: String(savedJobs.has(id)) });
   }
 
   activeJobId = id;
+  recordEvent("job_selected", { label: id, source: jobs.find((job) => job.id === id)?.sourceName || "" });
   renderJobs();
   if (button?.dataset.action === "details" && window.matchMedia("(max-width: 900px)").matches) {
     jobDetail?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -1097,9 +1177,11 @@ featuredJobsCarousel?.addEventListener("click", (event) => {
   if (button?.dataset.action === "save") {
     if (savedJobs.has(id)) savedJobs.delete(id);
     else savedJobs.add(id);
+    recordEvent("job_saved", { label: id, saved: String(savedJobs.has(id)), placement: "featured" });
   }
 
   activeJobId = id;
+  recordEvent("job_selected", { label: id, placement: "featured" });
   renderJobs();
   document.querySelector("#offres")?.scrollIntoView({ behavior: "smooth", block: "start" });
 });

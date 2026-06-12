@@ -352,6 +352,46 @@ function validateLead(payload) {
   };
 }
 
+function sanitizeEventPayload(payload = {}) {
+  const metadata = payload.metadata && typeof payload.metadata === "object" ? payload.metadata : {};
+  const cleanMetadata = {};
+
+  for (const [key, value] of Object.entries(metadata).slice(0, 12)) {
+    cleanMetadata[cleanText(key, 50)] = cleanText(value, 300);
+  }
+
+  return {
+    eventType: cleanText(payload.type || payload.eventType, 80) || "interaction",
+    label: cleanText(payload.label, 160),
+    path: cleanText(payload.path, 240),
+    target: cleanText(payload.target || payload.href, 400),
+    metadata: cleanMetadata,
+  };
+}
+
+function anonymizedHash(value = "") {
+  return createHash("sha256").update(`${process.env.JOBFASO_EVENT_SALT || "jobfaso"}:${value}`).digest("hex").slice(0, 20);
+}
+
+function summarizeEvents(events = []) {
+  const since = Date.now() - 7 * 24 * 60 * 60 * 1000;
+  const recent = events.filter((event) => new Date(event.createdAt || 0).getTime() >= since);
+  const byType = countBy(recent, (event) => event.type || event.eventType);
+  const byPath = countBy(recent, (event) => event.payload?.path || event.path || "inconnu");
+  const sponsorEvents = recent.filter((event) =>
+    ["sponsor_click", "ad_impression", "ad_click", "outbound_click", "lead_created"].includes(event.type || event.eventType),
+  );
+
+  return {
+    total: events.length,
+    last7Days: recent.length,
+    sponsorSignals: sponsorEvents.length,
+    topTypes: Object.entries(byType).sort((a, b) => b[1] - a[1]).slice(0, 12),
+    topPaths: Object.entries(byPath).sort((a, b) => b[1] - a[1]).slice(0, 12),
+    latest: events.slice(0, 20),
+  };
+}
+
 function validIsoDate(value) {
   if (!value || !/^\d{4}-\d{2}-\d{2}$/.test(String(value))) return "";
   const date = new Date(`${value}T00:00:00Z`);
@@ -540,6 +580,37 @@ async function handleApi(req, res, url) {
     return;
   }
 
+  if (url.pathname === "/api/events" && req.method === "POST") {
+    if (!rateLimit(req, res, "event", 90)) return;
+    if (!sameOrigin(req)) {
+      sendJson(res, 403, { error: "Origine refusee." });
+      return;
+    }
+
+    try {
+      const payload = sanitizeEventPayload(await readBody(req));
+      const events = await readJson(EVENTS_FILE, []);
+      events.unshift({
+        id: randomUUID(),
+        type: payload.eventType,
+        payload: {
+          label: payload.label,
+          path: payload.path,
+          target: payload.target,
+          metadata: payload.metadata,
+        },
+        visitorHash: anonymizedHash(clientIp(req)),
+        userAgentHash: anonymizedHash(req.headers["user-agent"] || ""),
+        createdAt: new Date().toISOString(),
+      });
+      await writeJson(EVENTS_FILE, events.slice(0, 10000));
+      sendJson(res, 202, { ok: true });
+    } catch {
+      sendJson(res, 400, { error: "Evenement invalide." });
+    }
+    return;
+  }
+
   if (url.pathname === "/api/admin/leads" && req.method === "GET") {
     if (!requireAdmin(req, res)) return;
     const leads = await readJson(LEADS_FILE, []);
@@ -551,6 +622,24 @@ async function handleApi(req, res, url) {
     if (!requireAdmin(req, res)) return;
     const events = await readJson(EVENTS_FILE, []);
     sendJson(res, 200, { events });
+    return;
+  }
+
+  if (url.pathname === "/api/admin/analytics/summary" && req.method === "GET") {
+    if (!requireAdmin(req, res)) return;
+    const events = await readJson(EVENTS_FILE, []);
+    const leads = await readJson(LEADS_FILE, []);
+    const pipelineValue = leads.reduce((sum, lead) => sum + (Number(lead.valueFcfa) || 0), 0);
+    sendJson(res, 200, {
+      events: summarizeEvents(events),
+      leads: {
+        total: leads.length,
+        last7Days: leads.filter((lead) => new Date(lead.createdAt || 0).getTime() >= Date.now() - 7 * 24 * 60 * 60 * 1000)
+          .length,
+        pipelineValue,
+        byKind: Object.entries(countBy(leads, (lead) => lead.kind)).sort((a, b) => b[1] - a[1]),
+      },
+    });
     return;
   }
 

@@ -14,6 +14,7 @@ JobFaso est une web app emploi pour le Burkina Faso :
 - collecte multi-sources avec moderation ;
 - pages SEO indexables par ville, categorie, guide et fiche offre ;
 - alertes candidats, leads recruteurs et espaces sponsorises ;
+- analytics anonymisees pour mesurer audience, clics sponsorises et pipeline ;
 - base locale fonctionnelle en developpement, puis migration PostgreSQL/Supabase.
 
 ## Frontend
@@ -28,7 +29,7 @@ Pages principales :
 - `grille-tarifaire.html` : packs recruteurs, sponsorisation, publicite.
 - `contacts.html` et `contact.html` : contact, signalement, partenariat.
 - `admin.html` : admin local avec token serveur, automation, DB sync, leads,
-  social queue.
+  analytics commerciales, social queue.
 
 Categories visibles :
 
@@ -60,7 +61,9 @@ Routes utiles :
 - `/api/db/status`
 - `/api/jobs`
 - `/api/leads`
+- `/api/events`
 - `/api/admin/db/sync`
+- `/api/admin/analytics/summary`
 - `/api/admin/automation`
 - `/api/admin/social/queue`
 - `/api/admin/social/publish`
@@ -72,6 +75,7 @@ Securite deja presente :
 - rate limiting ;
 - verification origine sur POST ;
 - token admin via `JOBFASO_ADMIN_TOKEN` ;
+- analytics anonymisees par hash avec sel `JOBFASO_EVENT_SALT` ;
 - runtime ignore par Git ;
 - pas de secrets commites.
 
