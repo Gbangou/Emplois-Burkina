@@ -18,9 +18,13 @@ JobFaso doit rester gratuit pour les chercheurs d'emploi. Les revenus viennent d
 
 | Element | Volume |
 | --- | ---: |
-| Bureau | 9 |
-| Concours | 8 |
-| ONG | 3 |
+| Bureau | 8 |
+| ONG | 4 |
+| Finance et administration | 3 |
+| Metiers terrain et informels | 2 |
+| BTP et chantier | 1 |
+| Commerce et vente | 1 |
+| Transport et logistique | 1 |
 
 ## Opportunites par ville
 

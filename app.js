@@ -49,7 +49,7 @@ const fallbackJobs = [
     title: "Macon qualifie",
     company: "Chantier prive",
     city: "Bobo-Dioulasso",
-    category: "Metier terrain",
+    category: "Metiers terrain et informels",
     type: "Mission",
     salary: "8k - 15k FCFA / jour",
     deadline: "Cette semaine",
@@ -471,12 +471,15 @@ function renderPortalWidgets() {
 function getSourceTypeLabel(type) {
   const labels = {
     aggregator: "Agregateur",
+    classifieds: "Petites annonces",
     government: "Officiel",
     job_board: "Portail emploi",
+    marketplace: "Marketplace",
     media: "Media",
     ngo: "ONG / ONU",
     organization: "Organisation",
     recruiter: "Cabinet RH",
+    social_group: "Groupe social",
     social_jobs: "Reseau pro",
   };
 

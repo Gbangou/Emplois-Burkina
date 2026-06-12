@@ -109,6 +109,105 @@ const nonBurkinaCountryPatterns = [
 const nonBurkinaTextPattern =
   /benin|burundi|cameroun|central african republic|centrafrique|congo|cote d'ivoire|cote-d-ivoire|gabon|guinee|mali|mauritanie|niger|nigeria|republique centrafricaine|senegal|togo/;
 
+const categoryRules = [
+  {
+    category: "Stage",
+    type: "Stage",
+    keywords: ["stage", "stagiaire", "internship", "apprenti", "apprentissage"],
+  },
+  {
+    category: "ONG",
+    type: "Mission",
+    keywords: [
+      "ong",
+      "humanitaire",
+      "programme",
+      "project",
+      "officer",
+      "coordinateur",
+      "unicef",
+      "unhcr",
+      "pnud",
+      "world food",
+      "wfp",
+      "nrc",
+      "drc",
+      "projet",
+      "suivi-evaluation",
+      "bailleur",
+    ],
+  },
+  {
+    category: "Metiers terrain et informels",
+    type: "Mission",
+    keywords: [
+      "aide macon",
+      "apprenti",
+      "artisan",
+      "balayeur",
+      "blanchisseur",
+      "boucher",
+      "boulanger",
+      "carreleur",
+      "charpentier",
+      "chauffeur",
+      "coiffeur",
+      "couturier",
+      "cuisinier",
+      "electricien",
+      "ferrailleur",
+      "gardien",
+      "journali",
+      "macon",
+      "mecanicien",
+      "menuisier",
+      "nettoyage",
+      "ouvrier",
+      "peintre",
+      "plombier",
+      "soudeur",
+      "tailleur",
+      "terrain",
+      "vigile",
+    ],
+  },
+  {
+    category: "BTP et chantier",
+    type: "Mission",
+    keywords: ["btp", "chantier", "construction", "genie civil", "topographe", "conducteur travaux", "climatisation"],
+  },
+  {
+    category: "Technique et maintenance",
+    type: "CDD",
+    keywords: ["technicien", "maintenance", "reseau", "informatique", "developpeur", "electricite", "froid", "climatisation"],
+  },
+  {
+    category: "Transport et logistique",
+    type: "CDD",
+    keywords: ["logistique", "magasinier", "stock", "approvisionnement", "livreur", "conducteur", "fleet", "transport"],
+  },
+  {
+    category: "Commerce et vente",
+    type: "CDD",
+    keywords: ["commercial", "vente", "vendeur", "caissier", "guichetier", "marketing", "client", "recouvrement"],
+  },
+  {
+    category: "Finance et administration",
+    type: "CDD",
+    keywords: ["comptable", "finance", "administratif", "juridique", "secretaire", "assistant", "gestionnaire"],
+  },
+  {
+    category: "Sante",
+    type: "CDD",
+    keywords: ["medecin", "infirmier", "pharmacien", "sage-femme", "sante", "medical", "clinique"],
+  },
+  {
+    category: "Concours",
+    type: "Concours",
+    keywords: ["concours", "fonction publique", "enaref", "police", "douane", "armee", "gendarmerie"],
+  },
+];
+
 function normalize(value) {
   return String(value || "")
     .toLowerCase()
@@ -163,14 +262,44 @@ function normalizeDateFields(item) {
 }
 
 function inferCategory(item) {
-  const text = normalize(`${item.title} ${item.url} ${item.excerpt}`);
+  const titleText = normalize(`${item.title} ${item.type}`);
+  const bodyText = normalize(`${item.company} ${item.excerpt}`);
 
-  if (/concours|fonction publique|enaref|police|douane|armee/.test(text)) return "Concours";
-  if (/stage|stagiaire|internship/.test(text)) return "Stage";
-  if (/ong|humanitaire|programme|project|officer|coordinateur|unicef|unhcr|pnud|world food|wfp/.test(text)) return "ONG";
-  if (/macon|plombier|mecanicien|chauffeur|electricien|technicien|ouvrier|terrain/.test(text)) return "Metier terrain";
+  for (const rule of categoryRules) {
+    if (rule.keywords.some((keyword) => titleText.includes(normalize(keyword)))) return rule.category;
+  }
+
+  for (const rule of categoryRules.filter((entry) => entry.category !== "Concours")) {
+    const hits = rule.keywords.filter((keyword) => bodyText.includes(normalize(keyword))).length;
+    if (hits >= 2) return rule.category;
+  }
 
   return "Bureau";
+}
+
+function inferType(item, category) {
+  const titleText = normalize(`${item.title} ${item.type}`);
+  const bodyText = normalize(`${item.type} ${item.excerpt}`);
+  if (/cdi|contrat a duree indeterminee/.test(bodyText) || /cdi/.test(titleText)) return "CDI";
+  if (/cdd|contrat a duree determinee/.test(bodyText) || /cdd/.test(titleText)) return "CDD";
+  if (/consultant|consultation|appel a propositions|appel d.offres/.test(titleText)) return "Consultation";
+  if (/stage|stagiaire|internship|apprenti/.test(titleText)) return "Stage";
+  if (/concours/.test(titleText)) return "Concours";
+  const rule = categoryRules.find((entry) => entry.category === category);
+  return item.type || rule?.type || "A verifier";
+}
+
+function inferTags(item, category, city) {
+  const text = normalize(`${item.title} ${item.excerpt}`);
+  const tags = new Set([category, city, item.sourceName].filter(Boolean));
+  for (const rule of categoryRules) {
+    for (const keyword of rule.keywords) {
+      if (text.includes(normalize(keyword))) tags.add(keyword);
+      if (tags.size >= 8) break;
+    }
+    if (tags.size >= 8) break;
+  }
+  return [...tags].slice(0, 8);
 }
 
 function inferCity(item) {
@@ -214,6 +343,9 @@ function isLikelyJobTitle(item) {
   if (/responsable|assistant|charge|chef|directeur|manager|agent|technicien|commercial|magasinier|comptable|coordinateur|specialiste|officer|enqueteur|webdesigner|infographe/.test(title)) {
     return true;
   }
+  if (/artisan|chauffeur|conducteur|cuisinier|electricien|gardien|macon|mecanicien|menuisier|ouvrier|peintre|plombier|soudeur|tailleur|vigile/.test(title)) {
+    return true;
+  }
 
   return item.sourceId !== "rmo-burkina";
 }
@@ -233,6 +365,7 @@ function curate(items) {
 
     const category = inferCategory(item);
     const city = inferCity(item);
+    const type = inferType(item, category);
     const softKey = normalize(`${item.title} ${item.company || item.sourceName} ${city}`).replace(/[^a-z0-9]+/g, "");
     const dateFields = normalizeDateFields(item);
 
@@ -248,7 +381,7 @@ function curate(items) {
       company: item.company || item.sourceName,
       city,
       category,
-      type: item.type || (category === "Concours" ? "Concours" : "A verifier"),
+      type,
       salary: "Non communique",
       deadline: dateFields.deadline,
       openingDate: dateFields.openingDate,
@@ -259,7 +392,7 @@ function curate(items) {
       canonicalUrl: item.url,
       riskScore: 0,
       confidenceScore: item.excerpt ? 70 : 45,
-      tags: [category, item.sourceName].filter(Boolean),
+      tags: inferTags(item, category, city),
       status: "needs_review",
       excerpt: decodeHtml(item.excerpt || "").slice(0, 900),
       collectedAt: item.collectedAt,

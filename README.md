@@ -107,6 +107,19 @@ Les sources qui bloquent la collecte ou imposent des limites sont conservees
 dans le journal de pipeline. Le site publie uniquement les donnees obtenues
 proprement et affiche les dates de cloture quand elles sont disponibles.
 
+## Categorisation et metiers informels
+
+La curation classe les offres par domaines : bureau, ONG, concours, stage,
+BTP, technique, logistique, commerce, finance/admin, sante et
+`Metiers terrain et informels`. Cette derniere categorie capte notamment les
+plombiers, soudeurs, macons, menuisiers, mecaniciens, chauffeurs, gardiens,
+ouvriers, peintres, tailleurs et autres missions locales.
+
+Les reseaux sociaux et groupes communautaires sont integres comme sources de
+veille `manual_only` : Facebook, LinkedIn posts, WhatsApp/Telegram et groupes
+artisans doivent passer par API autorisee, partenariat, formulaire de
+soumission ou validation admin avant publication.
+
 ## Prochaines etapes recommandees
 
 1. Remplacer les donnees demo par une base Supabase.

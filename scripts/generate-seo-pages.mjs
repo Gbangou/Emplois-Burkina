@@ -32,10 +32,40 @@ const categoryGuides = {
     intro:
       "Decouvrez les stages pour jeunes diplomes, etudiants et profils en debut de carriere.",
   },
-  "Metier terrain": {
-    title: "Metiers terrain et missions locales au Burkina Faso",
+  "Metiers terrain et informels": {
+    title: "Metiers terrain et emplois informels au Burkina Faso",
     intro:
-      "Missions et profils terrain : ouvriers, techniciens, chauffeurs, artisans et services locaux.",
+      "Missions et profils terrain : plombiers, soudeurs, macons, chauffeurs, artisans, ouvriers et services locaux.",
+  },
+  "BTP et chantier": {
+    title: "Emplois BTP et chantier au Burkina Faso",
+    intro:
+      "Suivez les opportunites chantier, construction, genie civil, climatisation, topographie et travaux terrain.",
+  },
+  "Technique et maintenance": {
+    title: "Emplois technique et maintenance au Burkina Faso",
+    intro:
+      "Offres pour techniciens, maintenance, froid, electricite, informatique terrain et support operationnel.",
+  },
+  "Transport et logistique": {
+    title: "Emplois transport et logistique au Burkina Faso",
+    intro:
+      "Chauffeurs, conducteurs, magasiniers, fleet, stock, approvisionnement et logistique projet.",
+  },
+  "Commerce et vente": {
+    title: "Emplois commerce et vente au Burkina Faso",
+    intro:
+      "Postes commerciaux, caissiers, vendeurs, recouvrement, relation client et marketing terrain.",
+  },
+  "Finance et administration": {
+    title: "Emplois finance et administration au Burkina Faso",
+    intro:
+      "Comptabilite, secretariat, finance, juridique, gestion, administration et support bureau.",
+  },
+  Sante: {
+    title: "Emplois sante au Burkina Faso",
+    intro:
+      "Offres medicales, paramedicales, pharmacie, clinique, projets sante et missions de terrain.",
   },
 };
 
