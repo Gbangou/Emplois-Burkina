@@ -115,6 +115,7 @@ const featuredJobsCarousel = document.querySelector("#featuredJobsCarousel");
 const profileCarousel = document.querySelector("#profileCarousel");
 const categoryStats = document.querySelector("#categoryStats");
 const regionStats = document.querySelector("#regionStats");
+const heroJobCount = document.querySelector("#heroJobCount");
 
 const demoProfiles = [
   {
@@ -356,20 +357,32 @@ function deadlineState(job) {
   };
 }
 
+function renderDeadlineStrip(job) {
+  const state = deadlineState(job);
+  const hasClosingDate = Boolean(job.closingDate);
+  return `
+    <div class="deadline-strip ${state.tone} ${hasClosingDate ? "" : "missing"}">
+      <span>Date de cloture</span>
+      <strong>${escapeHtml(formatJobDate(job.closingDate, "A completer"))}</strong>
+      <small>${escapeHtml(state.helper)}</small>
+    </div>
+  `;
+}
+
 function renderTimeline(job, compact = false) {
   const state = deadlineState(job);
   return `
     <div class="job-timeline ${compact ? "compact" : ""}">
       <div>
-        <span>Ouverture</span>
+        <span>Date d'ouverture</span>
         <strong>${escapeHtml(formatJobDate(job.openingDate))}</strong>
       </div>
       <div>
-        <span>Cloture</span>
-        <strong>${escapeHtml(formatJobDate(job.closingDate))}</strong>
+        <span>Date de cloture</span>
+        <strong>${escapeHtml(formatJobDate(job.closingDate, "A completer"))}</strong>
       </div>
       <div class="countdown ${state.tone}">
-        <span>Countdown</span>
+        <span>Jours restants</span>
         <strong>${escapeHtml(state.label)}</strong>
       </div>
     </div>
@@ -437,6 +450,8 @@ function renderTaxonomy(container, entries, baseHref) {
 }
 
 function renderPortalWidgets() {
+  if (heroJobCount) heroJobCount.textContent = jobs.length || 0;
+
   if (employerCarousel) {
     const sourceCounts = Object.entries(countBy(jobs, (job) => job.sourceName))
       .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], "fr"))
@@ -593,10 +608,11 @@ function renderJobCard(job) {
         <h3>${escapeHtml(job.title)}</h3>
         <p class="muted">${escapeHtml(job.company || "Organisation non precisee")} - ${escapeHtml(job.city || "Burkina Faso")}</p>
       </div>
+      ${renderDeadlineStrip(job)}
       ${renderTimeline(job, true)}
       <div class="job-meta">
         <span class="pill">${escapeHtml(job.type || "Non precise")}</span>
-        <span class="pill">${escapeHtml(formatJobDate(job.closingDate, job.deadline || "A verifier"))}</span>
+        <span class="pill deadline-pill">Cloture : ${escapeHtml(formatJobDate(job.closingDate, "A completer"))}</span>
         <span class="pill warning">${reviewLabel}</span>
       </div>
       <div class="tag-row">
@@ -640,6 +656,7 @@ function renderDetail(job) {
       <p class="eyebrow">${escapeHtml(job.category || "Opportunite")}</p>
       <h3>${escapeHtml(job.title)}</h3>
       <p class="muted">${escapeHtml(job.company || "Organisation non precisee")}</p>
+      ${renderDeadlineStrip(job)}
       ${renderTimeline(job)}
       <dl class="detail-list">
         <div><dt>Ville</dt><dd>${escapeHtml(job.city || "Burkina Faso")}</dd></div>
@@ -730,7 +747,8 @@ function renderJobs() {
     const rangeStart = filtered.length ? pageStart + 1 : 0;
     const rangeEnd = Math.min(pageStart + visibleJobs.length, filtered.length);
     const pageLabel = filtered.length ? ` Affichage ${rangeStart}-${rangeEnd}.` : "";
-    resultsSummary.textContent = `${filtered.length} ${label} sur ${jobs.length}.${pageLabel}`;
+    const datedCount = filtered.filter((job) => job.closingDate).length;
+    resultsSummary.textContent = `${filtered.length} ${label} sur ${jobs.length}.${pageLabel} ${datedCount} avec date de cloture confirmee.`;
   }
 
   jobsList.innerHTML = visibleJobs.length
