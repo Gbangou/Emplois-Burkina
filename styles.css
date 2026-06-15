@@ -948,6 +948,35 @@ button:disabled,
   padding: 14px;
 }
 
+.admin-edit {
+  border-top: 1px solid var(--line);
+  padding-top: 10px;
+}
+
+.admin-edit summary {
+  color: var(--green-dark);
+  cursor: pointer;
+  font-weight: 900;
+}
+
+.admin-edit-form {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 12px;
+}
+
+.admin-edit-form label {
+  font-size: 0.84rem;
+}
+
+.admin-edit-form label:nth-child(1),
+.admin-edit-form label:nth-child(9),
+.admin-edit-form label:nth-child(10),
+.admin-edit-form button {
+  grid-column: 1 / -1;
+}
+
 .form-note {
   border-radius: 6px;
   font-weight: 700;

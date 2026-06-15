@@ -90,6 +90,7 @@ const expectedRoutes = [
   "/api/events",
   "/api/admin/db/sqlite/sync",
   "/api/admin/jobs/moderation",
+  "/api/admin/jobs/edit",
   "/api/admin/analytics/summary",
   "/api/admin/growth/visibility",
   "/api/admin/automation",

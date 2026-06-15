@@ -256,6 +256,8 @@ Back-office minimal :
 - implementation actuelle : `moderation_overrides` dans SQLite, statuts
   `needs_review`, `validated`, `rejected`, exclusion publique des offres
   rejetees et conservation des decisions apres regeneration SQLite.
+- edition actuelle : `job_edit_overrides` conserve les corrections humaines
+  sur titre, entreprise, ville, categorie, type, dates, source et tags.
 
 ### 8. Publishing and distribution
 
@@ -461,16 +463,16 @@ Livrable :
 
 ## Priorites techniques immediates
 
-1. Ajouter une page admin de detail offre avec edition persistante SQLite.
-2. Ajouter comptes recruteurs/admin et sessions securisees.
-3. Ajouter paiement mobile money manuel puis automatisable.
-4. Ajouter validation automatique de liens morts et dates expirees.
-5. Ajouter segments WhatsApp : concours, ONG, stages, terrain, IT, finance.
-6. Ajouter anti-arnaque plus fin : emails suspects, frais, doublons, vieux posts.
-7. Ajouter exports commerciaux : CSV prospects, CSV candidats, rapport sponsor.
-8. Ajouter tests Playwright des parcours critiques.
-9. Brancher Search Console/Bing apres deploiement.
-10. Preparer migration PostgreSQL/Supabase depuis `database/schema.sql`.
+1. Ajouter comptes recruteurs/admin et sessions securisees.
+2. Ajouter paiement mobile money manuel puis automatisable.
+3. Ajouter validation automatique de liens morts et dates expirees.
+4. Ajouter segments WhatsApp : concours, ONG, stages, terrain, IT, finance.
+5. Ajouter anti-arnaque plus fin : emails suspects, frais, doublons, vieux posts.
+6. Ajouter exports commerciaux : CSV prospects, CSV candidats, rapport sponsor.
+7. Ajouter tests Playwright des parcours critiques.
+8. Brancher Search Console/Bing apres deploiement.
+9. Preparer migration PostgreSQL/Supabase depuis `database/schema.sql`.
+10. Transformer l'edition rapide en page detail admin si le volume augmente.
 
 ## Sources et conformite
 

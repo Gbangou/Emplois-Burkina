@@ -70,6 +70,7 @@ Routes utiles :
 - `/api/admin/db/sync`
 - `/api/admin/db/sqlite/sync`
 - `/api/admin/jobs/moderation`
+- `/api/admin/jobs/edit`
 - `/api/admin/analytics/summary`
 - `/api/admin/growth/visibility`
 - `/api/admin/automation`
@@ -123,6 +124,16 @@ Moderation SQLite :
   `npm run db:sqlite` reconstruit la base.
 - Les offres `rejected` sont exclues de `/api/jobs` par defaut, sauf avec
   `includeRejected=true`.
+
+Edition persistante SQLite :
+
+- `POST /api/admin/jobs/edit` avec `jobId` et les champs corriges.
+- Champs principaux : `title`, `company`, `city`, `category`, `type`,
+  `openingDate`, `closingDate`, `sourceName`, `sourceUrl`, `tags`.
+- Les corrections sont stockees dans `job_edit_overrides`, preservees quand
+  `npm run db:sqlite` reconstruit la base.
+- Les corrections humaines sont fusionnees avant la moderation, puis exposees
+  par `/api/jobs` et `/api/platform`.
 
 Export PostgreSQL/Supabase :
 
@@ -355,11 +366,10 @@ URLs locales :
 
 ## Prochaines etapes propres
 
-1. Ajouter une page admin de detail offre avec edition persistante SQLite.
-2. Ajouter comptes recruteurs/admin avec sessions securisees.
-3. Brancher WhatsApp Business et paiements mobile money.
-4. Ajouter validation automatique de liens morts et dates expirees.
-5. Migrer vers PostgreSQL/Supabase avec `database/schema.sql`.
-6. Appliquer `database/seed.sql` pour initialiser sources, raw items, jobs et
+1. Ajouter comptes recruteurs/admin avec sessions securisees.
+2. Brancher WhatsApp Business et paiements mobile money.
+3. Ajouter validation automatique de liens morts et dates expirees.
+4. Migrer vers PostgreSQL/Supabase avec `database/schema.sql`.
+5. Appliquer `database/seed.sql` pour initialiser sources, raw items, jobs et
    pages SEO.
-7. Brancher Search Console/Bing apres deploiement.
+6. Brancher Search Console/Bing apres deploiement.

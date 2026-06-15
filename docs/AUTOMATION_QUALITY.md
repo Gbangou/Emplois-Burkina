@@ -1,6 +1,6 @@
 # Qualite automation JobFaso
 
-Genere le : 2026-06-15T09:36:31.612Z
+Genere le : 2026-06-15T09:55:08.869Z
 
 Score : 94/100
 Statut : warning
@@ -15,7 +15,7 @@ Statut : warning
 | critical | sitemap_exists | OK | 47 URLs sitemap | Executer npm run growth. |
 | critical | sitemap_files_exist | OK | 0 fichiers sitemap manquants | Regenerer les pages SEO. |
 | critical | seed_exists | OK | 741098 octets | Executer npm run db:export. |
-| critical | sqlite_exists | OK | 679936 octets | Executer npm run db:sqlite. |
+| critical | sqlite_exists | OK | 696320 octets | Executer npm run db:sqlite. |
 | warning | source_diversity | OK | 5 sources publiees | Ameliorer les sources actives si le catalogue depend trop d'un site. |
 | warning | category_diversity | OK | 7 categories publiees | Continuer a capter informel, BTP, ONG, finance et logistique. |
 | warning | closing_dates | A corriger | 2/20 avec date de cloture | Renforcer extraction detail et moderation dates. |

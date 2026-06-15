@@ -1,6 +1,6 @@
 # Rapport automation JobFaso
 
-Genere le : 2026-06-15T09:36:31.772Z
+Genere le : 2026-06-15T09:55:08.986Z
 
 ## Resume
 
@@ -25,7 +25,7 @@ Genere le : 2026-06-15T09:36:31.772Z
 - Audit projet : passed (100 / 100)
 - Cibles backlinks/partenariats : 43
 - URLs sitemap : 47
-- Taille SQLite locale : 679936 octets
+- Taille SQLite locale : 696320 octets
 - Erreurs scraper : 0
 - Taille seed SQL : 741098 octets
 

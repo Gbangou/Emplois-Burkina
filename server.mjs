@@ -240,6 +240,22 @@ function applyModerationOverrides(jobs, overrides = []) {
   });
 }
 
+function applyJobEditOverrides(jobs, overrides = []) {
+  if (!overrides.length) return jobs;
+  const byJobId = new Map(overrides.map((item) => [item.job_id, parseJsonValue(item.patch_json, {}) || {}]));
+  return jobs.map((job) => {
+    const patch = byJobId.get(job.id);
+    if (!patch) return job;
+    return {
+      ...job,
+      ...patch,
+      tags: Array.isArray(patch.tags) ? patch.tags : job.tags,
+      editedAt: patch.editedAt || job.editedAt,
+      editedBy: patch.editedBy || job.editedBy,
+    };
+  });
+}
+
 async function writeJson(file, value) {
   await mkdir(DATA_DIR, { recursive: true });
   await writeFile(file, `${JSON.stringify(value, null, 2)}\n`, "utf8");
@@ -348,8 +364,9 @@ async function readSqliteDb() {
       .all()
       .map((row) => parseJsonValue(row.payload_json, null))
       .filter(Boolean);
-    const overrides = db.prepare("select job_id, status, note, moderated_at, moderated_by from moderation_overrides").all();
-    const jobs = applyModerationOverrides(baseJobs, overrides);
+    const editOverrides = db.prepare("select job_id, patch_json, edited_at, edited_by from job_edit_overrides").all();
+    const moderationOverrides = db.prepare("select job_id, status, note, moderated_at, moderated_by from moderation_overrides").all();
+    const jobs = applyModerationOverrides(applyJobEditOverrides(baseJobs, editOverrides), moderationOverrides);
     const sources = db
       .prepare("select payload_json from sources order by priority asc, name asc")
       .all()
@@ -454,6 +471,71 @@ async function saveModerationOverride({ jobId, status, note, by = "admin" }) {
          moderated_by = excluded.moderated_by`,
     ).run(jobId, status, note, new Date().toISOString(), by);
     return { id: job.id, title: job.title, status };
+  });
+}
+
+function normalizeTags(value) {
+  if (Array.isArray(value)) return value.map((tag) => cleanText(tag, 60)).filter(Boolean).slice(0, 12);
+  return String(value || "")
+    .split(",")
+    .map((tag) => cleanText(tag, 60))
+    .filter(Boolean)
+    .slice(0, 12);
+}
+
+function sanitizeJobPatch(payload = {}) {
+  const patch = {};
+  const textFields = {
+    title: 300,
+    company: 220,
+    city: 160,
+    category: 120,
+    type: 120,
+    deadline: 120,
+    sourceName: 220,
+    sourceUrl: 900,
+    canonicalUrl: 900,
+  };
+
+  for (const [field, max] of Object.entries(textFields)) {
+    if (Object.hasOwn(payload, field)) patch[field] = cleanText(payload[field], max);
+  }
+
+  if (Object.hasOwn(payload, "openingDate")) patch.openingDate = validIsoDate(payload.openingDate) || "";
+  if (Object.hasOwn(payload, "closingDate")) patch.closingDate = validIsoDate(payload.closingDate) || "";
+  if (Object.hasOwn(payload, "tags")) patch.tags = normalizeTags(payload.tags);
+  if (patch.closingDate && !patch.deadline) patch.deadline = dateLabel(patch.closingDate);
+
+  patch.editedAt = new Date().toISOString();
+  patch.editedBy = "admin";
+  return patch;
+}
+
+async function saveJobEditOverride({ jobId, patch }) {
+  return withSqliteWrite((db) => {
+    const row = db.prepare("select payload_json from jobs where id = ?").get(jobId);
+    if (!row) throw new Error("Offre introuvable.");
+    const baseJob = parseJsonValue(row.payload_json, {});
+    const existing = db.prepare("select patch_json from job_edit_overrides where job_id = ?").get(jobId);
+    const previousPatch = parseJsonValue(existing?.patch_json, {}) || {};
+    const nextPatch = { ...previousPatch, ...patch };
+    const merged = { ...baseJob, ...nextPatch };
+
+    if (!merged.title) throw new Error("Le titre est requis.");
+    if (merged.closingDate && merged.openingDate && merged.closingDate < merged.openingDate) {
+      throw new Error("La date de cloture ne peut pas etre avant la date d'ouverture.");
+    }
+
+    db.prepare(
+      `insert into job_edit_overrides (job_id, patch_json, edited_at, edited_by)
+       values (?, ?, ?, ?)
+       on conflict(job_id) do update set
+         patch_json = excluded.patch_json,
+         edited_at = excluded.edited_at,
+         edited_by = excluded.edited_by`,
+    ).run(jobId, JSON.stringify(nextPatch), nextPatch.editedAt, nextPatch.editedBy);
+
+    return merged;
   });
 }
 
@@ -908,6 +990,31 @@ async function handleApi(req, res, url) {
     } catch (error) {
       const status = error.message === "Offre introuvable." ? 404 : 400;
       sendJson(res, status, { error: error.message || "Moderation impossible." });
+    }
+    return;
+  }
+
+  if (url.pathname === "/api/admin/jobs/edit" && req.method === "POST") {
+    if (!requireAdmin(req, res)) return;
+    if (!sameOrigin(req)) {
+      sendJson(res, 403, { error: "Origine refusee." });
+      return;
+    }
+
+    try {
+      const payload = await readBody(req);
+      const jobId = cleanText(payload.jobId, 120);
+      if (!jobId) {
+        sendJson(res, 400, { error: "jobId requis." });
+        return;
+      }
+
+      const job = await saveJobEditOverride({ jobId, patch: sanitizeJobPatch(payload) });
+      await appendEvent("job_edit_saved", { jobId, title: job.title });
+      sendJson(res, 200, { ok: true, job });
+    } catch (error) {
+      const status = error.message === "Offre introuvable." ? 404 : 400;
+      sendJson(res, status, { error: error.message || "Edition impossible." });
     }
     return;
   }

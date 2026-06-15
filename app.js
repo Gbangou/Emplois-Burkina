@@ -1099,6 +1099,22 @@ function renderAdmin() {
                   <button class="secondary-button moderation-button" type="button" data-job-id="${escapeHtml(job.id)}" data-status="needs_review">Revoir</button>
                   <button class="secondary-button moderation-button" type="button" data-job-id="${escapeHtml(job.id)}" data-status="rejected">Rejeter</button>
                 </div>
+                <details class="admin-edit">
+                  <summary>Modifier l'offre</summary>
+                  <form class="admin-edit-form" data-job-id="${escapeHtml(job.id)}">
+                    <label>Titre<input name="title" value="${escapeHtml(job.title || "")}" required /></label>
+                    <label>Entreprise<input name="company" value="${escapeHtml(job.company || "")}" /></label>
+                    <label>Ville<input name="city" value="${escapeHtml(job.city || "")}" /></label>
+                    <label>Categorie<input name="category" value="${escapeHtml(job.category || "")}" /></label>
+                    <label>Type<input name="type" value="${escapeHtml(job.type || "")}" /></label>
+                    <label>Ouverture<input name="openingDate" type="date" value="${escapeHtml(job.openingDate || "")}" /></label>
+                    <label>Cloture<input name="closingDate" type="date" value="${escapeHtml(job.closingDate || "")}" /></label>
+                    <label>Source<input name="sourceName" value="${escapeHtml(job.sourceName || "")}" /></label>
+                    <label>URL source<input name="sourceUrl" value="${escapeHtml(job.sourceUrl || "")}" /></label>
+                    <label>Tags<input name="tags" value="${escapeHtml((job.tags || []).join(", "))}" /></label>
+                    <button type="submit">Enregistrer</button>
+                  </form>
+                </details>
               </article>
             `
           )
@@ -1488,6 +1504,29 @@ document.addEventListener("click", async (event) => {
   } finally {
     button.disabled = false;
     button.textContent = status === "validated" ? "Valider" : status === "rejected" ? "Rejeter" : "Revoir";
+  }
+});
+
+document.addEventListener("submit", async (event) => {
+  const form = event.target.closest(".admin-edit-form");
+  if (!form) return;
+  event.preventDefault();
+
+  const submitButton = form.querySelector("button[type='submit']");
+  const data = Object.fromEntries(new FormData(form).entries());
+  data.jobId = form.dataset.jobId || "";
+
+  try {
+    submitButton?.setAttribute("disabled", "disabled");
+    if (submitButton) submitButton.textContent = "Sauvegarde...";
+    await runAdminPost("/api/admin/jobs/edit", data);
+    await loadJobs();
+    await loadAutomationStatus();
+  } catch (error) {
+    alert(error.message || "Impossible d'enregistrer l'offre.");
+  } finally {
+    submitButton?.removeAttribute("disabled");
+    if (submitButton) submitButton.textContent = "Enregistrer";
   }
 });
 

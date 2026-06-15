@@ -55,6 +55,7 @@ export async function syncSqliteDb() {
 
   await mkdir(dirname(SQLITE_FILE), { recursive: true });
   let moderationOverrides = [];
+  let jobEditOverrides = [];
   if (existsSync(SQLITE_FILE)) {
     const previousDb = new sqlite.DatabaseSync(SQLITE_FILE, { readOnly: true });
     try {
@@ -63,6 +64,13 @@ export async function syncSqliteDb() {
         .all();
     } catch {
       moderationOverrides = [];
+    }
+    try {
+      jobEditOverrides = previousDb
+        .prepare("select job_id, patch_json, edited_at, edited_by from job_edit_overrides order by edited_at desc")
+        .all();
+    } catch {
+      jobEditOverrides = [];
     } finally {
       previousDb.close();
     }
@@ -75,6 +83,7 @@ export async function syncSqliteDb() {
     pragma foreign_keys = ON;
 
     drop table if exists sync_metadata;
+    drop table if exists job_edit_overrides;
     drop table if exists moderation_overrides;
     drop table if exists page_events;
     drop table if exists leads;
@@ -168,6 +177,13 @@ export async function syncSqliteDb() {
       moderated_by text
     );
 
+    create table job_edit_overrides (
+      job_id text primary key,
+      patch_json text not null,
+      edited_at text not null,
+      edited_by text
+    );
+
     create table sync_metadata (
       key text primary key,
       value text not null
@@ -181,6 +197,7 @@ export async function syncSqliteDb() {
     create index events_type_created_idx on page_events(event_type, created_at);
     create index leads_kind_created_idx on leads(kind, created_at);
     create index moderation_status_idx on moderation_overrides(status, moderated_at);
+    create index job_edit_overrides_edited_idx on job_edit_overrides(edited_at);
   `);
 
   try {
@@ -310,6 +327,17 @@ export async function syncSqliteDb() {
         text(item.note, 1000),
         text(item.moderated_at, 80),
         text(item.moderated_by, 120),
+      ],
+    );
+
+    runInsert(
+      db.prepare("insert into job_edit_overrides (job_id, patch_json, edited_at, edited_by) values (?, ?, ?, ?)"),
+      jobEditOverrides,
+      (item) => [
+        text(item.job_id, 180),
+        item.patch_json || "{}",
+        text(item.edited_at, 80),
+        text(item.edited_by, 120),
       ],
     );
 
