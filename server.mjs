@@ -216,6 +216,14 @@ async function readJson(file, fallback) {
   }
 }
 
+function parseJsonValue(value, fallback = null) {
+  try {
+    return value ? JSON.parse(value) : fallback;
+  } catch {
+    return fallback;
+  }
+}
+
 async function writeJson(file, value) {
   await mkdir(DATA_DIR, { recursive: true });
   await writeFile(file, `${JSON.stringify(value, null, 2)}\n`, "utf8");
@@ -299,9 +307,74 @@ async function syncLocalDb(reason = "sync") {
 }
 
 async function readLocalDb() {
+  const sqliteDb = await readSqliteDb();
+  if (sqliteDb) return sqliteDb;
+
   const db = await readJson(LOCAL_DB_FILE, null);
   if (db?.version) return db;
   return syncLocalDb("bootstrap");
+}
+
+async function readSqliteDb() {
+  const status = await sqliteStatus();
+  if (!status.enabled) return null;
+
+  const sqlite = await import("node:sqlite").catch(() => null);
+  if (!sqlite?.DatabaseSync) return null;
+
+  let db;
+  try {
+    db = new sqlite.DatabaseSync(SQLITE_DB_FILE, { readOnly: true });
+    const configRows = db.prepare("select key, value from site_config").all();
+    const metadataRows = db.prepare("select key, value from sync_metadata").all();
+    const jobs = db
+      .prepare("select payload_json from jobs order by coalesce(collected_at, '') desc, title asc")
+      .all()
+      .map((row) => parseJsonValue(row.payload_json, null))
+      .filter(Boolean);
+    const sources = db
+      .prepare("select payload_json from sources order by priority asc, name asc")
+      .all()
+      .map((row) => parseJsonValue(row.payload_json, null))
+      .filter(Boolean);
+    const rateCards = db
+      .prepare("select payload_json from rate_cards order by name asc")
+      .all()
+      .map((row) => parseJsonValue(row.payload_json, null))
+      .filter(Boolean);
+    const rawItemsCount = db.prepare("select count(*) as count from raw_items").get().count;
+    const config = Object.fromEntries(configRows.map((row) => [row.key, parseJsonValue(row.value, row.value)]));
+    const metadata = Object.fromEntries(metadataRows.map((row) => [row.key, row.value]));
+    const [leads, events] = await Promise.all([readJson(LEADS_FILE, []), readJson(EVENTS_FILE, [])]);
+
+    return {
+      version: 2,
+      generatedAt: metadata.generatedAt || status.updatedAt || new Date().toISOString(),
+      lastSyncReason: "sqlite",
+      storage: {
+        primary: "sqlite",
+        path: status.path,
+        bytes: status.bytes,
+      },
+      config: publicConfig(config),
+      jobs,
+      sources,
+      rateCards,
+      rawItemsCount,
+      leads,
+      events,
+      stats: summarizeJobs(jobs),
+      monetization: {
+        publicAdSlots: ["homepage_featured", "category_sponsor", "job_detail_rail", "guide_sponsor"],
+        directSalesFirst: true,
+        adsenseReady: Boolean(config.adsenseClient),
+      },
+    };
+  } catch {
+    return null;
+  } finally {
+    db?.close();
+  }
 }
 
 async function sqliteStatus() {
@@ -508,6 +581,7 @@ async function handleApi(req, res, url) {
       ok: true,
       generatedAt: db.generatedAt,
       lastSyncReason: db.lastSyncReason,
+      storage: db.storage || { primary: "json", path: "data/runtime/local-db.json" },
       jobs: db.jobs.length,
       sources: db.sources.length,
       rawItems: db.rawItemsCount,
@@ -600,6 +674,7 @@ async function handleApi(req, res, url) {
       await writeJson(LEADS_FILE, leads.slice(0, 5000));
       await appendEvent("lead_created", { kind: validation.lead.kind, valueFcfa: validation.lead.valueFcfa });
       await syncLocalDb("lead_created");
+      await syncSqliteDirect().catch(() => null);
       sendJson(res, 201, { ok: true, id: validation.lead.id });
     } catch {
       sendJson(res, 400, { error: "Requete invalide." });
@@ -711,6 +786,7 @@ async function handleApi(req, res, url) {
     }
 
     const db = await syncLocalDb("admin_sync");
+    const sqlite = await syncSqliteDirect().catch(() => null);
     await appendEvent("db_synced", { by: "admin" });
     sendJson(res, 200, {
       ok: true,
@@ -719,6 +795,7 @@ async function handleApi(req, res, url) {
       sources: db.sources.length,
       leads: db.leads.length,
       events: db.events.length,
+      sqlite,
     });
     return;
   }

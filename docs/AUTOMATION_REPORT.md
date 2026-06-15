@@ -1,6 +1,6 @@
 # Rapport automation JobFaso
 
-Genere le : 2026-06-12T14:49:04.761Z
+Genere le : 2026-06-15T09:02:56.759Z
 
 ## Resume
 
@@ -17,7 +17,7 @@ Genere le : 2026-06-12T14:49:04.761Z
 - Offres a moderer : 20
 - Offres avec date de cloture : 2
 - Offres sans date de cloture : 18
-- Offres cloturant sous 7 jours : 0
+- Offres cloturant sous 7 jours : 1
 - Offres expirees : 0
 - Posts sociaux en file : 47
 - Dates en file de revue : 18
@@ -60,7 +60,7 @@ Genere le : 2026-06-12T14:49:04.761Z
 
 ## Deadlines proches
 
-Aucune deadline proche.
+- 7j : Assistant Financier SMC – Malaria Consortium (HumanitaireHub) - 2026-06-21
 
 ## Offres sans date de cloture
 

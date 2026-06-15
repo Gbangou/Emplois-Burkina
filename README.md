@@ -32,6 +32,8 @@ curl http://127.0.0.1:8088/api/db/status
 curl http://127.0.0.1:8088/api/platform
 ```
 
+`/api/db/status` indique aussi si l'API lit en priorite `sqlite` ou `json`.
+
 ## Ce que le MVP contient
 
 - Recherche d'opportunites par mot-cle et ville.

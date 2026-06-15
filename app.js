@@ -956,6 +956,7 @@ async function loadAutomationStatus() {
       <article><strong>${escapeHtml(totals.closingSoon ?? "-")}</strong><span>deadlines proches</span></article>
       <article><strong>${escapeHtml(totals.seedSqlBytes ? `${Math.round(totals.seedSqlBytes / 1024)} KB` : "-")}</strong><span>seed PostgreSQL</span></article>
       <article><strong>${escapeHtml(status.sqlite?.enabled ? `${Math.round((status.sqlite.bytes || 0) / 1024)} KB` : "-")}</strong><span>SQLite locale</span></article>
+      <article><strong>${escapeHtml(status.storage?.primary || (status.sqlite?.enabled ? "sqlite" : "json"))}</strong><span>stockage primaire</span></article>
       <article><strong>${escapeHtml(quality.score ?? "-")}/100</strong><span>score qualite</span></article>
       <article><strong>${escapeHtml(quality.failedCritical ?? "-")}</strong><span>checks critiques</span></article>
       <article><strong>${escapeHtml(quality.failedWarnings ?? "-")}</strong><span>warnings qualite</span></article>

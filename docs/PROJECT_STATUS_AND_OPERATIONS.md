@@ -53,6 +53,11 @@ electricien, artisan et missions journalieres.
 
 Serveur principal : `server.mjs`.
 
+Les endpoints publics lisent en priorite `data/runtime/jobfaso.sqlite` quand
+la base existe et que `node:sqlite` est disponible. Si SQLite est absente ou
+indisponible, le serveur retombe automatiquement sur
+`data/runtime/local-db.json`.
+
 Routes utiles :
 
 - `/api/health`
@@ -106,7 +111,8 @@ npm run db:sqlite
 
 L'admin peut aussi lancer `/api/admin/db/sqlite/sync` via le bouton
 `Synchroniser SQLite`. Le statut `/api/db/status` expose la taille et la date
-de mise a jour de `data/runtime/jobfaso.sqlite`.
+de mise a jour de `data/runtime/jobfaso.sqlite`, ainsi que le stockage primaire
+utilise par l'API (`sqlite` ou `json`).
 
 Export PostgreSQL/Supabase :
 
