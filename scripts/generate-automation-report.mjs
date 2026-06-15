@@ -54,7 +54,13 @@ function markdownTable(rows) {
   return ["| Nom | Total |", "| --- | ---: |", ...rows.map((row) => `| ${row.name} | ${row.count} |`)].join("\n");
 }
 
-const [sources, rawItems, jobs, scraperReport, automationState, qualityGate, dateReviewQueue, socialQueue, visibilityReport] = await Promise.all([
+function auditScore(markdown = "") {
+  const score = markdown.match(/Score : (\d+)\/100/)?.[1] || null;
+  const status = markdown.match(/Statut : ([a-z]+)/)?.[1] || "unknown";
+  return { score: score === null ? null : Number(score), status };
+}
+
+const [sources, rawItems, jobs, scraperReport, automationState, qualityGate, dateReviewQueue, socialQueue, visibilityReport, projectAuditMd] = await Promise.all([
   readJson(join(DATA_DIR, "sources.json"), []),
   readJson(join(DATA_DIR, "raw-items.json"), []),
   readJson(join(DATA_DIR, "curated-jobs.json"), []),
@@ -64,7 +70,9 @@ const [sources, rawItems, jobs, scraperReport, automationState, qualityGate, dat
   readJson(join(RUNTIME_DIR, "date-review-queue.json"), []),
   readJson(join(DATA_DIR, "social", "queue.json"), []),
   readJson(join(DATA_DIR, "growth", "visibility-report.json"), {}),
+  readFile(join(ROOT, "docs", "PROJECT_AUDIT.md"), "utf8").catch(() => ""),
 ]);
+const projectAudit = auditScore(projectAuditMd);
 
 const closingSoon = jobs
   .map((job) => ({ ...job, days: daysUntil(job.closingDate) }))
@@ -107,6 +115,8 @@ const report = {
     socialQueue: socialQueue.length,
     dateReviewQueue: dateReviewQueue.length,
     visibilityScore: visibilityReport.score ?? null,
+    projectAuditScore: projectAudit.score,
+    projectAuditStatus: projectAudit.status,
     outreachTargets: visibilityReport.totals?.outreachTargets || 0,
     sitemapUrls: visibilityReport.totals?.sitemapUrls || 0,
     sqliteBytes: await fileSize(join(RUNTIME_DIR, "jobfaso.sqlite")),
@@ -154,6 +164,7 @@ Genere le : ${report.generatedAt}
 - Posts sociaux en file : ${report.totals.socialQueue}
 - Dates en file de revue : ${report.totals.dateReviewQueue}
 - Score visibilite : ${report.totals.visibilityScore ?? "-"} / 100
+- Audit projet : ${report.totals.projectAuditStatus} (${report.totals.projectAuditScore ?? "-"} / 100)
 - Cibles backlinks/partenariats : ${report.totals.outreachTargets}
 - URLs sitemap : ${report.totals.sitemapUrls}
 - Taille SQLite locale : ${report.totals.sqliteBytes} octets

@@ -1,6 +1,6 @@
 # Qualite automation JobFaso
 
-Genere le : 2026-06-15T09:15:57.776Z
+Genere le : 2026-06-15T09:36:31.612Z
 
 Score : 94/100
 Statut : warning
@@ -22,6 +22,7 @@ Statut : warning
 | warning | social_queue | OK | 47 posts en file | Executer npm run social:queue. |
 | warning | visibility_engine | OK | rapport visibilite present | Executer npm run visibility. |
 | warning | outreach_targets | OK | cibles prospection presentes | Executer npm run visibility. |
+| warning | project_audit | OK | audit projet passed | Executer npm run audit:project. |
 | info | indexnow_urls | OK | 3145 octets | Executer npm run growth. |
 | info | llms_txt | OK | llms.txt present | Executer npm run growth. |
 | info | manifest | OK | manifest present | Executer npm run growth. |

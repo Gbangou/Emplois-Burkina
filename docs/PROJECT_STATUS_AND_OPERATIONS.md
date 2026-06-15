@@ -355,12 +355,11 @@ URLs locales :
 
 ## Prochaines etapes propres
 
-1. Brancher l'app serveur sur SQLite pour les lectures/ecritures dynamiques.
-2. Migrer vers PostgreSQL/Supabase avec `database/schema.sql`.
-3. Appliquer `database/seed.sql` pour initialiser sources, raw items, jobs et
+1. Ajouter une page admin de detail offre avec edition persistante SQLite.
+2. Ajouter comptes recruteurs/admin avec sessions securisees.
+3. Brancher WhatsApp Business et paiements mobile money.
+4. Ajouter validation automatique de liens morts et dates expirees.
+5. Migrer vers PostgreSQL/Supabase avec `database/schema.sql`.
+6. Appliquer `database/seed.sql` pour initialiser sources, raw items, jobs et
    pages SEO.
-4. Ajouter interface de moderation persistante.
-5. Ajouter comptes recruteurs.
-6. Ajouter paiements mobile money.
-7. Ajouter validation automatique de liens morts et dates expirees.
-8. Brancher Search Console/Bing apres deploiement.
+7. Brancher Search Console/Bing apres deploiement.

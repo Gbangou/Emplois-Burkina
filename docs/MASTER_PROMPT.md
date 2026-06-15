@@ -46,6 +46,9 @@ Direction UX actuelle :
   extrait court, checklist candidature, offres similaires et rail sponsorise.
 - Admin : pipeline collecte, moderation, leads, reseaux sociaux, exports et
   etat des sources.
+- Etat actuel : backend Node securise, SQLite locale prioritaire pour les
+  lectures API, fallback JSON, moderation persistante, analytics anonymisees,
+  moteur visibility/backlinks, SEO statique et automation runnable en local.
 
 Contraintes :
 
@@ -250,6 +253,9 @@ Back-office minimal :
 - champs editables
 - historique moderation
 - raison de rejet
+- implementation actuelle : `moderation_overrides` dans SQLite, statuts
+  `needs_review`, `validated`, `rejected`, exclusion publique des offres
+  rejetees et conservation des decisions apres regeneration SQLite.
 
 ### 8. Publishing and distribution
 
@@ -277,6 +283,15 @@ Tables ou collections a prevoir :
 - `invoices`
 - `lead_events`
 - `whatsapp_broadcasts`
+
+Deja en place :
+
+- `rate_cards`
+- `leads`
+- `page_events`
+- analytics anonymisees via `/api/events`
+- moteur visibilite via `npm run visibility`
+- rapport backlinks/prospection dans `docs/VISIBILITY_ENGINE.md`
 
 ## Propositions monetisables prioritaires
 
@@ -425,9 +440,11 @@ Livrable :
 
 ### Semaine 3 : automatiser sans perdre la qualite
 
-- Migrer les donnees vers Supabase/PostgreSQL.
-- Ajouter `raw_items`, `jobs`, `sources`, `subscribers`, `employer_orders`.
-- Creer un mini back-office moderation.
+- Consolider SQLite puis migrer vers Supabase/PostgreSQL quand le deploiement
+  cloud est pret.
+- Garder `raw_items`, `jobs`, `sources`, leads, events et moderation alignes
+  entre SQLite, seed PostgreSQL et JSON de secours.
+- Etendre le back-office moderation avec edition detaillee.
 - Ajouter collecteur planifie par source.
 - Ajouter logs, dedoublonnage, risk score et confidence score.
 - Objectif : 80% du travail de collecte assiste, 100% publication moderee.
@@ -444,16 +461,16 @@ Livrable :
 
 ## Priorites techniques immediates
 
-1. Transformer les formulaires demo en stockage reel.
-2. Ajouter une page detail pour chaque offre.
-3. Ajouter une interface de moderation.
-4. Ajouter un pipeline `raw_items -> curated_jobs -> published_jobs`.
-5. Ajouter tracking des clics source et demandes WhatsApp.
-6. Ajouter segments WhatsApp : concours, ONG, stages, terrain, IT, finance.
-7. Ajouter anti-doublons et anti-arnaque.
-8. Ajouter rate card dynamique pour annonceurs.
-9. Ajouter exports commerciaux : CSV prospects, CSV candidats, rapport sponsor.
-10. Ajouter tests Playwright des parcours critiques.
+1. Ajouter une page admin de detail offre avec edition persistante SQLite.
+2. Ajouter comptes recruteurs/admin et sessions securisees.
+3. Ajouter paiement mobile money manuel puis automatisable.
+4. Ajouter validation automatique de liens morts et dates expirees.
+5. Ajouter segments WhatsApp : concours, ONG, stages, terrain, IT, finance.
+6. Ajouter anti-arnaque plus fin : emails suspects, frais, doublons, vieux posts.
+7. Ajouter exports commerciaux : CSV prospects, CSV candidats, rapport sponsor.
+8. Ajouter tests Playwright des parcours critiques.
+9. Brancher Search Console/Bing apres deploiement.
+10. Preparer migration PostgreSQL/Supabase depuis `database/schema.sql`.
 
 ## Sources et conformite
 

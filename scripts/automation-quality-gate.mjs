@@ -66,6 +66,9 @@ const [sources, rawItems, jobs, socialQueue] = await Promise.all([
 ]);
 
 const sitemap = (await exists(join(ROOT, "sitemap.xml"))) ? await readFile(join(ROOT, "sitemap.xml"), "utf8") : "";
+const projectAudit = (await exists(join(ROOT, "docs", "PROJECT_AUDIT.md")))
+  ? await readFile(join(ROOT, "docs", "PROJECT_AUDIT.md"), "utf8")
+  : "";
 const sitemapUrlList = sitemapUrls(sitemap);
 const sitemapPaths = sitemapUrlList.map(pathFromUrl).filter(Boolean);
 const missingSitemapFiles = [];
@@ -91,6 +94,7 @@ add(checks, "warning", "closing_dates", jobs.filter((job) => job.closingDate).le
 add(checks, "warning", "social_queue", socialQueue.length >= Math.min(10, jobs.length), `${socialQueue.length} posts en file`, "Executer npm run social:queue.");
 add(checks, "warning", "visibility_engine", await exists(join(DATA_DIR, "growth", "visibility-report.json")), "rapport visibilite present", "Executer npm run visibility.");
 add(checks, "warning", "outreach_targets", await exists(join(DATA_DIR, "growth", "outreach-targets.json")), "cibles prospection presentes", "Executer npm run visibility.");
+add(checks, "warning", "project_audit", projectAudit.includes("Statut : passed"), "audit projet passed", "Executer npm run audit:project.");
 add(checks, "info", "indexnow_urls", (await size(join(ROOT, "indexnow-urls.txt"))) > 0, `${await size(join(ROOT, "indexnow-urls.txt"))} octets`, "Executer npm run growth.");
 add(checks, "info", "llms_txt", await exists(join(ROOT, "llms.txt")), "llms.txt present", "Executer npm run growth.");
 add(checks, "info", "manifest", await exists(join(ROOT, "site.webmanifest")), "manifest present", "Executer npm run growth.");

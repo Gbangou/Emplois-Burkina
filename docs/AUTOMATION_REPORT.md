@@ -1,6 +1,6 @@
 # Rapport automation JobFaso
 
-Genere le : 2026-06-15T09:15:57.768Z
+Genere le : 2026-06-15T09:36:31.772Z
 
 ## Resume
 
@@ -22,6 +22,7 @@ Genere le : 2026-06-15T09:15:57.768Z
 - Posts sociaux en file : 47
 - Dates en file de revue : 18
 - Score visibilite : 92 / 100
+- Audit projet : passed (100 / 100)
 - Cibles backlinks/partenariats : 43
 - URLs sitemap : 47
 - Taille SQLite locale : 679936 octets

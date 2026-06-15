@@ -12,6 +12,7 @@
     "automate:health": "node scripts/automation-health.mjs",
     "automate:quality": "node scripts/automation-quality-gate.mjs",
     "automate:report": "node scripts/generate-automation-report.mjs",
+    "audit:project": "node scripts/audit-project.mjs",
     "visibility": "node scripts/generate-visibility-engine.mjs",
     "dates:queue": "node scripts/generate-date-review-queue.mjs",
     "db:export": "node scripts/export-postgres-seed.mjs",
@@ -23,7 +24,7 @@
     "social:queue": "node scripts/generate-social-queue.mjs",
     "social:dry": "node scripts/publish-social.mjs",
     "social:publish": "node scripts/publish-social.mjs --live",
-    "check": "node --check app.js && node --check server.mjs && node --check scripts/jobfaso-scraper.mjs && node --check scripts/curate-raw-items.mjs && node --check scripts/generate-seo-pages.mjs && node --check scripts/enhance-static-seo.mjs && node --check scripts/generate-growth-assets.mjs && node --check scripts/generate-visibility-engine.mjs && node --check scripts/generate-social-queue.mjs && node --check scripts/generate-date-review-queue.mjs && node --check scripts/publish-social.mjs && node --check scripts/sync-local-db.mjs && node --check scripts/sync-sqlite-db.mjs && node --check scripts/export-postgres-seed.mjs && node --check scripts/submit-indexnow.mjs && node --check scripts/check-schema.mjs && node --check scripts/automation-state.mjs && node --check scripts/automation-daemon.mjs && node --check scripts/automation-health.mjs && node --check scripts/automation-quality-gate.mjs && node --check scripts/generate-automation-report.mjs && node --check scripts/run-automation.mjs && node scripts/check-schema.mjs"
+    "check": "node --check app.js && node --check server.mjs && node --check scripts/jobfaso-scraper.mjs && node --check scripts/curate-raw-items.mjs && node --check scripts/generate-seo-pages.mjs && node --check scripts/enhance-static-seo.mjs && node --check scripts/generate-growth-assets.mjs && node --check scripts/generate-visibility-engine.mjs && node --check scripts/audit-project.mjs && node --check scripts/generate-social-queue.mjs && node --check scripts/generate-date-review-queue.mjs && node --check scripts/publish-social.mjs && node --check scripts/sync-local-db.mjs && node --check scripts/sync-sqlite-db.mjs && node --check scripts/export-postgres-seed.mjs && node --check scripts/submit-indexnow.mjs && node --check scripts/check-schema.mjs && node --check scripts/automation-state.mjs && node --check scripts/automation-daemon.mjs && node --check scripts/automation-health.mjs && node --check scripts/automation-quality-gate.mjs && node --check scripts/generate-automation-report.mjs && node --check scripts/run-automation.mjs && node scripts/check-schema.mjs && node scripts/audit-project.mjs"
   },
   "engines": {
     "node": ">=20"

@@ -1,7 +1,8 @@
-# JobFaso MVP
+# JobFaso
 
-Premiere version locale de JobFaso : une page web pour tester le concept
-`emplois + concours + metiers terrain + alertes WhatsApp`.
+Web app locale de JobFaso : portail emploi, concours, metiers terrain,
+automation de collecte, moderation SQLite, SEO, analytics et monetisation
+recruteurs/sponsors.
 
 ## Ouvrir le projet
 
@@ -34,7 +35,7 @@ curl http://127.0.0.1:8088/api/platform
 
 `/api/db/status` indique aussi si l'API lit en priorite `sqlite` ou `json`.
 
-## Ce que le MVP contient
+## Ce que l'app contient
 
 - Recherche d'opportunites par mot-cle et ville.
 - Categories : bureau, ONG, concours, stages, metiers terrain.
@@ -194,11 +195,11 @@ Le script cree `indexnow-key.txt` localement et soumet les URLs de
 
 ## Prochaines etapes recommandees
 
-1. Remplacer les donnees demo par une base Supabase.
-2. Ajouter une interface admin pour valider les offres.
-3. Brancher n8n pour collecter, nettoyer et publier les offres.
-4. Ajouter OpenAI pour classer les offres et generer CV/lettres.
-5. Brancher WhatsApp Business et paiements mobile money.
+1. Ajouter une page admin de detail offre avec edition persistante SQLite.
+2. Ajouter comptes recruteurs/admin avec sessions securisees.
+3. Brancher WhatsApp Business et paiements mobile money.
+4. Ajouter validation automatique de liens morts et dates expirees.
+5. Preparer migration PostgreSQL/Supabase pour le deploiement cloud.
 
 ## Documents importants
 
