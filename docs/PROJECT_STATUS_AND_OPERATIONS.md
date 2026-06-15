@@ -69,6 +69,7 @@ Routes utiles :
 - `/api/events`
 - `/api/admin/db/sync`
 - `/api/admin/db/sqlite/sync`
+- `/api/admin/jobs/moderation`
 - `/api/admin/analytics/summary`
 - `/api/admin/growth/visibility`
 - `/api/admin/automation`
@@ -113,6 +114,15 @@ L'admin peut aussi lancer `/api/admin/db/sqlite/sync` via le bouton
 `Synchroniser SQLite`. Le statut `/api/db/status` expose la taille et la date
 de mise a jour de `data/runtime/jobfaso.sqlite`, ainsi que le stockage primaire
 utilise par l'API (`sqlite` ou `json`).
+
+Moderation SQLite :
+
+- `POST /api/admin/jobs/moderation` avec `jobId`, `status` et `note`.
+- Statuts acceptes : `needs_review`, `validated`, `rejected`.
+- Les decisions sont stockees dans `moderation_overrides`, preservees quand
+  `npm run db:sqlite` reconstruit la base.
+- Les offres `rejected` sont exclues de `/api/jobs` par defaut, sauf avec
+  `includeRejected=true`.
 
 Export PostgreSQL/Supabase :
 

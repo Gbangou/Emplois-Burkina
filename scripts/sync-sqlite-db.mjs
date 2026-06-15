@@ -1,4 +1,5 @@
 import { mkdir, readFile, stat } from "node:fs/promises";
+import { existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
@@ -53,6 +54,20 @@ export async function syncSqliteDb() {
   ]);
 
   await mkdir(dirname(SQLITE_FILE), { recursive: true });
+  let moderationOverrides = [];
+  if (existsSync(SQLITE_FILE)) {
+    const previousDb = new sqlite.DatabaseSync(SQLITE_FILE, { readOnly: true });
+    try {
+      moderationOverrides = previousDb
+        .prepare("select job_id, status, note, moderated_at, moderated_by from moderation_overrides order by moderated_at desc")
+        .all();
+    } catch {
+      moderationOverrides = [];
+    } finally {
+      previousDb.close();
+    }
+  }
+
   const db = new sqlite.DatabaseSync(SQLITE_FILE);
 
   db.exec(`
@@ -60,6 +75,7 @@ export async function syncSqliteDb() {
     pragma foreign_keys = ON;
 
     drop table if exists sync_metadata;
+    drop table if exists moderation_overrides;
     drop table if exists page_events;
     drop table if exists leads;
     drop table if exists raw_items;
@@ -144,6 +160,14 @@ export async function syncSqliteDb() {
       created_at text
     );
 
+    create table moderation_overrides (
+      job_id text primary key,
+      status text not null check (status in ('needs_review', 'validated', 'rejected')),
+      note text,
+      moderated_at text not null,
+      moderated_by text
+    );
+
     create table sync_metadata (
       key text primary key,
       value text not null
@@ -156,6 +180,7 @@ export async function syncSqliteDb() {
     create index raw_items_source_idx on raw_items(source_name);
     create index events_type_created_idx on page_events(event_type, created_at);
     create index leads_kind_created_idx on leads(kind, created_at);
+    create index moderation_status_idx on moderation_overrides(status, moderated_at);
   `);
 
   try {
@@ -271,6 +296,20 @@ export async function syncSqliteDb() {
         text(event.payload?.target || event.target, 700),
         stringify(event.payload || event),
         text(event.createdAt, 80),
+      ],
+    );
+
+    runInsert(
+      db.prepare(
+        "insert into moderation_overrides (job_id, status, note, moderated_at, moderated_by) values (?, ?, ?, ?, ?)",
+      ),
+      moderationOverrides,
+      (item) => [
+        text(item.job_id, 180),
+        text(item.status, 80),
+        text(item.note, 1000),
+        text(item.moderated_at, 80),
+        text(item.moderated_by, 120),
       ],
     );
 

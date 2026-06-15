@@ -224,6 +224,22 @@ function parseJsonValue(value, fallback = null) {
   }
 }
 
+function applyModerationOverrides(jobs, overrides = []) {
+  if (!overrides.length) return jobs;
+  const byJobId = new Map(overrides.map((item) => [item.job_id, item]));
+  return jobs.map((job) => {
+    const override = byJobId.get(job.id);
+    if (!override) return job;
+    return {
+      ...job,
+      status: override.status,
+      moderationNote: override.note || "",
+      moderatedAt: override.moderated_at,
+      moderatedBy: override.moderated_by || "admin",
+    };
+  });
+}
+
 async function writeJson(file, value) {
   await mkdir(DATA_DIR, { recursive: true });
   await writeFile(file, `${JSON.stringify(value, null, 2)}\n`, "utf8");
@@ -327,11 +343,13 @@ async function readSqliteDb() {
     db = new sqlite.DatabaseSync(SQLITE_DB_FILE, { readOnly: true });
     const configRows = db.prepare("select key, value from site_config").all();
     const metadataRows = db.prepare("select key, value from sync_metadata").all();
-    const jobs = db
+    const baseJobs = db
       .prepare("select payload_json from jobs order by coalesce(collected_at, '') desc, title asc")
       .all()
       .map((row) => parseJsonValue(row.payload_json, null))
       .filter(Boolean);
+    const overrides = db.prepare("select job_id, status, note, moderated_at, moderated_by from moderation_overrides").all();
+    const jobs = applyModerationOverrides(baseJobs, overrides);
     const sources = db
       .prepare("select payload_json from sources order by priority asc, name asc")
       .all()
@@ -399,6 +417,44 @@ async function sqliteStatus() {
 async function syncSqliteDirect() {
   const { syncSqliteDb } = await import("./scripts/sync-sqlite-db.mjs");
   return syncSqliteDb();
+}
+
+async function withSqliteWrite(callback) {
+  const status = await sqliteStatus();
+  if (!status.enabled) await syncSqliteDirect();
+  const sqlite = await import("node:sqlite").catch(() => null);
+  if (!sqlite?.DatabaseSync) throw new Error("SQLite indisponible sur cette version de Node.");
+  const db = new sqlite.DatabaseSync(SQLITE_DB_FILE);
+  try {
+    db.exec("begin immediate;");
+    const result = callback(db);
+    db.exec("commit;");
+    return result;
+  } catch (error) {
+    db.exec("rollback;");
+    throw error;
+  } finally {
+    db.close();
+  }
+}
+
+async function saveModerationOverride({ jobId, status, note, by = "admin" }) {
+  const allowed = new Set(["needs_review", "validated", "rejected"]);
+  if (!allowed.has(status)) throw new Error("Statut de moderation invalide.");
+  return withSqliteWrite((db) => {
+    const job = db.prepare("select id, title from jobs where id = ?").get(jobId);
+    if (!job) throw new Error("Offre introuvable.");
+    db.prepare(
+      `insert into moderation_overrides (job_id, status, note, moderated_at, moderated_by)
+       values (?, ?, ?, ?, ?)
+       on conflict(job_id) do update set
+         status = excluded.status,
+         note = excluded.note,
+         moderated_at = excluded.moderated_at,
+         moderated_by = excluded.moderated_by`,
+    ).run(jobId, status, note, new Date().toISOString(), by);
+    return { id: job.id, title: job.title, status };
+  });
 }
 
 async function readBody(req) {
@@ -556,18 +612,20 @@ async function handleApi(req, res, url) {
 
   if (url.pathname === "/api/platform" && req.method === "GET") {
     const db = await readLocalDb();
-    const featuredJobs = db.jobs
+    const publicJobs = db.jobs.filter((job) => job.status !== "rejected");
+    const stats = summarizeJobs(publicJobs);
+    const featuredJobs = publicJobs
       .slice()
       .sort((a, b) => Number(Boolean(b.closingDate)) - Number(Boolean(a.closingDate)))
       .slice(0, 12);
     sendJson(res, 200, {
       config: db.config,
-      stats: db.stats,
-      jobs: db.jobs,
+      stats,
+      jobs: publicJobs,
       featuredJobs,
-      sources: db.stats.sourceCounts,
-      categories: db.stats.categories,
-      cities: db.stats.cities,
+      sources: stats.sourceCounts,
+      categories: stats.categories,
+      cities: stats.cities,
       rateCards: db.rateCards,
       monetization: db.monetization,
       generatedAt: db.generatedAt,
@@ -601,11 +659,15 @@ async function handleApi(req, res, url) {
     const city = cleanText(url.searchParams.get("city") || "", 100);
     const source = cleanText(url.searchParams.get("source") || "", 140);
     const category = cleanText(url.searchParams.get("category") || "", 80);
+    const status = cleanText(url.searchParams.get("status") || "", 40);
+    const includeRejected = url.searchParams.get("includeRejected") === "true";
     const filtered = jobs.filter((job) => {
       const haystack = [job.title, job.company, job.city, job.category, job.type, job.sourceName, ...(job.tags || [])]
         .join(" ")
         .toLowerCase();
       return (
+        (includeRejected || job.status !== "rejected") &&
+        (!status || job.status === status) &&
         (!query || haystack.includes(query)) &&
         (!city || job.city === city) &&
         (!source || job.sourceName === source) &&
@@ -623,8 +685,8 @@ async function handleApi(req, res, url) {
 
   if (url.pathname === "/api/admin/automation/status" && req.method === "GET") {
     if (!requireAdmin(req, res)) return;
-    const [jobs, sources, rawItems, events, automationState, automationReport, automationQuality, dateReviewQueue] = await Promise.all([
-      readJson(join(ROOT, "data", "curated-jobs.json"), []),
+    const [db, sources, rawItems, events, automationState, automationReport, automationQuality, dateReviewQueue] = await Promise.all([
+      readLocalDb(),
       readJson(join(ROOT, "data", "sources.json"), []),
       readJson(join(ROOT, "data", "raw-items.json"), []),
       readJson(EVENTS_FILE, []),
@@ -633,6 +695,7 @@ async function handleApi(req, res, url) {
       readJson(AUTOMATION_QUALITY_FILE, {}),
       readJson(DATE_REVIEW_QUEUE_FILE, []),
     ]);
+    const jobs = db.jobs || [];
     const lastJobDate = jobs
       .map((job) => new Date(job.collectedAt || 0).getTime())
       .filter(Boolean)
@@ -650,6 +713,7 @@ async function handleApi(req, res, url) {
       dateReviewQueue: dateReviewQueue.slice(0, 30),
       latestEvents: events.slice(0, 10),
       sqlite: await sqliteStatus(),
+      storage: db.storage || { primary: "json" },
     });
     return;
   }
@@ -817,6 +881,33 @@ async function handleApi(req, res, url) {
       });
     } catch (error) {
       sendJson(res, 500, { error: error.message || "Synchronisation SQLite impossible." });
+    }
+    return;
+  }
+
+  if (url.pathname === "/api/admin/jobs/moderation" && req.method === "POST") {
+    if (!requireAdmin(req, res)) return;
+    if (!sameOrigin(req)) {
+      sendJson(res, 403, { error: "Origine refusee." });
+      return;
+    }
+
+    try {
+      const payload = await readBody(req);
+      const jobId = cleanText(payload.jobId, 120);
+      const status = cleanText(payload.status, 40);
+      const note = cleanText(payload.note, 1000);
+      if (!jobId || !status) {
+        sendJson(res, 400, { error: "jobId et status sont requis." });
+        return;
+      }
+
+      const job = await saveModerationOverride({ jobId, status, note });
+      await appendEvent("job_moderation_saved", { jobId, status });
+      sendJson(res, 200, { ok: true, job });
+    } catch (error) {
+      const status = error.message === "Offre introuvable." ? 404 : 400;
+      sendJson(res, status, { error: error.message || "Moderation impossible." });
     }
     return;
   }

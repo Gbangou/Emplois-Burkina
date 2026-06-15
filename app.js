@@ -1043,6 +1043,10 @@ function renderAdmin() {
   const events = readStorageArray(EVENTS_KEY);
   const pipelineValue = leads.reduce((sum, lead) => sum + (lead.valueFcfa || 0), 0);
   const reviewJobs = jobs.filter((job) => job.status === "needs_review");
+  const moderationJobs = jobs
+    .slice()
+    .sort((a, b) => Number(a.status === "needs_review") - Number(b.status === "needs_review"))
+    .reverse();
 
   if (leadCount) leadCount.textContent = leads.length;
   if (eventCount) eventCount.textContent = events.length;
@@ -1075,32 +1079,39 @@ function renderAdmin() {
   }
 
   if (adminJobsList) {
-    adminJobsList.innerHTML = reviewJobs.length
-      ? reviewJobs
+    adminJobsList.innerHTML = moderationJobs.length
+      ? moderationJobs
           .slice(0, 24)
           .map(
             (job) => `
-              <article class="job-card">
+              <article class="job-card" data-job-id="${escapeHtml(job.id)}">
                 <p class="eyebrow">${escapeHtml(job.category || "A classer")}</p>
                 <h3>${escapeHtml(job.title)}</h3>
                 <p class="muted">${escapeHtml(job.company || job.sourceName || "")} - ${escapeHtml(job.city || "Burkina Faso")}</p>
                 <div class="job-meta">
-                  <span class="pill warning">A moderer</span>
+                  <span class="pill ${job.status === "needs_review" ? "warning" : ""}">${escapeHtml(job.status || "needs_review")}</span>
                   <span class="pill">${escapeHtml(job.sourceName || "Source")}</span>
                 </div>
-                <a class="secondary-link" href="${escapeHtml(job.sourceUrl || "#")}" target="_blank" rel="noopener" data-track="admin_source_open" data-track-label="${escapeHtml(job.title)}">Verifier la source</a>
+                ${job.moderationNote ? `<p class="muted">${escapeHtml(job.moderationNote)}</p>` : ""}
+                <div class="job-actions">
+                  <a class="secondary-link" href="${escapeHtml(job.sourceUrl || "#")}" target="_blank" rel="noopener" data-track="admin_source_open" data-track-label="${escapeHtml(job.title)}">Verifier</a>
+                  <button class="secondary-button moderation-button" type="button" data-job-id="${escapeHtml(job.id)}" data-status="validated">Valider</button>
+                  <button class="secondary-button moderation-button" type="button" data-job-id="${escapeHtml(job.id)}" data-status="needs_review">Revoir</button>
+                  <button class="secondary-button moderation-button" type="button" data-job-id="${escapeHtml(job.id)}" data-status="rejected">Rejeter</button>
+                </div>
               </article>
             `
           )
           .join("")
-      : `<p class="muted">Aucune offre a moderer chargee.</p>`;
+      : `<p class="muted">Aucune offre chargee pour la moderation.</p>`;
   }
 }
 
 async function loadJobs() {
   if (!jobsList && !adminJobsList) return;
   try {
-    const apiResponse = await fetch("/api/jobs", { cache: "no-store" });
+    const adminQuery = adminJobsList ? "?includeRejected=true" : "";
+    const apiResponse = await fetch(`/api/jobs${adminQuery}`, { cache: "no-store" });
     if (apiResponse.ok) {
       const payload = await apiResponse.json();
       jobs = payload.jobs?.length ? payload.jobs : fallbackJobs;
@@ -1449,6 +1460,34 @@ document.addEventListener("click", async (event) => {
   } finally {
     button.disabled = false;
     button.textContent = "Corriger";
+  }
+});
+
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest(".moderation-button");
+  if (!button) return;
+
+  const status = button.dataset.status || "";
+  const note =
+    status === "rejected"
+      ? prompt("Note de rejet ou raison interne", "Source a verifier ou offre non publiable") || ""
+      : "";
+
+  try {
+    button.disabled = true;
+    button.textContent = "Enregistrement...";
+    await runAdminPost("/api/admin/jobs/moderation", {
+      jobId: button.dataset.jobId,
+      status,
+      note,
+    });
+    await loadJobs();
+    await loadAutomationStatus();
+  } catch (error) {
+    alert(error.message || "Impossible d'enregistrer la moderation.");
+  } finally {
+    button.disabled = false;
+    button.textContent = status === "validated" ? "Valider" : status === "rejected" ? "Rejeter" : "Revoir";
   }
 });
 
