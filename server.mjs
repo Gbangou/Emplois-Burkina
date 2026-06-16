@@ -42,7 +42,7 @@ const publicPaths = new Set([
   "/indexnow-urls.txt",
   "/indexnow-key.txt",
 ]);
-const publicDataPaths = new Set(["/data/curated-jobs.json", "/data/sources.json"]);
+const publicDataPaths = new Set(["/data/curated-jobs.json", "/data/sources.json", "/data/employer-logos.json"]);
 
 const contentTypes = {
   ".html": "text/html; charset=utf-8",
@@ -71,7 +71,7 @@ function securityHeaders() {
       "object-src 'none'",
       "frame-ancestors 'none'",
       "form-action 'self'",
-      "img-src 'self' data: https://images.unsplash.com",
+      "img-src 'self' data: https:",
       "style-src 'self' 'unsafe-inline'",
       "script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com",
       `connect-src ${connectSrc}`,
@@ -495,6 +495,8 @@ function sanitizeJobPatch(payload = {}) {
     sourceName: 220,
     sourceUrl: 900,
     canonicalUrl: 900,
+    sourceLogoUrl: 900,
+    companyLogoUrl: 900,
   };
 
   for (const [field, max] of Object.entries(textFields)) {

@@ -63,9 +63,11 @@ const fallbackJobs = [
 
 let jobs = [];
 let sources = [];
+let employerLogos = [];
 let activeCategory = "";
 let activeJobId = "";
 let currentJobsPage = 1;
+let wordCloudAnimationFrame = 0;
 let savedJobs = new Set(JSON.parse(localStorage.getItem("jobfaso.savedJobs") || "[]"));
 const WHATSAPP_NUMBER = "";
 const LEADS_KEY = "jobfaso.leads";
@@ -85,6 +87,7 @@ const savedOnlyFilter = document.querySelector("#savedOnlyFilter");
 const resultsSummary = document.querySelector("#resultsSummary");
 const jobsPagination = document.querySelector("#jobsPagination");
 const jobDetail = document.querySelector("#jobDetail");
+const employmentExplorer = document.querySelector("#employmentExplorer");
 const sourceMetrics = document.querySelector("#sourceMetrics");
 const sourceGrid = document.querySelector("#sourceGrid");
 const quickSearch = document.querySelector("#quickSearch");
@@ -292,7 +295,7 @@ function displayDate(value) {
   }).format(date);
 }
 
-function formatJobDate(value, fallback = "A verifier") {
+function formatJobDate(value, fallback = "Date non precisee") {
   if (!value) return fallback;
   const date = new Date(`${String(value).slice(0, 10)}T00:00:00`);
   if (Number.isNaN(date.getTime())) return fallback;
@@ -312,6 +315,35 @@ function daysUntil(value) {
   return Math.ceil((target - today) / 86_400_000);
 }
 
+function getDeadlineTarget(value) {
+  if (!value) return null;
+  const target = new Date(`${String(value).slice(0, 10)}T23:59:59`);
+  return Number.isNaN(target.getTime()) ? null : target;
+}
+
+function millisecondsUntil(value) {
+  const target = getDeadlineTarget(value);
+  return target ? target.getTime() - Date.now() : null;
+}
+
+function formatCountdown(value) {
+  const remaining = millisecondsUntil(value);
+  if (remaining === null) return "";
+  if (remaining <= 0) return "00h 00mn 00s";
+
+  const totalSeconds = Math.floor(remaining / 1000);
+  const days = Math.floor(totalSeconds / 86_400);
+  const hours = Math.floor((totalSeconds % 86_400) / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  if (days > 0) {
+    return `${days}j ${String(hours).padStart(2, "0")}h ${String(minutes).padStart(2, "0")}mn`;
+  }
+
+  return `${String(hours).padStart(2, "0")}h ${String(minutes).padStart(2, "0")}mn ${String(seconds).padStart(2, "0")}s`;
+}
+
 function deadlineState(job) {
   if (job.inconsistentDates) {
     return {
@@ -324,9 +356,9 @@ function deadlineState(job) {
   const days = daysUntil(job.closingDate);
   if (days === null) {
     return {
-      label: "Cloture a verifier",
+      label: "Date non precisee",
       tone: "neutral",
-      helper: "La date de cloture n'a pas encore ete extraite.",
+      helper: "Consultez la source officielle pour la date limite.",
     };
   }
   if (days < 0) {
@@ -338,20 +370,20 @@ function deadlineState(job) {
   }
   if (days === 0) {
     return {
-      label: "Dernier jour",
+      label: formatCountdown(job.closingDate),
       tone: "danger",
       helper: "La cloture est prevue aujourd'hui.",
     };
   }
   if (days <= 3) {
     return {
-      label: `${days} jour${days > 1 ? "s" : ""} restant${days > 1 ? "s" : ""}`,
+      label: formatCountdown(job.closingDate),
       tone: "warning",
       helper: "Deadline proche.",
     };
   }
   return {
-    label: `${days} jours restants`,
+    label: formatCountdown(job.closingDate),
     tone: "success",
     helper: "Candidature encore ouverte.",
   };
@@ -363,7 +395,7 @@ function renderDeadlineStrip(job) {
   return `
     <div class="deadline-strip ${state.tone} ${hasClosingDate ? "" : "missing"}">
       <span>Date de cloture</span>
-      <strong>${escapeHtml(formatJobDate(job.closingDate, "A completer"))}</strong>
+      <strong>${escapeHtml(formatJobDate(job.closingDate, "Date non precisee"))}</strong>
       <small>${escapeHtml(state.helper)}</small>
     </div>
   `;
@@ -379,14 +411,65 @@ function renderTimeline(job, compact = false) {
       </div>
       <div>
         <span>Date de cloture</span>
-        <strong>${escapeHtml(formatJobDate(job.closingDate, "A completer"))}</strong>
+        <strong>${escapeHtml(formatJobDate(job.closingDate, "Date non precisee"))}</strong>
       </div>
       <div class="countdown ${state.tone}">
-        <span>Jours restants</span>
-        <strong>${escapeHtml(state.label)}</strong>
+        <span>Temps restant</span>
+        <strong ${job.closingDate ? `data-countdown="${escapeHtml(job.closingDate)}"` : ""}>${escapeHtml(state.label)}</strong>
       </div>
     </div>
   `;
+}
+
+function updateCountdowns() {
+  document.querySelectorAll("[data-countdown]").forEach((node) => {
+    const value = node.getAttribute("data-countdown") || "";
+    const next = formatCountdown(value);
+    if (next && node.textContent !== next) node.textContent = next;
+  });
+}
+
+function stopWordCloudOrbit() {
+  if (!wordCloudAnimationFrame) return;
+  cancelAnimationFrame(wordCloudAnimationFrame);
+  wordCloudAnimationFrame = 0;
+}
+
+function startWordCloudOrbit() {
+  stopWordCloudOrbit();
+  const cloud = employmentExplorer?.querySelector(".word-cloud");
+  if (!cloud || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  const rect = cloud.getBoundingClientRect();
+  const scale = Math.min(1, Math.max(0.52, rect.width / 980));
+  const words = [...cloud.querySelectorAll("[data-orbit-word]")].map((node) => ({
+    node,
+    angle: Number(node.dataset.orbitAngle || 0),
+    radiusX: Number(node.dataset.orbitRadiusX || 0) * scale,
+    radiusY: Number(node.dataset.orbitRadiusY || 0) * scale,
+    speed: Number(node.dataset.orbitSpeed || 0.00008),
+    phase: Number(node.dataset.orbitPhase || 0),
+  }));
+  if (!words.length) return;
+
+  const render = (time) => {
+    if (!cloud.matches(":hover, :focus-within")) {
+      for (const word of words) {
+        const angle = word.angle + time * word.speed + word.phase;
+        const x = Math.cos(angle) * word.radiusX;
+        const y = Math.sin(angle) * word.radiusY;
+        const depth = (Math.sin(angle) + 1) / 2;
+        word.node.style.setProperty("--orbit-x", `${x.toFixed(2)}px`);
+        word.node.style.setProperty("--orbit-y", `${y.toFixed(2)}px`);
+        word.node.style.setProperty("--orbit-scale", (0.9 + depth * 0.2).toFixed(3));
+        word.node.style.setProperty("--orbit-opacity", (0.74 + depth * 0.26).toFixed(3));
+        word.node.style.zIndex = String(Math.round(10 + depth * 20));
+      }
+    }
+    wordCloudAnimationFrame = requestAnimationFrame(render);
+  };
+
+  wordCloudAnimationFrame = requestAnimationFrame(render);
 }
 
 function slugify(value = "") {
@@ -433,6 +516,115 @@ function countBy(items, getter) {
   }, {});
 }
 
+function getSearchTermsFromJobs(items) {
+  const stopWords = new Set([
+    "a",
+    "au",
+    "aux",
+    "avec",
+    "de",
+    "des",
+    "du",
+    "en",
+    "et",
+    "la",
+    "le",
+    "les",
+    "pour",
+    "sur",
+    "une",
+    "un",
+    "d",
+    "l",
+    "offre",
+    "emploi",
+    "recrutement",
+    "vacancy",
+    "job",
+    "jobs",
+    "burkina",
+    "faso",
+    "a verifier",
+    "date non precisee",
+    "verifier",
+    "connexion",
+    "inscription",
+    "ressources",
+    "candidats",
+    "employeurs",
+    "newsletter",
+    "publier",
+    "demandes",
+    "nous",
+    "annonce",
+    "annonces",
+    "espace",
+  ]);
+  const counts = new Map();
+  const add = (term, weight = 1) => {
+    const clean = String(term || "").replace(/[^\p{L}\p{N}\s'-]/gu, " ").replace(/\s+/g, " ").trim();
+    if (!clean || clean.length < 3) return;
+    const normalized = normalize(clean);
+    if (!normalized || stopWords.has(normalized)) return;
+    counts.set(clean, (counts.get(clean) || 0) + weight);
+  };
+  const addWords = (value, weight = 1) => {
+    const words = String(value || "")
+      .split(/\s+/)
+      .map((word) => word.replace(/[^\p{L}\p{N}'-]/gu, ""))
+      .filter((word) => word.length >= 4);
+    for (const word of words) add(word, weight);
+  };
+
+  for (const job of items) {
+    add(job.city, 4);
+    add(job.category, 4);
+    add(job.type, 3);
+    add(job.company, 2);
+    add(job.sourceName, 2);
+    for (const tag of job.tags || []) add(tag, 3);
+    addWords(job.title, 1);
+    addWords(job.excerpt, 0.35);
+  }
+
+  return [...counts.entries()]
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], "fr"))
+    .slice(0, 26)
+    .map(([term, count]) => ({ term, count }));
+}
+
+function setQuickCategory(category) {
+  activeCategory = category || "";
+  filterButtons.forEach((button) => {
+    button.classList.toggle("active", (button.dataset.category || "") === activeCategory);
+  });
+}
+
+function applyExplorerSearch({ type, value }) {
+  const term = value || "";
+  if (!term) return;
+
+  if (type === "category") {
+    setQuickCategory(term);
+  } else if (type === "city" && cityFilter) {
+    cityFilter.value = [...cityFilter.options].some((option) => option.value === term || option.textContent === term) ? term : "";
+    searchInput.value = cityFilter.value ? searchInput.value : term;
+  } else if (type === "source" && sourceFilter) {
+    sourceFilter.value = [...sourceFilter.options].some((option) => option.value === term || option.textContent === term) ? term : "";
+    searchInput.value = sourceFilter.value ? searchInput.value : term;
+  } else if (type === "type" && typeFilter) {
+    typeFilter.value = [...typeFilter.options].some((option) => option.value === term || option.textContent === term) ? term : "";
+    searchInput.value = typeFilter.value ? searchInput.value : term;
+  } else if (searchInput) {
+    searchInput.value = term;
+  }
+
+  resetJobsPage();
+  recordEvent("employment_explorer_search", { label: term, type });
+  renderJobs();
+  document.querySelector("#offres")?.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
 function renderTaxonomy(container, entries, baseHref) {
   if (!container) return;
   container.innerHTML = entries.length
@@ -453,20 +645,37 @@ function renderPortalWidgets() {
   if (heroJobCount) heroJobCount.textContent = jobs.length || 0;
 
   if (employerCarousel) {
-    const sourceCounts = Object.entries(countBy(jobs, (job) => job.sourceName))
-      .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], "fr"))
-      .slice(0, 16);
-    employerCarousel.innerHTML = sourceCounts
-      .map(
-        ([source, count]) => `
-          <article class="logo-card">
-            <span>${escapeHtml(initials(source))}</span>
-            <strong>${escapeHtml(source)}</strong>
-            <small>${count} offre${count > 1 ? "s" : ""}</small>
-          </article>
+    const dynamicCards = buildEmployerCardsFromJobs();
+    const cards = (dynamicCards.length ? dynamicCards : employerLogos).slice(0, 18);
+    const renderLogoCards = (items, duplicate = false) =>
+      items
+        .map(
+          (card) => `
+          <a class="logo-card ${card.logoUrl ? "has-logo" : ""}" href="${escapeHtml(card.profileUrl || "#")}" target="_blank" rel="noopener" data-track="employer_logo_click" data-track-label="${escapeHtml(card.name)}"${duplicate ? ` aria-hidden="true" tabindex="-1"` : ""}>
+            <span class="logo-visual">
+              ${
+                card.logoUrl
+                  ? `<img src="${escapeHtml(card.logoUrl)}" alt="Logo ${escapeHtml(card.name)}" loading="lazy" onerror="this.closest('.logo-visual').classList.add('logo-missing'); this.remove();" />`
+                  : ""
+              }
+              <b>${escapeHtml(initials(card.name))}</b>
+            </span>
+            <strong>${escapeHtml(card.name)}</strong>
+            <small>${card.jobs || card.count ? `${card.jobs || card.count} offre${(card.jobs || card.count) > 1 ? "s" : ""}` : escapeHtml(card.sector || "Recruteur")}</small>
+          </a>
         `
-      )
-      .join("");
+        )
+        .join("");
+
+    employerCarousel.classList.toggle("is-animated", cards.length > 1);
+    employerCarousel.innerHTML = cards.length
+      ? `
+          <div class="logo-marquee-track">
+            ${renderLogoCards(cards)}
+            ${renderLogoCards(cards, true)}
+          </div>
+        `
+      : `<p class="muted">Les logos recruteurs seront affiches apres la prochaine collecte.</p>`;
   }
 
   if (featuredJobsCarousel) {
@@ -474,7 +683,20 @@ function renderPortalWidgets() {
       .slice()
       .sort((a, b) => Number(Boolean(b.closingDate)) - Number(Boolean(a.closingDate)))
       .slice(0, 10);
-    featuredJobsCarousel.innerHTML = featured.map(renderJobCard).join("");
+    const renderFeaturedJobs = (items, duplicate = false) =>
+      items
+        .map((job) => renderJobCard(job, { duplicate }))
+        .join("");
+
+    featuredJobsCarousel.classList.toggle("is-animated", featured.length > 1);
+    featuredJobsCarousel.innerHTML = featured.length
+      ? `
+          <div class="featured-marquee-track">
+            ${renderFeaturedJobs(featured)}
+            ${renderFeaturedJobs(featured, true)}
+          </div>
+        `
+      : `<p class="muted">Les offres mises en avant seront affichees apres la prochaine collecte.</p>`;
   }
 
   if (categoryStats) {
@@ -510,6 +732,48 @@ function renderPortalWidgets() {
       )
       .join("");
   }
+}
+
+function buildEmployerCardsFromJobs() {
+  const byName = new Map();
+
+  for (const job of jobs) {
+    const name = job.company && normalize(job.company) !== normalize(job.sourceName) ? job.company : job.sourceName;
+    const logoUrl = job.companyLogoUrl || job.sourceLogoUrl || "";
+    if (!name) continue;
+    const key = normalize(name);
+    const current = byName.get(key);
+    if (!current) {
+      byName.set(key, {
+        name,
+        logoUrl,
+        sector: job.category || job.type || "Recruteur",
+        profileUrl: job.sourceUrl || job.canonicalUrl || "#",
+        jobs: 1,
+        updatedAt: job.collectedAt || "",
+      });
+      continue;
+    }
+    current.jobs += 1;
+    if (!current.logoUrl && logoUrl) current.logoUrl = logoUrl;
+    if (String(job.collectedAt || "") > String(current.updatedAt || "")) current.updatedAt = job.collectedAt;
+  }
+
+  return [...byName.values()].sort((a, b) => Number(Boolean(b.logoUrl)) - Number(Boolean(a.logoUrl)) || b.jobs - a.jobs || a.name.localeCompare(b.name, "fr"));
+}
+
+function renderEntityLogo(name, logoUrl, className = "job-logo") {
+  const safeName = name || "Organisation";
+  return `
+    <span class="${className} ${logoUrl ? "has-logo" : ""}">
+      ${
+        logoUrl
+          ? `<img src="${escapeHtml(logoUrl)}" alt="Logo ${escapeHtml(safeName)}" loading="lazy" onerror="this.closest('.${className}').classList.add('logo-missing'); this.remove();" />`
+          : ""
+      }
+      <b>${escapeHtml(initials(safeName))}</b>
+    </span>
+  `;
 }
 
 function getSourceTypeLabel(type) {
@@ -596,32 +860,48 @@ function getFilteredJobs() {
   });
 }
 
-function renderJobCard(job) {
+function renderJobCard(job, options = {}) {
   const isActive = job.id === activeJobId;
   const isSaved = savedJobs.has(job.id);
-  const reviewLabel = job.status === "needs_review" ? "Verification en cours" : "Source indiquee";
+  const applyUrl = job.sourceUrl || job.canonicalUrl || "#";
+  const hasApplyUrl = Boolean(applyUrl && applyUrl !== "#");
+  const logoUrl = job.companyLogoUrl || job.sourceLogoUrl || "";
+  const duplicateAttrs = options.duplicate ? ` aria-hidden="true"` : "";
+  const duplicateInteractiveAttrs = options.duplicate ? ` tabindex="-1"` : "";
+  const displayType = normalize(job.type) === "a verifier" ? "" : job.type;
+  const metaPills = [
+    displayType ? `<span class="pill">${escapeHtml(displayType)}</span>` : "",
+    job.closingDate ? `<span class="pill deadline-pill">Cloture : ${escapeHtml(formatJobDate(job.closingDate))}</span>` : "",
+    hasApplyUrl ? `<span class="pill source-pill">Source officielle</span>` : "",
+  ].join("");
 
   return `
-    <article class="job-card ${isActive ? "active" : ""}" data-job-id="${escapeHtml(job.id)}">
-      <div>
-        <p class="eyebrow">${escapeHtml(job.category || "Autre")}</p>
-        <h3>${escapeHtml(job.title)}</h3>
-        <p class="muted">${escapeHtml(job.company || "Organisation non precisee")} - ${escapeHtml(job.city || "Burkina Faso")}</p>
+    <article class="job-card ${isActive ? "active" : ""}" data-job-id="${escapeHtml(job.id)}" tabindex="${options.duplicate ? "-1" : "0"}" role="button" aria-label="Voir les details de ${escapeHtml(job.title)}"${duplicateAttrs}>
+      <div class="job-card-heading">
+        ${renderEntityLogo(job.company || job.sourceName, logoUrl)}
+        <div>
+          <p class="eyebrow">${escapeHtml(job.category || "Autre")}</p>
+          <h3>${escapeHtml(job.title)}</h3>
+          <p class="muted">${escapeHtml(job.company || "Organisation non precisee")} - ${escapeHtml(job.city || "Burkina Faso")}</p>
+        </div>
       </div>
       ${renderDeadlineStrip(job)}
       ${renderTimeline(job, true)}
       <div class="job-meta">
-        <span class="pill">${escapeHtml(job.type || "Non precise")}</span>
-        <span class="pill deadline-pill">Cloture : ${escapeHtml(formatJobDate(job.closingDate, "A completer"))}</span>
-        <span class="pill warning">${reviewLabel}</span>
+        ${metaPills}
       </div>
       <div class="tag-row">
         ${(job.tags || []).slice(0, 4).map((tag) => `<span class="pill">${escapeHtml(tag)}</span>`).join("")}
       </div>
       <div class="job-actions">
-        <button type="button" data-action="details" data-id="${escapeHtml(job.id)}">Voir</button>
-        <a class="secondary-link" href="${escapeHtml(getJobPagePath(job))}">Fiche</a>
-        <button class="secondary-button" type="button" data-action="save" data-id="${escapeHtml(job.id)}">
+        ${
+          hasApplyUrl
+            ? `<a class="nav-action inline-action" href="${escapeHtml(applyUrl)}" target="_blank" rel="noopener" data-track="source_apply_click" data-track-label="${escapeHtml(job.title)}"${duplicateInteractiveAttrs}>Postuler</a>`
+            : `<button class="nav-action inline-action" type="button" disabled>Source indisponible</button>`
+        }
+        <button class="secondary-button" type="button" data-action="details" data-id="${escapeHtml(job.id)}"${duplicateInteractiveAttrs}>Détails</button>
+        <a class="secondary-link" href="${escapeHtml(getJobPagePath(job))}"${duplicateInteractiveAttrs}>Fiche JobFaso</a>
+        <button class="secondary-button" type="button" data-action="save" data-id="${escapeHtml(job.id)}"${duplicateInteractiveAttrs}>
           ${isSaved ? "Sauvegarde" : "Favori"}
         </button>
       </div>
@@ -648,21 +928,27 @@ function renderDetail(job) {
   );
   const sourceLink =
     job.sourceUrl && job.sourceUrl !== "#"
-      ? `<a class="nav-action inline-action" href="${escapeHtml(job.sourceUrl)}" target="_blank" rel="noopener" data-track="source_apply_click" data-track-label="${escapeHtml(job.title)}">Ouvrir la source</a>`
+      ? `<a class="nav-action inline-action" href="${escapeHtml(job.sourceUrl)}" target="_blank" rel="noopener" data-track="source_apply_click" data-track-label="${escapeHtml(job.title)}">Postuler sur le site officiel</a>`
       : "";
+  const logoUrl = job.companyLogoUrl || job.sourceLogoUrl || "";
 
   jobDetail.innerHTML = `
     <div class="detail-sticky">
-      <p class="eyebrow">${escapeHtml(job.category || "Opportunite")}</p>
-      <h3>${escapeHtml(job.title)}</h3>
-      <p class="muted">${escapeHtml(job.company || "Organisation non precisee")}</p>
+      <div class="detail-heading">
+        ${renderEntityLogo(job.company || job.sourceName, logoUrl)}
+        <div>
+          <p class="eyebrow">${escapeHtml(job.category || "Opportunite")}</p>
+          <h3>${escapeHtml(job.title)}</h3>
+          <p class="muted">${escapeHtml(job.company || "Organisation non precisee")}</p>
+        </div>
+      </div>
       ${renderDeadlineStrip(job)}
       ${renderTimeline(job)}
       <dl class="detail-list">
         <div><dt>Ville</dt><dd>${escapeHtml(job.city || "Burkina Faso")}</dd></div>
         <div><dt>Date d'ouverture</dt><dd>${escapeHtml(formatJobDate(job.openingDate))}</dd></div>
-        <div><dt>Date de cloture</dt><dd>${escapeHtml(formatJobDate(job.closingDate, job.deadline || "Non communiquee"))}</dd></div>
-        <div><dt>Etat</dt><dd>${escapeHtml(deadlineState(job).helper)}</dd></div>
+        <div><dt>Date de cloture</dt><dd>${escapeHtml(formatJobDate(job.closingDate, "Consulter la source"))}</dd></div>
+        <div><dt>Temps restant</dt><dd>${job.closingDate ? `<span data-countdown="${escapeHtml(job.closingDate)}">${escapeHtml(formatCountdown(job.closingDate))}</span>` : "Consulter la source"}</dd></div>
         <div><dt>Source</dt><dd>${escapeHtml(job.sourceName || "JobFaso")}</dd></div>
         <div><dt>Collecte</dt><dd>${escapeHtml(displayDate(job.collectedAt))}</dd></div>
       </dl>
@@ -674,12 +960,95 @@ function renderDetail(job) {
       </p>
       <div class="detail-actions">
         ${sourceLink}
-        <a class="secondary-link" href="${escapeHtml(getJobPagePath(job))}">Fiche complete</a>
+        <a class="secondary-link" href="${escapeHtml(getJobPagePath(job))}">Fiche JobFaso</a>
         <a class="secondary-link" href="${buildWhatsAppUrl(decodeURIComponent(whatsappText))}" target="_blank" rel="noopener" data-track="whatsapp_alert" data-track-label="${escapeHtml(job.title)}">Alerte WhatsApp</a>
         <a class="secondary-link" href="contact.html">Signaler</a>
       </div>
     </div>
   `;
+}
+
+function renderEmploymentExplorer(activeJob, filteredJobs) {
+  if (!employmentExplorer) return;
+
+  const categoryCounts = Object.entries(countBy(jobs, (job) => job.category))
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 8);
+  const terms = getSearchTermsFromJobs(filteredJobs.length ? filteredJobs : jobs);
+  const similarButtons = activeJob
+    ? [
+        ["Du meme annonceur", "source", activeJob.sourceName, jobs.filter((job) => job.sourceName === activeJob.sourceName).length],
+        ["Du meme secteur", "category", activeJob.category, jobs.filter((job) => job.category === activeJob.category).length],
+        ["Du meme type contrat", "type", activeJob.type, jobs.filter((job) => job.type === activeJob.type).length],
+        ["De la meme localite", "city", activeJob.city, jobs.filter((job) => job.city === activeJob.city).length],
+      ].filter(([, , value]) => value)
+    : [];
+
+  employmentExplorer.innerHTML = `
+    <article class="employment-panel similar-panel">
+      <h3>Annonces similaires</h3>
+      <div class="similar-actions">
+        ${
+          similarButtons.length
+            ? similarButtons
+                .map(
+                  ([label, type, value, count]) => `
+                    <button type="button" data-employment-search="${escapeHtml(value)}" data-employment-type="${escapeHtml(type)}">
+                      <span>${escapeHtml(label)}</span>
+                      <strong>${escapeHtml(value)}</strong>
+                      <small>${count} offre${count > 1 ? "s" : ""}</small>
+                    </button>
+                  `,
+                )
+                .join("")
+            : `<p class="muted">Selectionnez une offre pour afficher les rapprochements.</p>`
+        }
+      </div>
+    </article>
+
+    <article class="employment-panel sector-panel">
+      <h3>Les annonces par secteur</h3>
+      <div class="sector-wheel">
+        ${categoryCounts
+          .map(
+            ([category, count]) => `
+              <button type="button" data-employment-search="${escapeHtml(category)}" data-employment-type="category">
+                <span>${escapeHtml(initials(category))}</span>
+                <strong>${escapeHtml(category)}</strong>
+                <small>${count}</small>
+              </button>
+            `,
+          )
+          .join("")}
+      </div>
+    </article>
+
+    <article class="employment-panel word-panel">
+      <h3>Les mots de l'emploi</h3>
+      <div class="word-cloud">
+        ${terms
+          .map((item, index) => {
+            const maxCount = Math.max(...terms.map((term) => term.count), 1);
+            const ratio = item.count / maxCount;
+            const level = Math.min(5, Math.max(1, Math.ceil(ratio * 5)));
+            const size = 1 + ratio * 1.55;
+            const drift = index % 2 === 0 ? 1 : -1;
+            const ring = index === 0 ? 0 : index <= 6 ? 1 : index <= 15 ? 2 : 3;
+            const ringStart = ring === 0 ? 0 : ring === 1 ? 1 : ring === 2 ? 7 : 16;
+            const ringCount = ring === 0 ? 1 : ring === 1 ? 6 : ring === 2 ? 9 : 10;
+            const position = index - ringStart;
+            const angle = ring === 0 ? 0 : (Math.PI * 2 * position) / ringCount + ring * 0.36;
+            const radiusX = ring === 0 ? 0 : 118 + ring * 112 + (index % 2) * 12;
+            const radiusY = ring === 0 ? 0 : 54 + ring * 42 + (index % 3) * 8;
+            const speed = (drift * (0.000035 + ring * 0.000012 + (index % 4) * 0.000003)).toFixed(6);
+            return `<button class="word-level-${level} ${ring === 0 ? "word-center" : ""}" type="button" data-orbit-word data-orbit-angle="${angle.toFixed(4)}" data-orbit-radius-x="${radiusX}" data-orbit-radius-y="${radiusY}" data-orbit-speed="${speed}" data-orbit-phase="${(index * 0.21).toFixed(3)}" data-employment-search="${escapeHtml(item.term)}" data-employment-type="keyword" aria-label="Rechercher ${escapeHtml(item.term)}, ${Math.round(item.count)} occurrences" style="--word-order:${index}; --word-size:${size.toFixed(2)}rem;">${escapeHtml(item.term)}</button>`;
+          })
+          .join("")}
+      </div>
+      <button class="text-link" type="button" data-employment-search="" data-employment-type="reset">Tous les tags</button>
+    </article>
+  `;
+  startWordCloudOrbit();
 }
 
 function getPageNumbers(current, total) {
@@ -756,7 +1125,10 @@ function renderJobs() {
     : `<p class="muted">Aucune opportunite ne correspond encore a cette recherche.</p>`;
 
   renderJobsPagination(totalPages);
-  renderDetail(jobs.find((job) => job.id === activeJobId));
+  const activeJob = jobs.find((job) => job.id === activeJobId);
+  renderDetail(activeJob);
+  renderEmploymentExplorer(activeJob, filtered);
+  updateCountdowns();
 }
 
 function renderSourceDirectory() {
@@ -1187,6 +1559,18 @@ async function loadSources() {
   renderAdmin();
 }
 
+async function loadEmployerLogos() {
+  if (!employerCarousel) return;
+  try {
+    const response = await fetch("data/employer-logos.json", { cache: "no-store" });
+    if (!response.ok) throw new Error("Impossible de charger les logos");
+    employerLogos = await response.json();
+  } catch {
+    employerLogos = [];
+  }
+  renderPortalWidgets();
+}
+
 if (quickSearch) {
   quickSearch.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -1236,11 +1620,30 @@ jobsPagination?.addEventListener("click", (event) => {
   document.querySelector("#offres")?.scrollIntoView({ behavior: "smooth", block: "start" });
 });
 
+employmentExplorer?.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-employment-search]");
+  if (!button) return;
+  const type = button.dataset.employmentType || "keyword";
+  if (type === "reset") {
+    if (searchInput) searchInput.value = "";
+    if (cityFilter) cityFilter.value = "";
+    if (typeFilter) typeFilter.value = "";
+    if (sourceFilter) sourceFilter.value = "";
+    setQuickCategory("");
+    resetJobsPage();
+    recordEvent("employment_explorer_reset", { label: "Tous les tags" });
+    renderJobs();
+    return;
+  }
+  applyExplorerSearch({ type, value: button.dataset.employmentSearch || "" });
+});
+
 jobsList?.addEventListener("click", (event) => {
   const button = event.target.closest("button[data-action]");
   const card = event.target.closest(".job-card");
   const id = button?.dataset.id || card?.dataset.jobId;
   if (!id) return;
+  if (!button && event.target.closest("a, button, input, select, textarea")) return;
 
   if (button?.dataset.action === "save") {
     if (savedJobs.has(id)) savedJobs.delete(id);
@@ -1256,11 +1659,27 @@ jobsList?.addEventListener("click", (event) => {
   }
 });
 
+jobsList?.addEventListener("keydown", (event) => {
+  if (!["Enter", " "].includes(event.key)) return;
+  const card = event.target.closest(".job-card");
+  if (!card || event.target.closest("a, button, input, select, textarea")) return;
+  event.preventDefault();
+  const id = card.dataset.jobId;
+  if (!id) return;
+  activeJobId = id;
+  recordEvent("job_selected", { label: id, source: jobs.find((job) => job.id === id)?.sourceName || "", input: "keyboard" });
+  renderJobs();
+  if (window.matchMedia("(max-width: 900px)").matches) {
+    jobDetail?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+});
+
 featuredJobsCarousel?.addEventListener("click", (event) => {
   const button = event.target.closest("button[data-action]");
   const card = event.target.closest(".job-card");
   const id = button?.dataset.id || card?.dataset.jobId;
   if (!id) return;
+  if (!button && event.target.closest("a, button, input, select, textarea")) return;
 
   if (button?.dataset.action === "save") {
     if (savedJobs.has(id)) savedJobs.delete(id);
@@ -1379,7 +1798,9 @@ document.addEventListener("click", (event) => {
   const carousel = document.querySelector(`#${CSS.escape(targetId)}`);
   if (!carousel) return;
   const direction = next ? 1 : -1;
+  carousel.classList.add("is-user-scrolling");
   carousel.scrollBy({ left: direction * Math.max(280, carousel.clientWidth * 0.82), behavior: "smooth" });
+  window.setTimeout(() => carousel.classList.remove("is-user-scrolling"), 1400);
 });
 
 exportLeadsButton?.addEventListener("click", exportLeadsCsv);
@@ -1582,7 +2003,9 @@ document.querySelector("#publishSocialButton")?.addEventListener("click", async 
 });
 
 loadJobs();
+loadEmployerLogos();
 loadSources();
+setInterval(updateCountdowns, 1000);
 if (leadTable || eventCount || adminSummary) {
   loadServerAdminData();
 }

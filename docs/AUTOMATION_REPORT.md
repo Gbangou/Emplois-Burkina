@@ -1,6 +1,6 @@
 # Rapport automation JobFaso
 
-Genere le : 2026-06-15T10:06:01.240Z
+Genere le : 2026-06-15T16:34:05.842Z
 
 ## Resume
 
@@ -8,45 +8,44 @@ Genere le : 2026-06-15T10:06:01.240Z
 - Dernier succes : Aucun
 - Duree derniere run : 0s
 - Runs : 0 total, 0 succes, 0 echecs
-- Quality gate : warning (94 / 100)
+- Quality gate : passed (100 / 100)
 - Checks critiques en echec : 0
-- Warnings quality gate : 1
-- Sources : 38 (16 automatiques, 22 manuelles)
-- Items bruts : 394
-- Offres : 20
-- Offres a moderer : 20
-- Offres avec date de cloture : 2
-- Offres sans date de cloture : 18
-- Offres cloturant sous 7 jours : 1
+- Warnings quality gate : 0
+- Sources : 36 (15 automatiques, 21 manuelles)
+- Items bruts : 352
+- Offres : 18
+- Offres a moderer : 18
+- Offres avec date de cloture : 10
+- Offres sans date de cloture : 8
+- Offres cloturant sous 7 jours : 4
 - Offres expirees : 0
 - Posts sociaux en file : 47
-- Dates en file de revue : 18
-- Score visibilite : 92 / 100
+- Dates en file de revue : 8
+- Score visibilite : 80 / 100
 - Audit projet : passed (100 / 100)
-- Cibles backlinks/partenariats : 43
+- Cibles backlinks/partenariats : 42
 - URLs sitemap : 47
 - Taille SQLite locale : 696320 octets
-- Erreurs scraper : 0
-- Taille seed SQL : 741098 octets
+- Erreurs scraper : 3
+- Taille seed SQL : 672198 octets
 
 ## Categories
 
 | Nom | Total |
 | --- | ---: |
-| Bureau | 8 |
-| ONG | 4 |
-| Finance et administration | 3 |
-| Metiers terrain et informels | 2 |
+| Bureau | 7 |
+| ONG | 6 |
+| Finance et administration | 2 |
 | BTP et chantier | 1 |
-| Commerce et vente | 1 |
+| Metiers terrain et informels | 1 |
 | Transport et logistique | 1 |
 
 ## Villes
 
 | Nom | Total |
 | --- | ---: |
-| Burkina Faso | 11 |
-| Ouagadougou | 8 |
+| Burkina Faso | 12 |
+| Ouagadougou | 5 |
 | Bagassi | 1 |
 
 ## Sources publiees
@@ -56,26 +55,28 @@ Genere le : 2026-06-15T10:06:01.240Z
 | BFemploi | 8 |
 | Emploiburkina | 7 |
 | HumanitaireHub | 2 |
-| UNjobs Burkina Faso | 2 |
 | LeFaso.net Recrutement | 1 |
 
 ## Deadlines proches
 
-- 7j : Assistant Financier SMC – Malaria Consortium (HumanitaireHub) - 2026-06-21
+- 1j : Specialiste Safeguarding Regional (BFemploi) - 2026-06-15
+- 2j : Cash Academy Program Coordinator (BFemploi) - 2026-06-16
+- 2j : Programme Officer - School Meals (BFemploi) - 2026-06-16
+- 7j : Appel à propositions pour la mise en œuvre d’une enquête de couverture post-campagne de supplémentation en vitamine a (BFemploi) - 2026-06-21
 
 ## Offres sans date de cloture
 
-- Appel à propositions pour la mise en œuvre d’une enquête de couverture post-campagne de supplémentation en vitamine a (BFemploi) - Bureau
 - Technico Commercial en Climatisation Haut de Gamme- Ouagadougou (Emploiburkina) - BTP et chantier
 - Avis de recrutement d’un(e) Coordonnateur(trice) de Projet (LeFaso.net Recrutement) - ONG
-- IFDC Vacancy: Jeune Professionnel Agent Terrain (JP) (UNjobs Burkina Faso) - Metiers terrain et informels
-- Cash Academy Program Coordinator (BFemploi) - Bureau
-- Sales Manager- Ouagadougou (Emploiburkina) - Bureau
-- Communications and Marketing Specialist, Pathfinder Portuguese & English Countries (UNjobs Burkina Faso) - Commerce et vente
-- Responsable Relations Bailleurs H/F Tout Pays (BFemploi) - ONG
-- Secrétaire Comptable- Ouagadougou (Emploiburkina) - Finance et administration
-- Programme Officer - School Meals (BFemploi) - ONG
+- Sécretaire Comptable- Ouagadougou (Emploiburkina) - Finance et administration
+- Executive Secretary- Ouagadougou (Emploiburkina) - Bureau
+- Magazine Keeper Junior (Magasinier) H/F- Bagassi (Emploiburkina) - Transport et logistique
+- Manager- Work From Home (Emploiburkina) - Bureau
+- Secrétaire- Ouagadougou (Emploiburkina) - Finance et administration
+- ANGULAR Developer (M/F) (Emploiburkina) - Bureau
 
 ## Erreurs scraper recentes
 
-Aucune erreur scraper recente.
+- Afrique Emplois: fetch failed
+- UNjobs Burkina Faso: robots.txt interdit la collecte de cette source
+- UN Talent Burkina Faso: HTTP 403 Forbidden

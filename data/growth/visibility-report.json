@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-06-12T14:36:02.521Z",
-  "score": 92,
+  "generatedAt": "2026-06-15T16:33:12.043Z",
+  "score": 80,
   "checks": [
     {
       "id": "domain",
@@ -40,7 +40,7 @@
     {
       "id": "content_depth",
       "label": "Volume offres SEO",
-      "ok": true,
+      "ok": false,
       "weight": 12,
       "fix": "Automatiser plus de sources fiables."
     },
@@ -74,14 +74,15 @@
     }
   ],
   "priorities": [
+    "Automatiser plus de sources fiables.",
     "Ajouter adsenseClient apres approbation Google."
   ],
   "totals": {
-    "jobs": 20,
-    "sources": 38,
+    "jobs": 18,
+    "sources": 36,
     "sitemapUrls": 47,
     "rateProducts": 7,
-    "outreachTargets": 43,
+    "outreachTargets": 42,
     "outreachTemplates": 3
   }
 }

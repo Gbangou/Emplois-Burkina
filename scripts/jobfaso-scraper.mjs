@@ -10,22 +10,49 @@ const USER_AGENT = process.env.JOBFASO_CRAWLER_AGENT || "JobFasoBot/0.1 (+contac
 const DETAIL_LIMIT_PER_SOURCE = Number(process.env.JOBFASO_DETAIL_LIMIT || 18);
 const REQUEST_DELAY_MS = Number(process.env.JOBFASO_REQUEST_DELAY_MS || 350);
 
-const frenchMonths = {
+const monthNumbers = {
+  jan: "01",
   janvier: "01",
+  january: "01",
+  feb: "02",
+  fev: "02",
   fevrier: "02",
   février: "02",
+  february: "02",
+  mar: "03",
   mars: "03",
+  march: "03",
+  apr: "04",
+  avr: "04",
   avril: "04",
+  april: "04",
+  may: "05",
   mai: "05",
+  jun: "06",
   juin: "06",
+  june: "06",
+  jul: "07",
   juillet: "07",
+  july: "07",
+  aug: "08",
+  aou: "08",
   aout: "08",
   août: "08",
+  august: "08",
+  sep: "09",
+  sept: "09",
   septembre: "09",
+  september: "09",
+  oct: "10",
   octobre: "10",
+  october: "10",
+  nov: "11",
   novembre: "11",
+  november: "11",
+  dec: "12",
   decembre: "12",
   décembre: "12",
+  december: "12",
 };
 
 function normalize(value) {
@@ -87,33 +114,91 @@ function absolutizeUrl(href, baseUrl) {
   }
 }
 
-function parseFrenchDate(value = "") {
-  const text = normalize(value);
-  const numeric = text.match(/\b(\d{1,2})[/-](\d{1,2})[/-](\d{2,4})\b/);
+function imageAttributes(html) {
+  const images = [];
+  const imgTags = [...String(html || "").matchAll(/<img\b[^>]*>/gi)];
+
+  for (const [tag] of imgTags) {
+    const attrs = {};
+    for (const [, name, value] of tag.matchAll(/\s([a-zA-Z:-]+)=["']([^"']*)["']/g)) {
+      attrs[name.toLowerCase()] = decodeHtml(value);
+    }
+    const src = attrs.src || attrs["data-src"] || attrs["data-lazy-src"] || "";
+    if (src) images.push({ ...attrs, src });
+  }
+
+  return images;
+}
+
+function isUsefulLogoImage(image) {
+  const haystack = normalize(`${image.src} ${image.alt} ${image.title} ${image.class}`);
+  if (!haystack) return false;
+  if (/default-logo|favicon|icon|facebook|linkedin|twitter|whatsapp|appstore|playstore|banner|header|footer/.test(haystack)) {
+    return false;
+  }
+  return /logo|entreprise|company|employer|recrut/.test(haystack) || Boolean(image.alt && image.alt.length >= 3);
+}
+
+function extractLogoUrl(html, baseUrl, preferredName = "") {
+  const preferred = normalize(preferredName);
+  const images = imageAttributes(html)
+    .map((image) => ({ ...image, src: absolutizeUrl(image.src, baseUrl) }))
+    .filter((image) => image.src && isUsefulLogoImage(image));
+
+  const named = images.find((image) => preferred && normalize(`${image.alt} ${image.title}`).includes(preferred));
+  const logo = named || images.find((image) => /\/logo\//i.test(image.src)) || images[0];
+  return logo?.src || "";
+}
+
+function extractOpenGraphImage(html, baseUrl) {
+  const match = String(html || "").match(/<meta\s+(?:property|name)=["']og:image["']\s+content=["']([^"']+)["']/i);
+  return match ? absolutizeUrl(decodeHtml(match[1]), baseUrl) : "";
+}
+
+function validIsoDate(value) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(String(value || ""))) return "";
+  const date = new Date(`${value}T00:00:00Z`);
+  return Number.isNaN(date.getTime()) ? "" : value;
+}
+
+function parseDateValue(value = "") {
+  const raw = String(value || "").trim();
+  const iso = validIsoDate(raw);
+  if (iso) return iso;
+
+  const numeric = raw.match(/\b(\d{1,2})[/-](\d{1,2})[/-](\d{2,4})\b/);
   if (numeric) {
     const [, day, month, year] = numeric;
     const fullYear = year.length === 2 ? `20${year}` : year;
-    return `${fullYear.padStart(4, "0")}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
+    return validIsoDate(`${fullYear.padStart(4, "0")}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`);
   }
 
-  const french = text.match(/\b(\d{1,2})\s+([a-z\u00e0-\u00ff]+)\s+(\d{4})\b/i);
-  if (!french) return "";
+  const text = normalize(raw).replace(/\./g, "");
+  const named = text.match(/\b(\d{1,2})(?:er)?[\s-]+([a-z]+)[\s-]+(\d{4})\b/i);
+  if (!named) return "";
 
-  const [, day, monthName, year] = french;
-  const month = frenchMonths[monthName];
-  if (!month) return "";
-  return `${year}-${month}-${day.padStart(2, "0")}`;
+  const [, day, monthName, year] = named;
+  const month = monthNumbers[monthName] || monthNumbers[monthName.slice(0, 3)];
+  return month ? validIsoDate(`${year}-${month}-${day.padStart(2, "0")}`) : "";
 }
 
 function firstDateAfter(text, patterns) {
   for (const pattern of patterns) {
     const match = text.match(pattern);
     if (match) {
-      const parsed = parseFrenchDate(match[1] || match[0]);
+      const parsed = parseDateValue(match[1] || match[0]);
       if (parsed) return parsed;
     }
   }
   return "";
+}
+
+function extractBfemploiDeadline(text, openingDate = "") {
+  const dates = [...String(text || "").matchAll(/\b(\d{1,2}[/-]\d{1,2}[/-]\d{2,4})\b/g)]
+    .map((match) => parseDateValue(match[1]))
+    .filter(Boolean);
+  const uniqueDates = [...new Set(dates)];
+  return uniqueDates.find((date) => !openingDate || date > openingDate) || "";
 }
 
 function extractTitle(html, fallback = "") {
@@ -130,32 +215,43 @@ function extractDetailMetadata(html, item) {
   const openingDate =
     firstDateAfter(text, [
       /offre\s+d[eé]pos[eé]e?\s+([0-9]{1,2}\s+[a-z\u00e0-\u00ff]+\s+[0-9]{4})/i,
-      /date\s+(?:de\s+)?(?:publication|depot|d[eé]p[oô]t|ouverture)\s*:?\s*([0-9]{1,2}\s+[a-z\u00e0-\u00ff]+\s+[0-9]{4})/i,
-      /publi[eé]\s+le\s+([0-9]{1,2}\s+[a-z\u00e0-\u00ff]+\s+[0-9]{4})/i,
+      /date\s+(?:de\s+)?(?:publication|depot|d[eé]p[oô]t|ouverture)\s*:?\s*([0-9]{1,2}(?:er)?[\s/-]+[a-zA-ZÀ-ÿ.]+[\s/-]+[0-9]{2,4})/i,
+      /(?:published|posted|date\s+posted)\s+(?:on\s+)?\s*:?\s*([0-9]{1,2}(?:er)?[\s/-]+[a-zA-ZÀ-ÿ.]+[\s/-]+[0-9]{2,4})/i,
+      /publi[eé]\s+le\s+([0-9]{1,2}(?:er)?[\s/-]+[a-zA-ZÀ-ÿ.]+[\s/-]+[0-9]{2,4})/i,
       /([0-9]{1,2}[/-][0-9]{1,2}[/-][0-9]{2,4})/,
     ]) || item.openingDate || "";
   const closingDate =
     firstDateAfter(text, [
-      /date\s+de\s+cl[oô]ture\s+(?:de\s+l[’']offre\s*)?:?\s*([0-9]{1,2}\s+[a-z\u00e0-\u00ff]+\s+[0-9]{4})/i,
-      /date\s+limite\s+(?:de\s+d[eé]p[oô]t|de\s+candidature|pour\s+postuler)?\s*:?\s*([0-9]{1,2}\s+[a-z\u00e0-\u00ff]+\s+[0-9]{4})/i,
-      /cl[oô]ture\s*:?\s*([0-9]{1,2}\s+[a-z\u00e0-\u00ff]+\s+[0-9]{4})/i,
-      /deadline\s*:?\s*([0-9]{1,2}\s+[a-z\u00e0-\u00ff]+\s+[0-9]{4})/i,
-    ]) || item.closingDate || "";
+      /date\s+de\s+cl[oô]ture\s+(?:de\s+l[’']offre\s*)?:?\s*([0-9]{1,2}(?:er)?[\s/-]+[a-zA-ZÀ-ÿ.]+[\s/-]+[0-9]{2,4})/i,
+      /date\s+de\s+cl[oô]ture\s+(?:de\s+l[’']offre\s*)?:?\s*([0-9]{1,2}[/-][0-9]{1,2}[/-][0-9]{2,4})/i,
+      /date\s+limite\s+(?:de\s+d[eé]p[oô]t|de\s+candidature|pour\s+postuler|de\s+r[eé]ception)?\s*:?\s*([0-9]{1,2}(?:er)?[\s/-]+[a-zA-ZÀ-ÿ.]+[\s/-]+[0-9]{2,4})/i,
+      /date\s+limite\s+(?:de\s+d[eé]p[oô]t|de\s+candidature|pour\s+postuler|de\s+r[eé]ception)?\s*:?\s*([0-9]{1,2}[/-][0-9]{1,2}[/-][0-9]{2,4})/i,
+      /(?:closing\s+date|application\s+deadline|apply\s+by|deadline\s+on|deadline)\s*:?\s*([0-9]{1,2}(?:er)?[\s/-]+[a-zA-ZÀ-ÿ.]+[\s/-]+[0-9]{2,4})/i,
+      /(?:closing\s+date|application\s+deadline|apply\s+by|deadline\s+on|deadline)\s*:?\s*([0-9]{1,2}[/-][0-9]{1,2}[/-][0-9]{2,4})/i,
+      /(?:cl[oô]ture|expire|fin\s+de\s+publication)\s*:?\s*([0-9]{1,2}(?:er)?[\s/-]+[a-zA-ZÀ-ÿ.]+[\s/-]+[0-9]{2,4})/i,
+      /(?:cl[oô]ture|expire|fin\s+de\s+publication)\s*:?\s*([0-9]{1,2}[/-][0-9]{1,2}[/-][0-9]{2,4})/i,
+    ]) ||
+    (item.sourceId === "bfemploi" ? extractBfemploiDeadline(text, openingDate) : "") ||
+    item.closingDate ||
+    "";
   const cityMatch = text.match(/(?:lieu de travail|localisation|ville)\s*:?\s*([A-Za-zÀ-ÿ -]{3,80})/i);
   const typeMatch = text.match(/type de contrat\s*:?\s*([A-Za-zÀ-ÿ0-9 /-]{3,80})/i);
   const companyMatch = text.match(
     /offre\s+d[eé]pos[eé]e?\s+[0-9]{1,2}\s+[a-z\u00e0-\u00ff]+\s+[0-9]{4}\s+par\s+(.+?)(?:\s+Date\s+de\s+cl[oô]ture|\s+Secteur|\s+L[’']|$)/i
   );
+  const company = companyMatch?.[1]?.trim() || item.company;
+  const companyLogoUrl = extractLogoUrl(html, item.url, company) || item.companyLogoUrl || "";
 
   return {
     ...item,
     title: title || item.title,
-    company: companyMatch?.[1]?.trim() || item.company,
+    company,
     city: cityMatch?.[1]?.replace(/\s+(remuneration|type|assurance).*$/i, "").trim() || item.city,
     type: typeMatch?.[1]?.trim() || item.type,
     openingDate,
     closingDate,
     deadline: closingDate || item.deadline,
+    companyLogoUrl,
     excerpt: text.slice(0, 900),
     detailExtractedAt: new Date().toISOString(),
   };
@@ -258,12 +354,15 @@ function extractJsonLdJobs(html, source) {
           sourceId: source.id,
           sourceName: source.name,
           sourceUrl: source.url,
+          sourceLogoUrl: source.logoUrl || "",
           title,
           company,
           city,
           deadline,
           openingDate: datePosted,
           closingDate: deadline,
+          companyLogoUrl:
+            absolutizeUrl(item.hiringOrganization?.logo || item.image || "", url) || source.logoUrl || "",
           url,
           category: "A classer",
           status: "needs_review",
@@ -279,10 +378,11 @@ function extractJsonLdJobs(html, source) {
   return jobs;
 }
 
-function extractLikelyJobLinks(html, source) {
+function extractLikelyJobLinks(html, source, sourceLogoUrl = "") {
   const links = [...html.matchAll(/<a\s+[^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi)];
   const keywords = /(emploi|job|recrut|concours|stage|candidature|offre|career|carriere)/i;
-  const blockedLabel = /(inscription|connexion|newsletter|deposer|deposez|publier|candidat|recruteur|conditions|telechargement|formation|freelance|voir plus|toutes les annonces)/i;
+  const blockedLabel = /(inscription|connexion|newsletter|deposer|deposez|publier|candidat|recruteur|conditions|telechargement|formation|freelance|voir plus|toutes les annonces|skip to main content|clear filters|all jobs|closing soon|remote\s*\/\s*roster\s*\/\s*roving|sort by|filter|reset)/i;
+  const blockedUrl = /#main-content|[?&](list|view|sort|advanced-search)=|\/jobs\/?$/i;
   const items = [];
 
   for (const [, href, labelHtml] of links) {
@@ -296,6 +396,7 @@ function extractLikelyJobLinks(html, source) {
     const excluded = excludeUrl.some((pattern) => normalizedUrl.includes(normalize(pattern)));
 
     if (!url || !label || label.length < 8 || !keywords.test(haystack)) continue;
+    if (blockedUrl.test(url)) continue;
     if (blockedLabel.test(label) || !included || excluded) continue;
 
     items.push({
@@ -303,12 +404,14 @@ function extractLikelyJobLinks(html, source) {
       sourceId: source.id,
       sourceName: source.name,
       sourceUrl: source.url,
+      sourceLogoUrl,
       title: label.slice(0, 160),
       company: source.name,
       city: "Burkina Faso",
       deadline: "",
       openingDate: "",
       closingDate: "",
+      companyLogoUrl: "",
       url,
       category: "A classer",
       status: "needs_review",
@@ -350,12 +453,13 @@ async function collectSource(source) {
   }
 
   const html = await fetchText(source.url);
+  const sourceLogoUrl = source.logoUrl || extractLogoUrl(html, source.url, source.name) || extractOpenGraphImage(html, source.url);
   const structuredJobs = extractJsonLdJobs(html, source);
-  const likelyLinks = extractLikelyJobLinks(html, source);
+  const likelyLinks = extractLikelyJobLinks(html, source, sourceLogoUrl);
   const byId = new Map();
 
   for (const item of [...structuredJobs, ...likelyLinks]) {
-    byId.set(item.id, item);
+    byId.set(item.id, { ...item, sourceLogoUrl: item.sourceLogoUrl || sourceLogoUrl });
   }
 
   return enrichDetails([...byId.values()]);

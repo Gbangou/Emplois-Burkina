@@ -3,6 +3,7 @@
     "id": "bfemploi",
     "name": "BFemploi",
     "url": "https://www.bfemploi.com/",
+    "logoUrl": "https://www.bfemploi.com/favicon.ico",
     "type": "job_board",
     "priority": 1,
     "collection": "review_required",
@@ -14,6 +15,7 @@
     "id": "emploiburkina",
     "name": "Emploiburkina",
     "url": "https://www.emploiburkina.com/",
+    "logoUrl": "https://www.emploiburkina.com/sites/emploiburkina.com/themes/africawork3/logo-header-emploiburkina.svg",
     "type": "job_board",
     "priority": 1,
     "collection": "review_required",
@@ -33,17 +35,6 @@
     "notes": "A surveiller pour offres privees et alertes emploi Burkina."
   },
   {
-    "id": "afriqueemplois",
-    "name": "Afrique Emplois",
-    "url": "https://www.afriqueemplois.com/",
-    "type": "job_board",
-    "priority": 1,
-    "collection": "review_required",
-    "includeUrl": ["emploi", "job", "offre", "concours", "recrutement"],
-    "excludeUrl": ["inscription", "login", "cv", "formation", "contact"],
-    "notes": "Contient des offres Burkina, concours et opportunites regionales."
-  },
-  {
     "id": "rmo-burkina",
     "name": "RMO Job Center",
     "url": "https://www.rmo-jobcenter.com/fr/nos-offres-emploi.html",
@@ -58,6 +49,7 @@
     "id": "humanitairehub",
     "name": "HumanitaireHub",
     "url": "https://humanitairehub.com/",
+    "logoUrl": "https://humanitairehub.com/favicon.ico",
     "type": "ngo",
     "priority": 1,
     "collection": "review_required",
@@ -69,6 +61,7 @@
     "id": "unjobs-burkina",
     "name": "UNjobs Burkina Faso",
     "url": "https://unjobs.org/duty_stations/burkina-faso",
+    "logoUrl": "https://unjobs.org/favicon.ico",
     "type": "ngo",
     "priority": 1,
     "collection": "review_required",
@@ -83,8 +76,8 @@
     "type": "ngo",
     "priority": 1,
     "collection": "review_required",
-    "includeUrl": ["job", "jobs", "burkina-faso"],
-    "excludeUrl": ["training", "reports", "updates"],
+    "includeUrl": ["/job/"],
+    "excludeUrl": ["training", "reports", "updates", "/jobs?", "#main-content"],
     "notes": "Source humanitaire mondiale. Collecter seulement titres, deadlines et liens officiels."
   },
   {
@@ -300,6 +293,7 @@
     "id": "lefaso-recrutement",
     "name": "LeFaso.net Recrutement",
     "url": "https://emploi.lefaso.net/",
+    "logoUrl": "https://emploi.lefaso.net/favicon.ico",
     "type": "media",
     "priority": 3,
     "collection": "review_required",
@@ -321,7 +315,7 @@
   {
     "id": "jooble-burkina",
     "name": "Jooble Burkina Faso",
-    "url": "https://bf.jooble.org/",
+    "url": "https://jooble.org/SearchResult?ukw=&rgns=Burkina%20Faso",
     "type": "aggregator",
     "priority": 2,
     "collection": "manual_only",
@@ -332,24 +326,13 @@
   {
     "id": "optioncarriere-burkina",
     "name": "Optioncarriere Burkina Faso",
-    "url": "https://www.optioncarriere.bf/",
+    "url": "https://www.optioncarriere.com/emploi?s=&l=Burkina+Faso",
     "type": "aggregator",
     "priority": 2,
     "collection": "manual_only",
     "includeUrl": ["emploi", "offre", "burkina"],
     "excludeUrl": ["login"],
     "notes": "Agregateur emploi. Lier les offres vers les sources originales quand possible."
-  },
-  {
-    "id": "jumia-deals-burkina-emploi",
-    "name": "Jumia Deals Burkina Emploi",
-    "url": "https://deals.jumia.bf/",
-    "type": "classifieds",
-    "priority": 2,
-    "collection": "manual_only",
-    "includeUrl": ["emploi", "service", "plombier", "macon", "soudeur", "chauffeur"],
-    "excludeUrl": ["login", "account"],
-    "notes": "Petites annonces utiles pour reperer les besoins terrain et services locaux. A verifier manuellement selon disponibilite du site."
   },
   {
     "id": "facebook-emploi-burkina-veille",

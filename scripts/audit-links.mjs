@@ -1,0 +1,165 @@
+import { readdir, readFile, writeFile, mkdir } from "node:fs/promises";
+import { dirname, extname, join, resolve } from "node:path";
+
+const ROOT = resolve(new URL("..", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1"));
+const BASE_URL = process.env.JOBFASO_BASE_URL || "http://127.0.0.1:8088";
+const REPORT_FILE = join(ROOT, "docs", "LINK_AUDIT.md");
+const USER_AGENT = "JobFasoLinkAudit/0.1 (+https://jobfaso.com)";
+const CHECK_EXTERNAL = process.argv.includes("--external");
+const allowedExtensions = new Set([".html", ".css", ".js", ".mjs", ".json", ".xml", ".webmanifest", ".txt"]);
+const ignoredDirectories = new Set([".git", "node_modules", ".agents", ".codex"]);
+const productionHosts = new Set(["jobfaso.com", "www.jobfaso.com"]);
+const ignoredSchemes = /^(mailto:|tel:|whatsapp:|javascript:|data:|#)/i;
+
+async function listFiles(dir) {
+  const entries = await readdir(dir, { withFileTypes: true });
+  const files = [];
+
+  for (const entry of entries) {
+    if (ignoredDirectories.has(entry.name)) continue;
+    const absolute = join(dir, entry.name);
+    if (entry.isDirectory()) {
+      files.push(...(await listFiles(absolute)));
+      continue;
+    }
+    if (allowedExtensions.has(extname(entry.name))) files.push(absolute);
+  }
+
+  return files;
+}
+
+function normalizePath(value) {
+  return value.replaceAll("\\", "/").replace(ROOT.replaceAll("\\", "/"), "").replace(/^\/+/, "");
+}
+
+function decode(value) {
+  return String(value || "")
+    .replace(/&amp;/g, "&")
+    .replace(/&quot;/g, "\"")
+    .replace(/&#039;/g, "'")
+    .trim();
+}
+
+function extractLinks(content, file) {
+  const links = [];
+  const patterns = [
+    /\b(?:href|src|action|content)=["']([^"']+)["']/gi,
+    /\b(?:sourceUrl|canonicalUrl|logoUrl|profileUrl|url)\s*:\s*["']([^"']+)["']/gi,
+    /url\(["']?([^"')]+)["']?\)/gi,
+    /"((?:https?:\/\/|\/|\.\/|\.\.\/)[^"\s]+)"/gi,
+  ];
+
+  for (const pattern of patterns) {
+    for (const match of content.matchAll(pattern)) {
+      const raw = decode(match[1]);
+      if (!raw || ignoredSchemes.test(raw)) continue;
+      links.push({ file, raw });
+    }
+  }
+
+  return links;
+}
+
+function toCheckUrl(link) {
+  const clean = link.raw.split("#")[0];
+  if (!clean || ignoredSchemes.test(clean)) return null;
+  if (clean.includes("${")) return null;
+  try {
+    if (/^https?:\/\//i.test(clean)) {
+      const parsed = new URL(clean);
+      if (productionHosts.has(parsed.hostname)) {
+        return { type: "internal", url: new URL(`${parsed.pathname}${parsed.search}`, BASE_URL).toString() };
+      }
+      return { type: "external", url: clean };
+    }
+    const fileUrl = new URL(`file:///${link.file.replaceAll("\\", "/")}`);
+    const resolved = new URL(clean, fileUrl);
+    const relative = resolved.pathname.replace(/^\/([A-Za-z]:\/)/, "$1");
+    const root = ROOT.replaceAll("\\", "/");
+    if (!relative.startsWith(root)) return { type: "internal", url: new URL(clean, BASE_URL).toString() };
+    const webPath = `/${relative.slice(root.length).replace(/^\/+/, "")}`;
+    return { type: "internal", url: new URL(webPath, BASE_URL).toString() };
+  } catch {
+    return { type: "invalid", url: clean };
+  }
+}
+
+async function request(url, method = "HEAD") {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 7000);
+  try {
+    const response = await fetch(url, {
+      method,
+      redirect: "follow",
+      signal: controller.signal,
+      headers: { "user-agent": USER_AGENT, accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" },
+    });
+    return { ok: response.status < 500, status: response.status, finalUrl: response.url };
+  } catch (error) {
+    return { ok: false, status: 0, error: error.message };
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+async function checkUrl(url, type) {
+  if (type === "external" && !CHECK_EXTERNAL) return { ok: true, status: "skipped", note: "external non verifie sans --external" };
+  const head = await request(url, "HEAD");
+  if (head.ok && head.status !== 405) return head;
+  return request(url, "GET");
+}
+
+function uniqueLinks(links) {
+  const byKey = new Map();
+  for (const link of links) {
+    const check = toCheckUrl(link);
+    if (!check) continue;
+    const key = `${check.type}:${check.url}`;
+    const existing = byKey.get(key);
+    if (existing) {
+      existing.files.add(normalizePath(link.file));
+      continue;
+    }
+    byKey.set(key, { ...check, raw: link.raw, files: new Set([normalizePath(link.file)]) });
+  }
+  return [...byKey.values()];
+}
+
+const files = await listFiles(ROOT);
+const links = [];
+for (const file of files) links.push(...extractLinks(await readFile(file, "utf8"), file));
+
+const checks = [];
+for (const link of uniqueLinks(links)) {
+  const result = link.type === "invalid" ? { ok: false, status: "invalid" } : await checkUrl(link.url, link.type);
+  checks.push({ ...link, ...result, files: [...link.files] });
+}
+
+const broken = checks.filter((item) => !item.ok);
+const internalBroken = broken.filter((item) => item.type === "internal");
+const externalBroken = broken.filter((item) => item.type === "external");
+const markdown = `# Audit des liens JobFaso
+
+Genere le : ${new Date().toISOString()}
+
+- Base locale : ${BASE_URL}
+- Fichiers analyses : ${files.length}
+- Liens uniques : ${checks.length}
+- Liens internes casses : ${internalBroken.length}
+- Liens externes casses : ${externalBroken.length}
+- Verification externe : ${CHECK_EXTERNAL ? "oui" : "non"}
+
+## Liens a corriger
+
+${broken.length ? broken.map((item) => `- ${item.type} ${item.status || item.error || ""} : ${item.url}\n  - Fichiers : ${item.files.join(", ")}`).join("\n") : "Aucun lien casse detecte."}
+`;
+
+await mkdir(dirname(REPORT_FILE), { recursive: true });
+await writeFile(REPORT_FILE, markdown, "utf8");
+
+console.log(`Link audit: ${broken.length ? "failed" : "passed"} (${checks.length} liens uniques)`);
+console.log(`Internal broken: ${internalBroken.length}`);
+console.log(`External broken: ${externalBroken.length}`);
+console.log(`Report: ${REPORT_FILE}`);
+
+if (internalBroken.length || externalBroken.length) process.exitCode = 1;

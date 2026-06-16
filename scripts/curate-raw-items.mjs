@@ -3,6 +3,7 @@ import { readFile, writeFile } from "node:fs/promises";
 const ROOT = new URL("../", import.meta.url);
 const RAW_FILE = new URL("data/raw-items.json", ROOT);
 const OUTPUT_FILE = new URL("data/curated-jobs.json", ROOT);
+const EMPLOYER_LOGOS_FILE = new URL("data/employer-logos.json", ROOT);
 
 const blockedTitles = [
   "a propos de rmo",
@@ -59,14 +60,21 @@ const blockedTitles = [
   "tous les metiers",
   "voir l'offre",
   "alertes emploi",
+  "all jobs",
+  "clear filters",
   "closing soon",
   "duty stations",
   "organizations",
+  "remote / roster / roving",
+  "skip to main content",
   "la recherche d'emploi",
 ];
 
 const blockedTitlePatterns = [
   /^comment\s+/,
+  /^all jobs$/,
+  /^clear filters$/,
+  /^skip to /,
   /^\d+\s+regles?\s+/,
   /arbre de noel/,
   /arbre de no.l/,
@@ -107,7 +115,7 @@ const nonBurkinaCountryPatterns = [
 ];
 
 const nonBurkinaTextPattern =
-  /benin|burundi|cameroun|central african republic|centrafrique|congo|cote d'ivoire|cote-d-ivoire|gabon|guinee|mali|mauritanie|niger|nigeria|republique centrafricaine|senegal|togo/;
+  /benin|burundi|cameroun|central african republic|centrafrique|congo|cote d'ivoire|cote-d-ivoire|france|gabon|guinee|mali|mauritanie|niger|nigeria|rdc|republique centrafricaine|senegal|tchad|togo/;
 
 const categoryRules = [
   {
@@ -238,6 +246,109 @@ function validIsoDate(value) {
   return Number.isNaN(date.getTime()) ? "" : value;
 }
 
+const monthNumbers = {
+  jan: "01",
+  janvier: "01",
+  january: "01",
+  feb: "02",
+  fev: "02",
+  fevrier: "02",
+  février: "02",
+  february: "02",
+  mar: "03",
+  mars: "03",
+  march: "03",
+  apr: "04",
+  avr: "04",
+  avril: "04",
+  april: "04",
+  may: "05",
+  mai: "05",
+  jun: "06",
+  juin: "06",
+  june: "06",
+  jul: "07",
+  juillet: "07",
+  july: "07",
+  aug: "08",
+  aou: "08",
+  aout: "08",
+  août: "08",
+  august: "08",
+  sep: "09",
+  sept: "09",
+  septembre: "09",
+  september: "09",
+  oct: "10",
+  octobre: "10",
+  october: "10",
+  nov: "11",
+  novembre: "11",
+  november: "11",
+  dec: "12",
+  decembre: "12",
+  décembre: "12",
+  december: "12",
+};
+
+function parseDateValue(value) {
+  const raw = String(value || "").trim();
+  const iso = validIsoDate(raw);
+  if (iso) return iso;
+
+  const numeric = raw.match(/\b(\d{1,2})[/-](\d{1,2})[/-](\d{2,4})\b/);
+  if (numeric) {
+    const [, day, month, year] = numeric;
+    const fullYear = year.length === 2 ? `20${year}` : year;
+    return validIsoDate(`${fullYear.padStart(4, "0")}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`);
+  }
+
+  const text = normalize(raw).replace(/\./g, "");
+  const named = text.match(/\b(\d{1,2})(?:er)?[\s-]+([a-z]+)[\s-]+(\d{4})\b/);
+  if (!named) return "";
+
+  const [, day, monthName, year] = named;
+  const month = monthNumbers[monthName.slice(0, 3)] || monthNumbers[monthName];
+  return month ? validIsoDate(`${year}-${month}-${day.padStart(2, "0")}`) : "";
+}
+
+function firstDateAfter(text, patterns) {
+  for (const pattern of patterns) {
+    const match = text.match(pattern);
+    if (!match) continue;
+    const parsed = parseDateValue(match[1] || match[0]);
+    if (parsed) return parsed;
+  }
+  return "";
+}
+
+function extractClosingDate(item) {
+  const existing = parseDateValue(item.closingDate) || parseDateValue(item.deadline);
+  if (existing) return existing;
+
+  const text = decodeHtml(`${item.deadline || ""} ${item.excerpt || ""}`);
+  const explicitDate = firstDateAfter(text, [
+    /date\s+de\s+cl[oô]ture\s+(?:de\s+l[’']offre\s*)?:?\s*([0-9]{1,2}(?:er)?[\s/-]+[a-zA-ZÀ-ÿ.]+[\s/-]+[0-9]{2,4})/i,
+    /date\s+limite\s+(?:de\s+d[eé]p[oô]t|de\s+candidature|pour\s+postuler)?\s*:?\s*([0-9]{1,2}(?:er)?[\s/-]+[a-zA-ZÀ-ÿ.]+[\s/-]+[0-9]{2,4})/i,
+    /(?:closing\s+date|application\s+deadline|apply\s+by|deadline\s+on)\s*:?\s*([0-9]{1,2}(?:er)?[\s/-]+[a-zA-ZÀ-ÿ.]+[\s/-]+[0-9]{2,4})/i,
+    /deadline\s+on\s*:?\s*([0-9]{1,2}(?:er)?[\s/-]+[a-zA-ZÀ-ÿ.]+[\s/-]+[0-9]{2,4})/i,
+    /deadline\s*:?\s*([0-9]{1,2}(?:er)?[\s/-]+[a-zA-ZÀ-ÿ.]+[\s/-]+[0-9]{2,4})/i,
+    /cl[oô]ture\s*:?\s*([0-9]{1,2}(?:er)?[\s/-]+[a-zA-ZÀ-ÿ.]+[\s/-]+[0-9]{2,4})/i,
+    /date\s+de\s+cl[oô]ture\s+(?:de\s+l[’']offre\s*)?:?\s*([0-9]{1,2}[/-][0-9]{1,2}[/-][0-9]{2,4})/i,
+    /date\s+limite\s+(?:de\s+d[eé]p[oô]t|de\s+candidature|pour\s+postuler)?\s*:?\s*([0-9]{1,2}[/-][0-9]{1,2}[/-][0-9]{2,4})/i,
+    /(?:closing\s+date|application\s+deadline|apply\s+by|deadline\s+on|deadline)\s*:?\s*([0-9]{1,2}[/-][0-9]{1,2}[/-][0-9]{2,4})/i,
+  ]);
+  if (explicitDate) return explicitDate;
+
+  const relativeDays = `${item.title || ""} ${text}`.match(/\bJ-(\d{1,3})\b/i);
+  const collectedDate = validIsoDate(String(item.collectedAt || "").slice(0, 10));
+  if (!relativeDays || !collectedDate) return "";
+
+  const date = new Date(`${collectedDate}T00:00:00Z`);
+  date.setUTCDate(date.getUTCDate() + Number(relativeDays[1]));
+  return date.toISOString().slice(0, 10);
+}
+
 function dateLabel(value) {
   const date = validIsoDate(value);
   if (!date) return "";
@@ -249,8 +360,8 @@ function dateLabel(value) {
 }
 
 function normalizeDateFields(item) {
-  const openingDate = validIsoDate(item.openingDate) || validIsoDate(String(item.collectedAt || "").slice(0, 10));
-  const closingDate = validIsoDate(item.closingDate) || validIsoDate(item.deadline);
+  const openingDate = parseDateValue(item.openingDate) || validIsoDate(String(item.collectedAt || "").slice(0, 10));
+  const closingDate = extractClosingDate(item);
   const inconsistentDates = Boolean(openingDate && closingDate && closingDate < openingDate);
 
   return {
@@ -313,6 +424,46 @@ function inferCity(item) {
   if (/ouaga|ouagadougou/.test(text)) return "Ouagadougou";
 
   return item.city || "Burkina Faso";
+}
+
+function cleanUrl(value) {
+  try {
+    const url = new URL(String(value || ""));
+    return ["http:", "https:"].includes(url.protocol) ? url.toString() : "";
+  } catch {
+    return "";
+  }
+}
+
+function buildEmployerLogos(jobs) {
+  const byName = new Map();
+
+  for (const job of jobs) {
+    const name = job.company && normalize(job.company) !== normalize(job.sourceName) ? job.company : job.sourceName;
+    const logoUrl = cleanUrl(job.companyLogoUrl) || cleanUrl(job.sourceLogoUrl);
+    if (!name || !logoUrl) continue;
+
+    const key = normalize(name);
+    const current = byName.get(key);
+    if (!current) {
+      byName.set(key, {
+        name,
+        logoUrl,
+        sector: job.category || job.type || "Recruteur",
+        profileUrl: job.sourceUrl,
+        sourceName: job.sourceName,
+        jobs: 1,
+        updatedAt: job.collectedAt || new Date().toISOString(),
+      });
+      continue;
+    }
+
+    current.jobs += 1;
+    if (!current.sector && job.category) current.sector = job.category;
+    if (String(job.collectedAt || "") > String(current.updatedAt || "")) current.updatedAt = job.collectedAt;
+  }
+
+  return [...byName.values()].sort((a, b) => b.jobs - a.jobs || a.name.localeCompare(b.name, "fr")).slice(0, 24);
 }
 
 function isLikelyCategoryPage(item) {
@@ -390,6 +541,8 @@ function curate(items) {
       sourceName: item.sourceName,
       sourceUrl: item.url,
       canonicalUrl: item.url,
+      sourceLogoUrl: cleanUrl(item.sourceLogoUrl),
+      companyLogoUrl: cleanUrl(item.companyLogoUrl) || cleanUrl(item.sourceLogoUrl),
       riskScore: 0,
       confidenceScore: item.excerpt ? 70 : 45,
       tags: inferTags(item, category, city),
@@ -453,8 +606,10 @@ async function main() {
   }
 
   await writeFile(OUTPUT_FILE, `${JSON.stringify(curated, null, 2)}\n`, "utf8");
+  await writeFile(EMPLOYER_LOGOS_FILE, `${JSON.stringify(buildEmployerLogos(curated), null, 2)}\n`, "utf8");
   console.log(`Curated jobs: ${curated.length}`);
   console.log(`Output: ${OUTPUT_FILE.pathname}`);
+  console.log(`Employer logos: ${EMPLOYER_LOGOS_FILE.pathname}`);
 }
 
 main().catch((error) => {

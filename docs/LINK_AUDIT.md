@@ -1,0 +1,465 @@
+# Audit des liens JobFaso
+
+Genere le : 2026-06-15T17:19:05.471Z
+
+- Base locale : http://127.0.0.1:8088
+- Fichiers analyses : 100
+- Liens uniques : 686
+- Liens internes casses : 0
+- Liens externes casses : 226
+- Verification externe : oui
+
+## Liens a corriger
+
+- external fetch failed : https://www.southsudanjob.com/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.emploi.cf/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.emploiburkina.com/mentions-legales
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.emploiburkina.com/propriete-intellectuelle
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.travail-burkina.com/wp-content/themes/jobseek/images/logo.png
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.travail-burkina.com/offres-emploi/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.travail-burkina.com/offres-de-stages/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.travail-burkina.com/category/offres-emploi/administration/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.travail-burkina.com/category/offres-emploi/agriculture-agro-alimentaire/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.travail-burkina.com/category/offres-emploi/architecture/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.travail-burkina.com/category/offres-emploi/assistance-secretariat/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.travail-burkina.com/category/offres-emploi/audiovisuel-infographie-graphisme/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.travail-burkina.com/category/offres-emploi/biologie-chimie/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.travail-burkina.com/category/offres-emploi/charge-de-clientele-communication/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.travail-burkina.com/category/offres-emploi/commerce-marketing-vente/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.travail-burkina.com/category/offres-emploi/comptabilite-finance-statistiques/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.travail-burkina.com/category/offres-emploi/conseil-consulting/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.travail-burkina.com/category/offres-emploi/direction-management/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.travail-burkina.com/category/offres-emploi/informatique-telecom-internet/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.travail-burkina.com/category/offres-emploi/ingenierie-industrie-production/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.travail-burkina.com/category/offres-emploi/journalisme-redaction-traduction/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.travail-burkina.com/category/offres-emploi/juridique/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.travail-burkina.com/category/offres-emploi/mecanique-electrique-energetique/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.travail-burkina.com/category/offres-emploi/medical-paramedical/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.travail-burkina.com/category/offres-emploi/ressources-humaines/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.travail-burkina.com/category/offres-emploi/restauration-hotellerie/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.travail-burkina.com/category/offres-emploi/teleoperateurs-teleconseillers-televendeurs-technicien-support/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.travail-burkina.com/category/offres-emploi/textile-styliste-modeliste/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.travail-burkina.com/category/offres-emploi/vendeur-ouvrier-chauffeur/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.travail-burkina.com/offres-emploi-par-secteur-activite/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/images/offres-emploi.jpg
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/burkina-faso/images/anim_home/home-recrutement1.jpg
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/burkina-faso/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/images/anim_home/home-recrutement.jpg
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/cote-d-ivoire/candidats/inscription.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/fr/rmo.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/fr/cote-d-ivoire/images/anim_home/home-recrutement1.jpg
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/fr/cote-d-ivoire/offres-emploi.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/fr/conseils-emploi.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/fr/cote-d-ivoire/entreprises.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/fr/rmo/actualites/261-grand-jeu-intention-travailleurs.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/fr/rmo/actualites/260-arbre-noel-2021-ecole-maternelle.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/fr/rmo/actualites/258-arbre-noel-2020-ecole-maternelle.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/fr/rmo/actualites/257-cancer-sein-parlons-en.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/fr/rmo/actualites.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/includes/fonctions/outils/telecharger_docs.php?file=postuler-a-une-offre-sur-rmo-jobcenter.pdf
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/flux-rss/filiales/cote-d-ivoire/offres.xml
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/fr/cote-d-ivoire/offres-emploi/industrie-production-mat-1eres/4029-responsable-chaine-logistique.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/fr/cote-d-ivoire/offres-emploi/ntic/3971-ingenieur-support-data-center.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/fr/mali/offres-emploi/services/4035-operations-manager.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/fr/mali/offres-emploi/services/4036-commercial.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/fr/mali/offres-emploi/ntic/4034-agent-controle-draft.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/fr/cote-d-ivoire/offres-emploi/services/4002-chef-projet-it.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/fr/mali/offres-emploi/services/4033-hse.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/fr/mali/offres-emploi/services/4032-infographe-webdesigner.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/fr/cote-d-ivoire/offres-emploi/services/4030-office-manager.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/fr/cote-d-ivoire/offres-emploi/industrie-production-mat-1eres/4027-magasinier.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/fr/cote-d-ivoire/offres-emploi/services/4028-responsable-administratif.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/fr/togo/offres-emploi/services/4025-responsable-developpement.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/fr/togo/offres-emploi/services/4024-assistant-administratif.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/fr/togo/offres-emploi/services/4026-patissier.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/fr/cote-d-ivoire/offres-emploi/achat-logistique-transport/4023-charge-hse.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/fr/cote-d-ivoire/offres-emploi/services/3985-attache-commercial.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/fr/togo/offres-emploi/services/3978-responsable-commercial.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/fr/togo/offres-emploi/ntic/4008-directeur-commercial.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/fr/togo/offres-emploi/services/3977-gerant-restauration-collective.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/fr/cote-d-ivoire/offres-emploi/industrie-production-mat-1eres/3960-responsable-tresorerie.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/rmo.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/rmo/qui-sommes-nous.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/rmo/notre-savoir-faire.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/rmo/nos-implantations.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/rmo/nos-clients.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/rmo/nos-partenaires.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/rmo/actualites.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/conseils-emploi.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/conseils-emploi/gerer-recherche-emploi.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/conseils-emploi/gerer-recherche-emploi/preparer-entretien-embauche.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/conseils-emploi/gerer-recherche-emploi/preparer-entretien-embauche/differents-types-entretien.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/conseils-emploi/gerer-recherche-emploi/preparer-entretien-embauche/deroulement-entretien.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/conseils-emploi/gerer-recherche-emploi/preparer-entretien-embauche/erreurs-eviter-entretien.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/conseils-emploi/gerer-recherche-emploi/preparer-entretien-embauche/post-it-entretien-embauche.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/conseils-emploi/gerer-recherche-emploi/entretien-telephonique.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/conseils-emploi/gerer-recherche-emploi/entretien-telephonique/appel-pas-oublier.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/conseils-emploi/gerer-recherche-emploi/entretien-telephonique/attitudes-eviter.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/conseils-emploi/gerer-recherche-emploi/redaction-cv.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/conseils-emploi/gerer-recherche-emploi/redaction-cv/strategie-professionnelle.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/conseils-emploi/gerer-recherche-emploi/redaction-cv/parties-principales-cv.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/conseils-emploi/gerer-recherche-emploi/redaction-cv/differents-types-cv.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/conseils-emploi/gerer-recherche-emploi/redaction-cv/recommandations-erreurs-eviter.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/conseils-emploi/gerer-recherche-emploi/redaction-cv/conseils-suivre.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/conseils-emploi/gerer-recherche-emploi/redaction-cv/post-it-redaction-cv.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/conseils-emploi/gerer-recherche-emploi/lettre-motivation.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/conseils-emploi/gerer-recherche-emploi/lettre-motivation/erreurs-pas-commettre.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/conseils-emploi/gerer-recherche-emploi/lettre-motivation/florilege-formulations-eviter.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/conseils-emploi/gerer-recherche-emploi/choisir-annonces.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/conseils-emploi/gerer-recherche-emploi/choisir-annonces/analyser-annonces-selectionner.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/conseils-emploi/gerer-recherche-emploi/choisir-annonces/criteres-objectifs-subjectifs.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/conseils-emploi/gerer-recherche-emploi/choisir-annonces/erreurs-eviter.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/conseils-emploi/gerer-recherche-emploi/choisir-annonces/quelques-recommandations.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/conseils-emploi/gerer-recherche-emploi/choisir-annonces/post-it-choisir-annonce.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/conseils-emploi/connaitre-droits.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/conseils-emploi/connaitre-droits/explication-bulletin-paie.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/conseils-emploi/connaitre-droits/contrat-mission.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/conseils-emploi/connaitre-droits/lexique-juridique.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/conseils-emploi/connaitre-droits/documentations-legales.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/conseils-emploi/controle-qualite.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/conseils-emploi/fiches-metier.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/conseils-emploi/actu-conseils.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/cote-d-ivoire/candidats/depot-cv.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/cote-d-ivoire/candidats/agent-recherche.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/cote-d-ivoire/candidats/tests-rh.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/cote-d-ivoire/candidats/boite-outils.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/cote-d-ivoire/candidats/boite-outils/conseil-juridique.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/cote-d-ivoire/candidats/questions-reponses.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/cote-d-ivoire/candidats/demande-documents.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/cote-d-ivoire/entreprises.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/cote-d-ivoire/entreprises/nos-services.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/cote-d-ivoire/entreprises/nos-services/recrutement.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/cote-d-ivoire/entreprises/nos-services/recrutement/nos-offres.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/cote-d-ivoire/entreprises/nos-services/recrutement/notre-agrement.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/cote-d-ivoire/entreprises/nos-services/recrutement/nos-tests-rh.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/cote-d-ivoire/entreprises/nos-services/travail-temporaire.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/cote-d-ivoire/entreprises/nos-services/travail-temporaire/contrat-mission.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/cote-d-ivoire/entreprises/nos-services/travail-temporaire/notre-agrement.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/cote-d-ivoire/entreprises/nos-services/sous-traitance.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/cote-d-ivoire/entreprises/nos-services/sous-traitance/notre-agrement.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/cote-d-ivoire/entreprises/nos-services/formation/notre-agrement.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/cote-d-ivoire/entreprises/nos-services/conseil-rh.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/cote-d-ivoire/entreprises/nos-services/conseil-rh/notre-agrement.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/cote-d-ivoire/entreprises/nos-services/marketing-event.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/cote-d-ivoire/entreprises/temoignages.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/cote-d-ivoire/entreprises/demande-cotation-express.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/cote-d-ivoire/entreprises/service-web.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/espace-employes.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/espace-employes/demande-documents.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/fr/politique-confidentialite.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://www.rmo-jobcenter.com/fr/fr/politique-cookie.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://humanitairehub.com/emploi/associee-senior-aux-operations-de-mouvement-appui-terrain_g-6/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://humanitairehub.com/emploi/unicef-recrute-02-postes-3/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://humanitairehub.com/emploi/pam-recrute-associe-au-programme-sc6/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://humanitairehub.com/emploi/developpeur-euse-senior-dapplication-web-et-mobiles-specialiste/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://humanitairehub.com/emploi/hcr-recrute-500-volontaires-en-ligne/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://humanitairehub.com/emploi/directeur-de-lappui-a-la-mission-d2/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://humanitairehub.com/emploi/charge-e-sera_-projet-atinord-securite-h-f/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://humanitairehub.com/emploi/responsable-de-composantes-_-projet-atinord-securite-h-f/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://humanitairehub.com/emploi/benin-cashew-sa-960-postes/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://humanitairehub.com/emploi/hcdh-recrute-02-postes/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://humanitairehub.com/emploi/ambassade-de-france-recrute-02-postes/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://humanitairehub.com/emploi/pole-regional-et-directeur-pays-afrique-de-louest-et-centrale/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://humanitairehub.com/emploi/coordonnateurrice-projet-npap/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://humanitairehub.com/emploi/comptable/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://humanitairehub.com/emploi/charge-logistique-pays/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://humanitairehub.com/emploi/adjoint%c2%b7e-chef-de-bureau-regional-resilac-referent%c2%b7e-support-et-conformite/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://humanitairehub.com/emploi/ficr-recrute-12-postes-chauffeurs/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://humanitairehub.com/emploi/responsable-de-programme-mali/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://humanitairehub.com/emploi/expertise-france-recrute-02-postes-3/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://humanitairehub.com/emploi/coordinateur-trice-de-projet/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://humanitairehub.com/emploi/unicef-recrute-26-postes/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://humanitairehub.com/emploi/crs-recrute-02-project-officer-sante/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://humanitairehub.com/emploi/coordinateur-financier-2/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://humanitairehub.com/emploi/procurement-assistant-chargee-dachat/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://humanitairehub.com/emploi/assistante-sensibilisation-et-cohesion-sociale/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://humanitairehub.com/emploi/directeur-oms/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://humanitairehub.com/alertes-emploi/
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://emploi.lefaso.net/
+  - Fichiers : data/raw-items.json, data/runtime/local-db.json, data/sources.json
+- external fetch failed : https://emploi.lefaso.net/squelettes-dist/img/logo-emploi-lefaso.jpg
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://emploi.lefaso.net/?page=offres
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://emploi.lefaso.net/-Conseil-du-recruteur-.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://emploi.lefaso.net/Les-entreprises-qui-recrutent-en-ce-moment.html
+  - Fichiers : data/raw-items.json, data/social/queue.json
+- external fetch failed : https://emploi.lefaso.net/Nos-partenaires.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://emploi.lefaso.net/01-Agent-e-de-Bureau.html
+  - Fichiers : data/raw-items.json, data/social/queue.json
+- external fetch failed : https://emploi.lefaso.net/01-Chef-de-mission-et-controleurs-de-chantiers.html
+  - Fichiers : data/raw-items.json, data/social/queue.json
+- external fetch failed : https://emploi.lefaso.net/01-Medecin-Dermatologue.html
+  - Fichiers : data/raw-items.json, data/social/queue.json
+- external fetch failed : https://emploi.lefaso.net/01-Medecin-Chirurgien-maxillo-facial.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://emploi.lefaso.net/01-Medecin-Pneumologue.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://emploi.lefaso.net/01-Medecin-Hematologue.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://emploi.lefaso.net/01-Medecin-ORL.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://emploi.lefaso.net/01-Medecin-Neurologue.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://emploi.lefaso.net/01-Chef-du-service-communication.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://emploi.lefaso.net/01-Chef-de-publicite.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://emploi.lefaso.net/01-Pharmacien.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://emploi.lefaso.net/01-Charge-de-recouvrement.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://emploi.lefaso.net/02-Medecin-Oncologues-medical-et-chirurgical.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://emploi.lefaso.net/02-Chefs-de-mission-ou-chefs-de-projet.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://emploi.lefaso.net/02-Ingenieurs-charges-d-affaires-Mines.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://emploi.lefaso.net/6-conseils-pour-reussir-vos-entretiens-de-recrutement.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://emploi.lefaso.net/Comment-rechercher-efficacement-un-stage-ou-un-emploi.html
+  - Fichiers : data/raw-items.json, data/social/queue.json
+- external fetch failed : https://emploi.lefaso.net/Comment-negocier-une-augmentation.html
+  - Fichiers : data/raw-items.json, data/social/queue.json
+- external fetch failed : https://emploi.lefaso.net/5-regles-pour-bien-gerer-son-temps.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://emploi.lefaso.net/Comment-reussir-son-entretien-d-embauche.html
+  - Fichiers : data/raw-items.json
+- external fetch failed : https://unjobs.org/favicon.ico
+  - Fichiers : data/runtime/local-db.json, data/sources.json
+- external fetch failed : https://www.econcours.gov.bf/
+  - Fichiers : data/runtime/local-db.json, data/sources.json
+- external fetch failed : https://fasomebo.gov.bf/
+  - Fichiers : data/runtime/local-db.json, data/sources.json
+- external fetch failed : https://burkina24.com/
+  - Fichiers : data/runtime/local-db.json, data/sources.json
+- external fetch failed : https://jooble.org/SearchResult?ukw=&rgns=Burkina%20Faso
+  - Fichiers : data/runtime/local-db.json, data/sources.json
+- external fetch failed : https://www.optioncarriere.com/emploi?s=&l=Burkina+Faso
+  - Fichiers : data/runtime/local-db.json, data/sources.json
+- external fetch failed : https://www.facebook.com/search/groups/?q=emploi%20burkina%20faso
+  - Fichiers : data/runtime/local-db.json, data/sources.json
+- external fetch failed : https://www.facebook.com/search/groups/?q=artisans%20services%20burkina%20faso
+  - Fichiers : data/runtime/local-db.json, data/sources.json
+- external fetch failed : https://www.linkedin.com/search/results/content/?keywords=recrutement%20Burkina%20Faso
+  - Fichiers : data/runtime/local-db.json, data/sources.json
+- external fetch failed : https://siao.bf/
+  - Fichiers : data/runtime/local-db.json, data/sources.json
+- external fetch failed : https://www.linkedin.com/jobs/search/?keywords=&location=Burkina%20Faso
+  - Fichiers : data/runtime/local-db.json, data/sources.json
+- external fetch failed : https://unjobs.org/offices/norwegian-refugee-council_oua
+  - Fichiers : data/social/queue.json
+- external fetch failed : https://unjobs.org/offices/chai_oua
+  - Fichiers : data/social/queue.json
+- external fetch failed : https://unjobs.org/offices/medecins-du-monde_oua
+  - Fichiers : data/social/queue.json
+- external fetch failed : https://unjobs.org/offices/fhi-360_746308883472211969
+  - Fichiers : data/social/queue.json
+- external fetch failed : https://humanitairehub.com/emploi/charge-de-projet-en-maladies-tropicales-negligees-2/
+  - Fichiers : data/social/queue.json
+- external fetch failed : https://humanitairehub.com/emploi/directeur-responsable-des-operations/
+  - Fichiers : data/social/queue.json
+- external fetch failed : https://unjobs.org/offices/ifdc_oua
+  - Fichiers : data/social/queue.json
+- external fetch failed : http://emploi.lefaso.net/Un-e-directeur-trice-technique.html
+  - Fichiers : data/social/queue.json
+- external fetch failed : http://emploi.lefaso.net/Dix-10-ouvriers.html
+  - Fichiers : data/social/queue.json
+- external fetch failed : http://emploi.lefaso.net/Un-e-Charge-e-de-Planification-et-de-Capitalisation.html
+  - Fichiers : data/social/queue.json
+- external fetch failed : http://emploi.lefaso.net/UN-01-GESTIONNAIRE-DES-RISQUES.html
+  - Fichiers : data/social/queue.json
+- external fetch failed : http://emploi.lefaso.net/DEUX-02-GUICHETIERS.html
+  - Fichiers : data/social/queue.json
+- external fetch failed : http://emploi.lefaso.net/QUATRE-04-CAISSIERS.html
+  - Fichiers : data/social/queue.json
+- external fetch failed : http://emploi.lefaso.net/Un-01-Coordinateur-de-projet.html
+  - Fichiers : data/social/queue.json
+- external fetch failed : http://emploi.lefaso.net/Un-1-Responsable-marketing-et-distribution-h-f.html
+  - Fichiers : data/social/queue.json
+- external fetch failed : http://emploi.lefaso.net/Un-1-Responsable-finance-et-comptabilite-h-f.html
+  - Fichiers : data/social/queue.json
+- external fetch failed : http://emploi.lefaso.net/Un-1-Chef-d-Agence-h-f.html
+  - Fichiers : data/social/queue.json
+- external fetch failed : http://emploi.lefaso.net/Un-1-Charge-e-des-Relations-Clients-h-f.html
+  - Fichiers : data/social/queue.json
+- external fetch failed : http://emploi.lefaso.net/Directeur-des-Affaires-Juridiques-et-du-Contentieux-H-F.html
+  - Fichiers : data/social/queue.json
+- external fetch failed : https://schema.org/
+  - Fichiers : pages/jobs/angular-developer-m-f-db86e6a3.html, pages/jobs/appel-a-propositions-pour-la-mise-en-uvre-d-une-enquete-de-couverture-post-campagne-de-sup-e05b148d.html, pages/jobs/assistant-financier-malaria-consortium-6460fa0f.html, pages/jobs/assistant-financier-smc-malaria-consortium-0c6185d2.html, pages/jobs/avis-de-recrutement-d-un-e-coordonnateur-trice-de-projet-f69dcfb6.html, pages/jobs/cash-academy-program-coordinator-b511815e.html, pages/jobs/communications-and-marketing-specialist-pathfinder-portuguese-et-english-countries-1d382472.html, pages/jobs/coordinateur-administratif-et-logistique-a8c21595.html, pages/jobs/enqueteurs-chercheurs-de-terrain-ac8e8a25.html, pages/jobs/executive-secretary-ouagadougou-55269b4f.html, pages/jobs/ifdc-vacancy-jeune-professionnel-agent-terrain-jp-1aef4001.html, pages/jobs/magazine-keeper-junior-magasinier-h-f-bagassi-dd07b607.html, pages/jobs/manager-work-from-home-416c39ed.html, pages/jobs/programme-officer-school-meals-dd10c613.html, pages/jobs/responsable-de-recherche-5114bd32.html, pages/jobs/responsable-relations-bailleurs-h-f-tout-pays-085b3a6f.html, pages/jobs/sales-manager-ouagadougou-5f975014.html, pages/jobs/secretaire-comptable-ouagadougou-17344c89.html, pages/jobs/specialiste-safeguarding-regional-7f08c84a.html, pages/jobs/technico-commercial-en-climatisation-haut-de-gamme-ouagadougou-4a1ec186.html, scripts/generate-seo-pages.mjs
+- external fetch failed : http://www.sitemaps.org/schemas/sitemap/0.9
+  - Fichiers : scripts/generate-seo-pages.mjs, sitemap.xml
+- external fetch failed : https://api.indexnow.org/indexnow
+  - Fichiers : scripts/submit-indexnow.mjs
+- external fetch failed : https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1800&q=80
+  - Fichiers : styles.css
+- external fetch failed : https://images.unsplash.com/photo-1521791055366-0d553872125f?auto=format&fit=crop&w=1600&q=80
+  - Fichiers : styles.css
