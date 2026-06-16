@@ -214,9 +214,30 @@ const SOURCE_SPOTLIGHTS = [
     title: "Organisations internationales et systeme des Nations Unies",
     description:
       "Portes d'entree officielles et verifiees pour les agences onusiennes, ONG internationales, bailleurs et structures de developpement ou les Burkinabe peuvent postuler.",
+    segments: ["international_onu"],
     keywords: ["Burkina Faso", "Ouagadougou", "national", "programme", "consultant", "volunteer"],
-    actionHref: "jobs.html?category=ONG",
+    actionHref: "jobs.html?focus=onu-consultance",
     actionLabel: "Voir les offres ONG suivies",
+    searchShortcuts: [
+      {
+        label: "Offres onusiennes",
+        note: "UNICEF, PNUD, FAO, WFP, OMS, UNESCO et volontariat.",
+        query: "ONU",
+        focus: "onu-consultance",
+      },
+      {
+        label: "Organisations internationales",
+        note: "ONG, bailleurs, projets et postes a dimension regionale.",
+        query: "international",
+        focus: "onu-consultance",
+      },
+      {
+        label: "Consultance internationale",
+        note: "Consultant, expert, mission, terme de reference, home-based.",
+        query: "consultant",
+        focus: "onu-consultance",
+      },
+    ],
     limit: 24,
   },
   {
@@ -226,12 +247,61 @@ const SOURCE_SPOTLIGHTS = [
     title: "Consultance, freelance et travail a distance",
     description:
       "Sources serieuses pour missions de consultance, teletravail, freelance et opportunites internationales accessibles depuis le Burkina Faso.",
+    segments: ["consulting_remote"],
     keywords: ["consultant", "consultancy", "remote", "teletravail", "homebased", "freelance"],
-    actionHref: "jobs.html?q=consultant",
+    actionHref: "jobs.html?focus=onu-consultance&q=consultant",
     actionLabel: "Lancer une recherche guidee",
+    searchShortcuts: [
+      {
+        label: "Consultance",
+        note: "Missions courtes, experts, reporting, evaluation, assistance technique.",
+        query: "consultant",
+        focus: "onu-consultance",
+      },
+      {
+        label: "Travail a distance",
+        note: "Remote, teletravail, home-based et support digital.",
+        query: "teletravail",
+        focus: "onu-consultance",
+      },
+      {
+        label: "Freelance",
+        note: "Redaction, design, support, produit, data, developpement.",
+        query: "freelance",
+        focus: "onu-consultance",
+      },
+    ],
     limit: 16,
   },
 ];
+
+const SPECIAL_JOB_FILTER_LABEL = "ONU / Consultance";
+const SPECIAL_JOB_FILTERS = {
+  "onu / consultance": {
+    segments: ["international_onu", "consulting_remote"],
+    keywords: [
+      "onu",
+      "unicef",
+      "undp",
+      "fao",
+      "wfp",
+      "unesco",
+      "who",
+      "unv",
+      "volunteer",
+      "volontariat",
+      "international",
+      "consultant",
+      "consultance",
+      "consultancy",
+      "expert",
+      "remote",
+      "teletravail",
+      "homebased",
+      "freelance",
+    ],
+  },
+};
 
 function readStorageArray(key) {
   try {
@@ -270,6 +340,43 @@ function sortSourcesByPriority(list = []) {
   return list
     .slice()
     .sort((a, b) => a.priority - b.priority || a.name.localeCompare(b.name, "fr"));
+}
+
+function getJobSearchableText(job) {
+  return normalize(
+    [
+      job.title,
+      job.company,
+      job.city,
+      job.category,
+      job.type,
+      job.salary,
+      job.deadline,
+      job.openingDate,
+      job.closingDate,
+      job.sourceName,
+      job.excerpt,
+      ...(job.tags || []),
+    ].join(" ")
+  );
+}
+
+function matchesSpecialJobFilter(job, filterValue = "") {
+  const config = SPECIAL_JOB_FILTERS[normalize(filterValue)];
+  if (!config) return false;
+
+  const source = getSourceRecord(job.sourceName);
+  const sourceSegments = new Set(getSourceSegments(source));
+  if ((config.segments || []).some((segment) => sourceSegments.has(normalize(segment)))) return true;
+
+  const searchable = getJobSearchableText(job);
+  return (config.keywords || []).some((keyword) => searchable.includes(normalize(keyword)));
+}
+
+function matchesSpotlightJob(job, spotlight) {
+  const source = getSourceRecord(job.sourceName);
+  const sourceSegments = new Set(getSourceSegments(source));
+  return (spotlight.segments || []).some((segment) => sourceSegments.has(normalize(segment)));
 }
 
 function sourceReferenceDescriptor(source) {
@@ -813,8 +920,15 @@ function applyUrlSearchParams() {
   const query = params.get("q") || params.get("search") || "";
   const category = params.get("category") || "";
   const city = params.get("city") || "";
+  const focus = params.get("focus") || "";
 
   if (query && searchInput) searchInput.value = query;
+  if (focus === "onu-consultance") {
+    setQuickCategory(SPECIAL_JOB_FILTER_LABEL);
+    if (typeFilter && [...typeFilter.options].some((option) => option.value === SPECIAL_JOB_FILTER_LABEL || option.textContent === SPECIAL_JOB_FILTER_LABEL)) {
+      typeFilter.value = SPECIAL_JOB_FILTER_LABEL;
+    }
+  }
   if (category) {
     setQuickCategory(category);
     if (typeFilter && [...typeFilter.options].some((option) => option.value === category || option.textContent === category)) {
@@ -847,6 +961,32 @@ function applyExplorerSearch({ type, value }) {
 
   resetJobsPage();
   recordEvent("employment_explorer_search", { label: term, type });
+  renderJobs();
+  document.querySelector("#offres")?.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function applyPortalSearch({ query = "", focus = "", category = "", type = "" }) {
+  if (searchInput) searchInput.value = query;
+
+  const resolvedType = focus === "onu-consultance" ? SPECIAL_JOB_FILTER_LABEL : type;
+  const resolvedCategory = focus === "onu-consultance" ? SPECIAL_JOB_FILTER_LABEL : category;
+
+  if (typeFilter) {
+    const canUseType = [...typeFilter.options].some((option) => option.value === resolvedType || option.textContent === resolvedType);
+    typeFilter.value = resolvedType && canUseType ? resolvedType : "";
+  }
+
+  if (resolvedCategory) {
+    setQuickCategory(resolvedCategory);
+  } else {
+    setQuickCategory("");
+  }
+
+  resetJobsPage();
+  recordEvent("portal_search_shortcut", {
+    label: query || resolvedCategory || focus || "shortcut",
+    focus,
+  });
   renderJobs();
   document.querySelector("#offres")?.scrollIntoView({ behavior: "smooth", block: "start" });
 }
@@ -1062,30 +1202,20 @@ function getFilteredJobs() {
   const filtered = jobs
     .map((job) => ({ job, searchScore: getJobSearchScore(job, normalizedQuery) }))
     .filter(({ job, searchScore }) => {
-    const haystack = normalize(
-      [
-        job.title,
-        job.company,
-        job.city,
-        job.category,
-        job.type,
-        job.salary,
-        job.deadline,
-        job.openingDate,
-        job.closingDate,
-        job.sourceName,
-        ...(job.tags || []),
-      ].join(" ")
-    );
-    const matchesQuery = !normalizedQuery || searchScore > 0 || haystack.includes(normalizedQuery);
-    const matchesCity = !city || job.city === city || job.city === "Tout le Burkina" || job.city === "Burkina Faso";
-    const matchesType = !type || normalize(job.type).includes(normalize(type)) || normalize(job.category).includes(normalize(type));
-    const matchesCategory = !activeCategory || job.category === activeCategory;
-    const matchesSource = !source || job.sourceName === source;
-    const matchesSaved = !savedOnly || savedJobs.has(job.id);
+      const haystack = getJobSearchableText(job);
+      const matchesQuery = !normalizedQuery || searchScore > 0 || haystack.includes(normalizedQuery);
+      const matchesCity = !city || job.city === city || job.city === "Tout le Burkina" || job.city === "Burkina Faso";
+      const matchesType =
+        !type ||
+        matchesSpecialJobFilter(job, type) ||
+        normalize(job.type).includes(normalize(type)) ||
+        normalize(job.category).includes(normalize(type));
+      const matchesCategory = !activeCategory || matchesSpecialJobFilter(job, activeCategory) || job.category === activeCategory;
+      const matchesSource = !source || job.sourceName === source;
+      const matchesSaved = !savedOnly || savedJobs.has(job.id);
 
-    return matchesQuery && matchesCity && matchesType && matchesCategory && matchesSource && matchesSaved;
-  });
+      return matchesQuery && matchesCity && matchesType && matchesCategory && matchesSource && matchesSaved;
+    });
 
   return filtered
     .sort((a, b) => {
@@ -1429,8 +1559,24 @@ function renderStrategicSourceSections() {
 
   strategicSourceSections.innerHTML = SOURCE_SPOTLIGHTS.map((spotlight) => {
     const spotlightSources = sortSourcesByPriority(sources.filter((source) => sourceHasSegment(source, spotlight.id))).slice(0, spotlight.limit);
+    const spotlightJobCount = jobs.filter((job) => matchesSpotlightJob(job, spotlight)).length;
     const keywordMarkup = spotlight.keywords
       .map((keyword) => `<span class="pill">${escapeHtml(keyword)}</span>`)
+      .join("");
+    const shortcutMarkup = (spotlight.searchShortcuts || [])
+      .map(
+        (shortcut) => `
+          <button
+            class="strategic-search-card"
+            type="button"
+            data-portal-focus="${escapeHtml(shortcut.focus || "")}"
+            data-portal-query="${escapeHtml(shortcut.query || "")}"
+          >
+            <strong>${escapeHtml(shortcut.label)}</strong>
+            <span>${escapeHtml(shortcut.note)}</span>
+          </button>
+        `
+      )
       .join("");
     const cardsMarkup = spotlightSources.length
       ? spotlightSources
@@ -1456,7 +1602,7 @@ function renderStrategicSourceSections() {
       : `<p class="muted">Aucune source n'est encore configuree pour cette rubrique.</p>`;
 
     return `
-      <section class="strategic-source-section" id="${escapeHtml(spotlight.anchor)}">
+      <section class="strategic-source-section strategic-source-band" id="${escapeHtml(spotlight.anchor)}">
         <div class="strategic-source-lead">
           <div>
             <p class="eyebrow">${escapeHtml(spotlight.eyebrow)}</p>
@@ -1465,8 +1611,12 @@ function renderStrategicSourceSections() {
           </div>
           <div class="strategic-source-meta">
             <span class="pill">${spotlightSources.length} source${spotlightSources.length > 1 ? "s" : ""}</span>
+            <span class="pill">${spotlightJobCount} offre${spotlightJobCount > 1 ? "s" : ""} reliee${spotlightJobCount > 1 ? "s" : ""}</span>
             <span class="pill">Liens reels</span>
           </div>
+        </div>
+        <div class="strategic-search-grid">
+          ${shortcutMarkup}
         </div>
         <div class="tag-row keyword-row">${keywordMarkup}</div>
         <div class="source-directory-grid spotlight-grid">${cardsMarkup}</div>
@@ -1850,6 +2000,7 @@ async function loadJobs() {
   hydrateSourceFilter();
   applyUrlSearchParams();
   renderPortalWidgets();
+  renderStrategicSourceSections();
   renderJobs();
   renderAdmin();
 }
@@ -2003,6 +2154,15 @@ featuredJobsCarousel?.addEventListener("click", (event) => {
   recordEvent("job_selected", { label: id, placement: "featured" });
   renderJobs();
   document.querySelector("#offres")?.scrollIntoView({ behavior: "smooth", block: "start" });
+});
+
+document.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-portal-focus], [data-portal-query]");
+  if (!button) return;
+  applyPortalSearch({
+    query: button.dataset.portalQuery || "",
+    focus: button.dataset.portalFocus || "",
+  });
 });
 
 function validateLead(kind, data) {
