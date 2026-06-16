@@ -20,6 +20,8 @@
     "db:sqlite": "node scripts/sync-sqlite-db.mjs",
     "seo:static": "node scripts/enhance-static-seo.mjs",
     "seo:indexnow": "node scripts/submit-indexnow.mjs",
+    "audit:links": "node scripts/audit-links.mjs --site",
+    "audit:links:external": "node scripts/audit-links.mjs --site --external",
     "growth": "node scripts/generate-seo-pages.mjs && node scripts/enhance-static-seo.mjs && node scripts/generate-growth-assets.mjs && node scripts/generate-visibility-engine.mjs",
     "social:queue": "node scripts/generate-social-queue.mjs",
     "social:dry": "node scripts/publish-social.mjs",

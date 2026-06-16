@@ -207,7 +207,7 @@ const categoryRules = [
   {
     category: "Sante",
     type: "CDD",
-    keywords: ["medecin", "infirmier", "pharmacien", "sage-femme", "sante", "medical", "clinique"],
+    keywords: ["medecin", "infirmier", "pediatre", "pharmacien", "sage-femme", "sante", "medical", "clinique"],
   },
   {
     category: "Concours",
@@ -415,6 +415,7 @@ function inferTags(item, category, city) {
 
 function inferCity(item) {
   const text = normalize(`${item.title} ${item.city} ${item.excerpt}`);
+  const sourceCity = normalize(item.city);
 
   if (/bagassi/.test(text)) return "Bagassi";
   if (/bobo/.test(text)) return "Bobo-Dioulasso";
@@ -422,6 +423,8 @@ function inferCity(item) {
   if (/ouahigouya/.test(text)) return "Ouahigouya";
   if (/teletravail|remote/.test(text)) return "Teletravail";
   if (/ouaga|ouagadougou/.test(text)) return "Ouagadougou";
+  if (/burkina faso/.test(sourceCity)) return "Burkina Faso";
+  if (!sourceCity || /americaines|africaines|europeennes|membres|plusieurs secteurs/.test(sourceCity)) return "Burkina Faso";
 
   return item.city || "Burkina Faso";
 }

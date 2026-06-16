@@ -209,6 +209,24 @@ function extractTitle(html, fallback = "") {
   return fallback;
 }
 
+function cleanCity(value, fallback = "Burkina Faso") {
+  const city = decodeHtml(value)
+    .replace(/\s+(pays|date|type|remuneration|r[eé]mun[eé]ration|assurance|organisation)\b.*$/i, "")
+    .replace(/\s+/g, " ")
+    .trim();
+  const normalized = normalize(city);
+
+  if (!city || city.length < 3) return fallback;
+  if (/burkina\s+faso/.test(normalized)) return "Burkina Faso";
+  if (/^ouaga/.test(normalized) || /ouagadougou/.test(normalized)) return "Ouagadougou";
+  if (/bobo/.test(normalized)) return "Bobo-Dioulasso";
+  if (/bagassi/.test(normalized)) return "Bagassi";
+  if (/teletravail|remote/.test(normalized)) return "Teletravail";
+  if (/americaines|africaines|europeennes|membres|plusieurs secteurs/.test(normalized)) return fallback;
+
+  return city;
+}
+
 function extractDetailMetadata(html, item) {
   const text = decodeHtml(stripHtml(html));
   const title = extractTitle(html, item.title);
@@ -234,7 +252,7 @@ function extractDetailMetadata(html, item) {
     (item.sourceId === "bfemploi" ? extractBfemploiDeadline(text, openingDate) : "") ||
     item.closingDate ||
     "";
-  const cityMatch = text.match(/(?:lieu de travail|localisation|ville)\s*:?\s*([A-Za-zÀ-ÿ -]{3,80})/i);
+  const cityMatch = text.match(/\b(?:lieu(?:\s+de\s+travail)?|localisation|ville)\b\s*:?\s*([A-Za-zÀ-ÿ -]{3,80})/i);
   const typeMatch = text.match(/type de contrat\s*:?\s*([A-Za-zÀ-ÿ0-9 /-]{3,80})/i);
   const companyMatch = text.match(
     /offre\s+d[eé]pos[eé]e?\s+[0-9]{1,2}\s+[a-z\u00e0-\u00ff]+\s+[0-9]{4}\s+par\s+(.+?)(?:\s+Date\s+de\s+cl[oô]ture|\s+Secteur|\s+L[’']|$)/i
@@ -246,7 +264,7 @@ function extractDetailMetadata(html, item) {
     ...item,
     title: title || item.title,
     company,
-    city: cityMatch?.[1]?.replace(/\s+(remuneration|type|assurance).*$/i, "").trim() || item.city,
+    city: cleanCity(cityMatch?.[1], item.city || "Burkina Faso"),
     type: typeMatch?.[1]?.trim() || item.type,
     openingDate,
     closingDate,

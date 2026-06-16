@@ -6,7 +6,7 @@
     "profileUrl": "https://www.bfemploi.com/annonce-details-3866.html",
     "sourceName": "BFemploi",
     "jobs": 8,
-    "updatedAt": "2026-06-15T14:52:06.124Z"
+    "updatedAt": "2026-06-16T09:27:57.141Z"
   },
   {
     "name": "Emploiburkina",
@@ -15,16 +15,25 @@
     "profileUrl": "https://www.emploiburkina.com/offre-emploi-burkina-faso/technico-commercial-climatisation-haut-gamme-ouagadougou-82601",
     "sourceName": "Emploiburkina",
     "jobs": 7,
-    "updatedAt": "2026-06-15T14:52:25.947Z"
+    "updatedAt": "2026-06-16T09:28:08.033Z"
   },
   {
     "name": "HumanitaireHub",
-    "logoUrl": "https://humanitairehub.com/wp-content/uploads/2026/04/logo-navbar-1.svg",
+    "logoUrl": "https://humanitairehub.com/favicon.ico",
     "sector": "ONG",
-    "profileUrl": "https://humanitairehub.com/emploi/programme-de-bourses-de-loibt/",
+    "profileUrl": "https://humanitairehub.com/emploi/oordonnateur-de-programme-du-secteur-prive/",
     "sourceName": "HumanitaireHub",
-    "jobs": 2,
-    "updatedAt": "2026-06-15T14:53:35.245Z"
+    "jobs": 4,
+    "updatedAt": "2026-06-16T09:29:49.908Z"
+  },
+  {
+    "name": "Burkina24 Emploi",
+    "logoUrl": "https://burkina24.com/wp-content/uploads/2024/07/LOGO-B24-3D.jpg",
+    "sector": "Bureau",
+    "profileUrl": "https://burkina24.com/2026/06/16/cagei-appel-a-candidatures-recrutement-6ieme-promotion-pour-la-formation-certifiante-en-analyse-de-donnees-data-analyst-3/",
+    "sourceName": "Burkina24 Emploi",
+    "jobs": 1,
+    "updatedAt": "2026-06-16T09:31:42.643Z"
   },
   {
     "name": "LeFaso.net Recrutement",
@@ -33,6 +42,15 @@
     "profileUrl": "https://emploi.lefaso.net/Avis-de-recrutement-d-un-e-Coordonnateur-trice-de-Projet.html",
     "sourceName": "LeFaso.net Recrutement",
     "jobs": 1,
-    "updatedAt": "2026-06-15T14:54:12.343Z"
+    "updatedAt": "2026-06-16T09:31:18.469Z"
+  },
+  {
+    "name": "UNjobs Burkina Faso",
+    "logoUrl": "https://unjobs.org/favicon.ico",
+    "sector": "Commerce et vente",
+    "profileUrl": "https://unjobs.org/vacancies/1779895707052",
+    "sourceName": "UNjobs Burkina Faso",
+    "jobs": 1,
+    "updatedAt": "2026-06-16T09:30:22.979Z"
   }
 ]

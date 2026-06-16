@@ -24,6 +24,9 @@
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"JobFaso - Emploi, recrutement, concours et stages au Burkina Faso","description":"JobFaso centralise les offres d'emploi, concours, stages, metiers informels et solutions de recrutement au Burkina Faso avec alertes et sources verifiees.","url":"https://jobfaso.com/index.html","inLanguage":"fr-BF","isPartOf":{"@type":"WebSite","name":"JobFaso","url":"https://jobfaso.com","potentialAction":{"@type":"SearchAction","target":"https://jobfaso.com/jobs.html?q={search_term_string}","query-input":"required name=search_term_string"}},"publisher":{"@type":"Organization","name":"JobFaso","url":"https://jobfaso.com","email":"contact@jobfaso.com","areaServed":"Burkina Faso"}}</script>
 
 
+
+
+
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body class="portal-page">
@@ -64,12 +67,13 @@
             <a href="annonceurs.html">Recruteur : publier une annonce</a>
           </div>
           <div class="hero-copy">
-            <p class="eyebrow">Moteur emploi Burkina Faso</p>
-            <h1>Trouvez votre futur job parmi <span id="heroJobCount">0</span> opportunites suivies.</h1>
+            <p class="eyebrow">Moteur emploi pour tous au Burkina Faso</p>
+            <h1>Trouvez un travail formel ou informel parmi <span id="heroJobCount">0</span> opportunites suivies.</h1>
             <p class="lead">
-              Offres d'emploi, concours, stages et missions collectes depuis
-              plusieurs sources, enrichis avec dates, compte a rebours,
-              categories, regions et liens officiels.
+              Emploi bureau, concours, stages, chantiers, commerce, ONG,
+              artisans, chauffeurs, macons, soudeurs et missions journalieres :
+              JobFaso classe les annonces avec des mots simples et des sources
+              verifiees.
             </p>
           </div>
 
@@ -79,7 +83,7 @@
               <input
                 id="searchInput"
                 type="search"
-                placeholder="Poste, entreprise, competence, concours..."
+                placeholder="Ex: macon, chauffeur, vendeuse, ONG, concours..."
                 autocomplete="off"
               />
             </label>
@@ -119,11 +123,37 @@
 
           <div class="hero-quick-actions">
             <a href="jobs.html">Toutes les offres</a>
+            <a href="jobs.html?category=Metiers%20terrain%20et%20informels">Metiers informels</a>
             <a href="annonceurs.html">Publier une offre</a>
             <a href="#alertes">Alerte WhatsApp</a>
             <a href="#monetisation">Devenir sponsor</a>
           </div>
         </div>
+      </section>
+
+      <section class="portal-section word-cloud-section homepage-word-cloud" aria-label="Explorer les mots de l'emploi">
+        <div class="portal-heading">
+          <div>
+            <p class="eyebrow">Chercher avec des mots simples</p>
+            <h2>Les mots de l'emploi</h2>
+          </div>
+          <a class="secondary-link" href="jobs.html">Voir toutes les offres</a>
+        </div>
+        <div class="plain-language-grid">
+          <article>
+            <strong>Formel</strong>
+            <span>Bureau, ONG, concours, finance, sante, technique.</span>
+          </article>
+          <article>
+            <strong>Informel</strong>
+            <span>Chantier, artisanat, conduite, vente, securite, missions.</span>
+          </article>
+          <article>
+            <strong>Facile</strong>
+            <span>Recherchez par metier, quartier, ville ou mot local connu.</span>
+          </article>
+        </div>
+        <div class="employment-explorer" id="employmentExplorer"></div>
       </section>
 
       <section class="portal-stats" aria-label="Indicateurs JobFaso">
@@ -293,8 +323,9 @@
           <p class="eyebrow">Alertes emploi</p>
           <h2>Recevoir les nouvelles opportunites</h2>
           <p>
-            Indiquez votre domaine et votre ville. JobFaso pourra vous envoyer
-            les opportunites pertinentes et les rappels de deadline.
+            Indiquez votre metier, votre ville et la langue la plus facile pour
+            vous. JobFaso pourra envoyer des alertes courtes, simples et
+            verifiees.
           </p>
         </div>
         <form class="form-card" id="alertForm" data-lead-type="alert">
@@ -323,8 +354,18 @@
             </select>
           </label>
           <label>
+            Langue preferee
+            <select name="language">
+              <option>Francais simple</option>
+              <option>Moore</option>
+              <option>Dioula</option>
+              <option>Fulfulde</option>
+              <option>Gourmantche</option>
+            </select>
+          </label>
+          <label>
             Ville preferee
-            <input name="city" placeholder="Ouagadougou, Bobo, teletravail..." />
+            <input name="city" placeholder="Ouagadougou, Bobo, village, teletravail..." />
           </label>
           <button type="submit">Recevoir les alertes</button>
           <p class="form-note" id="alertMessage"></p>

@@ -1,10 +1,10 @@
 # Moteur visibilite et revenus JobFaso
 
-Derniere generation : 2026-06-15T16:33:12.043Z
+Derniere generation : 2026-06-16T09:56:42.867Z
 
 ## Score de preparation
 
-Score global : 80/100
+Score global : 92/100
 
 | Controle | Etat | Poids | Correction |
 | --- | --- | ---: | --- |
@@ -13,7 +13,7 @@ Score global : 80/100
 | Pages confiance | OK | 12 | Garder privacy, terms, contacts et tarifs. |
 | Sitemap riche | OK | 12 | Executer npm run growth. |
 | Robots.txt propre | OK | 8 | Regenerer robots.txt. |
-| Volume offres SEO | A faire | 12 | Automatiser plus de sources fiables. |
+| Volume offres SEO | OK | 12 | Automatiser plus de sources fiables. |
 | Diversite des sources | OK | 10 | Ajouter partenaires/RSS/API autorises. |
 | Contenus utiles hors offres | OK | 8 | Publier guides candidats originaux. |
 | AdSense pret a activer | A faire | 8 | Ajouter adsenseClient apres approbation Google. |
@@ -21,7 +21,6 @@ Score global : 80/100
 
 ## Priorites immediates
 
-- Automatiser plus de sources fiables.
 - Ajouter adsenseClient apres approbation Google.
 
 ## Cibles backlinks et partenariats
@@ -46,7 +45,7 @@ Score global : 80/100
 - UNDP Jobs Burkina Faso (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres.
 - Sponsor categorie (revenue_product) : 100 000 FCFA - visibilite categorie, mention sponsorisee, placement newsletter, rapport simple. Demande : Trouver 5 clients potentiels pour le produit Sponsor categorie.
 - Centres CV et coaching entretien (commercial_partner) : Leads qualifies avec commission par client confirme. Demande : Partenariat legal, marque, mesure par clics/leads, sans vente abusive de donnees personnelles.
-- Sponsor categorie BTP et chantier (category_sponsor) : Vendre une visibilite utile sur la categorie BTP et chantier. Demande : Sponsor mensuel, bannieres natives marquees, lien suivi et rapport de performance.
+- Sponsor categorie Bureau (category_sponsor) : Vendre une visibilite utile sur la categorie Bureau. Demande : Sponsor mensuel, bannieres natives marquees, lien suivi et rapport de performance.
 - IUCN Careers Burkina Faso (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres.
 - NRC Careers (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres.
 - DRC Careers (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres.

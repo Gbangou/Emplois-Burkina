@@ -161,10 +161,10 @@
   },
   {
     "type": "category_sponsor",
-    "name": "Sponsor categorie BTP et chantier",
+    "name": "Sponsor categorie Bureau",
     "url": "",
     "priority": 3,
-    "angle": "Vendre une visibilite utile sur la categorie BTP et chantier.",
+    "angle": "Vendre une visibilite utile sur la categorie Bureau.",
     "ask": "Sponsor mensuel, bannieres natives marquees, lien suivi et rapport de performance."
   },
   {
@@ -265,10 +265,10 @@
   },
   {
     "type": "category_sponsor",
-    "name": "Sponsor categorie Bureau",
+    "name": "Sponsor categorie BTP et chantier",
     "url": "",
     "priority": 4,
-    "angle": "Vendre une visibilite utile sur la categorie Bureau.",
+    "angle": "Vendre une visibilite utile sur la categorie BTP et chantier.",
     "ask": "Sponsor mensuel, bannieres natives marquees, lien suivi et rapport de performance."
   },
   {
@@ -289,10 +289,10 @@
   },
   {
     "type": "category_sponsor",
-    "name": "Sponsor categorie Finance et administration",
+    "name": "Sponsor categorie Commerce et vente",
     "url": "",
     "priority": 5,
-    "angle": "Vendre une visibilite utile sur la categorie Finance et administration.",
+    "angle": "Vendre une visibilite utile sur la categorie Commerce et vente.",
     "ask": "Sponsor mensuel, bannieres natives marquees, lien suivi et rapport de performance."
   },
   {
@@ -305,10 +305,10 @@
   },
   {
     "type": "category_sponsor",
-    "name": "Sponsor categorie Metiers terrain et informels",
+    "name": "Sponsor categorie Finance et administration",
     "url": "",
     "priority": 6,
-    "angle": "Vendre une visibilite utile sur la categorie Metiers terrain et informels.",
+    "angle": "Vendre une visibilite utile sur la categorie Finance et administration.",
     "ask": "Sponsor mensuel, bannieres natives marquees, lien suivi et rapport de performance."
   },
   {
@@ -334,5 +334,21 @@
     "priority": 7,
     "angle": "50 000 FCFA - secteurs qui recrutent, villes actives, competences demandees, donnees agregees non personnelles.",
     "ask": "Trouver 5 clients potentiels pour le produit Rapport tendances emploi."
+  },
+  {
+    "type": "category_sponsor",
+    "name": "Sponsor categorie Metiers terrain et informels",
+    "url": "",
+    "priority": 8,
+    "angle": "Vendre une visibilite utile sur la categorie Metiers terrain et informels.",
+    "ask": "Sponsor mensuel, bannieres natives marquees, lien suivi et rapport de performance."
+  },
+  {
+    "type": "category_sponsor",
+    "name": "Sponsor categorie Sante",
+    "url": "",
+    "priority": 9,
+    "angle": "Vendre une visibilite utile sur la categorie Sante.",
+    "ask": "Sponsor mensuel, bannieres natives marquees, lien suivi et rapport de performance."
   }
 ]

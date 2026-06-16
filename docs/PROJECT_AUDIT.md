@@ -1,6 +1,6 @@
 # Audit projet JobFaso
 
-Genere le : 2026-06-15T16:34:06.025Z
+Genere le : 2026-06-16T09:58:14.882Z
 
 Score : 100/100
 Statut : passed
@@ -67,7 +67,7 @@ Statut : passed
 | critical | sqlite_runtime | OK | SQLite sert de lecture API et conserve les overrides de moderation | Verifier server.mjs et scripts/sync-sqlite-db.mjs. |
 | critical | security_baseline | OK | Headers, rate limit, origine et token admin | Ne pas retirer les garde-fous serveur. |
 | warning | admin_surfaces | OK | Admin expose analytics, visibilite, moderation et SQLite | Completer app.js/admin.html si un panneau manque. |
-| warning | seo_assets | OK | 47 URLs sitemap | Executer npm run growth. |
+| warning | seo_assets | OK | 50 URLs sitemap | Executer npm run growth. |
 | warning | master_prompt_current_state | OK | Le master prompt doit refleter l'etat actuel | Mettre a jour docs/MASTER_PROMPT.md. |
 | warning | operations_current_state | OK | Le guide operationnel couvre SQLite, visibilite et moderation | Mettre a jour docs/PROJECT_STATUS_AND_OPERATIONS.md. |
 | warning | readme_no_stale_next_steps | OK | README ne doit pas presenter des acquis comme a faire | Actualiser les prochaines etapes. |

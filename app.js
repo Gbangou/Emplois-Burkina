@@ -600,6 +600,24 @@ function setQuickCategory(category) {
   });
 }
 
+function applyUrlSearchParams() {
+  const params = new URLSearchParams(window.location.search);
+  const query = params.get("q") || params.get("search") || "";
+  const category = params.get("category") || "";
+  const city = params.get("city") || "";
+
+  if (query && searchInput) searchInput.value = query;
+  if (category) {
+    setQuickCategory(category);
+    if (typeFilter && [...typeFilter.options].some((option) => option.value === category || option.textContent === category)) {
+      typeFilter.value = category;
+    }
+  }
+  if (city && cityFilter && [...cityFilter.options].some((option) => option.value === city || option.textContent === city)) {
+    cityFilter.value = city;
+  }
+}
+
 function applyExplorerSearch({ type, value }) {
   const term = value || "";
   if (!term) return;
@@ -1539,6 +1557,7 @@ async function loadJobs() {
     }
   }
   hydrateSourceFilter();
+  applyUrlSearchParams();
   renderPortalWidgets();
   renderJobs();
   renderAdmin();

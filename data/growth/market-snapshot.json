@@ -6,14 +6,14 @@
     ],
     [
       "ONG",
-      4
+      6
     ],
     [
       "Finance et administration",
-      3
+      2
     ],
     [
-      "Metiers terrain et informels",
+      "Transport et logistique",
       2
     ],
     [
@@ -25,18 +25,22 @@
       1
     ],
     [
-      "Transport et logistique",
+      "Metiers terrain et informels",
+      1
+    ],
+    [
+      "Sante",
       1
     ]
   ],
   "cities": [
     [
       "Burkina Faso",
-      11
+      16
     ],
     [
       "Ouagadougou",
-      8
+      5
     ],
     [
       "Bagassi",
@@ -54,14 +58,18 @@
     ],
     [
       "HumanitaireHub",
-      2
+      4
     ],
     [
-      "UNjobs Burkina Faso",
-      2
+      "Burkina24 Emploi",
+      1
     ],
     [
       "LeFaso.net Recrutement",
+      1
+    ],
+    [
+      "UNjobs Burkina Faso",
       1
     ]
   ]

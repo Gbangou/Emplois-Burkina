@@ -6,6 +6,9 @@ const BASE_URL = process.env.JOBFASO_BASE_URL || "http://127.0.0.1:8088";
 const REPORT_FILE = join(ROOT, "docs", "LINK_AUDIT.md");
 const USER_AGENT = "JobFasoLinkAudit/0.1 (+https://jobfaso.com)";
 const CHECK_EXTERNAL = process.argv.includes("--external");
+const SITE_SCOPE = process.argv.includes("--site");
+const CONCURRENCY = Math.max(1, Number(process.env.LINK_AUDIT_CONCURRENCY || 12));
+const REQUEST_TIMEOUT_MS = Math.max(1000, Number(process.env.LINK_AUDIT_TIMEOUT_MS || 5000));
 const allowedExtensions = new Set([".html", ".css", ".js", ".mjs", ".json", ".xml", ".webmanifest", ".txt"]);
 const ignoredDirectories = new Set([".git", "node_modules", ".agents", ".codex"]);
 const productionHosts = new Set(["jobfaso.com", "www.jobfaso.com"]);
@@ -30,6 +33,14 @@ async function listFiles(dir) {
 
 function normalizePath(value) {
   return value.replaceAll("\\", "/").replace(ROOT.replaceAll("\\", "/"), "").replace(/^\/+/, "");
+}
+
+function isPublicSiteFile(file) {
+  const relative = normalizePath(file);
+  if (relative.startsWith("pages/")) return allowedExtensions.has(extname(relative));
+  if (["data/curated-jobs.json", "data/employer-logos.json", "data/sources.json"].includes(relative)) return true;
+  if (relative.includes("/")) return false;
+  return allowedExtensions.has(extname(relative));
 }
 
 function decode(value) {
@@ -86,7 +97,7 @@ function toCheckUrl(link) {
 
 async function request(url, method = "HEAD") {
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 7000);
+  const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
   try {
     const response = await fetch(url, {
       method,
@@ -125,15 +136,30 @@ function uniqueLinks(links) {
   return [...byKey.values()];
 }
 
-const files = await listFiles(ROOT);
+async function mapLimit(items, limit, mapper) {
+  const results = new Array(items.length);
+  let nextIndex = 0;
+
+  async function worker() {
+    while (nextIndex < items.length) {
+      const currentIndex = nextIndex;
+      nextIndex += 1;
+      results[currentIndex] = await mapper(items[currentIndex], currentIndex);
+    }
+  }
+
+  await Promise.all(Array.from({ length: Math.min(limit, items.length) }, worker));
+  return results;
+}
+
+const files = (await listFiles(ROOT)).filter((file) => !SITE_SCOPE || isPublicSiteFile(file));
 const links = [];
 for (const file of files) links.push(...extractLinks(await readFile(file, "utf8"), file));
 
-const checks = [];
-for (const link of uniqueLinks(links)) {
+const checks = await mapLimit(uniqueLinks(links), CONCURRENCY, async (link) => {
   const result = link.type === "invalid" ? { ok: false, status: "invalid" } : await checkUrl(link.url, link.type);
-  checks.push({ ...link, ...result, files: [...link.files] });
-}
+  return { ...link, ...result, files: [...link.files] };
+});
 
 const broken = checks.filter((item) => !item.ok);
 const internalBroken = broken.filter((item) => item.type === "internal");
@@ -148,6 +174,8 @@ Genere le : ${new Date().toISOString()}
 - Liens internes casses : ${internalBroken.length}
 - Liens externes casses : ${externalBroken.length}
 - Verification externe : ${CHECK_EXTERNAL ? "oui" : "non"}
+- Portee : ${SITE_SCOPE ? "site public" : "tout le depot"}
+- Concurrence : ${CONCURRENCY}
 
 ## Liens a corriger
 

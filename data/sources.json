@@ -279,17 +279,6 @@
     "notes": "Inscription en ligne aux concours directs. A utiliser comme lien officiel."
   },
   {
-    "id": "fasomebo",
-    "name": "Agence Faso Mebo",
-    "url": "https://fasomebo.gov.bf/",
-    "type": "government",
-    "priority": 2,
-    "collection": "official_link",
-    "includeUrl": ["recrutement", "emploi", "concours", "communique"],
-    "excludeUrl": ["login"],
-    "notes": "Source publique a surveiller pour recrutements infrastructure et terrain."
-  },
-  {
     "id": "lefaso-recrutement",
     "name": "LeFaso.net Recrutement",
     "url": "https://emploi.lefaso.net/",
@@ -388,6 +377,72 @@
     "includeUrl": ["artisan", "formation", "emploi", "communique"],
     "excludeUrl": ["login"],
     "notes": "Source officielle utile pour ecosysteme artisanat, formations et opportunites liees aux metiers manuels."
+  },
+  {
+    "id": "aib-communiques-emploi",
+    "name": "AIB Communiques emploi",
+    "url": "https://www.aib.media/",
+    "type": "media",
+    "priority": 3,
+    "collection": "manual_only",
+    "includeUrl": ["emploi", "recrutement", "concours", "formation", "communique"],
+    "excludeUrl": ["politique", "sport"],
+    "notes": "Veille presse publique pour communiques locaux, concours, recrutements communaux et formations."
+  },
+  {
+    "id": "sidwaya-communiques-emploi",
+    "name": "Sidwaya Communiques",
+    "url": "https://www.sidwaya.info/",
+    "type": "media",
+    "priority": 3,
+    "collection": "manual_only",
+    "includeUrl": ["emploi", "recrutement", "concours", "formation", "communique"],
+    "excludeUrl": ["politique", "sport"],
+    "notes": "Veille manuelle des annonces publiques, communiques institutionnels et opportunites locales."
+  },
+  {
+    "id": "radio-communautaire-veille",
+    "name": "Radios et annonces communautaires",
+    "url": "https://jobfaso.com/contacts.html",
+    "type": "community_channel",
+    "priority": 1,
+    "collection": "manual_only",
+    "includeUrl": ["emploi", "artisan", "chantier", "journalier", "service", "apprentissage"],
+    "excludeUrl": [],
+    "notes": "Canal inclusif pour offres entendues a la radio ou dans les quartiers. Soumission via formulaire/WhatsApp puis verification admin."
+  },
+  {
+    "id": "marches-artisans-submissions",
+    "name": "Marches, ateliers et artisans",
+    "url": "https://jobfaso.com/contacts.html",
+    "type": "informal_market",
+    "priority": 1,
+    "collection": "manual_only",
+    "includeUrl": ["macon", "soudeur", "menuisier", "plombier", "electricien", "tailleur", "chauffeur", "apprenti"],
+    "excludeUrl": [],
+    "notes": "Collecte via relais terrain, syndicats, ateliers, maitres artisans et formulaires simples. Publication uniquement apres verification."
+  },
+  {
+    "id": "mairies-communes-veille",
+    "name": "Mairies et communes",
+    "url": "https://jobfaso.com/contacts.html",
+    "type": "local_government",
+    "priority": 2,
+    "collection": "manual_only",
+    "includeUrl": ["recrutement", "communique", "chantier", "formation", "appel"],
+    "excludeUrl": [],
+    "notes": "Veille locale pour chantiers communaux, agents temporaires, appels a candidatures et travaux de proximite."
+  },
+  {
+    "id": "centres-formation-apprentissage",
+    "name": "Centres de formation et apprentissage",
+    "url": "https://jobfaso.com/contacts.html",
+    "type": "training",
+    "priority": 2,
+    "collection": "manual_only",
+    "includeUrl": ["apprentissage", "formation", "stage", "atelier", "metier"],
+    "excludeUrl": [],
+    "notes": "Canal pour stages, apprentissage metier, alternance, formations courtes et insertion professionnelle."
   },
   {
     "id": "linkedin-burkina",
