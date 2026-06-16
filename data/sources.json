@@ -55,7 +55,8 @@
     "collection": "review_required",
     "includeUrl": ["emploi", "job", "offre", "recrutement", "stage"],
     "excludeUrl": ["formation", "login", "contact", "ressources"],
-    "notes": "Offres ONG, ONU et humanitaires Afrique francophone. Filtrer Burkina et Sahel a la moderation."
+    "notes": "Offres ONG, ONU et humanitaires Afrique francophone. Filtrer Burkina et Sahel a la moderation.",
+    "segments": ["international_onu"]
   },
   {
     "id": "unjobs-burkina",
@@ -67,7 +68,8 @@
     "collection": "review_required",
     "includeUrl": ["jobs", "vacancies", "burkina", "ouagadougou", "bobo", "dori", "kaya"],
     "excludeUrl": ["privacy", "cookie"],
-    "notes": "Source internationale utile pour ONU, ONG et developpement. Page verifiee avec offres Burkina."
+    "notes": "Source internationale utile pour ONU, ONG et developpement. Page verifiee avec offres Burkina.",
+    "segments": ["international_onu"]
   },
   {
     "id": "reliefweb-burkina",
@@ -78,7 +80,8 @@
     "collection": "review_required",
     "includeUrl": ["/job/"],
     "excludeUrl": ["training", "reports", "updates", "/jobs?", "#main-content"],
-    "notes": "Source humanitaire mondiale. Collecter seulement titres, deadlines et liens officiels."
+    "notes": "Source humanitaire mondiale. Collecter seulement titres, deadlines et liens officiels.",
+    "segments": ["international_onu"]
   },
   {
     "id": "impactpool-burkina",
@@ -89,7 +92,8 @@
     "collection": "manual_only",
     "includeUrl": ["jobs", "burkina"],
     "excludeUrl": ["login", "signup"],
-    "notes": "Plateforme internationale. Souvent dynamique, donc surveillance manuelle/API si disponible."
+    "notes": "Plateforme internationale. Souvent dynamique, donc surveillance manuelle/API si disponible.",
+    "segments": ["international_onu", "consulting_remote"]
   },
   {
     "id": "devex-burkina",
@@ -100,7 +104,8 @@
     "collection": "manual_only",
     "includeUrl": ["jobs", "burkina"],
     "excludeUrl": ["login", "membership"],
-    "notes": "Developpement international. Peut necessiter compte, donc lien et veille manuelle."
+    "notes": "Developpement international. Peut necessiter compte, donc lien et veille manuelle.",
+    "segments": ["international_onu", "consulting_remote"]
   },
   {
     "id": "un-talent-burkina",
@@ -111,7 +116,8 @@
     "collection": "review_required",
     "includeUrl": ["jobs", "burkina", "ouagadougou"],
     "excludeUrl": ["login"],
-    "notes": "Offres ONU et volontariat liees au Burkina."
+    "notes": "Offres ONU et volontariat liees au Burkina.",
+    "segments": ["international_onu"]
   },
   {
     "id": "unicef-careers-burkina",
@@ -122,7 +128,8 @@
     "collection": "manual_only",
     "includeUrl": ["jobs", "burkina"],
     "excludeUrl": ["login"],
-    "notes": "Source officielle UNICEF. Utiliser comme verification des offres UNICEF."
+    "notes": "Source officielle UNICEF. Utiliser comme verification des offres UNICEF.",
+    "segments": ["international_onu", "consulting_remote"]
   },
   {
     "id": "undp-careers-burkina",
@@ -133,7 +140,8 @@
     "collection": "manual_only",
     "includeUrl": ["Burkina", "requisitions"],
     "excludeUrl": ["login"],
-    "notes": "Source officielle PNUD/UNDP, souvent dynamique."
+    "notes": "Source officielle PNUD/UNDP, souvent dynamique.",
+    "segments": ["international_onu", "consulting_remote"]
   },
   {
     "id": "iucn-careers-burkina",
@@ -144,7 +152,8 @@
     "collection": "manual_only",
     "includeUrl": ["jobs", "burkina"],
     "excludeUrl": ["login"],
-    "notes": "Verification manuelle des offres environnement et conservation."
+    "notes": "Verification manuelle des offres environnement et conservation.",
+    "segments": ["international_onu"]
   },
   {
     "id": "nrc-careers",
@@ -155,7 +164,8 @@
     "collection": "manual_only",
     "includeUrl": ["jobs", "burkina", "ouagadougou", "dori"],
     "excludeUrl": ["login"],
-    "notes": "Norwegian Refugee Council. Verifier les postes Burkina cites par UNjobs."
+    "notes": "Norwegian Refugee Council. Verifier les postes Burkina cites par UNjobs.",
+    "segments": ["international_onu"]
   },
   {
     "id": "drc-careers",
@@ -166,7 +176,8 @@
     "collection": "manual_only",
     "includeUrl": ["careers", "vacancies", "burkina"],
     "excludeUrl": ["login"],
-    "notes": "Danish Refugee Council. Source officielle de verification."
+    "notes": "Danish Refugee Council. Source officielle de verification.",
+    "segments": ["international_onu"]
   },
   {
     "id": "plan-international-careers",
@@ -177,7 +188,8 @@
     "collection": "manual_only",
     "includeUrl": ["job", "burkina"],
     "excludeUrl": ["login"],
-    "notes": "Source officielle pour offres Plan International."
+    "notes": "Source officielle pour offres Plan International.",
+    "segments": ["international_onu"]
   },
   {
     "id": "save-children-careers",
@@ -188,7 +200,8 @@
     "collection": "manual_only",
     "includeUrl": ["career", "job", "burkina"],
     "excludeUrl": ["login"],
-    "notes": "Source officielle Save the Children."
+    "notes": "Source officielle Save the Children.",
+    "segments": ["international_onu"]
   },
   {
     "id": "action-contre-la-faim-careers",
@@ -199,7 +212,8 @@
     "collection": "manual_only",
     "includeUrl": ["emploi", "job", "burkina"],
     "excludeUrl": ["login"],
-    "notes": "Source officielle ACF."
+    "notes": "Source officielle ACF.",
+    "segments": ["international_onu"]
   },
   {
     "id": "humanity-inclusion-careers",
@@ -210,7 +224,8 @@
     "collection": "manual_only",
     "includeUrl": ["jobs", "burkina"],
     "excludeUrl": ["login"],
-    "notes": "Source officielle HI / Handicap International."
+    "notes": "Source officielle HI / Handicap International.",
+    "segments": ["international_onu"]
   },
   {
     "id": "fhi360-careers",
@@ -221,7 +236,8 @@
     "collection": "manual_only",
     "includeUrl": ["careers", "burkina"],
     "excludeUrl": ["login"],
-    "notes": "Source officielle FHI 360, complement pour offres sante/projets."
+    "notes": "Source officielle FHI 360, complement pour offres sante/projets.",
+    "segments": ["international_onu"]
   },
   {
     "id": "world-vision-careers",
@@ -232,7 +248,8 @@
     "collection": "manual_only",
     "includeUrl": ["careers", "burkina"],
     "excludeUrl": ["login"],
-    "notes": "Source officielle World Vision."
+    "notes": "Source officielle World Vision.",
+    "segments": ["international_onu"]
   },
   {
     "id": "crs-careers",
@@ -243,7 +260,104 @@
     "collection": "manual_only",
     "includeUrl": ["career", "burkina"],
     "excludeUrl": ["login"],
-    "notes": "Source officielle CRS."
+    "notes": "Source officielle CRS.",
+    "segments": ["international_onu"]
+  },
+  {
+    "id": "unv-opportunities",
+    "name": "UNV Opportunities",
+    "url": "https://app.unv.org/opportunities",
+    "type": "multilateral",
+    "priority": 2,
+    "collection": "manual_only",
+    "includeUrl": ["opportunities", "burkina", "volunteer"],
+    "excludeUrl": ["login"],
+    "notes": "Portail officiel des Volontaires des Nations Unies. Utile pour volontariat national et international.",
+    "segments": ["international_onu", "consulting_remote"]
+  },
+  {
+    "id": "who-careers",
+    "name": "WHO Careers",
+    "url": "https://careers.who.int/careersection/ex/jobsearch.ftl",
+    "type": "multilateral",
+    "priority": 2,
+    "collection": "manual_only",
+    "includeUrl": ["jobsearch", "burkina", "consultant"],
+    "excludeUrl": ["login"],
+    "notes": "Portail officiel OMS/WHO. Important pour sante publique, consultance et coordination de projets.",
+    "segments": ["international_onu", "consulting_remote"]
+  },
+  {
+    "id": "unesco-careers",
+    "name": "UNESCO Careers",
+    "url": "https://careers.unesco.org/go/All-jobs-openings/782502/",
+    "type": "multilateral",
+    "priority": 2,
+    "collection": "manual_only",
+    "includeUrl": ["jobs", "openings", "consultant", "burkina"],
+    "excludeUrl": ["login"],
+    "notes": "Portail officiel UNESCO. A surveiller pour education, culture, communication et consultance.",
+    "segments": ["international_onu", "consulting_remote"]
+  },
+  {
+    "id": "fao-careers",
+    "name": "FAO Careers",
+    "url": "https://jobs.fao.org/careersection/fao_external/jobsearch.ftl",
+    "type": "multilateral",
+    "priority": 2,
+    "collection": "manual_only",
+    "includeUrl": ["jobsearch", "burkina", "consultant"],
+    "excludeUrl": ["login"],
+    "notes": "Portail officiel FAO pour agriculture, resilience, nutrition et consultance.",
+    "segments": ["international_onu", "consulting_remote"]
+  },
+  {
+    "id": "wfp-careers",
+    "name": "WFP Careers",
+    "url": "https://wd3.myworkdaysite.com/recruiting/wfp/job_openings",
+    "type": "multilateral",
+    "priority": 2,
+    "collection": "manual_only",
+    "includeUrl": ["job_openings", "burkina", "consultant"],
+    "excludeUrl": ["login"],
+    "notes": "Portail officiel Programme Alimentaire Mondial pour operations, logistique et postes terrain.",
+    "segments": ["international_onu", "consulting_remote"]
+  },
+  {
+    "id": "afdb-careers",
+    "name": "African Development Bank Careers",
+    "url": "https://www.afdb.org/en/about-us/careers/current-vacancies",
+    "type": "multilateral",
+    "priority": 3,
+    "collection": "manual_only",
+    "includeUrl": ["careers", "vacancies", "consultant", "burkina"],
+    "excludeUrl": ["login"],
+    "notes": "Banque Africaine de Developpement. Utile pour postes experts, projets et consultance regionale.",
+    "segments": ["international_onu", "consulting_remote"]
+  },
+  {
+    "id": "world-bank-careers",
+    "name": "World Bank Group Careers",
+    "url": "https://worldbankgroup.csod.com/ux/ats/careersite/1/home",
+    "type": "multilateral",
+    "priority": 3,
+    "collection": "manual_only",
+    "includeUrl": ["careersite", "burkina", "consultant"],
+    "excludeUrl": ["login"],
+    "notes": "Portail officiel Banque mondiale. A suivre pour projets, operations, data et consultance.",
+    "segments": ["international_onu", "consulting_remote"]
+  },
+  {
+    "id": "giz-careers",
+    "name": "GIZ Careers",
+    "url": "https://jobs.giz.de/",
+    "type": "organization",
+    "priority": 3,
+    "collection": "manual_only",
+    "includeUrl": ["job", "burkina", "africa"],
+    "excludeUrl": ["login"],
+    "notes": "Portail officiel GIZ. Utile pour cooperation, gouvernance, climat et missions d'expertise.",
+    "segments": ["international_onu", "consulting_remote"]
   },
   {
     "id": "econcours-pro",
@@ -354,7 +468,8 @@
     "collection": "manual_only",
     "includeUrl": ["recrutement", "job", "burkina", "ouagadougou"],
     "excludeUrl": ["login"],
-    "notes": "Veille reseau professionnel pour offres partagees en posts. Utiliser API/partenariats ou saisie admin."
+    "notes": "Veille reseau professionnel pour offres partagees en posts. Utiliser API/partenariats ou saisie admin.",
+    "segments": ["consulting_remote"]
   },
   {
     "id": "telegram-whatsapp-community-watch",
@@ -453,6 +568,67 @@
     "collection": "manual_only",
     "includeUrl": ["jobs", "burkina"],
     "excludeUrl": ["login"],
-    "notes": "Important pour cadres et entreprises, mais collecte automatisee a eviter sans API/accord."
+    "notes": "Important pour cadres et entreprises, mais collecte automatisee a eviter sans API/accord.",
+    "segments": ["consulting_remote"]
+  },
+  {
+    "id": "devbusiness-consulting",
+    "name": "Development Business Consulting",
+    "url": "https://www.devbusiness.com/Search/Consulting/",
+    "type": "development_marketplace",
+    "priority": 2,
+    "collection": "manual_only",
+    "includeUrl": ["consulting", "africa", "burkina"],
+    "excludeUrl": ["login"],
+    "notes": "Source internationale serieuse pour missions de consultance financees par bailleurs et projets publics.",
+    "segments": ["international_onu", "consulting_remote"]
+  },
+  {
+    "id": "upwork-remote",
+    "name": "Upwork Remote Jobs",
+    "url": "https://www.upwork.com/nx/jobs/search/",
+    "type": "freelance_platform",
+    "priority": 2,
+    "collection": "manual_only",
+    "includeUrl": ["jobs", "remote", "freelance"],
+    "excludeUrl": ["login"],
+    "notes": "Plateforme mondiale de freelance. Bonne porte d'entree pour consultance, design, redaction, support et developpement.",
+    "segments": ["consulting_remote"]
+  },
+  {
+    "id": "fiverr-freelance",
+    "name": "Fiverr Freelance",
+    "url": "https://www.fiverr.com/categories/programming-tech",
+    "type": "freelance_platform",
+    "priority": 3,
+    "collection": "manual_only",
+    "includeUrl": ["freelance", "remote", "gig"],
+    "excludeUrl": ["login"],
+    "notes": "Plateforme freelance utile pour services numeriques et missions courtes. Profil et reputation a construire proprement.",
+    "segments": ["consulting_remote"]
+  },
+  {
+    "id": "remoteok-jobs",
+    "name": "Remote OK",
+    "url": "https://remoteok.com/",
+    "type": "remote_board",
+    "priority": 3,
+    "collection": "manual_only",
+    "includeUrl": ["remote", "jobs"],
+    "excludeUrl": ["login"],
+    "notes": "Tableau mondial de travail a distance. Rechercher remote, support, engineering, design ou operations.",
+    "segments": ["consulting_remote"]
+  },
+  {
+    "id": "weworkremotely-jobs",
+    "name": "We Work Remotely",
+    "url": "https://weworkremotely.com/remote-jobs/search?term=africa",
+    "type": "remote_board",
+    "priority": 3,
+    "collection": "manual_only",
+    "includeUrl": ["remote", "jobs", "africa"],
+    "excludeUrl": ["login"],
+    "notes": "Site reconnu pour travail a distance. Les mots utiles sont remote, customer support, operations, product et africa.",
+    "segments": ["consulting_remote"]
   }
 ]

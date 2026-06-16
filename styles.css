@@ -1045,6 +1045,7 @@ textarea {
 .results-summary {
   color: var(--muted);
   font-weight: 800;
+  line-height: 1.55;
   margin-bottom: 16px;
 }
 
@@ -1095,6 +1096,13 @@ textarea {
     border-color 160ms ease,
     box-shadow 160ms ease,
     transform 160ms ease;
+}
+
+.reference-note {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0;
 }
 
 #featuredJobsCarousel .job-card {
@@ -1888,6 +1896,55 @@ button:disabled,
   gap: 14px;
 }
 
+.strategic-source-sections {
+  display: grid;
+  gap: 34px;
+}
+
+.strategic-source-section {
+  display: grid;
+  gap: 18px;
+}
+
+.strategic-source-lead {
+  align-items: end;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: space-between;
+}
+
+.strategic-source-lead h3 {
+  font-size: 1.4rem;
+  margin: 0 0 8px;
+}
+
+.strategic-source-lead .muted {
+  margin-bottom: 0;
+  max-width: 860px;
+}
+
+.strategic-source-meta,
+.strategic-source-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.keyword-row {
+  gap: 8px;
+}
+
+.keyword-row .pill {
+  background: #fff;
+}
+
+.source-directory-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
 .source-card h3 {
   font-size: 1.12rem;
   line-height: 1.2;
@@ -1922,6 +1979,14 @@ button:disabled,
 .admin-summary span {
   color: var(--muted);
   font-weight: 700;
+}
+
+.source-card .reference-note {
+  min-height: 4.5em;
+}
+
+.spotlight-grid .source-card {
+  min-height: 100%;
 }
 
 .page-hero {
@@ -2256,6 +2321,8 @@ th {
   .plain-language-grid,
   .employment-explorer,
   .monetization-grid,
+  .strategic-source-sections,
+  .source-directory-grid,
   .split,
   .partner-grid,
   .editorial-grid,
@@ -2285,6 +2352,11 @@ th {
   }
 
   .portal-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .strategic-source-lead {
     align-items: flex-start;
     flex-direction: column;
   }

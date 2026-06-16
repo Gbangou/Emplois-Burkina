@@ -1,6 +1,6 @@
 # Qualite automation JobFaso
 
-Genere le : 2026-06-16T09:58:13.880Z
+Genere le : 2026-06-16T11:28:45.603Z
 
 Score : 100/100
 Statut : passed
@@ -9,7 +9,7 @@ Statut : passed
 
 | Severite | Check | Etat | Detail | Recommandation |
 | --- | --- | --- | --- | --- |
-| critical | sources_minimum | OK | 41 sources configurees | Garder une base de sources large et diversifiee. |
+| critical | sources_minimum | OK | 54 sources configurees | Garder une base de sources large et diversifiee. |
 | critical | raw_items_minimum | OK | 391 items bruts | Verifier les crawlers si ce nombre chute brutalement. |
 | critical | jobs_minimum | OK | 22 offres curees | Ne pas publier un catalogue vide ou trop faible. |
 | critical | sitemap_exists | OK | 50 URLs sitemap | Executer npm run growth. |

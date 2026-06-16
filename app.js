@@ -64,6 +64,7 @@ const fallbackJobs = [
 let jobs = [];
 let sources = [];
 let employerLogos = [];
+let sourceIndex = new Map();
 let activeCategory = "";
 let activeJobId = "";
 let currentJobsPage = 1;
@@ -90,6 +91,7 @@ const jobDetail = document.querySelector("#jobDetail");
 const employmentExplorer = document.querySelector("#employmentExplorer");
 const sourceMetrics = document.querySelector("#sourceMetrics");
 const sourceGrid = document.querySelector("#sourceGrid");
+const strategicSourceSections = document.querySelector("#strategicSourceSections");
 const quickSearch = document.querySelector("#quickSearch");
 const filterButtons = document.querySelectorAll(".filter-button");
 const alertForm = document.querySelector("#alertForm");
@@ -163,6 +165,74 @@ function normalize(value = "") {
     .replace(/[\u0300-\u036f]/g, "");
 }
 
+const SEARCH_EQUIVALENTS = {
+  admin: ["assistant", "bureau", "office", "secretariat"],
+  anglais: ["english", "bilingual", "bilingue"],
+  artisan: ["informel", "service", "terrain"],
+  assistant: ["admin", "bureau", "office", "secretaire"],
+  bureau: ["administration", "secretariat", "assistante"],
+  chauffeur: ["conducteur", "transport", "livraison", "logistique"],
+  commerce: ["vente", "vendeur", "vendeuse", "commercial"],
+  comptable: ["finance", "administration", "gestion"],
+  concours: ["fonction publique", "selection", "communique"],
+  consultance: ["consultant", "consultancy", "expert", "freelance", "mission"],
+  consultant: ["consultance", "consultancy", "expert", "mission"],
+  distance: ["remote", "teletravail", "homebased"],
+  driver: ["chauffeur", "conducteur", "transport"],
+  electricien: ["technique", "artisan", "chantier", "maintenance"],
+  english: ["anglais", "bilingual", "bilingue"],
+  freelance: ["consultance", "consultant", "remote", "teletravail"],
+  gardien: ["vigile", "securite"],
+  homebased: ["remote", "teletravail", "distance"],
+  informel: ["artisan", "terrain", "journalier", "service"],
+  internship: ["stage", "stagiaire", "trainee"],
+  journalier: ["mission", "terrain", "chantier"],
+  macon: ["btp", "chantier", "construction", "terrain"],
+  nurse: ["infirmier", "sante"],
+  ong: ["humanitaire", "programme", "projet", "international"],
+  plomberie: ["plombier", "artisan", "chantier"],
+  plombier: ["artisan", "chantier", "service"],
+  remote: ["teletravail", "distance", "homebased", "workfromhome"],
+  sante: ["medical", "clinique", "pediatre", "infirmier"],
+  secretaire: ["bureau", "administration", "assistante"],
+  soudeur: ["artisan", "chantier", "technique"],
+  stage: ["stagiaire", "apprentissage", "formation"],
+  teletravail: ["remote", "distance", "homebased"],
+  trainee: ["stage", "internship", "stagiaire"],
+  vendeur: ["vente", "commerce", "boutique"],
+  vendeuse: ["vente", "commerce", "boutique"],
+  volunteer: ["volontariat", "benevole", "unv"],
+  volontariat: ["volunteer", "benevole", "unv"],
+  workfromhome: ["remote", "teletravail"],
+};
+
+const SOURCE_SPOTLIGHTS = [
+  {
+    id: "international_onu",
+    anchor: "international-careers",
+    eyebrow: "Carriere internationale",
+    title: "Organisations internationales et systeme des Nations Unies",
+    description:
+      "Portes d'entree officielles et verifiees pour les agences onusiennes, ONG internationales, bailleurs et structures de developpement ou les Burkinabe peuvent postuler.",
+    keywords: ["Burkina Faso", "Ouagadougou", "national", "programme", "consultant", "volunteer"],
+    actionHref: "jobs.html?category=ONG",
+    actionLabel: "Voir les offres ONG suivies",
+    limit: 24,
+  },
+  {
+    id: "consulting_remote",
+    anchor: "consulting-remote",
+    eyebrow: "Travail flexible",
+    title: "Consultance, freelance et travail a distance",
+    description:
+      "Sources serieuses pour missions de consultance, teletravail, freelance et opportunites internationales accessibles depuis le Burkina Faso.",
+    keywords: ["consultant", "consultancy", "remote", "teletravail", "homebased", "freelance"],
+    actionHref: "jobs.html?q=consultant",
+    actionLabel: "Lancer une recherche guidee",
+    limit: 16,
+  },
+];
+
 function readStorageArray(key) {
   try {
     const data = JSON.parse(localStorage.getItem(key) || "[]");
@@ -174,6 +244,133 @@ function readStorageArray(key) {
 
 function writeStorageArray(key, items) {
   localStorage.setItem(key, JSON.stringify(items));
+}
+
+function rebuildSourceIndex() {
+  sourceIndex = new Map(
+    sources
+      .filter((source) => source?.name)
+      .map((source) => [normalize(source.name), source]),
+  );
+}
+
+function getSourceRecord(sourceName = "") {
+  return sourceIndex.get(normalize(sourceName)) || null;
+}
+
+function getSourceSegments(source = {}) {
+  return Array.isArray(source.segments) ? source.segments.map((segment) => normalize(segment)) : [];
+}
+
+function sourceHasSegment(source, segment) {
+  return getSourceSegments(source).includes(normalize(segment));
+}
+
+function sortSourcesByPriority(list = []) {
+  return list
+    .slice()
+    .sort((a, b) => a.priority - b.priority || a.name.localeCompare(b.name, "fr"));
+}
+
+function sourceReferenceDescriptor(source) {
+  if (source?.collection === "official_link") {
+    return {
+      badge: "Lien officiel",
+      actionLabel: "Ouvrir la reference officielle",
+      note: "Lien direct vers une source institutionnelle ou officielle citee par JobFaso.",
+    };
+  }
+
+  if (source?.collection === "manual_only") {
+    return {
+      badge: "Veille humaine",
+      actionLabel: "Ouvrir la reference citee",
+      note: "Annonce relayee depuis une veille humaine ou un partenaire. Relisez toujours la source d'origine avant de postuler.",
+    };
+  }
+
+  if (source?.collection === "review_required") {
+    return {
+      badge: "Source verifiee",
+      actionLabel: "Ouvrir l'annonce source",
+      note: "Annonce issue d'une source suivie par JobFaso. Verifiez les pieces, contacts et delais sur la page source.",
+    };
+  }
+
+  return {
+    badge: "Source citee",
+    actionLabel: "Ouvrir la source",
+    note: "Relisez toujours l'annonce d'origine avant tout envoi de dossier ou paiement.",
+  };
+}
+
+function getJobSourceDescriptor(job) {
+  return sourceReferenceDescriptor(getSourceRecord(job.sourceName));
+}
+
+function buildSearchGroups(query = "") {
+  const tokens = normalize(query)
+    .split(/\s+/)
+    .map((token) => token.trim())
+    .filter((token) => token.length >= 2);
+
+  return tokens.map((token) => {
+    const variants = new Set([token]);
+    const related = SEARCH_EQUIVALENTS[token] || [];
+    related.forEach((value) => variants.add(normalize(value)));
+    for (const [keyword, equivalents] of Object.entries(SEARCH_EQUIVALENTS)) {
+      if (keyword.includes(token) || token.includes(keyword)) {
+        variants.add(normalize(keyword));
+        equivalents.forEach((value) => variants.add(normalize(value)));
+      }
+    }
+    return [...variants];
+  });
+}
+
+function scoreTextAgainstGroups(text, groups, weight) {
+  if (!text) return 0;
+  let score = 0;
+  for (const group of groups) {
+    if (group.some((token) => text.includes(token))) score += weight;
+  }
+  return score;
+}
+
+function getJobSearchScore(job, query = "") {
+  const normalizedQuery = normalize(query);
+  if (!normalizedQuery) return 0;
+
+  const groups = buildSearchGroups(normalizedQuery);
+  if (!groups.length) return 0;
+
+  const fields = {
+    title: normalize(job.title),
+    company: normalize(job.company),
+    city: normalize(job.city),
+    category: normalize(job.category),
+    type: normalize(job.type),
+    source: normalize(job.sourceName),
+    tags: normalize((job.tags || []).join(" ")),
+    excerpt: normalize(job.excerpt),
+  };
+
+  const searchable = Object.values(fields).join(" ");
+  const matchedGroups = groups.filter((group) => group.some((token) => searchable.includes(token)));
+  if (!matchedGroups.length) return 0;
+  if (groups.length > 1 && matchedGroups.length < groups.length) return 0;
+
+  let score = 0;
+  if (searchable.includes(normalizedQuery)) score += 18;
+  score += scoreTextAgainstGroups(fields.title, groups, 9);
+  score += scoreTextAgainstGroups(fields.category, groups, 7);
+  score += scoreTextAgainstGroups(fields.tags, groups, 6);
+  score += scoreTextAgainstGroups(fields.company, groups, 5);
+  score += scoreTextAgainstGroups(fields.type, groups, 4);
+  score += scoreTextAgainstGroups(fields.city, groups, 4);
+  score += scoreTextAgainstGroups(fields.source, groups, 3);
+  score += scoreTextAgainstGroups(fields.excerpt, groups, 1);
+  return score;
 }
 
 function sendServerEvent(type, payload = {}) {
@@ -810,13 +1007,17 @@ function getSourceTypeLabel(type) {
   const labels = {
     aggregator: "Agregateur",
     classifieds: "Petites annonces",
+    development_marketplace: "Consultance",
+    freelance_platform: "Freelance",
     government: "Officiel",
     job_board: "Portail emploi",
     marketplace: "Marketplace",
     media: "Media",
+    multilateral: "Institution internationale",
     ngo: "ONG / ONU",
     organization: "Organisation",
     recruiter: "Cabinet RH",
+    remote_board: "Teletravail",
     social_group: "Groupe social",
     social_jobs: "Reseau pro",
   };
@@ -850,14 +1051,17 @@ function hydrateSourceFilter() {
 }
 
 function getFilteredJobs() {
-  const query = normalize(searchInput?.value.trim());
+  const query = searchInput?.value.trim() || "";
+  const normalizedQuery = normalize(query);
   const city = cityFilter?.value || "";
   const type = typeFilter?.value || "";
   const source = sourceFilter?.value || "";
   const savedOnly = Boolean(savedOnlyFilter?.checked);
   const sortMode = sortFilter?.value || "recent";
 
-  const filtered = jobs.filter((job) => {
+  const filtered = jobs
+    .map((job) => ({ job, searchScore: getJobSearchScore(job, normalizedQuery) }))
+    .filter(({ job, searchScore }) => {
     const haystack = normalize(
       [
         job.title,
@@ -873,7 +1077,7 @@ function getFilteredJobs() {
         ...(job.tags || []),
       ].join(" ")
     );
-    const matchesQuery = !query || haystack.includes(query);
+    const matchesQuery = !normalizedQuery || searchScore > 0 || haystack.includes(normalizedQuery);
     const matchesCity = !city || job.city === city || job.city === "Tout le Burkina" || job.city === "Burkina Faso";
     const matchesType = !type || normalize(job.type).includes(normalize(type)) || normalize(job.category).includes(normalize(type));
     const matchesCategory = !activeCategory || job.category === activeCategory;
@@ -883,11 +1087,14 @@ function getFilteredJobs() {
     return matchesQuery && matchesCity && matchesType && matchesCategory && matchesSource && matchesSaved;
   });
 
-  return filtered.sort((a, b) => {
-    if (sortMode === "title") return a.title.localeCompare(b.title, "fr");
-    if (sortMode === "source") return (a.sourceName || "").localeCompare(b.sourceName || "", "fr");
-    return new Date(b.collectedAt || 0) - new Date(a.collectedAt || 0);
-  });
+  return filtered
+    .sort((a, b) => {
+      if (normalizedQuery && a.searchScore !== b.searchScore) return b.searchScore - a.searchScore;
+      if (sortMode === "title") return a.job.title.localeCompare(b.job.title, "fr");
+      if (sortMode === "source") return (a.job.sourceName || "").localeCompare(b.job.sourceName || "", "fr");
+      return new Date(b.job.collectedAt || 0) - new Date(a.job.collectedAt || 0);
+    })
+    .map(({ job }) => job);
 }
 
 function renderJobCard(job, options = {}) {
@@ -896,13 +1103,14 @@ function renderJobCard(job, options = {}) {
   const applyUrl = job.sourceUrl || job.canonicalUrl || "#";
   const hasApplyUrl = Boolean(applyUrl && applyUrl !== "#");
   const logoUrl = job.companyLogoUrl || job.sourceLogoUrl || "";
+  const sourceDescriptor = getJobSourceDescriptor(job);
   const duplicateAttrs = options.duplicate ? ` aria-hidden="true"` : "";
   const duplicateInteractiveAttrs = options.duplicate ? ` tabindex="-1"` : "";
   const displayType = normalize(job.type) === "a verifier" ? "" : job.type;
   const metaPills = [
     displayType ? `<span class="pill">${escapeHtml(displayType)}</span>` : "",
     job.closingDate ? `<span class="pill deadline-pill">Cloture : ${escapeHtml(formatJobDate(job.closingDate))}</span>` : "",
-    hasApplyUrl ? `<span class="pill source-pill">Source officielle</span>` : "",
+    hasApplyUrl ? `<span class="pill source-pill">${escapeHtml(sourceDescriptor.badge)}</span>` : "",
   ].join("");
 
   return `
@@ -923,10 +1131,11 @@ function renderJobCard(job, options = {}) {
       <div class="tag-row">
         ${(job.tags || []).slice(0, 4).map((tag) => `<span class="pill">${escapeHtml(tag)}</span>`).join("")}
       </div>
+      <p class="reference-note">${escapeHtml(sourceDescriptor.note)}</p>
       <div class="job-actions">
         ${
           hasApplyUrl
-            ? `<a class="nav-action inline-action" href="${escapeHtml(applyUrl)}" target="_blank" rel="noopener" data-track="source_apply_click" data-track-label="${escapeHtml(job.title)}"${duplicateInteractiveAttrs}>Postuler</a>`
+            ? `<a class="nav-action inline-action" href="${escapeHtml(applyUrl)}" target="_blank" rel="noopener" data-track="source_apply_click" data-track-label="${escapeHtml(job.title)}"${duplicateInteractiveAttrs}>${escapeHtml(sourceDescriptor.actionLabel)}</a>`
             : `<button class="nav-action inline-action" type="button" disabled>Source indisponible</button>`
         }
         <button class="secondary-button" type="button" data-action="details" data-id="${escapeHtml(job.id)}"${duplicateInteractiveAttrs}>Détails</button>
@@ -956,9 +1165,10 @@ function renderDetail(job) {
   const whatsappText = encodeURIComponent(
     `Bonjour JobFaso, je veux recevoir les alertes pour: ${job.title} (${job.sourceName || "source"})`
   );
+  const sourceDescriptor = getJobSourceDescriptor(job);
   const sourceLink =
     job.sourceUrl && job.sourceUrl !== "#"
-      ? `<a class="nav-action inline-action" href="${escapeHtml(job.sourceUrl)}" target="_blank" rel="noopener" data-track="source_apply_click" data-track-label="${escapeHtml(job.title)}">Postuler sur le site officiel</a>`
+      ? `<a class="nav-action inline-action" href="${escapeHtml(job.sourceUrl)}" target="_blank" rel="noopener" data-track="source_apply_click" data-track-label="${escapeHtml(job.title)}">${escapeHtml(sourceDescriptor.actionLabel)}</a>`
       : "";
   const logoUrl = job.companyLogoUrl || job.sourceLogoUrl || "";
 
@@ -980,13 +1190,14 @@ function renderDetail(job) {
         <div><dt>Date de cloture</dt><dd>${escapeHtml(formatJobDate(job.closingDate, "Consulter la source"))}</dd></div>
         <div><dt>Temps restant</dt><dd>${job.closingDate ? `<span data-countdown="${escapeHtml(job.closingDate)}">${escapeHtml(formatCountdown(job.closingDate))}</span>` : "Consulter la source"}</dd></div>
         <div><dt>Source</dt><dd>${escapeHtml(job.sourceName || "JobFaso")}</dd></div>
+        <div><dt>Verification</dt><dd>${escapeHtml(sourceDescriptor.badge)}</dd></div>
         <div><dt>Collecte</dt><dd>${escapeHtml(displayDate(job.collectedAt))}</dd></div>
       </dl>
       <div class="tag-row">
         ${(job.tags || []).map((tag) => `<span class="pill">${escapeHtml(tag)}</span>`).join("")}
       </div>
-      <p class="moderation-note">
-        Ne payez jamais de frais suspects pour postuler. Verifiez toujours les consignes depuis la source officielle.
+      <p class="moderation-note reference-note">
+        ${escapeHtml(sourceDescriptor.note)} Ne payez jamais de frais suspects pour postuler.
       </p>
       <div class="detail-actions">
         ${sourceLink}
@@ -1147,12 +1358,13 @@ function renderJobs() {
     const rangeEnd = Math.min(pageStart + visibleJobs.length, filtered.length);
     const pageLabel = filtered.length ? ` Affichage ${rangeStart}-${rangeEnd}.` : "";
     const datedCount = filtered.filter((job) => job.closingDate).length;
-    resultsSummary.textContent = `${filtered.length} ${label} sur ${jobs.length}.${pageLabel} ${datedCount} avec date de cloture confirmee.`;
+    const trustedCount = filtered.filter((job) => ["official_link", "review_required"].includes(getSourceRecord(job.sourceName)?.collection)).length;
+    resultsSummary.textContent = `${filtered.length} ${label} sur ${jobs.length}.${pageLabel} ${datedCount} avec date de cloture confirmee. ${trustedCount} issues de liens officiels ou de sources suivies.`;
   }
 
   jobsList.innerHTML = visibleJobs.length
     ? visibleJobs.map(renderJobCard).join("")
-    : `<p class="muted">Aucune opportunite ne correspond encore a cette recherche.</p>`;
+    : `<p class="muted">Aucune opportunite ne correspond encore a cette recherche. Essayez un metier simple comme macon, chauffeur, vendeuse, comptable, ONG ou concours.</p>`;
 
   renderJobsPagination(totalPages);
   const activeJob = jobs.find((job) => job.id === activeJobId);
@@ -1162,7 +1374,7 @@ function renderJobs() {
 }
 
 function renderSourceDirectory() {
-  if (!sourceGrid || !sourceMetrics) return;
+  if (!sourceGrid && !sourceMetrics) return;
 
   const sourceTypes = sources.reduce((acc, source) => {
     acc[source.type] = (acc[source.type] || 0) + 1;
@@ -1170,34 +1382,101 @@ function renderSourceDirectory() {
   }, {});
   const automaticCount = sources.filter((source) => source.collection !== "manual_only").length;
   const manualCount = sources.length - automaticCount;
+  const orderedSources = sortSourcesByPriority(sources);
 
-  sourceMetrics.innerHTML = `
-    <article><strong>${sources.length}</strong><span>sources surveillees</span></article>
-    <article><strong>${automaticCount}</strong><span>suivi automatise possible</span></article>
-    <article><strong>${manualCount}</strong><span>controle humain</span></article>
-    <article><strong>${Object.keys(sourceTypes).length}</strong><span>types de sources</span></article>
-  `;
+  if (sourceMetrics) {
+    sourceMetrics.innerHTML = `
+      <article><strong>${sources.length}</strong><span>sources surveillees</span></article>
+      <article><strong>${automaticCount}</strong><span>suivi automatise possible</span></article>
+      <article><strong>${manualCount}</strong><span>controle humain</span></article>
+      <article><strong>${Object.keys(sourceTypes).length}</strong><span>types de sources</span></article>
+    `;
+  }
 
-  sourceGrid.innerHTML = sources
-    .slice()
-    .sort((a, b) => a.priority - b.priority || a.name.localeCompare(b.name, "fr"))
-    .map(
-      (source) => `
-        <article class="source-card">
+  if (sourceGrid) {
+    sourceGrid.innerHTML = orderedSources
+      .map(
+        (source) => {
+          const descriptor = sourceReferenceDescriptor(source);
+          return `
+          <article class="source-card">
+            <div>
+              <p class="eyebrow">${getSourceTypeLabel(source.type)}</p>
+              <h3>${escapeHtml(source.name)}</h3>
+              <p class="muted">${escapeHtml(source.notes || "Source a verifier avant publication.")}</p>
+            </div>
+            <div class="job-meta">
+              <span class="pill">${getCollectionLabel(source.collection)}</span>
+              <span class="pill">${getSourceMonitoringLabel(source)}</span>
+            </div>
+            <p class="reference-note">${escapeHtml(descriptor.note)}</p>
+            <a class="secondary-link" href="${escapeHtml(source.url)}" target="_blank" rel="noopener">${escapeHtml(descriptor.actionLabel)}</a>
+          </article>
+        `;
+        }
+      )
+      .join("");
+  }
+}
+
+function renderStrategicSourceSections() {
+  if (!strategicSourceSections) return;
+
+  if (!sources.length) {
+    strategicSourceSections.innerHTML = `<p class="muted">Les repertoires internationaux et teletravail seront affiches apres le chargement des sources.</p>`;
+    return;
+  }
+
+  strategicSourceSections.innerHTML = SOURCE_SPOTLIGHTS.map((spotlight) => {
+    const spotlightSources = sortSourcesByPriority(sources.filter((source) => sourceHasSegment(source, spotlight.id))).slice(0, spotlight.limit);
+    const keywordMarkup = spotlight.keywords
+      .map((keyword) => `<span class="pill">${escapeHtml(keyword)}</span>`)
+      .join("");
+    const cardsMarkup = spotlightSources.length
+      ? spotlightSources
+          .map((source) => {
+            const descriptor = sourceReferenceDescriptor(source);
+            return `
+              <article class="source-card">
+                <div>
+                  <p class="eyebrow">${getSourceTypeLabel(source.type)}</p>
+                  <h3>${escapeHtml(source.name)}</h3>
+                  <p class="muted">${escapeHtml(source.notes || "Source a verifier avant publication.")}</p>
+                </div>
+                <div class="job-meta">
+                  <span class="pill">${getCollectionLabel(source.collection)}</span>
+                  <span class="pill">${getSourceMonitoringLabel(source)}</span>
+                </div>
+                <p class="reference-note">${escapeHtml(descriptor.note)}</p>
+                <a class="secondary-link" href="${escapeHtml(source.url)}" target="_blank" rel="noopener">${escapeHtml(descriptor.actionLabel)}</a>
+              </article>
+            `;
+          })
+          .join("")
+      : `<p class="muted">Aucune source n'est encore configuree pour cette rubrique.</p>`;
+
+    return `
+      <section class="strategic-source-section" id="${escapeHtml(spotlight.anchor)}">
+        <div class="strategic-source-lead">
           <div>
-            <p class="eyebrow">${getSourceTypeLabel(source.type)}</p>
-            <h3>${escapeHtml(source.name)}</h3>
-            <p class="muted">${escapeHtml(source.notes || "Source a verifier avant publication.")}</p>
+            <p class="eyebrow">${escapeHtml(spotlight.eyebrow)}</p>
+            <h3>${escapeHtml(spotlight.title)}</h3>
+            <p class="muted">${escapeHtml(spotlight.description)}</p>
           </div>
-          <div class="job-meta">
-            <span class="pill">${getCollectionLabel(source.collection)}</span>
-            <span class="pill">${getSourceMonitoringLabel(source)}</span>
+          <div class="strategic-source-meta">
+            <span class="pill">${spotlightSources.length} source${spotlightSources.length > 1 ? "s" : ""}</span>
+            <span class="pill">Liens reels</span>
           </div>
-          <a class="secondary-link" href="${escapeHtml(source.url)}" target="_blank" rel="noopener">Ouvrir</a>
-        </article>
-      `
-    )
-    .join("");
+        </div>
+        <div class="tag-row keyword-row">${keywordMarkup}</div>
+        <div class="source-directory-grid spotlight-grid">${cardsMarkup}</div>
+        <div class="strategic-source-actions">
+          <a class="secondary-link" href="${escapeHtml(spotlight.actionHref)}">${escapeHtml(spotlight.actionLabel)}</a>
+          <a class="secondary-link" href="conseils.html">Voir les conseils de candidature</a>
+        </div>
+      </section>
+    `;
+  }).join("");
 }
 
 function getLeadLabel(kind) {
@@ -1576,7 +1855,7 @@ async function loadJobs() {
 }
 
 async function loadSources() {
-  if (!sourceGrid) return;
+  if (!sourceGrid && !sourceMetrics && !strategicSourceSections) return;
   try {
     const response = await fetch("data/sources.json", { cache: "no-store" });
     if (!response.ok) throw new Error("Impossible de charger les sources");
@@ -1585,8 +1864,10 @@ async function loadSources() {
     sources = [];
   }
 
+  rebuildSourceIndex();
   if (sourceCount && sources.length) sourceCount.textContent = sources.length;
   renderSourceDirectory();
+  renderStrategicSourceSections();
   renderAdmin();
 }
 
