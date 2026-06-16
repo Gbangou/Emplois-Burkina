@@ -508,6 +508,17 @@ function initials(value = "") {
     .toUpperCase();
 }
 
+function brandTone(value = "") {
+  const total = [...String(value)].reduce((sum, char) => sum + char.charCodeAt(0), 0);
+  return (total % 6) + 1;
+}
+
+function isUsableEmployerLogo(value = "") {
+  const url = String(value || "").toLowerCase();
+  if (!url) return false;
+  return !/favicon|apple-touch-icon|\/icon[\W_]|\.ico(?:$|\?)/.test(url);
+}
+
 function countBy(items, getter) {
   return items.reduce((acc, item) => {
     const key = getter(item) || "Autre";
@@ -667,22 +678,23 @@ function renderPortalWidgets() {
     const cards = (dynamicCards.length ? dynamicCards : employerLogos).slice(0, 18);
     const renderLogoCards = (items, duplicate = false) =>
       items
-        .map(
-          (card) => `
-          <a class="logo-card ${card.logoUrl ? "has-logo" : ""}" href="${escapeHtml(card.profileUrl || "#")}" target="_blank" rel="noopener" data-track="employer_logo_click" data-track-label="${escapeHtml(card.name)}"${duplicate ? ` aria-hidden="true" tabindex="-1"` : ""}>
+        .map((card) => {
+          const useImageLogo = isUsableEmployerLogo(card.logoUrl);
+          const count = card.jobs || card.count || 0;
+          return `
+          <a class="logo-card ${useImageLogo ? "has-logo" : "generated-logo"} tone-${brandTone(card.name)}" href="${escapeHtml(card.profileUrl || "#")}" target="_blank" rel="noopener" data-track="employer_logo_click" data-track-label="${escapeHtml(card.name)}"${duplicate ? ` aria-hidden="true" tabindex="-1"` : ""}>
             <span class="logo-visual">
-              ${
-                card.logoUrl
-                  ? `<img src="${escapeHtml(card.logoUrl)}" alt="Logo ${escapeHtml(card.name)}" loading="lazy" onerror="this.closest('.logo-visual').classList.add('logo-missing'); this.remove();" />`
-                  : ""
-              }
-              <b>${escapeHtml(initials(card.name))}</b>
+              ${useImageLogo ? `<img src="${escapeHtml(card.logoUrl)}" alt="Logo ${escapeHtml(card.name)}" loading="lazy" onload="if(this.naturalWidth < 96 || this.naturalHeight < 32){this.closest('.logo-visual').classList.add('logo-missing'); this.remove();}" onerror="this.closest('.logo-visual').classList.add('logo-missing'); this.remove();" />` : ""}
+              <span class="logo-fallback" aria-hidden="${useImageLogo ? "true" : "false"}">
+                <b>${escapeHtml(initials(card.name))}</b>
+                <em>${escapeHtml(card.sector || "Recruteur")}</em>
+              </span>
             </span>
             <strong>${escapeHtml(card.name)}</strong>
-            <small>${card.jobs || card.count ? `${card.jobs || card.count} offre${(card.jobs || card.count) > 1 ? "s" : ""}` : escapeHtml(card.sector || "Recruteur")}</small>
+            <small>${count ? `${count} offre${count > 1 ? "s" : ""}` : escapeHtml(card.sector || "Recruteur")}</small>
           </a>
-        `
-        )
+        `;
+        })
         .join("");
 
     employerCarousel.classList.toggle("is-animated", cards.length > 1);

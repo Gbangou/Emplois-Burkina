@@ -401,7 +401,8 @@ body {
 
 .logo-card {
   color: inherit;
-  min-height: 186px;
+  align-content: start;
+  min-height: 202px;
   text-decoration: none;
   width: 280px;
 }
@@ -418,12 +419,13 @@ body {
 
 .logo-card .logo-visual {
   align-items: center;
-  background: #fff;
+  background: linear-gradient(135deg, #f8fbfa, #eef5f2);
+  border: 1px solid rgba(216, 225, 222, 0.92);
   border-radius: 8px;
   color: var(--brand-blue);
   display: inline-flex;
   font-weight: 900;
-  height: 82px;
+  height: 92px;
   justify-content: center;
   overflow: hidden;
   width: 100%;
@@ -431,36 +433,87 @@ body {
 
 .logo-card .logo-visual img {
   display: block;
-  max-height: 72px;
-  max-width: 180px;
+  max-height: 68px;
+  max-width: 205px;
   object-fit: contain;
 }
 
-.logo-card .logo-visual b {
+.logo-card .logo-fallback {
   align-items: center;
-  background: #e3f5ed;
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  justify-content: center;
+  text-align: center;
+}
+
+.logo-card .logo-fallback b {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.9);
   border-radius: 8px;
   color: var(--green-dark);
-  display: none;
-  height: 52px;
+  display: inline-flex;
+  font-size: 1.15rem;
+  height: 54px;
   justify-content: center;
   min-width: 52px;
   padding-inline: 10px;
 }
 
-.logo-card .logo-visual.logo-missing,
-.logo-card:not(.has-logo) .logo-visual {
-  background: #eef7fb;
-  width: 58px;
+.logo-card .logo-fallback em {
+  color: rgba(20, 33, 29, 0.72);
+  font-size: 0.74rem;
+  font-style: normal;
+  font-weight: 900;
+  letter-spacing: 0;
+  line-height: 1.1;
+  max-width: 150px;
+  text-transform: uppercase;
 }
 
-.logo-card .logo-visual.logo-missing b,
-.logo-card:not(.has-logo) .logo-visual b {
+.logo-card .logo-visual.logo-missing,
+.logo-card:not(.has-logo) .logo-visual {
+  width: 100%;
+}
+
+.logo-card .logo-visual.logo-missing .logo-fallback,
+.logo-card:not(.has-logo) .logo-fallback,
+.logo-card.generated-logo .logo-fallback {
   display: inline-flex;
 }
 
-.logo-card:not(.has-logo) .logo-visual {
-  height: 58px;
+.logo-card .logo-visual.logo-missing img {
+  display: none;
+}
+
+.logo-card.tone-1 .logo-visual {
+  background: linear-gradient(135deg, #e7f6ef, #f7fbf9);
+}
+
+.logo-card.tone-2 .logo-visual {
+  background: linear-gradient(135deg, #e8f3fb, #f8fbfd);
+}
+
+.logo-card.tone-3 .logo-visual {
+  background: linear-gradient(135deg, #fff4dc, #fffdf7);
+}
+
+.logo-card.tone-4 .logo-visual {
+  background: linear-gradient(135deg, #fbe8ee, #fff9fb);
+}
+
+.logo-card.tone-5 .logo-visual {
+  background: linear-gradient(135deg, #edf1ff, #fbfcff);
+}
+
+.logo-card.tone-6 .logo-visual {
+  background: linear-gradient(135deg, #e9f8f5, #fcfffe);
+}
+
+.logo-card strong {
+  line-height: 1.2;
+  min-height: 2.4em;
 }
 
 .logo-card small,
