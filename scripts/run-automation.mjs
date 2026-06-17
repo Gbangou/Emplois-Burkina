@@ -9,6 +9,7 @@ import {
 
 const steps = [
   ["Collecte des sources", "scripts/jobfaso-scraper.mjs"],
+  ["Collecte institutions internationales", "scripts/international-feeds-scraper.mjs"],
   ["Curation et nettoyage", "scripts/curate-raw-items.mjs"],
   ["Generation SEO", "scripts/generate-seo-pages.mjs"],
   ["SEO pages statiques", "scripts/enhance-static-seo.mjs"],

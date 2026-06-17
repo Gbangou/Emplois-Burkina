@@ -1,0 +1,813 @@
+[
+  {
+    "sourceId": "unjobs-burkina",
+    "name": "UNjobs Burkina Faso",
+    "url": "https://unjobs.org/duty_stations/burkina-faso",
+    "type": "ngo",
+    "collection": "review_required",
+    "notes": "Source internationale utile pour ONU, ONG et developpement. Page verifiee avec offres Burkina.",
+    "priority": 1,
+    "updatedAt": "2026-06-16T16:52:41.757Z",
+    "jobs": [
+      {
+        "id": "8c6fbdde1b72b5a41abc3010f359218f9bab0727eb16907d5240187e15ebfa10",
+        "title": "Pédiatre Référent (HF), Ouahigouya Burkina",
+        "url": "https://unjobs.org/vacancies/1781558900820",
+        "location": "",
+        "contract": "",
+        "openingDate": "",
+        "closingDate": "",
+        "excerpt": "IRC Vacancy: Pédiatre Référent (HF), Ouahigouya, Burkina Faso | UNjobs Toggle navigation Latest Duty Stations Organizations Closing Soon Pédiatre Référent (HF), Ouahigouya, Burkina Faso Organization: International Rescue Committee (IRC) Country: Burkina Faso Field location: Ouahi"
+      },
+      {
+        "id": "029ce677a125de3a6a3f39b5aed167275113b9f437415432166c11286aee2169",
+        "title": "Midterm Review (MTR) of PONASI, Burkina Faso",
+        "url": "https://unjobs.org/vacancies/1781018896687",
+        "location": "",
+        "contract": "",
+        "openingDate": "",
+        "closingDate": "",
+        "excerpt": "UNDP Vacancy: Midterm Review (MTR) of PONASI, Burkina Faso | UNjobs Toggle navigation Latest Duty Stations Organizations Closing Soon Midterm Review (MTR) of PONASI, Burkina Faso Organization: UNDP - United Nations Development Programme Country: Burkina Faso City: Ouagadougou Off"
+      },
+      {
+        "id": "61b396e663bf09e88ebb7e47c2c5e538611e9b534785855f6e2f02f21fce43ba",
+        "title": "Recrutement d'un (e) Consultant(e) national(e) pour réaliser une Étude, Burkina Faso",
+        "url": "https://unjobs.org/vacancies/1781019696952",
+        "location": "",
+        "contract": "",
+        "openingDate": "",
+        "closingDate": "",
+        "excerpt": "UNDP Vacancy: Recrutement d'un (e) Consultant(e) national(e) pour réaliser une Étude, Burkina Faso | UNjobs Toggle navigation Latest Duty Stations Organizations Closing Soon Recrutement d'un (e) Consultant(e) national(e) pour réaliser une Étude, Burkina Faso Organization: UNDP - "
+      },
+      {
+        "id": "5a3428d2107b1f7a120ae818e8125b46d0497230a208a423d2acac6bc9c1c9ac",
+        "title": "Recrutement de consultant national pour la revue à mis parcours du projet PONAS, Burkina Faso",
+        "url": "https://unjobs.org/vacancies/1781020998548",
+        "location": "",
+        "contract": "",
+        "openingDate": "",
+        "closingDate": "",
+        "excerpt": "UNDP Vacancy: Recrutement de consultant national pour la revue à mis parcours du projet PONAS, Burkina Faso | UNjobs Toggle navigation Latest Duty Stations Organizations Closing Soon Recrutement de consultant national pour la revue à mis parcours du projet PONAS, Burkina Faso Org"
+      },
+      {
+        "id": "0f554cd0d540434df02c077c68745bacc01714db98db8c5b7b92fd72b896cd09",
+        "title": "VacancyTitle: Finance Assistant, Location: Ouagadougou",
+        "url": "https://unjobs.org/vacancies/1780962167818",
+        "location": "",
+        "contract": "",
+        "openingDate": "",
+        "closingDate": "",
+        "excerpt": "Malaria Consortium Vacancy: Finance Assistant, Ouagadougou, Burkina Faso | UNjobs Toggle navigation Latest Duty Stations Organizations Closing Soon Finance Assistant, Ouagadougou Organization: Malaria Consortium Country: Burkina Faso City: Ouagadougou Office: Malaria Consortium O"
+      },
+      {
+        "id": "777d18ab7169d2b3a672eb03fe4276d2493a09ed9fe5fb6334ed7c220da1d907",
+        "title": "VacancyTitle: Finance Assistant SMC, Location: Ouagadougou",
+        "url": "https://unjobs.org/vacancies/1780962160024",
+        "location": "",
+        "contract": "",
+        "openingDate": "",
+        "closingDate": "",
+        "excerpt": "Malaria Consortium Vacancy: Finance Assistant SMC, Ouagadougou, Burkina Faso | UNjobs Toggle navigation Latest Duty Stations Organizations Closing Soon Finance Assistant SMC, Ouagadougou Organization: Malaria Consortium Country: Burkina Faso City: Ouagadougou Office: Malaria Cons"
+      },
+      {
+        "id": "cc48514327c037a777c69f66d007b986ecf8b765cff7007ca6fbc88f711309a3",
+        "title": "Community Feedback Mechanism Technical Assistant, Ouagadougou, Burkina Faso",
+        "url": "https://unjobs.org/vacancies/1780601628292",
+        "location": "",
+        "contract": "",
+        "openingDate": "2026-03-06",
+        "closingDate": "",
+        "excerpt": "NRC Vacancy: Community Feedback Mechanism Technical Assistant, Ouagadougou, Burkina Faso | UNjobs Toggle navigation Latest Duty Stations Organizations Closing Soon Community Feedback Mechanism Technical Assistant, Ouagadougou, Burkina Faso Organization: Norwegian Refugee Council "
+      },
+      {
+        "id": "15d2bdb56521106c13ec9a3064cbd554fcb4334b6eaf603f4cc1cdc3b5cd2ec2",
+        "title": "Communications and Marketing Specialist, Pathfinder Portuguese & English Countries",
+        "url": "https://unjobs.org/vacancies/1779895707052",
+        "location": "",
+        "contract": "",
+        "openingDate": "",
+        "closingDate": "",
+        "excerpt": "Pathfinder International Vacancy: Communications and Marketing Specialist, Pathfinder Portuguese & English Countries, Burkina Faso, Cote D'Ivoire, DRC, Egypt, Ethiopia, Kenya, Mozambique, Nigeria, Niger, Tanzania or Uganda | UNjobs Toggle navigation Latest Duty Stations Organizat"
+      },
+      {
+        "id": "ffd713817e9b3d544e33263997de629f7cf19ed1d30e68491a0393f9e4f5e2cc",
+        "title": "Enquêteurs / Chercheurs de terrain - Burkina Faso, Burkina Faso",
+        "url": "https://unjobs.org/vacancies/1779894488201",
+        "location": "",
+        "contract": "",
+        "openingDate": "",
+        "closingDate": "",
+        "excerpt": "SoCha Vacancy: Enquêteurs / Chercheurs de terrain, Burkina Faso | UNjobs Toggle navigation Latest Duty Stations Organizations Closing Soon Enquêteurs / Chercheurs de terrain, Burkina Faso Organization: SoCha Country: Burkina Faso City: Ouagadougou Office: SoCha in Ouagadougou Con"
+      },
+      {
+        "id": "9f7625e33035b1bbc0bb4a89ab651b5f5050abb95bdc26ce337f724da9411cdd",
+        "title": "Admin/Finance Officer | Burkina Faso , Regione del Centro Burkina Faso",
+        "url": "https://unjobs.org/vacancies/1779654022705",
+        "location": "",
+        "contract": "",
+        "openingDate": "",
+        "closingDate": "",
+        "excerpt": "Doctors with Africa CUAMM Vacancy: Admin/Finance Officer, Burkina Faso | UNjobs Toggle navigation Latest Duty Stations Organizations Closing Soon Admin/Finance Officer, Burkina Faso Organization: Doctors with Africa CUAMM Country: Burkina Faso City: Ouagadougou Office: Doctors wi"
+      },
+      {
+        "id": "17e66ba8e6ab8222b1c06a211797d7fc8adaaacab4372aca4727172d658c4e1a",
+        "title": "Coordinateur administratif et logistique (F/H), Ouagadougou, Burkina Faso",
+        "url": "https://unjobs.org/vacancies/1778710942800",
+        "location": "",
+        "contract": "",
+        "openingDate": "",
+        "closingDate": "",
+        "excerpt": "MdM Vacancy: Coordinateur administratif et logistique (F/H), Ouagadougou, Burkina Faso | UNjobs Toggle navigation Latest Duty Stations Organizations Closing Soon Coordinateur administratif et logistique (F/H), Ouagadougou, Burkina Faso Organization: Médecins du Monde (MdM) Countr"
+      },
+      {
+        "id": "26dfc52e27cb7521d1631eb7f2aa82df022ba19a46d04613ce17a905088cc8ad",
+        "title": "Head of Support Services Sahel, Ouagadougou, Burkina Faso",
+        "url": "https://unjobs.org/vacancies/1778155544074",
+        "location": "",
+        "contract": "",
+        "openingDate": "",
+        "closingDate": "2026-06-06",
+        "excerpt": "WeWorld Onlus Vacancy: Head of Support Services Sahel, Ouagadougou, Burkina Faso | UNjobs Toggle navigation Latest Duty Stations Organizations Closing Soon Head of Support Services Sahel, Ouagadougou, Burkina Faso Organization: WeWorld Onlus Country: Burkina Faso City: Ouagadougo"
+      }
+    ]
+  },
+  {
+    "sourceId": "humanitairehub",
+    "name": "HumanitaireHub",
+    "url": "https://humanitairehub.com/",
+    "type": "ngo",
+    "collection": "review_required",
+    "notes": "Offres ONG, ONU et humanitaires Afrique francophone. Filtrer Burkina et Sahel a la moderation.",
+    "priority": 1,
+    "updatedAt": "2026-06-16T16:52:31.179Z",
+    "jobs": []
+  },
+  {
+    "sourceId": "reliefweb-burkina",
+    "name": "ReliefWeb Burkina Faso",
+    "url": "https://reliefweb.int/jobs?advanced-search=%28C162%29",
+    "type": "ngo",
+    "collection": "review_required",
+    "notes": "Source humanitaire mondiale. Collecter seulement titres, deadlines et liens officiels.",
+    "priority": 1,
+    "updatedAt": "2026-06-16T16:52:52.335Z",
+    "jobs": [],
+    "error": "fetch failed",
+    "stale": false
+  },
+  {
+    "sourceId": "linkedin-burkina",
+    "name": "LinkedIn Jobs Burkina Faso",
+    "url": "https://www.linkedin.com/jobs/search/?keywords=&location=Burkina%20Faso",
+    "type": "social_jobs",
+    "collection": "manual_only",
+    "notes": "Important pour cadres et entreprises, mais collecte automatisee a eviter sans API/accord.",
+    "priority": 2,
+    "updatedAt": "2026-06-16T16:54:51.653Z",
+    "jobs": [
+      {
+        "id": "514f9687948a86fa61f45b969ea3ca88996e1df334e4c986fa91429744d45b51",
+        "title": "Data Center Technician -Côte d'Ivoire-Yamoussoukro- Onsite",
+        "url": "https://bf.linkedin.com/jobs/view/data-center-technician-c%C3%B4te-d-ivoire-yamoussoukro-onsite-at-reboot-monkey-4382625214?position=1&amp;pageNum=0&amp;refId=2tvswrDaeqofrSPDsbBuIQ%3D%3D&amp;trackingId=P63B76q6IPoeg%2BaphiduBA%3D%3D",
+        "location": "Ouagadougou",
+        "contract": "FULL_TIME",
+        "openingDate": "",
+        "closingDate": "",
+        "excerpt": "Reboot Monkey hiring Data Center Technician -Côte d'Ivoire-Yamoussoukro- Onsite in Ouagadougou, Centre, Burkina Faso | LinkedIn Agree & Join LinkedIn By clicking Continue to join or sign in, you agree to LinkedIn’s User Agreement , Privacy Policy , and Cookie Policy . Skip to mai"
+      },
+      {
+        "id": "f5772552fd8e603a0ecef943ab5380ea2408405e34532ec8f6edb6e9f7f8c1ac",
+        "title": "Data Center Technician -Cameroon-Yaoundé- Onsite",
+        "url": "https://bf.linkedin.com/jobs/view/data-center-technician-cameroon-yaound%C3%A9-onsite-at-reboot-monkey-4382625285?position=2&amp;pageNum=0&amp;refId=2tvswrDaeqofrSPDsbBuIQ%3D%3D&amp;trackingId=QqQWnamPkyN%2FWWtANspKPQ%3D%3D",
+        "location": "Ouagadougou",
+        "contract": "FULL_TIME",
+        "openingDate": "",
+        "closingDate": "",
+        "excerpt": "Reboot Monkey hiring Data Center Technician -Cameroon-Yaoundé- Onsite in Ouagadougou, Centre, Burkina Faso | LinkedIn Agree & Join LinkedIn By clicking Continue to join or sign in, you agree to LinkedIn’s User Agreement , Privacy Policy , and Cookie Policy . Skip to main content "
+      },
+      {
+        "id": "1c25a0269099b5493c4991c021ee0900d1a8cbb3abafd97460dc6964dfa777f4",
+        "title": "Data Center Technician - BF - Ouagadougou - On-site",
+        "url": "https://bf.linkedin.com/jobs/view/data-center-technician-bf-ouagadougou-on-site-at-reboot-monkey-4382612624?position=3&amp;pageNum=0&amp;refId=2tvswrDaeqofrSPDsbBuIQ%3D%3D&amp;trackingId=WjS2Z1XNVazs5JI6L%2B0ZzQ%3D%3D",
+        "location": "Ouagadougou",
+        "contract": "OTHER",
+        "openingDate": "",
+        "closingDate": "",
+        "excerpt": "Reboot Monkey hiring Data Center Technician - BF - Ouagadougou - On-site in Ouagadougou, Centre, Burkina Faso | LinkedIn Agree & Join LinkedIn By clicking Continue to join or sign in, you agree to LinkedIn’s User Agreement , Privacy Policy , and Cookie Policy . Skip to main conte"
+      },
+      {
+        "id": "3fc7e9906752f6c5b0c780573e0eee0077a0e9812faf2ffc38d7c145dc1509da",
+        "title": "Data Center Technician - BF - Ouagadougou - On-site",
+        "url": "https://bf.linkedin.com/jobs/view/data-center-technician-bf-ouagadougou-on-site-at-reboot-monkey-4382622243?position=4&amp;pageNum=0&amp;refId=2tvswrDaeqofrSPDsbBuIQ%3D%3D&amp;trackingId=BDZlNuT4jZOAteQvH1stJQ%3D%3D",
+        "location": "Ouagadougou",
+        "contract": "FULL_TIME",
+        "openingDate": "",
+        "closingDate": "",
+        "excerpt": "Reboot Monkey hiring Data Center Technician - BF - Ouagadougou - On-site in Ouagadougou, Centre, Burkina Faso | LinkedIn Agree & Join LinkedIn By clicking Continue to join or sign in, you agree to LinkedIn’s User Agreement , Privacy Policy , and Cookie Policy . Skip to main conte"
+      },
+      {
+        "id": "dfa4be6c63b01d1e92979f58e57ae60dc6ccb4ff471c50f863fb097d3ec6d294",
+        "title": "Administrative Assistant",
+        "url": "https://bf.linkedin.com/jobs/view/administrative-assistant-at-odixcity-consulting-4412180799?position=5&amp;pageNum=0&amp;refId=2tvswrDaeqofrSPDsbBuIQ%3D%3D&amp;trackingId=XKD%2BlSEJHHyB5BEGTx67gg%3D%3D",
+        "location": "",
+        "contract": "",
+        "openingDate": "",
+        "closingDate": "",
+        "excerpt": "Odixcity Consulting hiring Administrative Assistant in Burkina Faso | LinkedIn Agree & Join LinkedIn By clicking Continue to join or sign in, you agree to LinkedIn’s User Agreement , Privacy Policy , and Cookie Policy . Skip to main content LinkedIn Administrative Assistant in Ou"
+      },
+      {
+        "id": "9a08fbdf6e552e898bd9fa27e5d1a0348e43b1e03e7b1c0d71226dda09f71b4f",
+        "title": "Responsable du suivi, de l'évaluation et de l'apprentissage",
+        "url": "https://bf.linkedin.com/jobs/view/responsable-du-suivi-de-l-%C3%A9valuation-et-de-l-apprentissage-at-amref-health-africa-in-west-africa-4423131399?position=6&amp;pageNum=0&amp;refId=2tvswrDaeqofrSPDsbBuIQ%3D%3D&amp;trackingId=LNNwGrVqVco%2B5HVNIeNpmQ%3D%3D",
+        "location": "Ouagadougou",
+        "contract": "FULL_TIME",
+        "openingDate": "",
+        "closingDate": "",
+        "excerpt": "Amref Health Africa in West Africa hiring Responsable du suivi, de l'évaluation et de l'apprentissage in Ouagadougou, Centre, Burkina Faso | LinkedIn Agree & Join LinkedIn By clicking Continue to join or sign in, you agree to LinkedIn’s User Agreement , Privacy Policy , and Cooki"
+      },
+      {
+        "id": "63748331b929ebd4eed48b2a6d3bbd14d3051dd2d05a34d735edef855b8a0d6a",
+        "title": "Responsable des Finances",
+        "url": "https://bf.linkedin.com/jobs/view/responsable-des-finances-at-amref-health-africa-in-west-africa-4423154169?position=7&amp;pageNum=0&amp;refId=2tvswrDaeqofrSPDsbBuIQ%3D%3D&amp;trackingId=4gykIQNJxq0klRi58bmQJQ%3D%3D",
+        "location": "Ouagadougou",
+        "contract": "FULL_TIME",
+        "openingDate": "",
+        "closingDate": "",
+        "excerpt": "Amref Health Africa in West Africa hiring Responsable des Finances in Ouagadougou, Centre, Burkina Faso | LinkedIn Agree & Join LinkedIn By clicking Continue to join or sign in, you agree to LinkedIn’s User Agreement , Privacy Policy , and Cookie Policy . Skip to main content Lin"
+      },
+      {
+        "id": "d0fdc905053187259d662a14d14b6dba6b4194b733cb06c5e91ac62c9d1b4597",
+        "title": "Gourmanchéma Linguistic Projects (Remote)",
+        "url": "https://bf.linkedin.com/jobs/view/gourmanch%C3%A9ma-linguistic-projects-remote-at-sigma-ai-3997537439?position=8&amp;pageNum=0&amp;refId=2tvswrDaeqofrSPDsbBuIQ%3D%3D&amp;trackingId=dCbcoFJa5qgzEsxONc1OSg%3D%3D",
+        "location": "",
+        "contract": "",
+        "openingDate": "",
+        "closingDate": "",
+        "excerpt": "Sigma AI hiring Gourmanchéma Linguistic Projects (Remote) in Burkina Faso | LinkedIn Agree & Join LinkedIn By clicking Continue to join or sign in, you agree to LinkedIn’s User Agreement , Privacy Policy , and Cookie Policy . Skip to main content LinkedIn Gourmanchéma Linguistic "
+      },
+      {
+        "id": "89a933ac400abca3b25c2444276a5a70e4675d0658882b98b1e8b8522c045983",
+        "title": "Chargé (e) de la Communication",
+        "url": "https://bf.linkedin.com/jobs/view/charg%C3%A9-e-de-la-communication-at-amref-health-africa-in-west-africa-4423144611?position=9&amp;pageNum=0&amp;refId=2tvswrDaeqofrSPDsbBuIQ%3D%3D&amp;trackingId=zM2YS3znVyKqSBeoGFRBUw%3D%3D",
+        "location": "Ouagadougou",
+        "contract": "FULL_TIME",
+        "openingDate": "",
+        "closingDate": "",
+        "excerpt": "Amref Health Africa in West Africa hiring Chargé (e) de la Communication in Ouagadougou, Centre, Burkina Faso | LinkedIn Agree & Join LinkedIn By clicking Continue to join or sign in, you agree to LinkedIn’s User Agreement , Privacy Policy , and Cookie Policy . Skip to main conte"
+      },
+      {
+        "id": "c72590524b6a8085ebf4613fedfe2b5ae57ee61af44fec8b0e4168005bf2d708",
+        "title": "Administrateur de Programme",
+        "url": "https://bf.linkedin.com/jobs/view/administrateur-de-programme-at-amref-health-africa-in-west-africa-4423627697?position=10&amp;pageNum=0&amp;refId=2tvswrDaeqofrSPDsbBuIQ%3D%3D&amp;trackingId=cfvfGG2Dv%2FAzUsBNwu7RiA%3D%3D",
+        "location": "Ouagadougou",
+        "contract": "FULL_TIME",
+        "openingDate": "",
+        "closingDate": "",
+        "excerpt": "Amref Health Africa in West Africa hiring Administrateur de Programme in Ouagadougou, Centre, Burkina Faso | LinkedIn Agree & Join LinkedIn By clicking Continue to join or sign in, you agree to LinkedIn’s User Agreement , Privacy Policy , and Cookie Policy . Skip to main content "
+      },
+      {
+        "id": "c4b7f19d050732e4d8acab8b62fd358e36df04dd391c0bd60c3343c5009325b1",
+        "title": "Internal Recruiter",
+        "url": "https://bf.linkedin.com/jobs/view/internal-recruiter-at-abconsulting-bk-4413904244?position=11&amp;pageNum=0&amp;refId=2tvswrDaeqofrSPDsbBuIQ%3D%3D&amp;trackingId=smsD2ZdxKe6IJXZCHCsMSw%3D%3D",
+        "location": "Boro",
+        "contract": "FULL_TIME",
+        "openingDate": "",
+        "closingDate": "",
+        "excerpt": "ABConsulting BK hiring Internal Recruiter in Boro, Boucle du Mouhoun, Burkina Faso | LinkedIn Agree & Join LinkedIn By clicking Continue to join or sign in, you agree to LinkedIn’s User Agreement , Privacy Policy , and Cookie Policy . Skip to main content LinkedIn Internal Recrui"
+      },
+      {
+        "id": "b6481fccbf16d8f0dc1893473ab8a3db4c7c26198dbc692bb0dbe7e7a5cc0290",
+        "title": "Legal Assistant",
+        "url": "https://bf.linkedin.com/jobs/view/legal-assistant-at-odixcity-consulting-4413465483?position=12&amp;pageNum=0&amp;refId=2tvswrDaeqofrSPDsbBuIQ%3D%3D&amp;trackingId=xggaNqTf7ZAPnNFKShU0OA%3D%3D",
+        "location": "",
+        "contract": "",
+        "openingDate": "",
+        "closingDate": "",
+        "excerpt": "Odixcity Consulting hiring Legal Assistant in Burkina Faso | LinkedIn Agree & Join LinkedIn By clicking Continue to join or sign in, you agree to LinkedIn’s User Agreement , Privacy Policy , and Cookie Policy . Skip to main content LinkedIn Legal Assistant in Ouagadougou Expand s"
+      }
+    ]
+  },
+  {
+    "sourceId": "wfp-careers",
+    "name": "WFP Careers",
+    "url": "https://wd3.myworkdaysite.com/recruiting/wfp/job_openings",
+    "type": "multilateral",
+    "collection": "manual_only",
+    "notes": "Portail officiel Programme Alimentaire Mondial pour operations, logistique et postes terrain.",
+    "priority": 2,
+    "updatedAt": "2026-06-16T16:54:17.121Z",
+    "jobs": [
+      {
+        "id": "299da193ba5bccd560ba76f3759513530fa3cb45d7e089e9a3ea515c821aa0d5",
+        "title": "Assistant(e) aux opérations informatiques – SCOPE (SC5)",
+        "url": "https://wd3.myworkdaysite.com/job/Bukavu-Congo-The-Dem-RepOf/Assistant-e--aux-oprations-informatiques---SCOPE--SC5-_JR124082",
+        "location": "2 Locations",
+        "contract": "JR124082",
+        "openingDate": "2026-06-16",
+        "closingDate": "",
+        "excerpt": "JR124082"
+      },
+      {
+        "id": "bd973a64735b925f1d51051cbcada3f9561c506e44736a1d74bbf4c41be326ab",
+        "title": "Programme Associate (Nutrition) G6, Manakara, Ambovombe",
+        "url": "https://wd3.myworkdaysite.com/job/Manakara-Madagascar-The-Democratic/Programme-Associate--Nutrition--G6--Manakara--Ambovombe_JR123836-1",
+        "location": "2 Locations",
+        "contract": "JR123836",
+        "openingDate": "2026-06-16",
+        "closingDate": "",
+        "excerpt": "JR123836"
+      },
+      {
+        "id": "cc152cb1f9561f96b735d2a106b4026baf575d54e08b373b9ece2e7175f14f19",
+        "title": "Accelerating Food Systems Transformation through a Scalable Success Model in Mauritania",
+        "url": "https://wd3.myworkdaysite.com/job/Nouakchott-Mauritania-The-Islamic-Re/Accelerating-Food-Systems-Transformation-through-a-Scalable-Success--Model-in-Mauritania_JR124072",
+        "location": "Nouakchott, Mauritania, The Islamic Re",
+        "contract": "JR124072",
+        "openingDate": "2026-06-16",
+        "closingDate": "",
+        "excerpt": "JR124072"
+      },
+      {
+        "id": "a83e718d4a4539ec197a5731f30b4e722155263df747df01affefa87c4a25e41",
+        "title": "Strategic & Special Assistant",
+        "url": "https://wd3.myworkdaysite.com/job/Aden-Yemen-The-Republic-Of/Strategic---Special-Assistant_JR124075",
+        "location": "Aden, Yemen, The Republic Of",
+        "contract": "JR124075",
+        "openingDate": "2026-06-16",
+        "closingDate": "",
+        "excerpt": "JR124075"
+      },
+      {
+        "id": "2f5f7a911ed4cc86a3751bc2eeeb684e8dd3fbe899353502d56e41728d7eb95a",
+        "title": "Programme Policy Officer (Senior Technical Advisor)_International Consultant CST III",
+        "url": "https://wd3.myworkdaysite.com/job/Vientiane-Laos-The-Peoples-Dem-Re/Senior-Technical-Advisor-International-Consultant-CST-III_JR124051",
+        "location": "Vientiane, Laos, The People's Dem. Re",
+        "contract": "JR124051",
+        "openingDate": "2026-06-16",
+        "closingDate": "",
+        "excerpt": "JR124051"
+      },
+      {
+        "id": "f9a6087c03cdedadb64f9398a033945137892ab09d72dbccc81c25c96b3e36de",
+        "title": "Assistant(e) de soutien aux entreprises (services externes) SC4, Port-au-Prince, Haiti",
+        "url": "https://wd3.myworkdaysite.com/job/Port-au-Prince-Haiti-The-Republic-Of/Assistant-e--de-soutien-aux-entreprises--services-externes--SC4--Port-au-Prince--Haiti_JR124040",
+        "location": "Port-au-Prince, Haiti, The Republic Of",
+        "contract": "JR124040",
+        "openingDate": "2026-06-15",
+        "closingDate": "",
+        "excerpt": "JR124040"
+      },
+      {
+        "id": "29d61e1574aada5c5c381a23c3abd746523279cfd97784796a804e5258f56b35",
+        "title": "Assistant.e Logistique (Operations portuaires) SC5, Port-au-Prince, Haiti",
+        "url": "https://wd3.myworkdaysite.com/job/Port-au-Prince-Haiti-The-Republic-Of/Assistante-Logistique--Operations-portuaires--SC5--Port-au-Prince--Haiti_JR124034",
+        "location": "Port-au-Prince, Haiti, The Republic Of",
+        "contract": "JR124034",
+        "openingDate": "2026-06-15",
+        "closingDate": "",
+        "excerpt": "JR124034"
+      },
+      {
+        "id": "75b6c78f17e1bd3deffa1fe8bf9b73ee50456696274fe2c6586ed447c9a61287",
+        "title": "Storekeeper SSA4",
+        "url": "https://wd3.myworkdaysite.com/job/Beirut-Lebanon-The-Republic-Of/Storekeeper-SSA4_JR124065",
+        "location": "Beirut, Lebanon, The Republic Of",
+        "contract": "JR124065",
+        "openingDate": "2026-06-15",
+        "closingDate": "",
+        "excerpt": "JR124065"
+      },
+      {
+        "id": "52738fa7fb31a46b1fa25409490820fb4e00f9de73dc7d483c91a99edd7f5e36",
+        "title": "Logistics Assistant SSA5",
+        "url": "https://wd3.myworkdaysite.com/job/Beirut-Lebanon-The-Republic-Of/Logistics-Assistant-SSA5_JR124066",
+        "location": "Beirut, Lebanon, The Republic Of",
+        "contract": "JR124066",
+        "openingDate": "2026-06-15",
+        "closingDate": "",
+        "excerpt": "JR124066"
+      },
+      {
+        "id": "860cda98c90f701466b1f4fa3c6b8c15b49f985504cc9803a85ad0dd55b90087",
+        "title": "Graphic Design and Visual Communications Associate SSA6 (When actually employed)",
+        "url": "https://wd3.myworkdaysite.com/job/Beirut-Lebanon-The-Republic-Of/Graphic-Design-and-Visual-Communications-Associate-SSA6--When-actually-employed-_JR124067-2",
+        "location": "Beirut, Lebanon, The Republic Of",
+        "contract": "JR124067",
+        "openingDate": "2026-06-15",
+        "closingDate": "",
+        "excerpt": "JR124067"
+      },
+      {
+        "id": "97e07740ff20550ccda2e9c87150956a2512f09415bc55c74a1a7ee1778a2012",
+        "title": "Consultant Programme Policy (Climate Solutions and Resilience) CST I",
+        "url": "https://wd3.myworkdaysite.com/job/Djibouti-Djibouti-The-Republic-Of/Consultant-Programme-Policy--Climate-Solutions-and-Resilience--CST-I_JR124062",
+        "location": "Djibouti, Djibouti, The Republic Of",
+        "contract": "JR124062",
+        "openingDate": "2026-06-15",
+        "closingDate": "",
+        "excerpt": "JR124062"
+      },
+      {
+        "id": "887a07ab3a3ed7ea474aa25d792c3cc2611da2c98e242afbd3d4c934a31b39bc",
+        "title": "Programme Asociate SC6 (Cash Based Transfert), Abeche, Chad",
+        "url": "https://wd3.myworkdaysite.com/job/Abeche-Chad-The-Republic-Of/Programme-Asociate-SC6--Cash-Based-Transfert---Abeche--Chad_JR124021",
+        "location": "Abeche, Chad, The Republic Of",
+        "contract": "JR124021",
+        "openingDate": "2026-06-15",
+        "closingDate": "",
+        "excerpt": "JR124021"
+      }
+    ]
+  },
+  {
+    "sourceId": "unesco-careers",
+    "name": "UNESCO Careers",
+    "url": "https://careers.unesco.org/go/All-jobs-openings/782502/",
+    "type": "multilateral",
+    "collection": "manual_only",
+    "notes": "Portail officiel UNESCO. A surveiller pour education, culture, communication et consultance.",
+    "priority": 2,
+    "updatedAt": "2026-06-16T16:54:04.473Z",
+    "jobs": [
+      {
+        "id": "399f1a70fbd8efa762281b58acfb4bc46eeaf8a8751793aeeedd300608c0d552",
+        "title": "Senior International Consultant for Skills Strategy Development in Afghanistan",
+        "url": "https://careers.unesco.org/job/Kabul-Senior-International-Consultant-for-Skills-Strategy-Development-in-Afghanistan/1363839257/",
+        "location": "",
+        "contract": "",
+        "openingDate": "",
+        "closingDate": "2026-06-28",
+        "excerpt": "Senior International Consultant for Skills Strategy Development in Afghanistan Senior International Consultant for Skills Strategy De"
+      },
+      {
+        "id": "941443b78103a63a3decc1b135941b6c078bae853fd6dbb63ffce0865dbeaa38",
+        "title": "Associate Communication Officer (Natural Sciences)",
+        "url": "https://careers.unesco.org/job/Paris-Associate-Communication-Officer-%28Natural-Sciences%29/1363800957/",
+        "location": "",
+        "contract": "",
+        "openingDate": "",
+        "closingDate": "2026-07-15",
+        "excerpt": "Associate Communication Officer (Natural Sciences) Associate Communication Officer (Natural Sciences)"
+      },
+      {
+        "id": "c2913cd022c41605d4c6e046a491f31dcec952d459a90d90dcb97595c5fa5075",
+        "title": "ASESOR PARA EL CAMBIO EN PEDAGOGÍA - PROYECTO EDUCACIÓN UNESCO-QUELLAVECO-REIMAGINA",
+        "url": "https://careers.unesco.org/job/Lima-ASESOR-PARA-EL-CAMBIO-EN-PEDAGOG%C3%8DA-PROYECTO-EDUCACI%C3%93N-UNESCO-QUELLAVECO-REIMAGINA/1363643357/",
+        "location": "",
+        "contract": "",
+        "openingDate": "",
+        "closingDate": "2026-06-22",
+        "excerpt": "ASESOR PARA EL CAMBIO EN PEDAGOGÍA - PROYECTO EDUCACIÓN UNESCO-QUELLAVECO-REIMAGINA ASESOR PARA EL CAMBIO EN"
+      },
+      {
+        "id": "18dab842f6cd6c60e9f9aea5ee84f1c11edba824e97ce208a38d640e7c9ea02c",
+        "title": "Associate Project Officer- Research",
+        "url": "https://careers.unesco.org/job/New-Delhi-Associate-Project-Officer-Research/1363584657/",
+        "location": "",
+        "contract": "",
+        "openingDate": "",
+        "closingDate": "2026-06-30",
+        "excerpt": "Associate Project Officer- Research Associate Project Officer- Research"
+      },
+      {
+        "id": "105946b0316d47aa6de4e24f72b5876a636b40c749df4f02c2bafd91f1686a22",
+        "title": "Lead Policy and Partnership Specialist (GPE System Capacity Grant)",
+        "url": "https://careers.unesco.org/job/Beirut-Lead-Policy-and-Partnership-Specialist-%28GPE-System-Capacity-Grant%29/1363471757/",
+        "location": "",
+        "contract": "",
+        "openingDate": "",
+        "closingDate": "2026-06-24",
+        "excerpt": "Lead Policy and Partnership Specialist (GPE System Capacity Grant) Lead Policy and Partnership Specialist (GPE System Capacity Grant)"
+      },
+      {
+        "id": "44d4f97243e04f0ebdc507204358c7fdf2aa273dee152ff81b9c8cb9d0191f5c",
+        "title": "IT Assistant",
+        "url": "https://careers.unesco.org/job/Bangkok-IT-Assistant/1363466857/",
+        "location": "",
+        "contract": "",
+        "openingDate": "",
+        "closingDate": "2026-06-16",
+        "excerpt": "IT Assistant IT Assistant"
+      }
+    ]
+  },
+  {
+    "sourceId": "devbusiness-consulting",
+    "name": "Development Business Consulting",
+    "url": "https://www.devbusiness.com/Search/Consulting/",
+    "type": "development_marketplace",
+    "collection": "manual_only",
+    "notes": "Source internationale serieuse pour missions de consultance financees par bailleurs et projets publics.",
+    "priority": 2,
+    "updatedAt": "2026-06-16T16:54:54.759Z",
+    "jobs": []
+  },
+  {
+    "sourceId": "devex-burkina",
+    "name": "Devex Burkina Faso",
+    "url": "https://www.devex.com/jobs/search?filter%5Bcountries%5D%5B%5D=Burkina%20Faso",
+    "type": "ngo",
+    "collection": "manual_only",
+    "notes": "Developpement international. Peut necessiter compte, donc lien et veille manuelle.",
+    "priority": 2,
+    "updatedAt": "2026-06-16T16:53:13.515Z",
+    "jobs": [],
+    "error": "fetch failed",
+    "stale": false
+  },
+  {
+    "sourceId": "fao-careers",
+    "name": "FAO Careers",
+    "url": "https://jobs.fao.org/careersection/fao_external/jobsearch.ftl",
+    "type": "multilateral",
+    "collection": "manual_only",
+    "notes": "Portail officiel FAO pour agriculture, resilience, nutrition et consultance.",
+    "priority": 2,
+    "updatedAt": "2026-06-16T16:54:05.166Z",
+    "jobs": []
+  },
+  {
+    "sourceId": "impactpool-burkina",
+    "name": "Impactpool Burkina Faso",
+    "url": "https://www.impactpool.org/search?countries=Burkina%20Faso",
+    "type": "ngo",
+    "collection": "manual_only",
+    "notes": "Plateforme internationale. Souvent dynamique, donc surveillance manuelle/API si disponible.",
+    "priority": 2,
+    "updatedAt": "2026-06-16T16:53:02.925Z",
+    "jobs": [],
+    "error": "fetch failed",
+    "stale": false
+  },
+  {
+    "sourceId": "linkedin-posts-burkina",
+    "name": "LinkedIn Posts Recrutement Burkina",
+    "url": "https://www.linkedin.com/search/results/content/?keywords=recrutement%20Burkina%20Faso",
+    "type": "social_jobs",
+    "collection": "manual_only",
+    "notes": "Veille reseau professionnel pour offres partagees en posts. Utiliser API/partenariats ou saisie admin.",
+    "priority": 2,
+    "updatedAt": "2026-06-16T16:54:40.560Z",
+    "jobs": []
+  },
+  {
+    "sourceId": "un-talent-burkina",
+    "name": "UN Talent Burkina Faso",
+    "url": "https://untalent.org/jobs/in-anything/contract-all/burkina-faso",
+    "type": "ngo",
+    "collection": "review_required",
+    "notes": "Offres ONU et volontariat liees au Burkina.",
+    "priority": 2,
+    "updatedAt": "2026-06-16T16:53:13.794Z",
+    "jobs": [],
+    "error": "HTTP 403",
+    "stale": false
+  },
+  {
+    "sourceId": "undp-careers-burkina",
+    "name": "UNDP Jobs Burkina Faso",
+    "url": "https://estm.fa.em2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1/requisitions?keyword=Burkina",
+    "type": "organization",
+    "collection": "manual_only",
+    "notes": "Source officielle PNUD/UNDP, souvent dynamique.",
+    "priority": 2,
+    "updatedAt": "2026-06-16T16:53:18.441Z",
+    "jobs": []
+  },
+  {
+    "sourceId": "unicef-careers-burkina",
+    "name": "UNICEF Careers Burkina Faso",
+    "url": "https://jobs.unicef.org/en-us/search/?search-keyword=Burkina%20Faso",
+    "type": "organization",
+    "collection": "manual_only",
+    "notes": "Source officielle UNICEF. Utiliser comme verification des offres UNICEF.",
+    "priority": 2,
+    "updatedAt": "2026-06-16T16:53:16.399Z",
+    "jobs": []
+  },
+  {
+    "sourceId": "unv-opportunities",
+    "name": "UNV Opportunities",
+    "url": "https://app.unv.org/opportunities",
+    "type": "multilateral",
+    "collection": "manual_only",
+    "notes": "Portail officiel des Volontaires des Nations Unies. Utile pour volontariat national et international.",
+    "priority": 2,
+    "updatedAt": "2026-06-16T16:54:00.791Z",
+    "jobs": []
+  },
+  {
+    "sourceId": "upwork-remote",
+    "name": "Upwork Remote Jobs",
+    "url": "https://www.upwork.com/nx/jobs/search/",
+    "type": "freelance_platform",
+    "collection": "manual_only",
+    "notes": "Plateforme mondiale de freelance. Bonne porte d'entree pour consultance, design, redaction, support et developpement.",
+    "priority": 2,
+    "updatedAt": "2026-06-16T16:54:55.037Z",
+    "jobs": [],
+    "error": "HTTP 403",
+    "stale": false
+  },
+  {
+    "sourceId": "who-careers",
+    "name": "WHO Careers",
+    "url": "https://careers.who.int/careersection/ex/jobsearch.ftl",
+    "type": "multilateral",
+    "collection": "manual_only",
+    "notes": "Portail officiel OMS/WHO. Important pour sante publique, consultance et coordination de projets.",
+    "priority": 2,
+    "updatedAt": "2026-06-16T16:54:01.537Z",
+    "jobs": []
+  },
+  {
+    "sourceId": "action-contre-la-faim-careers",
+    "name": "Action Contre la Faim Careers",
+    "url": "https://recrutement.actioncontrelafaim.org/",
+    "type": "organization",
+    "collection": "manual_only",
+    "notes": "Source officielle ACF.",
+    "priority": 3,
+    "updatedAt": "2026-06-16T16:53:35.215Z",
+    "jobs": []
+  },
+  {
+    "sourceId": "afdb-careers",
+    "name": "African Development Bank Careers",
+    "url": "https://www.afdb.org/en/about-us/careers/current-vacancies",
+    "type": "multilateral",
+    "collection": "manual_only",
+    "notes": "Banque Africaine de Developpement. Utile pour postes experts, projets et consultance regionale.",
+    "priority": 3,
+    "updatedAt": "2026-06-16T16:54:27.542Z",
+    "jobs": [],
+    "error": "fetch failed",
+    "stale": false
+  },
+  {
+    "sourceId": "crs-careers",
+    "name": "Catholic Relief Services Careers",
+    "url": "https://www.crs.org/about/careers",
+    "type": "organization",
+    "collection": "manual_only",
+    "notes": "Source officielle CRS.",
+    "priority": 3,
+    "updatedAt": "2026-06-16T16:53:59.826Z",
+    "jobs": [],
+    "error": "fetch failed",
+    "stale": false
+  },
+  {
+    "sourceId": "drc-careers",
+    "name": "DRC Careers",
+    "url": "https://drc.ngo/about-us/careers/vacancies/",
+    "type": "organization",
+    "collection": "manual_only",
+    "notes": "Danish Refugee Council. Source officielle de verification.",
+    "priority": 3,
+    "updatedAt": "2026-06-16T16:53:32.653Z",
+    "jobs": []
+  },
+  {
+    "sourceId": "fhi360-careers",
+    "name": "FHI 360 Careers",
+    "url": "https://www.fhi360.org/careers/",
+    "type": "organization",
+    "collection": "manual_only",
+    "notes": "Source officielle FHI 360, complement pour offres sante/projets.",
+    "priority": 3,
+    "updatedAt": "2026-06-16T16:53:38.866Z",
+    "jobs": []
+  },
+  {
+    "sourceId": "fiverr-freelance",
+    "name": "Fiverr Freelance",
+    "url": "https://www.fiverr.com/categories/programming-tech",
+    "type": "freelance_platform",
+    "collection": "manual_only",
+    "notes": "Plateforme freelance utile pour services numeriques et missions courtes. Profil et reputation a construire proprement.",
+    "priority": 3,
+    "updatedAt": "2026-06-16T16:54:55.702Z",
+    "jobs": [],
+    "error": "HTTP 403",
+    "stale": false
+  },
+  {
+    "sourceId": "giz-careers",
+    "name": "GIZ Careers",
+    "url": "https://jobs.giz.de/",
+    "type": "organization",
+    "collection": "manual_only",
+    "notes": "Portail officiel GIZ. Utile pour cooperation, gouvernance, climat et missions d'expertise.",
+    "priority": 3,
+    "updatedAt": "2026-06-16T16:54:39.520Z",
+    "jobs": []
+  },
+  {
+    "sourceId": "humanity-inclusion-careers",
+    "name": "Humanity & Inclusion Careers",
+    "url": "https://www.hi.org/en/jobs",
+    "type": "organization",
+    "collection": "manual_only",
+    "notes": "Source officielle HI / Handicap International.",
+    "priority": 3,
+    "updatedAt": "2026-06-16T16:53:36.653Z",
+    "jobs": []
+  },
+  {
+    "sourceId": "iucn-careers-burkina",
+    "name": "IUCN Careers Burkina Faso",
+    "url": "https://www.iucn.org/about/jobs",
+    "type": "organization",
+    "collection": "manual_only",
+    "notes": "Verification manuelle des offres environnement et conservation.",
+    "priority": 3,
+    "updatedAt": "2026-06-16T16:53:21.027Z",
+    "jobs": []
+  },
+  {
+    "sourceId": "nrc-careers",
+    "name": "NRC Careers",
+    "url": "https://www.nrc.no/jobs/",
+    "type": "organization",
+    "collection": "manual_only",
+    "notes": "Norwegian Refugee Council. Verifier les postes Burkina cites par UNjobs.",
+    "priority": 3,
+    "updatedAt": "2026-06-16T16:53:31.643Z",
+    "jobs": [],
+    "error": "fetch failed",
+    "stale": false
+  },
+  {
+    "sourceId": "plan-international-careers",
+    "name": "Plan International Careers",
+    "url": "https://jobs.plan-international.org/",
+    "type": "organization",
+    "collection": "manual_only",
+    "notes": "Source officielle pour offres Plan International.",
+    "priority": 3,
+    "updatedAt": "2026-06-16T16:53:33.617Z",
+    "jobs": []
+  },
+  {
+    "sourceId": "remoteok-jobs",
+    "name": "Remote OK",
+    "url": "https://remoteok.com/",
+    "type": "remote_board",
+    "collection": "manual_only",
+    "notes": "Tableau mondial de travail a distance. Rechercher remote, support, engineering, design ou operations.",
+    "priority": 3,
+    "updatedAt": "2026-06-16T16:54:56.049Z",
+    "jobs": []
+  },
+  {
+    "sourceId": "save-children-careers",
+    "name": "Save the Children Careers",
+    "url": "https://www.savethechildren.net/careers",
+    "type": "organization",
+    "collection": "manual_only",
+    "notes": "Source officielle Save the Children.",
+    "priority": 3,
+    "updatedAt": "2026-06-16T16:53:34.642Z",
+    "jobs": []
+  },
+  {
+    "sourceId": "weworkremotely-jobs",
+    "name": "We Work Remotely",
+    "url": "https://weworkremotely.com/remote-jobs/search?term=africa",
+    "type": "remote_board",
+    "collection": "manual_only",
+    "notes": "Site reconnu pour travail a distance. Les mots utiles sont remote, customer support, operations, product et africa.",
+    "priority": 3,
+    "updatedAt": "2026-06-16T16:54:56.361Z",
+    "jobs": [],
+    "error": "HTTP 403",
+    "stale": false
+  },
+  {
+    "sourceId": "world-bank-careers",
+    "name": "World Bank Group Careers",
+    "url": "https://worldbankgroup.csod.com/ux/ats/careersite/1/home",
+    "type": "multilateral",
+    "collection": "manual_only",
+    "notes": "Portail officiel Banque mondiale. A suivre pour projets, operations, data et consultance.",
+    "priority": 3,
+    "updatedAt": "2026-06-16T16:54:38.173Z",
+    "jobs": [],
+    "error": "fetch failed",
+    "stale": false
+  },
+  {
+    "sourceId": "world-vision-careers",
+    "name": "World Vision Careers",
+    "url": "https://www.wvi.org/careers",
+    "type": "organization",
+    "collection": "manual_only",
+    "notes": "Source officielle World Vision.",
+    "priority": 3,
+    "updatedAt": "2026-06-16T16:53:49.247Z",
+    "jobs": [],
+    "error": "fetch failed",
+    "stale": false
+  }
+]

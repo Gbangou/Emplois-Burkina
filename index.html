@@ -62,74 +62,135 @@
     <main id="top">
       <section class="portal-hero">
         <div class="portal-hero-inner">
-          <div class="hero-cta-row" aria-label="Actions principales">
-            <a href="#alertes">Candidat : recevoir les alertes</a>
-            <a href="annonceurs.html">Recruteur : publier une annonce</a>
-          </div>
-          <div class="hero-copy">
-            <p class="eyebrow">Moteur emploi pour tous au Burkina Faso</p>
-            <h1>Trouvez un travail formel ou informel parmi <span id="heroJobCount">0</span> opportunites suivies.</h1>
-            <p class="lead">
-              Emploi bureau, concours, stages, chantiers, commerce, ONG,
-              artisans, chauffeurs, macons, soudeurs et missions journalieres :
-              JobFaso classe les annonces avec des mots simples et des sources
-              verifiees.
-            </p>
-          </div>
+          <div class="hero-surface">
+            <div class="hero-stage">
+              <div class="hero-content">
+                <div class="hero-cta-row" aria-label="Actions principales">
+                  <a href="#alertes">Candidat : recevoir les alertes</a>
+                  <a href="annonceurs.html">Recruteur : publier une annonce</a>
+                </div>
+                <div class="hero-copy">
+                  <p class="eyebrow">Moteur emploi pour tous au Burkina Faso</p>
+                  <div class="hero-proofline" aria-label="Points forts">
+                    <span>Sources suivies</span>
+                    <span>Dates plus lisibles</span>
+                    <span>Recherche simple</span>
+                  </div>
+                  <h1>Trouvez un travail formel ou informel plus rapidement.</h1>
+                  <p class="lead">
+                    Emploi bureau, concours, stages, chantiers, commerce, ONG,
+                    artisans, chauffeurs, macons, soudeurs et missions
+                    journalieres : JobFaso classe les annonces avec des mots
+                    simples et des sources verifiees.
+                  </p>
+                  <div class="hero-metrics" aria-label="Indicateurs de recherche">
+                    <article>
+                      <strong id="heroJobCount">0</strong>
+                      <span>opportunites suivies</span>
+                    </article>
+                    <article>
+                      <strong id="heroTrustedCount">0</strong>
+                      <span>sources verifiees</span>
+                    </article>
+                    <article>
+                      <strong>Simple</strong>
+                      <span>recherche par metier, ville ou domaine</span>
+                    </article>
+                  </div>
+                </div>
+                <div class="hero-quick-actions">
+                  <a href="jobs.html">Toutes les offres</a>
+                  <a href="jobs.html?category=Metiers%20terrain%20et%20informels">Metiers informels</a>
+                  <a class="hero-quick-accent" href="#international-careers">ONU / Consultance</a>
+                  <a href="annonceurs.html">Publier une offre</a>
+                  <a href="#alertes">Alerte WhatsApp</a>
+                  <a href="#monetisation">Devenir sponsor</a>
+                </div>
+              </div>
+              <aside class="hero-visual" aria-label="Equipe africaine en reunion professionnelle">
+                <div class="hero-visual-media"></div>
+                <div class="hero-visual-overlay" aria-hidden="true">
+                  <article>
+                    <strong>Local</strong>
+                    <span>Bureau, concours, terrain</span>
+                  </article>
+                  <article>
+                    <strong>International</strong>
+                    <span>ONU, consultance, ONG</span>
+                  </article>
+                  <article>
+                    <strong>Clair</strong>
+                    <span>Source et date mieux exposees</span>
+                  </article>
+                </div>
+                <div class="hero-visual-copy">
+                  <p class="eyebrow">Recherche plus claire</p>
+                  <strong>Des offres formelles, informelles et internationales dans une seule entree.</strong>
+                  <span>Reperez vite bureau, terrain, ONU, consultance et teletravail avec un parcours de recherche plus net.</span>
+                </div>
+              </aside>
+            </div>
 
-          <form class="mega-search" id="quickSearch">
-            <label>
-              <span>Que recherchez-vous ?</span>
-              <input
-                id="searchInput"
-                type="search"
-                placeholder="Ex: macon, chauffeur, vendeuse, ONG, concours..."
-                autocomplete="off"
-              />
-            </label>
-            <label>
-              <span>Region</span>
-              <select id="cityFilter">
-                <option value="">Toutes les regions</option>
-                <option>Ouagadougou</option>
-                <option>Bobo-Dioulasso</option>
-                <option>Bagassi</option>
-                <option>Koudougou</option>
-                <option>Ouahigouya</option>
-                <option>Teletravail</option>
-                <option>Burkina Faso</option>
-              </select>
-            </label>
-            <label>
-              <span>Domaine</span>
-              <select id="typeFilter">
-                <option value="">Tous les domaines</option>
-                <option>Bureau</option>
-                <option>ONG</option>
-                <option>Concours</option>
-                <option>Stage</option>
-                <option>Metiers terrain et informels</option>
-                <option>ONU / Consultance</option>
-                <option>BTP et chantier</option>
-                <option>Technique et maintenance</option>
-                <option>Transport et logistique</option>
-                <option>Commerce et vente</option>
-                <option>Finance et administration</option>
-                <option>Sante</option>
-                <option>CDD</option>
-                <option>CDI</option>
-              </select>
-            </label>
-            <button type="submit">Rechercher</button>
-          </form>
-
-          <div class="hero-quick-actions">
-            <a href="jobs.html">Toutes les offres</a>
-            <a href="jobs.html?category=Metiers%20terrain%20et%20informels">Metiers informels</a>
-            <a class="hero-quick-accent" href="#international-careers">ONU / Consultance</a>
-            <a href="annonceurs.html">Publier une offre</a>
-            <a href="#alertes">Alerte WhatsApp</a>
-            <a href="#monetisation">Devenir sponsor</a>
+            <div class="search-surface-head">
+              <div>
+                <p class="eyebrow">Recherche principale</p>
+                <h2>Entrez par metier, ville ou type d'offre</h2>
+              </div>
+              <p>Comme sur les meilleurs job boards, l'entree principale reste simple, puis les filtres affinent le resultat.</p>
+            </div>
+            <form class="mega-search" id="quickSearch">
+              <label>
+                <span>Que recherchez-vous ?</span>
+                <input
+                  id="searchInput"
+                  type="search"
+                  placeholder="Ex: macon, chauffeur, vendeuse, ONG, concours..."
+                  autocomplete="off"
+                />
+              </label>
+              <label>
+                <span>Region</span>
+                <select id="cityFilter">
+                  <option value="">Toutes les regions</option>
+                  <option>Ouagadougou</option>
+                  <option>Bobo-Dioulasso</option>
+                  <option>Bagassi</option>
+                  <option>Koudougou</option>
+                  <option>Ouahigouya</option>
+                  <option>Teletravail</option>
+                  <option>Burkina Faso</option>
+                </select>
+              </label>
+              <label>
+                <span>Domaine</span>
+                <select id="typeFilter">
+                  <option value="">Tous les domaines</option>
+                  <option>Bureau</option>
+                  <option>ONG</option>
+                  <option>Concours</option>
+                  <option>Stage</option>
+                  <option>Metiers terrain et informels</option>
+                  <option>ONU / Consultance</option>
+                  <option>BTP et chantier</option>
+                  <option>Technique et maintenance</option>
+                  <option>Transport et logistique</option>
+                  <option>Commerce et vente</option>
+                  <option>Finance et administration</option>
+                  <option>Sante</option>
+                  <option>CDD</option>
+                  <option>CDI</option>
+                </select>
+              </label>
+              <button type="submit">Rechercher</button>
+            </form>
+            <div class="search-hints" aria-label="Suggestions rapides">
+              <span>Suggestions :</span>
+              <button class="search-chip" type="button" data-search-query="chauffeur">Chauffeur</button>
+              <button class="search-chip" type="button" data-search-query="comptable">Comptable</button>
+              <button class="search-chip" type="button" data-search-query="chantier" data-search-type="Metiers terrain et informels">Chantier</button>
+              <button class="search-chip" type="button" data-search-query="ONU" data-search-type="ONU / Consultance">ONU / Consultance</button>
+              <button class="search-chip" type="button" data-search-query="teletravail" data-search-city="Teletravail">Teletravail</button>
+            </div>
           </div>
         </div>
       </section>
@@ -178,6 +239,21 @@
         </article>
       </section>
 
+      <section class="trust-strip">
+        <article>
+          <strong>Entree plus nette</strong>
+          <span>Le premier ecran se concentre sur la recherche, la lisibilite et la confiance.</span>
+        </article>
+        <article>
+          <strong>Sources distinguees</strong>
+          <span>JobFaso separe mieux les liens officiels, les sources suivies et la veille humaine.</span>
+        </article>
+        <article>
+          <strong>Dates mieux assumees</strong>
+          <span>Une date n'est affichee comme verifiee que si elle est clairement lue sur la source.</span>
+        </article>
+      </section>
+
       <section class="portal-section" id="employeurs">
         <div class="portal-heading">
           <div>
@@ -186,10 +262,33 @@
           </div>
           <a class="secondary-link" href="annonceurs.html">Afficher votre logo</a>
         </div>
-        <div class="carousel-shell">
-          <button class="carousel-arrow" type="button" data-carousel-prev="employerCarousel" aria-label="Precedent">‹</button>
-          <div class="logo-carousel" id="employerCarousel" aria-live="polite"></div>
-          <button class="carousel-arrow" type="button" data-carousel-next="employerCarousel" aria-label="Suivant">›</button>
+        <div class="portal-split-band">
+          <aside class="section-aside-card">
+            <p class="eyebrow">Visibilite recruteur</p>
+            <h3>Des logos mieux presents, dans un environnement plus credible</h3>
+            <p>
+              Les entreprises, ONG et sources actives profitent d'une presentation
+              plus nette pour inspirer confiance sans transformer la page en
+              simple galerie.
+            </p>
+            <div class="aside-bullets">
+              <span>logos lisibles</span>
+              <span>ordre plus stable</span>
+              <span>clic vers la source</span>
+            </div>
+            <a class="secondary-link" href="annonceurs.html">Mettre votre structure en avant</a>
+          </aside>
+          <div class="carousel-panel">
+            <div class="carousel-panel-head">
+              <strong>Structures visibles</strong>
+              <span>Sources locales, ONG et recruteurs les plus actifs</span>
+            </div>
+            <div class="carousel-shell">
+              <button class="carousel-arrow" type="button" data-carousel-prev="employerCarousel" aria-label="Precedent">‹</button>
+              <div class="logo-carousel" id="employerCarousel" aria-live="polite"></div>
+              <button class="carousel-arrow" type="button" data-carousel-next="employerCarousel" aria-label="Suivant">›</button>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -201,7 +300,61 @@
           </div>
           <a class="secondary-link" href="jobs.html?focus=onu-consultance">Rechercher ce type d'offres</a>
         </div>
-        <div class="strategic-source-sections" id="strategicSourceSections"></div>
+        <div class="strategic-intro-grid" aria-label="Acces rapides internationaux">
+          <article>
+            <strong>Organismes onusiens</strong>
+            <span>UNICEF, PNUD, FAO, WFP, UNV et autres portes d'entree officielles.</span>
+          </article>
+          <article>
+            <strong>Consultance</strong>
+            <span>Missions d'expertise, evaluation, assistance technique et contrats courts.</span>
+          </article>
+          <article>
+            <strong>Travail a distance</strong>
+            <span>Remote, home-based, freelance et opportunites digitales accessibles depuis le Burkina Faso.</span>
+          </article>
+        </div>
+        <div class="strategic-source-sections" id="strategicSourceSections">
+          <section class="strategic-source-section strategic-source-band" id="international-careers">
+            <div class="strategic-source-lead">
+              <div>
+                <p class="eyebrow">Carriere internationale</p>
+                <h3>Organisations internationales et systeme des Nations Unies</h3>
+                <p class="muted">References officielles et suivies pour les Burkinabe qui veulent candidater sur des postes ONU, ONG internationales, volontariat ou consultance.</p>
+              </div>
+              <div class="strategic-source-meta">
+                <span class="pill">Liens reels</span>
+                <span class="pill">Verification visible</span>
+              </div>
+            </div>
+            <div class="source-directory-grid spotlight-grid">
+              <article class="source-card">
+                <div>
+                  <p class="eyebrow">Plateforme internationale</p>
+                  <h3>UNjobs Burkina Faso</h3>
+                  <p class="muted">Veille specialisee sur les offres ONU, ONG et developpement liees au Burkina Faso.</p>
+                </div>
+                <a class="secondary-link" href="https://unjobs.org/duty_stations/burkina-faso" target="_blank" rel="noopener">Ouvrir la source</a>
+              </article>
+              <article class="source-card">
+                <div>
+                  <p class="eyebrow">Source officielle</p>
+                  <h3>UNICEF Careers Burkina Faso</h3>
+                  <p class="muted">Portail officiel UNICEF pour les recrutements, consultances et opportunites pays.</p>
+                </div>
+                <a class="secondary-link" href="https://jobs.unicef.org/en-us/search/?search-keyword=Burkina%20Faso" target="_blank" rel="noopener">Ouvrir la reference officielle</a>
+              </article>
+              <article class="source-card">
+                <div>
+                  <p class="eyebrow">Source humanitaire</p>
+                  <h3>ReliefWeb Burkina Faso</h3>
+                  <p class="muted">Annonces humanitaires et developpement avec filtres pays et liens de candidature.</p>
+                </div>
+                <a class="secondary-link" href="https://reliefweb.int/jobs?advanced-search=%28C162%29" target="_blank" rel="noopener">Ouvrir la source</a>
+              </article>
+            </div>
+          </section>
+        </div>
       </section>
 
       <section class="portal-section featured-band">
@@ -212,10 +365,32 @@
           </div>
           <a class="secondary-link" href="grille-tarifaire.html" data-track="sponsor_click" data-track-label="featured_jobs_header">Sponsoriser une offre</a>
         </div>
-        <div class="carousel-shell">
-          <button class="carousel-arrow" type="button" data-carousel-prev="featuredJobsCarousel" aria-label="Precedent">‹</button>
-          <div class="featured-carousel" id="featuredJobsCarousel"></div>
-          <button class="carousel-arrow" type="button" data-carousel-next="featuredJobsCarousel" aria-label="Suivant">›</button>
+        <div class="portal-split-band">
+          <aside class="section-aside-card featured-aside">
+            <p class="eyebrow">Mise en avant</p>
+            <h3>Des offres presentes comme des opportunites prioritaires</h3>
+            <p>
+              Cette zone met en avant les annonces qui meritent une attention
+              immediate, avec un rendu plus editorial et plus stable dans le temps.
+            </p>
+            <div class="aside-bullets">
+              <span>deadline plus visible</span>
+              <span>source mieux exposee</span>
+              <span>lecture plus rapide</span>
+            </div>
+            <a class="secondary-link" href="grille-tarifaire.html">Voir les options de mise en avant</a>
+          </aside>
+          <div class="carousel-panel">
+            <div class="carousel-panel-head">
+              <strong>Selection prioritaire</strong>
+              <span>Les offres les plus utiles et les mieux documentees du moment</span>
+            </div>
+            <div class="carousel-shell">
+              <button class="carousel-arrow" type="button" data-carousel-prev="featuredJobsCarousel" aria-label="Precedent">‹</button>
+              <div class="featured-carousel" id="featuredJobsCarousel"></div>
+              <button class="carousel-arrow" type="button" data-carousel-next="featuredJobsCarousel" aria-label="Suivant">›</button>
+            </div>
+          </div>
         </div>
       </section>
 

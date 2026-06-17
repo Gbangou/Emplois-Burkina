@@ -97,6 +97,22 @@ const blockedTitlePatterns = [
   /^vacancytitle:/,
 ];
 
+const nonEmploymentTitlePatterns = [
+  /\bbourse(s)?\b/,
+  /\bscholarship(s)?\b/,
+  /\bfellowship(s)?\b/,
+  /formation certifiante/,
+  /\bbootcamp\b/,
+  /\bmasterclass\b/,
+  /\bwebinaire\b/,
+  /\bwebinar\b/,
+  /\batelier\b/,
+  /\bconference\b/,
+  /\bconf[ée]rence\b/,
+  /\bcours\b/,
+  /\bcertification\b/,
+];
+
 const nonBurkinaCountryPatterns = [
   /\/burundi\//,
   /\/centrafrique\//,
@@ -115,7 +131,7 @@ const nonBurkinaCountryPatterns = [
 ];
 
 const nonBurkinaTextPattern =
-  /benin|burundi|cameroun|central african republic|centrafrique|congo|cote d'ivoire|cote-d-ivoire|france|gabon|guinee|mali|mauritanie|niger|nigeria|rdc|republique centrafricaine|senegal|tchad|togo/;
+  /benin|burundi|cameroun|central african republic|centrafrique|congo|cote d'ivoire|cote-d-ivoire|france|gabon|ghana|guinee|liberia|mali|mauritanie|niger|nigeria|rdc|republique centrafricaine|senegal|sierra leone|tchad|togo/;
 
 const categoryRules = [
   {
@@ -349,6 +365,30 @@ function extractClosingDate(item) {
   return date.toISOString().slice(0, 10);
 }
 
+function extractOpeningDate(item) {
+  const existing = parseDateValue(item.openingDate);
+  if (existing) return existing;
+
+  const text = decodeHtml(`${item.title || ""} ${item.deadline || ""} ${item.excerpt || ""}`);
+  return firstDateAfter(text, [
+    /\b(?:lundi|mardi|mercredi|jeudi|vendredi|samedi|dimanche)\s+([0-9]{1,2}(?:er)?\s+[a-zA-ZÀ-ÿ.]+\s+[0-9]{4})/i,
+    /offre\s+d[eé]pos[eé]e?\s+([0-9]{1,2}(?:er)?\s+[a-zA-ZÀ-ÿ.]+\s+[0-9]{4})/i,
+    /date\s+(?:de\s+)?(?:publication|depot|d[eé]p[oô]t|ouverture)\s*:?\s*([0-9]{1,2}(?:er)?[\s/-]+[a-zA-ZÀ-ÿ.]+[\s/-]+[0-9]{2,4})/i,
+    /(?:published|posted|date\s+posted)\s+(?:on\s+)?\s*:?\s*([0-9]{1,2}(?:er)?[\s/-]+[a-zA-ZÀ-ÿ.]+[\s/-]+[0-9]{2,4})/i,
+    /publi[eé]\s+le\s+([0-9]{1,2}(?:er)?[\s/-]+[a-zA-ZÀ-ÿ.]+[\s/-]+[0-9]{2,4})/i,
+    /mis(?:e)?\s+en\s+ligne\s+le\s+([0-9]{1,2}(?:er)?[\s/-]+[a-zA-ZÀ-ÿ.]+[\s/-]+[0-9]{2,4})/i,
+    /([0-9]{1,2}(?:er)?\s+[a-zA-ZÀ-ÿ.]+\s+[0-9]{4})\s*,?\s+par\b/i,
+  ]);
+}
+
+function todayIso() {
+  return new Date().toISOString().slice(0, 10);
+}
+
+function isIsoBefore(left, right) {
+  return Boolean(left && right && left < right);
+}
+
 function dateLabel(value) {
   const date = validIsoDate(value);
   if (!date) return "";
@@ -360,15 +400,22 @@ function dateLabel(value) {
 }
 
 function normalizeDateFields(item) {
-  const openingDate = parseDateValue(item.openingDate) || validIsoDate(String(item.collectedAt || "").slice(0, 10));
+  const openingDate = extractOpeningDate(item);
   const closingDate = extractClosingDate(item);
+  const today = todayIso();
   const inconsistentDates = Boolean(openingDate && closingDate && closingDate < openingDate);
+  const expired = Boolean(closingDate && isIsoBefore(closingDate, today));
+  const stalePosting = Boolean(openingDate && !closingDate && openingDate < `${Number(today.slice(0, 4)) - 1}-01-01`);
 
   return {
     openingDate,
     closingDate,
+    openingDateConfirmed: Boolean(openingDate),
+    closingDateConfirmed: Boolean(closingDate),
     deadline: closingDate ? dateLabel(closingDate) : item.deadline || "A verifier",
     inconsistentDates,
+    expired,
+    stalePosting,
   };
 }
 
@@ -414,15 +461,26 @@ function inferTags(item, category, city) {
 }
 
 function inferCity(item) {
-  const text = normalize(`${item.title} ${item.city} ${item.excerpt}`);
+  const titleText = normalize(`${item.title} ${item.city}`);
+  const excerptText = decodeHtml(item.excerpt || "");
+  const normalizedExcerpt = normalize(excerptText);
   const sourceCity = normalize(item.city);
+  const explicitLocationMatch = excerptText.match(
+    /(?:\bLieu\b|\bPays\b|\bCountry\b|\bDuty\s*station\b|📍)\s*[:\-]?\s*([A-Za-zÀ-ÿ' -]{3,80})/i
+  );
+  const explicitLocation = normalize(explicitLocationMatch?.[1] || "");
 
-  if (/bagassi/.test(text)) return "Bagassi";
-  if (/bobo/.test(text)) return "Bobo-Dioulasso";
-  if (/koudougou/.test(text)) return "Koudougou";
-  if (/ouahigouya/.test(text)) return "Ouahigouya";
-  if (/teletravail|remote/.test(text)) return "Teletravail";
-  if (/ouaga|ouagadougou/.test(text)) return "Ouagadougou";
+  if (/bagassi/.test(titleText) || /bagassi/.test(explicitLocation)) return "Bagassi";
+  if (/bobo/.test(titleText) || /bobo/.test(explicitLocation)) return "Bobo-Dioulasso";
+  if (/koudougou/.test(titleText) || /koudougou/.test(explicitLocation)) return "Koudougou";
+  if (/ouahigouya/.test(titleText) || /ouahigouya/.test(explicitLocation)) return "Ouahigouya";
+  if (/teletravail|remote/.test(titleText) || /teletravail|remote/.test(explicitLocation)) return "Teletravail";
+  if (/ouaga|ouagadougou/.test(titleText) || /ouaga|ouagadougou/.test(explicitLocation)) return "Ouagadougou";
+  if (/burkina faso/.test(titleText) || /burkina faso/.test(explicitLocation) || /burkina faso/.test(normalizedExcerpt)) {
+    return "Burkina Faso";
+  }
+  if (/ghana/.test(sourceCity) || /ghana/.test(explicitLocation)) return "Ghana";
+  if (/senegal/.test(sourceCity) || /senegal/.test(explicitLocation)) return "Senegal";
   if (/burkina faso/.test(sourceCity)) return "Burkina Faso";
   if (!sourceCity || /americaines|africaines|europeennes|membres|plusieurs secteurs/.test(sourceCity)) return "Burkina Faso";
 
@@ -504,17 +562,41 @@ function isLikelyJobTitle(item) {
   return item.sourceId !== "rmo-burkina";
 }
 
+function isNonEmploymentOpportunity(item) {
+  const title = normalize(decodeHtml(item.title));
+  const excerpt = normalize(decodeHtml(item.excerpt || ""));
+  const text = `${title} ${excerpt}`;
+
+  if (nonEmploymentTitlePatterns.some((pattern) => pattern.test(title))) return true;
+  if (/appel a candidatures/.test(text) && /formation|bourse|scholarship|fellowship|promotion/.test(text)) return true;
+  if (/programme de bourses|immigration ?& ?bourses/.test(text)) return true;
+
+  return false;
+}
+
 function curate(items) {
   const seen = new Set();
   const softSeen = new Set();
+  const blockedSoftKeys = new Set();
   const curated = [];
+  const rankedItems = items
+    .slice()
+    .sort((a, b) => {
+      const score = (item) =>
+        (item.detailExtractedAt ? 1000 : 0) +
+        (parseDateValue(item.openingDate) ? 220 : 0) +
+        (parseDateValue(item.closingDate) || parseDateValue(item.deadline) ? 220 : 0) +
+        Math.min(String(item.excerpt || "").length, 900);
+      return score(b) - score(a);
+    });
 
-  for (const item of items) {
+  for (const item of rankedItems) {
     if (!item.title || !item.url || isLikelyCategoryPage(item)) continue;
     if (isOutsideBurkina(item)) continue;
     if (normalize(item.title).length < 10) continue;
     if (item.title.includes("�")) continue;
     if (!isLikelyJobTitle(item)) continue;
+    if (isNonEmploymentOpportunity(item)) continue;
     if (seen.has(item.id)) continue;
 
     const category = inferCategory(item);
@@ -522,9 +604,19 @@ function curate(items) {
     const type = inferType(item, category);
     const softKey = normalize(`${item.title} ${item.company || item.sourceName} ${city}`).replace(/[^a-z0-9]+/g, "");
     const dateFields = normalizeDateFields(item);
+    const excerpt = decodeHtml(item.excerpt || "").slice(0, 900);
+    const hasMeaningfulContent = excerpt.length >= 120 || dateFields.openingDateConfirmed || dateFields.closingDateConfirmed;
 
+    if (blockedSoftKeys.has(softKey)) continue;
     if (softSeen.has(softKey)) continue;
-    if (dateFields.inconsistentDates) continue;
+    if (dateFields.inconsistentDates || dateFields.expired || dateFields.stalePosting) {
+      blockedSoftKeys.add(softKey);
+      continue;
+    }
+    if (!hasMeaningfulContent) {
+      blockedSoftKeys.add(softKey);
+      continue;
+    }
 
     seen.add(item.id);
     softSeen.add(softKey);
@@ -540,6 +632,8 @@ function curate(items) {
       deadline: dateFields.deadline,
       openingDate: dateFields.openingDate,
       closingDate: dateFields.closingDate,
+      openingDateConfirmed: dateFields.openingDateConfirmed,
+      closingDateConfirmed: dateFields.closingDateConfirmed,
       inconsistentDates: dateFields.inconsistentDates,
       sourceName: item.sourceName,
       sourceUrl: item.url,
@@ -550,7 +644,7 @@ function curate(items) {
       confidenceScore: item.excerpt ? 70 : 45,
       tags: inferTags(item, category, city),
       status: "needs_review",
-      excerpt: decodeHtml(item.excerpt || "").slice(0, 900),
+      excerpt,
       collectedAt: item.collectedAt,
     });
   }

@@ -64,6 +64,7 @@ const fallbackJobs = [
 let jobs = [];
 let sources = [];
 let employerLogos = [];
+let internationalFeeds = [];
 let sourceIndex = new Map();
 let activeCategory = "";
 let activeJobId = "";
@@ -121,6 +122,7 @@ const profileCarousel = document.querySelector("#profileCarousel");
 const categoryStats = document.querySelector("#categoryStats");
 const regionStats = document.querySelector("#regionStats");
 const heroJobCount = document.querySelector("#heroJobCount");
+const heroTrustedCount = document.querySelector("#heroTrustedCount");
 
 const demoProfiles = [
   {
@@ -215,6 +217,7 @@ const SOURCE_SPOTLIGHTS = [
     description:
       "Portes d'entree officielles et verifiees pour les agences onusiennes, ONG internationales, bailleurs et structures de developpement ou les Burkinabe peuvent postuler.",
     segments: ["international_onu"],
+    sourceTypes: ["multilateral", "organization", "ngo"],
     keywords: ["Burkina Faso", "Ouagadougou", "national", "programme", "consultant", "volunteer"],
     actionHref: "jobs.html?focus=onu-consultance",
     actionLabel: "Voir les offres ONG suivies",
@@ -238,7 +241,7 @@ const SOURCE_SPOTLIGHTS = [
         focus: "onu-consultance",
       },
     ],
-    limit: 24,
+    limit: 12,
   },
   {
     id: "consulting_remote",
@@ -248,6 +251,7 @@ const SOURCE_SPOTLIGHTS = [
     description:
       "Sources serieuses pour missions de consultance, teletravail, freelance et opportunites internationales accessibles depuis le Burkina Faso.",
     segments: ["consulting_remote"],
+    sourceTypes: ["multilateral", "organization", "ngo", "development_marketplace", "freelance_platform", "remote_board"],
     keywords: ["consultant", "consultancy", "remote", "teletravail", "homebased", "freelance"],
     actionHref: "jobs.html?focus=onu-consultance&q=consultant",
     actionLabel: "Lancer une recherche guidee",
@@ -271,7 +275,7 @@ const SOURCE_SPOTLIGHTS = [
         focus: "onu-consultance",
       },
     ],
-    limit: 16,
+    limit: 12,
   },
 ];
 
@@ -340,6 +344,22 @@ function sortSourcesByPriority(list = []) {
   return list
     .slice()
     .sort((a, b) => a.priority - b.priority || a.name.localeCompare(b.name, "fr"));
+}
+
+function getInternationalFeed(sourceId = "") {
+  return internationalFeeds.find((feed) => normalize(feed.sourceId) === normalize(sourceId)) || null;
+}
+
+function sortSpotlightSources(list = []) {
+  return list
+    .slice()
+    .sort((a, b) => {
+      const feedA = getInternationalFeed(a.id);
+      const feedB = getInternationalFeed(b.id);
+      const jobsA = Array.isArray(feedA?.jobs) ? feedA.jobs.length : 0;
+      const jobsB = Array.isArray(feedB?.jobs) ? feedB.jobs.length : 0;
+      return jobsB - jobsA || a.priority - b.priority || a.name.localeCompare(b.name, "fr");
+    });
 }
 
 function getJobSearchableText(job) {
@@ -707,11 +727,13 @@ function renderDeadlineStrip(job) {
 
 function renderTimeline(job, compact = false) {
   const state = deadlineState(job);
+  const openingDateLabel = job.openingDateConfirmed ? "Date d'ouverture verifiee" : "Date d'ouverture";
+  const openingDateValue = formatJobDate(job.openingDate, "Non communiquee par la source");
   return `
     <div class="job-timeline ${compact ? "compact" : ""}">
       <div>
-        <span>Date d'ouverture</span>
-        <strong>${escapeHtml(formatJobDate(job.openingDate))}</strong>
+        <span>${escapeHtml(openingDateLabel)}</span>
+        <strong>${escapeHtml(openingDateValue)}</strong>
       </div>
       <div>
         <span>Date de cloture</span>
@@ -994,9 +1016,9 @@ function applyPortalSearch({ query = "", focus = "", category = "", type = "" })
 function renderTaxonomy(container, entries, baseHref) {
   if (!container) return;
   container.innerHTML = entries.length
-    ? entries
-        .map(
-          ([name, count]) => `
+        ? entries
+            .map(
+              ([name, count]) => `
             <a href="${baseHref}" data-taxonomy="${escapeHtml(name)}">
               <span>${escapeHtml(name)}</span>
               <strong>${count}</strong>
@@ -1007,8 +1029,50 @@ function renderTaxonomy(container, entries, baseHref) {
     : `<p class="muted">Les statistiques seront disponibles apres la prochaine collecte.</p>`;
 }
 
+function initVisualEnhancements() {
+  if (typeof window === "undefined" || !("IntersectionObserver" in window)) return;
+  const selectors = [
+    ".portal-stats article",
+    ".trust-strip article",
+    ".job-card",
+    ".source-card",
+    ".profile-card",
+    ".logo-card",
+  ];
+  const elements = document.querySelectorAll(selectors.join(", "));
+  if (!elements.length) return;
+
+  if (!window.jobFasoRevealObserver) {
+    window.jobFasoRevealObserver = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          entry.target.classList.add("is-visible");
+          window.jobFasoRevealObserver.unobserve(entry.target);
+        }
+      },
+      { rootMargin: "0px 0px -8% 0px", threshold: 0.12 }
+    );
+  }
+
+  elements.forEach((element) => {
+    if (element.dataset.revealBound === "true") return;
+    element.classList.add("reveal-on-scroll");
+    element.dataset.revealBound = "true";
+    const bounds = element.getBoundingClientRect();
+    if (bounds.top < window.innerHeight * 0.92 && bounds.bottom > 0) {
+      element.classList.add("is-visible");
+      return;
+    }
+    window.jobFasoRevealObserver.observe(element);
+  });
+}
+
 function renderPortalWidgets() {
   if (heroJobCount) heroJobCount.textContent = jobs.length || 0;
+  if (heroTrustedCount) {
+    heroTrustedCount.textContent = sources.filter((source) => ["official_link", "review_required"].includes(source.collection)).length || 0;
+  }
 
   if (employerCarousel) {
     const dynamicCards = buildEmployerCardsFromJobs();
@@ -1018,6 +1082,7 @@ function renderPortalWidgets() {
         .map((card) => {
           const useImageLogo = isUsableEmployerLogo(card.logoUrl);
           const count = card.jobs || card.count || 0;
+          const updateLabel = card.updatedAt ? displayDate(card.updatedAt) : "";
           return `
           <a class="logo-card ${useImageLogo ? "has-logo" : "generated-logo"} tone-${brandTone(card.name)}" href="${escapeHtml(card.profileUrl || "#")}" target="_blank" rel="noopener" data-track="employer_logo_click" data-track-label="${escapeHtml(card.name)}"${duplicate ? ` aria-hidden="true" tabindex="-1"` : ""}>
             <span class="logo-visual">
@@ -1028,7 +1093,11 @@ function renderPortalWidgets() {
               </span>
             </span>
             <strong>${escapeHtml(card.name)}</strong>
-            <small>${count ? `${count} offre${count > 1 ? "s" : ""}` : escapeHtml(card.sector || "Recruteur")}</small>
+            <div class="logo-card-meta">
+              <span class="pill">${escapeHtml(card.sector || "Recruteur")}</span>
+              <span class="pill">${count ? `${count} offre${count > 1 ? "s" : ""}` : "Source active"}</span>
+            </div>
+            <small>${escapeHtml(updateLabel ? `Derniere collecte ${updateLabel}` : "Cliquer pour ouvrir la source")}</small>
           </a>
         `;
         })
@@ -1099,6 +1168,8 @@ function renderPortalWidgets() {
       )
       .join("");
   }
+
+  initVisualEnhancements();
 }
 
 function buildEmployerCardsFromJobs() {
@@ -1240,8 +1311,14 @@ function renderJobCard(job, options = {}) {
   const metaPills = [
     displayType ? `<span class="pill">${escapeHtml(displayType)}</span>` : "",
     job.closingDate ? `<span class="pill deadline-pill">Cloture : ${escapeHtml(formatJobDate(job.closingDate))}</span>` : "",
+    job.openingDateConfirmed
+      ? `<span class="pill">Ouverture verifiee</span>`
+      : `<span class="pill">Ouverture a confirmer</span>`,
     hasApplyUrl ? `<span class="pill source-pill">${escapeHtml(sourceDescriptor.badge)}</span>` : "",
   ].join("");
+  const dateNote = job.openingDateConfirmed
+    ? "Date d'ouverture confirmee sur la source."
+    : "Date d'ouverture non communiquee clairement par la source.";
 
   return `
     <article class="job-card ${isActive ? "active" : ""}" data-job-id="${escapeHtml(job.id)}" tabindex="${options.duplicate ? "-1" : "0"}" role="button" aria-label="Voir les details de ${escapeHtml(job.title)}"${duplicateAttrs}>
@@ -1261,7 +1338,7 @@ function renderJobCard(job, options = {}) {
       <div class="tag-row">
         ${(job.tags || []).slice(0, 4).map((tag) => `<span class="pill">${escapeHtml(tag)}</span>`).join("")}
       </div>
-      <p class="reference-note">${escapeHtml(sourceDescriptor.note)}</p>
+      <p class="reference-note">${escapeHtml(dateNote)} ${escapeHtml(sourceDescriptor.note)}</p>
       <div class="job-actions">
         ${
           hasApplyUrl
@@ -1296,6 +1373,7 @@ function renderDetail(job) {
     `Bonjour JobFaso, je veux recevoir les alertes pour: ${job.title} (${job.sourceName || "source"})`
   );
   const sourceDescriptor = getJobSourceDescriptor(job);
+  const openingDateDetail = formatJobDate(job.openingDate, "Non communiquee par la source");
   const sourceLink =
     job.sourceUrl && job.sourceUrl !== "#"
       ? `<a class="nav-action inline-action" href="${escapeHtml(job.sourceUrl)}" target="_blank" rel="noopener" data-track="source_apply_click" data-track-label="${escapeHtml(job.title)}">${escapeHtml(sourceDescriptor.actionLabel)}</a>`
@@ -1316,11 +1394,12 @@ function renderDetail(job) {
       ${renderTimeline(job)}
       <dl class="detail-list">
         <div><dt>Ville</dt><dd>${escapeHtml(job.city || "Burkina Faso")}</dd></div>
-        <div><dt>Date d'ouverture</dt><dd>${escapeHtml(formatJobDate(job.openingDate))}</dd></div>
+        <div><dt>Date d'ouverture</dt><dd>${escapeHtml(openingDateDetail)}</dd></div>
         <div><dt>Date de cloture</dt><dd>${escapeHtml(formatJobDate(job.closingDate, "Consulter la source"))}</dd></div>
         <div><dt>Temps restant</dt><dd>${job.closingDate ? `<span data-countdown="${escapeHtml(job.closingDate)}">${escapeHtml(formatCountdown(job.closingDate))}</span>` : "Consulter la source"}</dd></div>
         <div><dt>Source</dt><dd>${escapeHtml(job.sourceName || "JobFaso")}</dd></div>
         <div><dt>Verification</dt><dd>${escapeHtml(sourceDescriptor.badge)}</dd></div>
+        <div><dt>Statut date</dt><dd>${job.openingDateConfirmed ? "Date d'ouverture confirmee" : "Date d'ouverture non communiquee par la source"}</dd></div>
         <div><dt>Collecte</dt><dd>${escapeHtml(displayDate(job.collectedAt))}</dd></div>
       </dl>
       <div class="tag-row">
@@ -1488,8 +1567,9 @@ function renderJobs() {
     const rangeEnd = Math.min(pageStart + visibleJobs.length, filtered.length);
     const pageLabel = filtered.length ? ` Affichage ${rangeStart}-${rangeEnd}.` : "";
     const datedCount = filtered.filter((job) => job.closingDate).length;
+    const openingConfirmedCount = filtered.filter((job) => job.openingDateConfirmed).length;
     const trustedCount = filtered.filter((job) => ["official_link", "review_required"].includes(getSourceRecord(job.sourceName)?.collection)).length;
-    resultsSummary.textContent = `${filtered.length} ${label} sur ${jobs.length}.${pageLabel} ${datedCount} avec date de cloture confirmee. ${trustedCount} issues de liens officiels ou de sources suivies.`;
+    resultsSummary.textContent = `${filtered.length} ${label} sur ${jobs.length}.${pageLabel} ${openingConfirmedCount} avec date d'ouverture confirmee. ${datedCount} avec date de cloture confirmee. ${trustedCount} issues de liens officiels ou de sources suivies.`;
   }
 
   jobsList.innerHTML = visibleJobs.length
@@ -1501,6 +1581,7 @@ function renderJobs() {
   renderDetail(activeJob);
   renderEmploymentExplorer(activeJob, filtered);
   updateCountdowns();
+  initVisualEnhancements();
 }
 
 function renderSourceDirectory() {
@@ -1547,18 +1628,168 @@ function renderSourceDirectory() {
       )
       .join("");
   }
+  initVisualEnhancements();
+}
+
+function renderInstitutionFeedCard(source) {
+  const descriptor = sourceReferenceDescriptor(source);
+  const feed = getInternationalFeed(source.id);
+  const jobs = Array.isArray(feed?.jobs) ? feed.jobs.slice(0, 10) : [];
+  const animated = jobs.length > 1;
+  const trackMarkup = jobs.length
+    ? [...jobs, ...(animated ? jobs : [])]
+        .map(
+          (job) => {
+            const summaryBits = [job.location, job.contract].filter(Boolean).join(" - ");
+            const dateBits = [
+              job.openingDate ? `Depot: ${formatJobDate(job.openingDate)}` : "",
+              job.closingDate ? `Cloture: ${formatJobDate(job.closingDate)}` : "",
+            ].filter(Boolean);
+
+            return `
+            <a class="institution-feed-item" href="${escapeHtml(job.url)}" target="_blank" rel="noopener">
+              <strong>${escapeHtml(job.title)}</strong>
+              <span>${escapeHtml(summaryBits || source.name)}</span>
+              <small>${escapeHtml(dateBits.join(" | ") || "Dates non lues clairement sur la source")}</small>
+            </a>
+          `;
+          },
+        )
+        .join("")
+    : `<div class="institution-feed-empty">Aucune offre ouverte n'a encore ete detectee automatiquement pour cette institution. Ouvrez la source officielle.</div>`;
+
+  return `
+    <article class="source-card institution-source-card">
+      <div>
+        <p class="eyebrow">${getSourceTypeLabel(source.type)}</p>
+        <h3>${escapeHtml(source.name)}</h3>
+        <p class="muted">${escapeHtml(source.notes || "Source a verifier avant publication.")}</p>
+      </div>
+      <div class="job-meta">
+        <span class="pill">${getCollectionLabel(source.collection)}</span>
+        <span class="pill">${jobs.length} offre${jobs.length > 1 ? "s" : ""}</span>
+      </div>
+      <div class="institution-feed-shell ${animated ? "is-animated" : ""}">
+        <div class="institution-feed-track">
+          ${trackMarkup}
+        </div>
+      </div>
+      <p class="reference-note">${escapeHtml(descriptor.note)}</p>
+      <p class="reference-note">Mise a jour du flux: ${escapeHtml(feed?.updatedAt ? new Date(feed.updatedAt).toLocaleDateString("fr-FR") : "date indisponible")}. Les dates de depot et cloture ne s'affichent que lorsqu'elles sont lues sur la source officielle.</p>
+      <a class="secondary-link" href="${escapeHtml(source.url)}" target="_blank" rel="noopener">${escapeHtml(descriptor.actionLabel)}</a>
+    </article>
+  `;
+}
+
+function renderStrategicSourcePlaceholder(spotlight, message) {
+  const keywordMarkup = spotlight.keywords
+    .map((keyword) => `<span class="pill">${escapeHtml(keyword)}</span>`)
+    .join("");
+  const shortcutMarkup = (spotlight.searchShortcuts || [])
+    .map(
+      (shortcut) => `
+        <button
+          class="strategic-search-card"
+          type="button"
+          data-portal-focus="${escapeHtml(shortcut.focus || "")}"
+          data-portal-query="${escapeHtml(shortcut.query || "")}"
+        >
+          <strong>${escapeHtml(shortcut.label)}</strong>
+          <span>${escapeHtml(shortcut.note)}</span>
+        </button>
+      `
+    )
+    .join("");
+
+  return `
+    <section class="strategic-source-section strategic-source-band" id="${escapeHtml(spotlight.anchor)}">
+      <div class="strategic-source-lead">
+        <div>
+          <p class="eyebrow">${escapeHtml(spotlight.eyebrow)}</p>
+          <h3>${escapeHtml(spotlight.title)}</h3>
+          <p class="muted">${escapeHtml(spotlight.description)}</p>
+        </div>
+        <div class="strategic-source-meta">
+          <span class="pill">Synchronisation</span>
+          <span class="pill">Sources reelles</span>
+        </div>
+      </div>
+      <div class="strategic-search-grid">
+        ${shortcutMarkup}
+      </div>
+      <div class="tag-row keyword-row">${keywordMarkup}</div>
+      <div class="source-directory-grid spotlight-grid">
+        <article class="source-card institution-source-card">
+          <div>
+            <p class="eyebrow">${escapeHtml(spotlight.eyebrow)}</p>
+            <h3>Chargement des references</h3>
+            <p class="muted">${escapeHtml(message)}</p>
+          </div>
+          <div class="job-meta">
+            <span class="pill">Patientez</span>
+            <span class="pill">Verification en cours</span>
+          </div>
+          <div class="institution-feed-shell">
+            <div class="institution-feed-track">
+              <div class="institution-feed-empty">Les liens officiels et les offres detectees s'afficheront ici automatiquement des que la synchronisation est terminee.</div>
+            </div>
+          </div>
+          <p class="reference-note">Vous pouvez deja ouvrir la recherche guidee ou revenir dans quelques secondes.</p>
+          <a class="secondary-link" href="${escapeHtml(spotlight.actionHref)}">${escapeHtml(spotlight.actionLabel)}</a>
+        </article>
+      </div>
+      <div class="strategic-source-actions">
+        <a class="secondary-link" href="${escapeHtml(spotlight.actionHref)}">${escapeHtml(spotlight.actionLabel)}</a>
+        <a class="secondary-link" href="conseils.html">Voir les conseils de candidature</a>
+      </div>
+    </section>
+  `;
 }
 
 function renderStrategicSourceSections() {
   if (!strategicSourceSections) return;
 
   if (!sources.length) {
-    strategicSourceSections.innerHTML = `<p class="muted">Les repertoires internationaux et teletravail seront affiches apres le chargement des sources.</p>`;
+    strategicSourceSections.innerHTML = SOURCE_SPOTLIGHTS
+      .map((spotlight) =>
+        renderStrategicSourcePlaceholder(
+          spotlight,
+          "Les sources internationales sont en cours de chargement. La rubrique reste visible pour eviter tout ecran vide."
+        )
+      )
+      .join("");
+    initVisualEnhancements();
+    return;
+  }
+
+  if (!internationalFeeds.length) {
+    strategicSourceSections.innerHTML = SOURCE_SPOTLIGHTS
+      .map((spotlight) =>
+        renderStrategicSourcePlaceholder(
+          spotlight,
+          "Les flux d'offres internationales sont en cours de synchronisation. Les references officielles seront injectees automatiquement."
+        )
+      )
+      .join("");
+    initVisualEnhancements();
     return;
   }
 
   strategicSourceSections.innerHTML = SOURCE_SPOTLIGHTS.map((spotlight) => {
-    const spotlightSources = sortSourcesByPriority(sources.filter((source) => sourceHasSegment(source, spotlight.id))).slice(0, spotlight.limit);
+    const spotlightSegments = Array.isArray(spotlight.segments) && spotlight.segments.length
+      ? spotlight.segments
+      : [spotlight.id];
+    const spotlightSources = sortSpotlightSources(
+      sources.filter((source) =>
+        spotlightSegments.some((segment) => sourceHasSegment(source, segment)) &&
+        (!spotlight.sourceTypes?.length || spotlight.sourceTypes.includes(source.type))
+      )
+    )
+      .filter((source) => {
+        const feed = getInternationalFeed(source.id);
+        return Array.isArray(feed?.jobs) && feed.jobs.length > 0;
+      })
+      .slice(0, spotlight.limit);
     const spotlightJobCount = jobs.filter((job) => matchesSpotlightJob(job, spotlight)).length;
     const keywordMarkup = spotlight.keywords
       .map((keyword) => `<span class="pill">${escapeHtml(keyword)}</span>`)
@@ -1580,26 +1811,24 @@ function renderStrategicSourceSections() {
       .join("");
     const cardsMarkup = spotlightSources.length
       ? spotlightSources
-          .map((source) => {
-            const descriptor = sourceReferenceDescriptor(source);
-            return `
-              <article class="source-card">
-                <div>
-                  <p class="eyebrow">${getSourceTypeLabel(source.type)}</p>
-                  <h3>${escapeHtml(source.name)}</h3>
-                  <p class="muted">${escapeHtml(source.notes || "Source a verifier avant publication.")}</p>
-                </div>
-                <div class="job-meta">
-                  <span class="pill">${getCollectionLabel(source.collection)}</span>
-                  <span class="pill">${getSourceMonitoringLabel(source)}</span>
-                </div>
-                <p class="reference-note">${escapeHtml(descriptor.note)}</p>
-                <a class="secondary-link" href="${escapeHtml(source.url)}" target="_blank" rel="noopener">${escapeHtml(descriptor.actionLabel)}</a>
-              </article>
-            `;
-          })
+          .map((source) => renderInstitutionFeedCard(source))
           .join("")
-      : `<p class="muted">Aucune source n'est encore configuree pour cette rubrique.</p>`;
+      : `
+        <article class="source-card institution-source-card">
+          <div>
+            <p class="eyebrow">${escapeHtml(spotlight.eyebrow)}</p>
+            <h3>Flux en cours de synchronisation</h3>
+            <p class="muted">Les institutions internationales sont bien configurees, mais aucune offre exploitable n'a encore ete chargee dans cette rubrique a cet instant.</p>
+          </div>
+          <div class="institution-feed-shell">
+            <div class="institution-feed-track">
+              <div class="institution-feed-empty">Rechargez la page dans quelques instants ou ouvrez directement les references officielles ci-dessous.</div>
+            </div>
+          </div>
+          <div class="strategic-source-actions">
+            <a class="secondary-link" href="${escapeHtml(spotlight.actionHref)}">${escapeHtml(spotlight.actionLabel)}</a>
+          </div>
+        </article>`;
 
     return `
       <section class="strategic-source-section strategic-source-band" id="${escapeHtml(spotlight.anchor)}">
@@ -1627,6 +1856,8 @@ function renderStrategicSourceSections() {
       </section>
     `;
   }).join("");
+
+  initVisualEnhancements();
 }
 
 function getLeadLabel(kind) {
@@ -2017,9 +2248,23 @@ async function loadSources() {
 
   rebuildSourceIndex();
   if (sourceCount && sources.length) sourceCount.textContent = sources.length;
+  renderPortalWidgets();
   renderSourceDirectory();
   renderStrategicSourceSections();
   renderAdmin();
+}
+
+async function loadInternationalFeeds() {
+  if (!strategicSourceSections) return;
+  try {
+    const response = await fetch("data/international-feeds.json", { cache: "no-store" });
+    if (!response.ok) throw new Error("Impossible de charger les flux internationaux");
+    internationalFeeds = await response.json();
+  } catch {
+    internationalFeeds = [];
+  }
+
+  renderStrategicSourceSections();
 }
 
 async function loadEmployerLogos() {
@@ -2047,6 +2292,32 @@ if (quickSearch) {
     document.querySelector("#offres")?.scrollIntoView({ behavior: "smooth" });
   });
 }
+
+document.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-search-query], [data-search-city], [data-search-type]");
+  if (!button) return;
+
+  const query = button.dataset.searchQuery || "";
+  const city = button.dataset.searchCity || "";
+  const type = button.dataset.searchType || "";
+
+  if (searchInput && query) searchInput.value = query;
+  if (cityFilter && city && [...cityFilter.options].some((option) => option.value === city || option.textContent === city)) {
+    cityFilter.value = city;
+  }
+  if (typeFilter && type && [...typeFilter.options].some((option) => option.value === type || option.textContent === type)) {
+    typeFilter.value = type;
+  }
+
+  recordEvent("search_chip_clicked", {
+    label: query || type || city || "preset",
+    city,
+    type,
+  });
+  resetJobsPage();
+  renderJobs();
+  document.querySelector("#offres")?.scrollIntoView({ behavior: "smooth" });
+});
 
 [searchInput, cityFilter, typeFilter, sourceFilter, sortFilter, savedOnlyFilter].forEach((control) => {
   control?.addEventListener("input", () => {
@@ -2477,6 +2748,8 @@ document.querySelector("#publishSocialButton")?.addEventListener("click", async 
 loadJobs();
 loadEmployerLogos();
 loadSources();
+loadInternationalFeeds();
+initVisualEnhancements();
 setInterval(updateCountdowns, 1000);
 if (leadTable || eventCount || adminSummary) {
   loadServerAdminData();

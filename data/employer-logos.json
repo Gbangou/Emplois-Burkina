@@ -5,52 +5,16 @@
     "sector": "ONG",
     "profileUrl": "https://www.bfemploi.com/annonce-details-3866.html",
     "sourceName": "BFemploi",
-    "jobs": 8,
+    "jobs": 7,
     "updatedAt": "2026-06-16T09:27:57.141Z"
   },
   {
-    "name": "Emploiburkina",
-    "logoUrl": "https://www.emploiburkina.com/sites/emploiburkina.com/themes/africawork3/logo-header-emploiburkina.svg",
-    "sector": "BTP et chantier",
-    "profileUrl": "https://www.emploiburkina.com/offre-emploi-burkina-faso/technico-commercial-climatisation-haut-gamme-ouagadougou-82601",
-    "sourceName": "Emploiburkina",
-    "jobs": 7,
-    "updatedAt": "2026-06-16T09:28:08.033Z"
-  },
-  {
     "name": "HumanitaireHub",
-    "logoUrl": "https://humanitairehub.com/favicon.ico",
-    "sector": "ONG",
-    "profileUrl": "https://humanitairehub.com/emploi/oordonnateur-de-programme-du-secteur-prive/",
+    "logoUrl": "https://humanitairehub.com/wp-content/uploads/2026/04/logo-navbar-1.svg",
+    "sector": "Transport et logistique",
+    "profileUrl": "https://humanitairehub.com/emploi/charge-de-securite-et-logistique-national/",
     "sourceName": "HumanitaireHub",
-    "jobs": 4,
-    "updatedAt": "2026-06-16T09:29:49.908Z"
-  },
-  {
-    "name": "Burkina24 Emploi",
-    "logoUrl": "https://burkina24.com/wp-content/uploads/2024/07/LOGO-B24-3D.jpg",
-    "sector": "Bureau",
-    "profileUrl": "https://burkina24.com/2026/06/16/cagei-appel-a-candidatures-recrutement-6ieme-promotion-pour-la-formation-certifiante-en-analyse-de-donnees-data-analyst-3/",
-    "sourceName": "Burkina24 Emploi",
-    "jobs": 1,
-    "updatedAt": "2026-06-16T09:31:42.643Z"
-  },
-  {
-    "name": "LeFaso.net Recrutement",
-    "logoUrl": "https://emploi.lefaso.net/favicon.ico",
-    "sector": "ONG",
-    "profileUrl": "https://emploi.lefaso.net/Avis-de-recrutement-d-un-e-Coordonnateur-trice-de-Projet.html",
-    "sourceName": "LeFaso.net Recrutement",
-    "jobs": 1,
-    "updatedAt": "2026-06-16T09:31:18.469Z"
-  },
-  {
-    "name": "UNjobs Burkina Faso",
-    "logoUrl": "https://unjobs.org/favicon.ico",
-    "sector": "Commerce et vente",
-    "profileUrl": "https://unjobs.org/vacancies/1779895707052",
-    "sourceName": "UNjobs Burkina Faso",
-    "jobs": 1,
-    "updatedAt": "2026-06-16T09:30:22.979Z"
+    "jobs": 2,
+    "updatedAt": "2026-06-16T09:29:49.907Z"
   }
 ]

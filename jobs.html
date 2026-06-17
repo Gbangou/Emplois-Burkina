@@ -49,60 +49,128 @@
     <main>
       <section class="portal-hero">
         <div class="portal-hero-inner">
-          <div class="hero-cta-row" aria-label="Actions principales">
-            <a href="contacts.html">Candidat : Deposez votre CV</a>
-            <a href="annonceurs.html">Recruteur : Publiez une annonce</a>
-          </div>
-          <div class="hero-copy">
-            <p class="eyebrow">Offres d'emploi</p>
-            <h1>Trouvez votre futur job parmi <span id="heroJobCount">0</span> opportunites suivies.</h1>
-          </div>
-          <form class="mega-search" id="quickSearch">
-            <label>
-              <span>Mot-cle</span>
-              <input id="searchInput" type="search" placeholder="Poste, entreprise, competence, concours..." autocomplete="off" />
-            </label>
-            <label>
-              <span>Region</span>
-              <select id="cityFilter">
-                <option value="">Toutes les regions</option>
-                <option>Ouagadougou</option>
-                <option>Bobo-Dioulasso</option>
-                <option>Bagassi</option>
-                <option>Koudougou</option>
-                <option>Ouahigouya</option>
-                <option>Teletravail</option>
-                <option>Burkina Faso</option>
-              </select>
-            </label>
-            <label>
-              <span>Domaine</span>
-              <select id="typeFilter">
-                <option value="">Tous les domaines</option>
-                <option>Bureau</option>
-                <option>ONG</option>
-                <option>Concours</option>
-                <option>Stage</option>
-                <option>Metiers terrain et informels</option>
-                <option>ONU / Consultance</option>
-                <option>BTP et chantier</option>
-                <option>Technique et maintenance</option>
-                <option>Transport et logistique</option>
-                <option>Commerce et vente</option>
-                <option>Finance et administration</option>
-                <option>Sante</option>
-                <option>CDD</option>
-                <option>CDI</option>
-              </select>
-            </label>
-            <button type="submit">Rechercher</button>
-          </form>
-          <div class="hero-quick-actions">
-            <a href="#offres">Toutes les offres</a>
-            <a class="hero-quick-accent" href="#international-careers">ONU / Consultance</a>
-            <a href="annonceurs.html">Publier une offre</a>
-            <a href="contacts.html">Alerte WhatsApp</a>
-            <a href="grille-tarifaire.html">Devenir sponsor</a>
+          <div class="hero-surface">
+            <div class="hero-stage">
+              <div class="hero-content">
+                <div class="hero-cta-row" aria-label="Actions principales">
+                  <a href="contacts.html">Candidat : Deposez votre CV</a>
+                  <a href="annonceurs.html">Recruteur : Publiez une annonce</a>
+                </div>
+                <div class="hero-copy">
+                  <p class="eyebrow">Offres d'emploi</p>
+                  <div class="hero-proofline" aria-label="Points forts">
+                    <span>Liens reels</span>
+                    <span>Recherche guidee</span>
+                    <span>Verification visible</span>
+                  </div>
+                  <h1>Trouvez votre futur job avec une recherche plus claire.</h1>
+                  <p class="lead">
+                    Bureau, ONG, concours, metiers terrain, consultance,
+                    teletravail et opportunites internationales : partez d'une
+                    recherche claire et accedez a des sources mieux verifiees.
+                  </p>
+                  <div class="hero-metrics" aria-label="Indicateurs de recherche">
+                    <article>
+                      <strong id="heroJobCount">0</strong>
+                      <span>opportunites suivies</span>
+                    </article>
+                    <article>
+                      <strong id="heroTrustedCount">0</strong>
+                      <span>sources verifiees</span>
+                    </article>
+                    <article>
+                      <strong>Rapide</strong>
+                      <span>tri par secteur, source, region et favoris</span>
+                    </article>
+                  </div>
+                </div>
+                <div class="hero-quick-actions">
+                  <a href="#offres">Toutes les offres</a>
+                  <a class="hero-quick-accent" href="#international-careers">ONU / Consultance</a>
+                  <a href="annonceurs.html">Publier une offre</a>
+                  <a href="contacts.html">Alerte WhatsApp</a>
+                  <a href="grille-tarifaire.html">Devenir sponsor</a>
+                </div>
+              </div>
+              <aside class="hero-visual" aria-label="Equipe africaine en reunion professionnelle">
+                <div class="hero-visual-media"></div>
+                <div class="hero-visual-overlay" aria-hidden="true">
+                  <article>
+                    <strong>Burkina</strong>
+                    <span>Local, concours, terrain</span>
+                  </article>
+                  <article>
+                    <strong>ONU</strong>
+                    <span>Consultance et ONG suivies</span>
+                  </article>
+                  <article>
+                    <strong>Fiable</strong>
+                    <span>Source et delai plus lisibles</span>
+                  </article>
+                </div>
+                <div class="hero-visual-copy">
+                  <p class="eyebrow">Sources mieux triees</p>
+                  <strong>Recherche simple, liens reels, verification plus visible.</strong>
+                  <span>Explorez plus vite les offres locales, onusiennes et de consultance depuis la meme page.</span>
+                </div>
+              </aside>
+            </div>
+
+            <div class="search-surface-head">
+              <div>
+                <p class="eyebrow">Recherche principale</p>
+                <h2>Lancez une recherche propre puis affinez</h2>
+              </div>
+              <p>Le mot-cle ouvre la recherche. La region et le domaine servent ensuite a la rendre plus precise sans surcharger la page.</p>
+            </div>
+            <form class="mega-search" id="quickSearch">
+              <label>
+                <span>Mot-cle</span>
+                <input id="searchInput" type="search" placeholder="Poste, entreprise, competence, concours..." autocomplete="off" />
+              </label>
+              <label>
+                <span>Region</span>
+                <select id="cityFilter">
+                  <option value="">Toutes les regions</option>
+                  <option>Ouagadougou</option>
+                  <option>Bobo-Dioulasso</option>
+                  <option>Bagassi</option>
+                  <option>Koudougou</option>
+                  <option>Ouahigouya</option>
+                  <option>Teletravail</option>
+                  <option>Burkina Faso</option>
+                </select>
+              </label>
+              <label>
+                <span>Domaine</span>
+                <select id="typeFilter">
+                  <option value="">Tous les domaines</option>
+                  <option>Bureau</option>
+                  <option>ONG</option>
+                  <option>Concours</option>
+                  <option>Stage</option>
+                  <option>Metiers terrain et informels</option>
+                  <option>ONU / Consultance</option>
+                  <option>BTP et chantier</option>
+                  <option>Technique et maintenance</option>
+                  <option>Transport et logistique</option>
+                  <option>Commerce et vente</option>
+                  <option>Finance et administration</option>
+                  <option>Sante</option>
+                  <option>CDD</option>
+                  <option>CDI</option>
+                </select>
+              </label>
+              <button type="submit">Rechercher</button>
+            </form>
+            <div class="search-hints" aria-label="Suggestions rapides">
+              <span>Suggestions :</span>
+              <button class="search-chip" type="button" data-search-query="assistant">Assistant</button>
+              <button class="search-chip" type="button" data-search-query="chauffeur">Chauffeur</button>
+              <button class="search-chip" type="button" data-search-query="enqueteur" data-search-type="Metiers terrain et informels">Enqueteur terrain</button>
+              <button class="search-chip" type="button" data-search-query="international" data-search-type="ONU / Consultance">International</button>
+              <button class="search-chip" type="button" data-search-query="teletravail" data-search-city="Teletravail">Teletravail</button>
+            </div>
           </div>
         </div>
       </section>
@@ -149,10 +217,32 @@
           </div>
           <a class="secondary-link" href="annonceurs.html">Afficher votre logo</a>
         </div>
-        <div class="carousel-shell">
-          <button class="carousel-arrow" type="button" data-carousel-prev="employerCarousel" aria-label="Precedent">‹</button>
-          <div class="logo-carousel" id="employerCarousel" aria-live="polite"></div>
-          <button class="carousel-arrow" type="button" data-carousel-next="employerCarousel" aria-label="Suivant">›</button>
+        <div class="portal-split-band">
+          <aside class="section-aside-card">
+            <p class="eyebrow">Recruteurs visibles</p>
+            <h3>Une presentation plus propre des structures qui publient</h3>
+            <p>
+              Les sources et employeurs actifs sont regroupes dans une zone plus
+              lisible, afin d'aider les candidats a identifier rapidement qui recrute.
+            </p>
+            <div class="aside-bullets">
+              <span>logos plus nets</span>
+              <span>sources distinguees</span>
+              <span>clic direct</span>
+            </div>
+            <a class="secondary-link" href="annonceurs.html">Afficher votre structure</a>
+          </aside>
+          <div class="carousel-panel">
+            <div class="carousel-panel-head">
+              <strong>Structures actives</strong>
+              <span>Annonceurs, portails emploi et organisations visibles sur JobFaso</span>
+            </div>
+            <div class="carousel-shell">
+              <button class="carousel-arrow" type="button" data-carousel-prev="employerCarousel" aria-label="Precedent">‹</button>
+              <div class="logo-carousel" id="employerCarousel" aria-live="polite"></div>
+              <button class="carousel-arrow" type="button" data-carousel-next="employerCarousel" aria-label="Suivant">›</button>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -164,7 +254,61 @@
           </div>
           <a class="secondary-link" href="jobs.html?focus=onu-consultance">Recherche guidee</a>
         </div>
-        <div class="strategic-source-sections" id="strategicSourceSections"></div>
+        <div class="strategic-intro-grid" aria-label="Acces rapides internationaux">
+          <article>
+            <strong>ONU et volontariat</strong>
+            <span>Reperez les portes d'entree onusiennes et les structures internationales suivies.</span>
+          </article>
+          <article>
+            <strong>Consultance</strong>
+            <span>Retrouvez les missions d'experts, ToR, evaluation et assistance technique.</span>
+          </article>
+          <article>
+            <strong>Remote et freelance</strong>
+            <span>Cherchez des opportunites home-based, digitales et flexibles sans quitter le Burkina Faso.</span>
+          </article>
+        </div>
+        <div class="strategic-source-sections" id="strategicSourceSections">
+          <section class="strategic-source-section strategic-source-band" id="international-careers">
+            <div class="strategic-source-lead">
+              <div>
+                <p class="eyebrow">Carriere internationale</p>
+                <h3>ONU, ONG internationales et consultance</h3>
+                <p class="muted">Zone de recherche dediee aux candidatures internationales avec liens reels, sources citees et acces plus direct aux repertoires utiles.</p>
+              </div>
+              <div class="strategic-source-meta">
+                <span class="pill">Liens reels</span>
+                <span class="pill">Recherche guidee</span>
+              </div>
+            </div>
+            <div class="source-directory-grid spotlight-grid">
+              <article class="source-card">
+                <div>
+                  <p class="eyebrow">Plateforme internationale</p>
+                  <h3>UNjobs Burkina Faso</h3>
+                  <p class="muted">Selection d'offres ONU et developpement reliees au Burkina Faso et a Ouagadougou.</p>
+                </div>
+                <a class="secondary-link" href="https://unjobs.org/duty_stations/burkina-faso" target="_blank" rel="noopener">Ouvrir la source</a>
+              </article>
+              <article class="source-card">
+                <div>
+                  <p class="eyebrow">Source officielle</p>
+                  <h3>UNDP Jobs Burkina Faso</h3>
+                  <p class="muted">Reference officielle PNUD pour les opportunites, consultances et recrutements pays.</p>
+                </div>
+                <a class="secondary-link" href="https://estm.fa.em2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1/requisitions?keyword=Burkina" target="_blank" rel="noopener">Ouvrir la reference officielle</a>
+              </article>
+              <article class="source-card">
+                <div>
+                  <p class="eyebrow">Consultance et remote</p>
+                  <h3>Impactpool Burkina Faso</h3>
+                  <p class="muted">Repertoire international utile pour consultance, postes organisations internationales et travail flexible.</p>
+                </div>
+                <a class="secondary-link" href="https://www.impactpool.org/search?countries=Burkina%20Faso" target="_blank" rel="noopener">Ouvrir la source</a>
+              </article>
+            </div>
+          </section>
+        </div>
       </section>
 
       <section class="portal-section featured-band">
@@ -175,10 +319,33 @@
           </div>
           <a class="secondary-link" href="grille-tarifaire.html">Sponsoriser une offre</a>
         </div>
-        <div class="carousel-shell">
-          <button class="carousel-arrow" type="button" data-carousel-prev="featuredJobsCarousel" aria-label="Precedent">‹</button>
-          <div class="featured-carousel" id="featuredJobsCarousel"></div>
-          <button class="carousel-arrow" type="button" data-carousel-next="featuredJobsCarousel" aria-label="Suivant">›</button>
+        <div class="portal-split-band">
+          <aside class="section-aside-card featured-aside">
+            <p class="eyebrow">Priorite</p>
+            <h3>Des cartes plus serieuses pour les offres importantes</h3>
+            <p>
+              Les annonces a la une servent de raccourci vers les postes les plus
+              visibles, tout en gardant les dates, la source et les actions dans
+              une presentation plus maitrisee.
+            </p>
+            <div class="aside-bullets">
+              <span>meilleure hierarchie</span>
+              <span>deadline plus claire</span>
+              <span>source toujours accessible</span>
+            </div>
+            <a class="secondary-link" href="grille-tarifaire.html">Mettre une offre en avant</a>
+          </aside>
+          <div class="carousel-panel">
+            <div class="carousel-panel-head">
+              <strong>Selection du moment</strong>
+              <span>Opportunites prioritaires, lisibles rapidement et reliees a leur source</span>
+            </div>
+            <div class="carousel-shell">
+              <button class="carousel-arrow" type="button" data-carousel-prev="featuredJobsCarousel" aria-label="Precedent">‹</button>
+              <div class="featured-carousel" id="featuredJobsCarousel"></div>
+              <button class="carousel-arrow" type="button" data-carousel-next="featuredJobsCarousel" aria-label="Suivant">›</button>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -193,6 +360,17 @@
             <h2>Opportunites disponibles</h2>
           </div>
         </div>
+            <div class="catalog-intro-card">
+              <div>
+                <strong>Catalogue principal</strong>
+                <span>Recherche, filtres et detail restent sur une seule surface pour eviter les allers-retours inutiles.</span>
+              </div>
+              <div class="aside-bullets">
+                <span>tri rapide</span>
+                <span>detail visible</span>
+                <span>source reliee</span>
+              </div>
+            </div>
             <div class="filters" aria-label="Filtres rapides">
               <button class="filter-button active" data-category="">Toutes</button>
               <button class="filter-button" data-category="Bureau">Bureau</button>

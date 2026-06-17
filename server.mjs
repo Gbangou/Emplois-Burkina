@@ -42,7 +42,12 @@ const publicPaths = new Set([
   "/indexnow-urls.txt",
   "/indexnow-key.txt",
 ]);
-const publicDataPaths = new Set(["/data/curated-jobs.json", "/data/sources.json", "/data/employer-logos.json"]);
+const publicDataPaths = new Set([
+  "/data/curated-jobs.json",
+  "/data/sources.json",
+  "/data/employer-logos.json",
+  "/data/international-feeds.json",
+]);
 
 const contentTypes = {
   ".html": "text/html; charset=utf-8",
@@ -64,7 +69,7 @@ const rateBuckets = new Map();
 
 function securityHeaders() {
   const connectSrc = NODE_ENV === "development" ? "'self' http://127.0.0.1:* http://localhost:*" : "'self'";
-  return {
+  const headers = {
     "Content-Security-Policy": [
       "default-src 'self'",
       "base-uri 'self'",
@@ -85,6 +90,12 @@ function securityHeaders() {
     "X-Frame-Options": "DENY",
     "X-Permitted-Cross-Domain-Policies": "none",
   };
+
+  if (NODE_ENV === "production") {
+    headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains; preload";
+  }
+
+  return headers;
 }
 
 function send(res, status, body, headers = {}) {

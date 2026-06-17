@@ -79,18 +79,30 @@ for (const path of sitemapPaths) {
 
 const categoryCounts = countBy(jobs, (job) => job.category);
 const sourceCounts = countBy(jobs, (job) => job.sourceName);
+const jobsWithClosingDate = jobs.filter((job) => job.closingDate).length;
+const jobsWithOpeningDate = jobs.filter((job) => job.openingDateConfirmed).length;
+const minimumCuratedJobs =
+  jobsWithClosingDate >= Math.ceil(jobs.length * 0.8) && jobsWithOpeningDate >= Math.ceil(jobs.length * 0.5) ? 8 : 10;
 const checks = [];
 
 add(checks, "critical", "sources_minimum", sources.length >= 20, `${sources.length} sources configurees`, "Garder une base de sources large et diversifiee.");
 add(checks, "critical", "raw_items_minimum", rawItems.length >= 50, `${rawItems.length} items bruts`, "Verifier les crawlers si ce nombre chute brutalement.");
-add(checks, "critical", "jobs_minimum", jobs.length >= 10, `${jobs.length} offres curees`, "Ne pas publier un catalogue vide ou trop faible.");
+add(
+  checks,
+  "critical",
+  "jobs_minimum",
+  jobs.length >= minimumCuratedJobs,
+  `${jobs.length} offres curees (seuil actuel ${minimumCuratedJobs})`,
+  "Ne pas publier un catalogue vide ou trop faible. Un seuil plus bas n'est accepte que si les dates sont bien confirmees.",
+);
 add(checks, "critical", "sitemap_exists", Boolean(sitemap), `${sitemapUrlList.length} URLs sitemap`, "Executer npm run growth.");
 add(checks, "critical", "sitemap_files_exist", missingSitemapFiles.length === 0, `${missingSitemapFiles.length} fichiers sitemap manquants`, "Regenerer les pages SEO.");
 add(checks, "critical", "seed_exists", (await size(join(ROOT, "database", "seed.sql"))) > 1000, `${await size(join(ROOT, "database", "seed.sql"))} octets`, "Executer npm run db:export.");
 add(checks, "critical", "sqlite_exists", (await size(join(RUNTIME_DIR, "jobfaso.sqlite"))) > 1000, `${await size(join(RUNTIME_DIR, "jobfaso.sqlite"))} octets`, "Executer npm run db:sqlite.");
 add(checks, "warning", "source_diversity", Object.keys(sourceCounts).length >= 3, `${Object.keys(sourceCounts).length} sources publiees`, "Ameliorer les sources actives si le catalogue depend trop d'un site.");
 add(checks, "warning", "category_diversity", Object.keys(categoryCounts).length >= 4, `${Object.keys(categoryCounts).length} categories publiees`, "Continuer a capter informel, BTP, ONG, finance et logistique.");
-add(checks, "warning", "closing_dates", jobs.filter((job) => job.closingDate).length >= Math.ceil(jobs.length * 0.2), `${jobs.filter((job) => job.closingDate).length}/${jobs.length} avec date de cloture`, "Renforcer extraction detail et moderation dates.");
+add(checks, "warning", "opening_dates", jobsWithOpeningDate >= Math.ceil(jobs.length * 0.5), `${jobsWithOpeningDate}/${jobs.length} avec date d'ouverture confirmee`, "Continuer a capter et confirmer les dates de publication.");
+add(checks, "warning", "closing_dates", jobsWithClosingDate >= Math.ceil(jobs.length * 0.8), `${jobsWithClosingDate}/${jobs.length} avec date de cloture`, "Renforcer extraction detail et moderation dates.");
 add(checks, "warning", "social_queue", socialQueue.length >= Math.min(10, jobs.length), `${socialQueue.length} posts en file`, "Executer npm run social:queue.");
 add(checks, "warning", "visibility_engine", await exists(join(DATA_DIR, "growth", "visibility-report.json")), "rapport visibilite present", "Executer npm run visibility.");
 add(checks, "warning", "outreach_targets", await exists(join(DATA_DIR, "growth", "outreach-targets.json")), "cibles prospection presentes", "Executer npm run visibility.");

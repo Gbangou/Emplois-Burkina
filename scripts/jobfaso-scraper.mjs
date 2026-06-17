@@ -218,9 +218,11 @@ function cleanCity(value, fallback = "Burkina Faso") {
 
   if (!city || city.length < 3) return fallback;
   if (/burkina\s+faso/.test(normalized)) return "Burkina Faso";
+  if (/ghana/.test(normalized)) return "Ghana";
   if (/^ouaga/.test(normalized) || /ouagadougou/.test(normalized)) return "Ouagadougou";
   if (/bobo/.test(normalized)) return "Bobo-Dioulasso";
   if (/bagassi/.test(normalized)) return "Bagassi";
+  if (/senegal/.test(normalized)) return "Senegal";
   if (/teletravail|remote/.test(normalized)) return "Teletravail";
   if (/americaines|africaines|europeennes|membres|plusieurs secteurs/.test(normalized)) return fallback;
 
@@ -232,10 +234,12 @@ function extractDetailMetadata(html, item) {
   const title = extractTitle(html, item.title);
   const openingDate =
     firstDateAfter(text, [
+      /\b(?:lundi|mardi|mercredi|jeudi|vendredi|samedi|dimanche)\s+([0-9]{1,2}(?:er)?\s+[a-zA-ZÀ-ÿ.]+\s+[0-9]{4})/i,
       /offre\s+d[eé]pos[eé]e?\s+([0-9]{1,2}\s+[a-z\u00e0-\u00ff]+\s+[0-9]{4})/i,
       /date\s+(?:de\s+)?(?:publication|depot|d[eé]p[oô]t|ouverture)\s*:?\s*([0-9]{1,2}(?:er)?[\s/-]+[a-zA-ZÀ-ÿ.]+[\s/-]+[0-9]{2,4})/i,
       /(?:published|posted|date\s+posted)\s+(?:on\s+)?\s*:?\s*([0-9]{1,2}(?:er)?[\s/-]+[a-zA-ZÀ-ÿ.]+[\s/-]+[0-9]{2,4})/i,
       /publi[eé]\s+le\s+([0-9]{1,2}(?:er)?[\s/-]+[a-zA-ZÀ-ÿ.]+[\s/-]+[0-9]{2,4})/i,
+      /([0-9]{1,2}(?:er)?\s+[a-zA-ZÀ-ÿ.]+\s+[0-9]{4})\s*,?\s+par\b/i,
       /([0-9]{1,2}[/-][0-9]{1,2}[/-][0-9]{2,4})/,
     ]) || item.openingDate || "";
   const closingDate =
