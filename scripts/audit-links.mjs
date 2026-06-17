@@ -53,19 +53,46 @@ function decode(value) {
 
 function extractLinks(content, file) {
   const links = [];
-  const patterns = [
-    /\b(?:href|src|action|content)=["']([^"']+)["']/gi,
-    /\b(?:sourceUrl|canonicalUrl|logoUrl|profileUrl|url)\s*:\s*["']([^"']+)["']/gi,
-    /url\(["']?([^"')]+)["']?\)/gi,
-    /"((?:https?:\/\/|\/|\.\/|\.\.\/)[^"\s]+)"/gi,
-  ];
+  const extension = extname(file).toLowerCase();
+  const text = String(content || "");
 
-  for (const pattern of patterns) {
-    for (const match of content.matchAll(pattern)) {
+  if (extension === ".html" || extension === ".xml") {
+    const attributePatterns = [
+      /\b(?:href|src|action)=["']([^"']+)["']/gi,
+      /<meta\b[^>]*(?:property|name)=["'](?:og:url|og:image|twitter:image|twitter:url)["'][^>]*content=["']([^"']+)["']/gi,
+    ];
+    for (const pattern of attributePatterns) {
+      for (const match of text.matchAll(pattern)) {
+        const raw = decode(match[1]);
+        if (!raw || ignoredSchemes.test(raw)) continue;
+        links.push({ file, raw });
+      }
+    }
+    return links;
+  }
+
+  if (extension === ".json" || extension === ".webmanifest") {
+    const jsonPatterns = [
+      /"(?:url|sourceUrl|canonicalUrl|logoUrl|profileUrl|applyUrl|externalUrl)"\s*:\s*"([^"]+)"/gi,
+      /"(?:start_url|scope)"\s*:\s*"([^"]+)"/gi,
+    ];
+    for (const pattern of jsonPatterns) {
+      for (const match of text.matchAll(pattern)) {
+        const raw = decode(match[1]);
+        if (!raw || ignoredSchemes.test(raw)) continue;
+        links.push({ file, raw });
+      }
+    }
+    return links;
+  }
+
+  if (extension === ".css") {
+    for (const match of text.matchAll(/url\(["']?([^"')]+)["']?\)/gi)) {
       const raw = decode(match[1]);
       if (!raw || ignoredSchemes.test(raw)) continue;
       links.push({ file, raw });
     }
+    return links;
   }
 
   return links;

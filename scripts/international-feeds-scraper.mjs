@@ -5,9 +5,13 @@ const ROOT = new URL("../", import.meta.url);
 const SOURCES_FILE = new URL("data/sources.json", ROOT);
 const OUTPUT_FILE = new URL("data/international-feeds.json", ROOT);
 const REPORT_FILE = new URL("data/runtime/international-feeds-report.json", ROOT);
+const ROBOTS_CACHE = new Map();
 const USER_AGENT = process.env.JOBFASO_CRAWLER_AGENT || "JobFasoBot/0.1 (+contact: contact@jobfaso.com)";
 const MAX_JOBS_PER_SOURCE = Math.max(3, Number(process.env.JOBFASO_INTERNATIONAL_JOB_LIMIT || 12));
 const DETAIL_FETCH_LIMIT = Math.max(1, Number(process.env.JOBFASO_INTERNATIONAL_DETAIL_LIMIT || MAX_JOBS_PER_SOURCE));
+const REQUEST_DELAY_MS = Math.max(120, Number(process.env.JOBFASO_INTERNATIONAL_DELAY_MS || 260));
+const FETCH_TIMEOUT_MS = Math.max(10000, Number(process.env.JOBFASO_INTERNATIONAL_TIMEOUT_MS || 18000));
+const FETCH_RETRIES = Math.max(1, Number(process.env.JOBFASO_INTERNATIONAL_RETRIES || 2));
 const SOURCE_FILTER = new Set(
   String(process.env.JOBFASO_SOURCE_IDS || "")
     .split(",")
@@ -73,6 +77,45 @@ function stripHtml(html = "") {
     .replace(/<[^>]+>/g, " ")
     .replace(/\s+/g, " ")
     .trim();
+}
+
+function coerceText(value) {
+  if (value == null) return "";
+  if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
+    return String(value).trim();
+  }
+
+  if (Array.isArray(value)) {
+    return value.map((entry) => coerceText(entry)).filter(Boolean).join(" | ").trim();
+  }
+
+  if (typeof value === "object") {
+    for (const key of ["title", "name", "label", "text", "value", "rendered", "raw", "excerpt", "description"]) {
+      const candidate = coerceText(value[key]);
+      if (candidate) return candidate;
+    }
+
+    return Object.values(value)
+      .slice(0, 4)
+      .map((entry) => coerceText(entry))
+      .filter(Boolean)
+      .join(" | ")
+      .trim();
+  }
+
+  return "";
+}
+
+function coerceUrl(value, baseUrl = "") {
+  if (!value) return "";
+  if (typeof value === "string") return absolutizeUrl(value, baseUrl);
+  if (typeof value === "object") {
+    for (const key of ["url", "href", "link", "uri", "value"]) {
+      const candidate = coerceUrl(value[key], baseUrl);
+      if (candidate) return candidate;
+    }
+  }
+  return "";
 }
 
 function hash(parts) {
@@ -145,21 +188,48 @@ function absolutizeUrl(href, baseUrl) {
   }
 }
 
-async function fetchText(url, options = {}) {
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 15000);
-  const response = await fetch(url, {
-    ...options,
-    signal: controller.signal,
-    headers: {
-      "user-agent": USER_AGENT,
-      "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,application/json;q=0.8,*/*;q=0.7",
-      ...(options.headers || {}),
-    },
-  }).finally(() => clearTimeout(timeout));
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
-  if (!response.ok) throw new Error(`HTTP ${response.status}`);
-  return response.text();
+async function fetchText(url, options = {}) {
+  let lastError = null;
+
+  for (let attempt = 1; attempt <= FETCH_RETRIES; attempt += 1) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+
+    try {
+      const response = await fetch(url, {
+        ...options,
+        signal: controller.signal,
+        headers: {
+          "user-agent": USER_AGENT,
+          "accept-language": "fr-FR,fr;q=0.9,en;q=0.8",
+          "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,application/json;q=0.8,*/*;q=0.7",
+          ...(options.headers || {}),
+        },
+      });
+
+      if (!response.ok) {
+        if (attempt < FETCH_RETRIES && response.status >= 500) {
+          await sleep(400 * attempt);
+          continue;
+        }
+        throw new Error(`HTTP ${response.status}`);
+      }
+
+      return await response.text();
+    } catch (error) {
+      lastError = error;
+      if (attempt >= FETCH_RETRIES) break;
+      await sleep(450 * attempt);
+    } finally {
+      clearTimeout(timeout);
+    }
+  }
+
+  throw lastError || new Error("fetch failed");
 }
 
 async function fetchJson(url, options = {}) {
@@ -186,9 +256,57 @@ async function readPreviousFeeds() {
   }
 }
 
+function parseRobots(text = "") {
+  const rules = [];
+  let applies = false;
+
+  for (const rawLine of String(text).split(/\r?\n/)) {
+    const line = rawLine.replace(/#.*/, "").trim();
+    if (!line) continue;
+
+    const [rawKey, ...rest] = line.split(":");
+    const key = normalize(rawKey);
+    const value = rest.join(":").trim();
+
+    if (key === "user-agent") {
+      const agent = normalize(value);
+      applies = agent === "*" || normalize(USER_AGENT).includes(agent);
+      continue;
+    }
+
+    if (applies && key === "disallow") {
+      rules.push(value);
+    }
+  }
+
+  return rules.filter(Boolean);
+}
+
+async function robotsDisallowRules(targetUrl) {
+  const origin = new URL(targetUrl).origin;
+  if (ROBOTS_CACHE.has(origin)) return ROBOTS_CACHE.get(origin);
+
+  try {
+    const robotsUrl = new URL("/robots.txt", origin).toString();
+    const text = await fetchText(robotsUrl);
+    const rules = parseRobots(text);
+    ROBOTS_CACHE.set(origin, rules);
+    return rules;
+  } catch {
+    ROBOTS_CACHE.set(origin, []);
+    return [];
+  }
+}
+
+async function isRobotsAllowed(targetUrl) {
+  const url = new URL(targetUrl);
+  const rules = await robotsDisallowRules(targetUrl);
+  return !rules.some((rule) => rule === "/" || url.pathname.startsWith(rule));
+}
+
 function cleanJob(item, source) {
-  const title = decodeHtml(item.title || "").slice(0, 220);
-  const url = absolutizeUrl(item.url || "", source.url);
+  const title = decodeHtml(coerceText(item.title)).slice(0, 220);
+  const url = coerceUrl(item.url, source.url);
   const normalizedTitle = normalize(title);
   if (!title || !url) return null;
   if (!isUsefulJobTitle(normalizedTitle)) return null;
@@ -197,11 +315,11 @@ function cleanJob(item, source) {
     id: hash([source.id, title, url]),
     title,
     url,
-    location: decodeHtml(item.location || "").slice(0, 120),
-    contract: decodeHtml(item.contract || "").slice(0, 120),
-    openingDate: parseAnyDate(item.openingDate),
-    closingDate: parseAnyDate(item.closingDate),
-    excerpt: decodeHtml(item.excerpt || "").slice(0, 280),
+    location: decodeHtml(coerceText(item.location)).slice(0, 120),
+    contract: decodeHtml(coerceText(item.contract)).slice(0, 120),
+    openingDate: parseAnyDate(coerceText(item.openingDate)),
+    closingDate: parseAnyDate(coerceText(item.closingDate)),
+    excerpt: decodeHtml(coerceText(item.excerpt)).slice(0, 280),
   };
 }
 
@@ -268,6 +386,74 @@ function extractJsonScripts(html = "") {
   return [...String(html).matchAll(/<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)].map((match) => match[1]);
 }
 
+function extractApplicationJsonScripts(html = "") {
+  return [...String(html).matchAll(/<script\b[^>]*type=["']application\/json["'][^>]*>([\s\S]*?)<\/script>/gi)].map((match) => match[1]);
+}
+
+function findBalancedJsonSlice(source = "", startIndex = 0) {
+  const openChar = source[startIndex];
+  const closeChar = openChar === "{" ? "}" : openChar === "[" ? "]" : "";
+  if (!closeChar) return "";
+
+  let depth = 0;
+  let inString = false;
+  let escaped = false;
+
+  for (let index = startIndex; index < source.length; index += 1) {
+    const char = source[index];
+
+    if (inString) {
+      if (escaped) {
+        escaped = false;
+        continue;
+      }
+      if (char === "\\") {
+        escaped = true;
+        continue;
+      }
+      if (char === "\"") inString = false;
+      continue;
+    }
+
+    if (char === "\"") {
+      inString = true;
+      continue;
+    }
+
+    if (char === openChar) depth += 1;
+    if (char === closeChar) {
+      depth -= 1;
+      if (depth === 0) return source.slice(startIndex, index + 1);
+    }
+  }
+
+  return "";
+}
+
+function extractAssignedJsonScripts(html = "") {
+  const source = String(html);
+  const items = [];
+  const patterns = [
+    /(?:window\.)?(?:__INITIAL_STATE__|__NEXT_DATA__|__NUXT__|__APOLLO_STATE__|drupalSettings|REDUX_STATE)\s*=\s*([\[{])/gi,
+    /(?:window\.)?(?:jobSearch|searchResults|vacanciesData|vacancyData|jobsData)\s*=\s*([\[{])/gi,
+  ];
+
+  for (const pattern of patterns) {
+    for (const match of source.matchAll(pattern)) {
+      const openChar = match[1];
+      const openIndex = match.index + match[0].lastIndexOf(openChar);
+      const payload = findBalancedJsonSlice(source, openIndex);
+      if (payload) items.push(payload);
+    }
+  }
+
+  return items;
+}
+
+function extractEmbeddedJsonScripts(html = "") {
+  return [...extractJsonScripts(html), ...extractApplicationJsonScripts(html), ...extractAssignedJsonScripts(html)];
+}
+
 function walkStructuredData(value, visit) {
   if (!value || typeof value !== "object") return;
   visit(value);
@@ -276,6 +462,95 @@ function walkStructuredData(value, visit) {
     return;
   }
   for (const child of Object.values(value)) walkStructuredData(child, visit);
+}
+
+function collectLikelyEmbeddedJobs(value, source, items = []) {
+  if (!value || typeof value !== "object") return items;
+  if (Array.isArray(value)) {
+    for (const item of value) collectLikelyEmbeddedJobs(item, source, items);
+    return items;
+  }
+
+  const title = decodeHtml(
+    coerceText(
+      value.title ||
+        value.name ||
+        value.jobName ||
+        value.positionTitle ||
+        value.displayTitle ||
+        value.jobTitle ||
+        value.postingTitle ||
+        value.requisitionTitle ||
+        ""
+    ),
+  ).slice(0, 220);
+  const url = coerceUrl(
+    value.url ||
+      value.canonicalUrl ||
+      value.jobUrl ||
+      value.jobLink ||
+      value.link ||
+      value.externalPath ||
+      value.externalUrl ||
+      value.jobPostingUrl ||
+      value.absoluteUrl ||
+      value.detailUrl ||
+      value.applyUrl ||
+      "",
+    source.url
+  );
+
+  if (title && isUsefulJobTitle(normalize(title)) && url && isLikelyVacancyUrl(url)) {
+    items.push(
+      cleanJob(
+        {
+          title,
+          url,
+          location:
+            value.location ||
+            value.locationsText ||
+            value.jobLocation?.address?.addressLocality ||
+            value.jobLocation?.address?.addressRegion ||
+            value.primaryLocation ||
+            value.city ||
+            "",
+          contract:
+            (Array.isArray(value.bulletFields) ? value.bulletFields.join(" - ") : value.bulletFields) ||
+            value.employmentType ||
+            value.contractType ||
+            value.workerSubType ||
+            value.schedule ||
+            value.requisitionNumber ||
+            "",
+          openingDate:
+            value.postedOn ||
+            value.datePosted ||
+            value.postedDate ||
+            value.publishDate ||
+            value.startDate ||
+            "",
+          closingDate:
+            value.endDate ||
+            value.validThrough ||
+            value.closingDate ||
+            value.expiryDate ||
+            value.applicationEndDate ||
+            value.deadline ||
+            "",
+          excerpt:
+            value.description ||
+            value.shortDescription ||
+            value.summary ||
+            value.snippet ||
+            "",
+        },
+        source
+      )
+    );
+  }
+
+  for (const child of Object.values(value)) collectLikelyEmbeddedJobs(child, source, items);
+  return items;
 }
 
 function extractJobPostingStructuredData(html = "") {
@@ -311,6 +586,22 @@ function extractJobPostingStructuredData(html = "") {
   }
 
   return null;
+}
+
+function extractStructuredJobsFromListing(html = "", source) {
+  const jobs = [];
+  const scripts = extractEmbeddedJsonScripts(html);
+
+  for (const script of scripts) {
+    try {
+      const parsed = JSON.parse(script.trim());
+      collectLikelyEmbeddedJobs(parsed, source, jobs);
+    } catch {
+      // ignore malformed embedded data
+    }
+  }
+
+  return dedupeJobs(jobs);
 }
 
 function enrichDatesFromPageText(text = "") {
@@ -393,6 +684,24 @@ function extractSuccessFactorsJobs(html, source) {
   return dedupeJobs(jobs);
 }
 
+function detectPortalIssue(html = "", url = "") {
+  const text = normalize(stripHtml(html));
+  const target = normalize(url);
+
+  if (
+    target.includes("maintenance-page") ||
+    (text.includes("workday is currently unavailable") &&
+      (text.includes("service interruption") || text.includes("restored as quickly as possible")))
+  ) {
+    return {
+      portalStatus: "maintenance",
+      statusMessage: "Le portail Workday est temporairement en maintenance cote source officielle.",
+    };
+  }
+
+  return null;
+}
+
 function dedupeJobs(items) {
   const byId = new Map();
   for (const item of items.filter(Boolean)) {
@@ -433,13 +742,21 @@ async function scrapeWorkday(source) {
 }
 
 async function scrapeGenericHtml(source) {
+  if (!(await isRobotsAllowed(source.url))) {
+    throw new Error("robots.txt interdit la collecte de cette source");
+  }
+  await sleep(REQUEST_DELAY_MS);
   const html = await fetchText(source.url);
-  return dedupeJobs(extractAnchorJobs(html, source));
+  return dedupeJobs([...extractStructuredJobsFromListing(html, source), ...extractAnchorJobs(html, source)]);
 }
 
 async function scrapeSuccessFactors(source) {
+  if (!(await isRobotsAllowed(source.url))) {
+    throw new Error("robots.txt interdit la collecte de cette source");
+  }
+  await sleep(REQUEST_DELAY_MS);
   const html = await fetchText(source.url);
-  return dedupeJobs(extractSuccessFactorsJobs(html, source));
+  return dedupeJobs([...extractStructuredJobsFromListing(html, source), ...extractSuccessFactorsJobs(html, source)]);
 }
 
 async function enrichJobsWithDetails(source, jobs) {
@@ -448,6 +765,11 @@ async function enrichJobsWithDetails(source, jobs) {
 
   for (const job of limitedJobs) {
     try {
+      if (!(await isRobotsAllowed(job.url))) {
+        enriched.push(job);
+        continue;
+      }
+      await sleep(REQUEST_DELAY_MS);
       const html = await fetchText(job.url);
       const text = decodeHtml(stripHtml(html));
       const structured = extractJobPostingStructuredData(html) || {};
@@ -471,12 +793,31 @@ async function enrichJobsWithDetails(source, jobs) {
 }
 
 async function collectJobsForSource(source) {
+  let portalIssue = null;
+
+  if (source.id === "wfp-careers") {
+    try {
+      const sourceHtml = await fetchText(source.url);
+      portalIssue = detectPortalIssue(sourceHtml, source.url);
+    } catch (error) {
+      portalIssue = {
+        portalStatus: "unreachable",
+        statusMessage: `Le portail officiel est temporairement indisponible (${error.message}).`,
+      };
+    }
+  }
+
   let jobs = [];
-  if (source.id === "wfp-careers") jobs = await scrapeWorkday(source);
-  else if (source.id === "unesco-careers") jobs = await scrapeSuccessFactors(source);
+  if (/\/recruiting\/[^/]+\/[^/]+/i.test(source.url)) jobs = await scrapeWorkday(source);
+  else if (/careersection\/.+\/jobsearch\.ftl|careers\.unesco\.org/i.test(source.url) || source.id === "unesco-careers") jobs = await scrapeSuccessFactors(source);
   else jobs = await scrapeGenericHtml(source);
 
-  return enrichJobsWithDetails(source, jobs);
+  const preparedJobs = portalIssue?.portalStatus ? jobs : await enrichJobsWithDetails(source, jobs);
+  return {
+    jobs: preparedJobs,
+    portalStatus: portalIssue?.portalStatus || "available",
+    statusMessage: portalIssue?.statusMessage || "",
+  };
 }
 
 function sortSourceFeeds(feeds) {
@@ -492,7 +833,8 @@ async function main() {
 
   for (const source of sources) {
     try {
-      const jobs = await collectJobsForSource(source);
+      const result = await collectJobsForSource(source);
+      const jobs = Array.isArray(result?.jobs) ? result.jobs : [];
       feeds.push({
         sourceId: source.id,
         name: source.name,
@@ -502,6 +844,8 @@ async function main() {
         notes: source.notes || "",
         priority: source.priority || 9,
         updatedAt: new Date().toISOString(),
+        portalStatus: result?.portalStatus || "available",
+        statusMessage: result?.statusMessage || "",
         jobs: jobs.slice(0, MAX_JOBS_PER_SOURCE),
       });
       console.log(`${source.name}: ${jobs.length} job(s)`);
@@ -537,7 +881,19 @@ async function main() {
   await writeFile(OUTPUT_FILE, `${JSON.stringify(finalFeeds, null, 2)}\n`, "utf8");
   await writeFile(
     REPORT_FILE,
-    `${JSON.stringify({ generatedAt: new Date().toISOString(), sources: feeds.length, errors }, null, 2)}\n`,
+    `${JSON.stringify(
+      {
+        generatedAt: new Date().toISOString(),
+        sources: feeds.length,
+        succeeded: feeds.filter((feed) => !feed.error).length,
+        failed: errors.length,
+        stale: feeds.filter((feed) => feed.stale).length,
+        withJobs: feeds.filter((feed) => Array.isArray(feed.jobs) && feed.jobs.length > 0).length,
+        errors,
+      },
+      null,
+      2
+    )}\n`,
     "utf8",
   );
 

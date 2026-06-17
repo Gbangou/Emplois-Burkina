@@ -215,6 +215,40 @@
           <p class="eyebrow">Moderation</p>
           <h2>Offres a valider, revoir ou rejeter</h2>
         </div>
+        <div class="admin-panel">
+          <div class="admin-actions">
+            <label>
+              Recherche
+              <input id="adminJobSearchInput" type="search" placeholder="Titre, entreprise, ville, source..." />
+            </label>
+            <label>
+              Statut
+              <select id="adminJobStatusFilter">
+                <option value="">Tous les statuts</option>
+                <option value="needs_review">A moderer</option>
+                <option value="validated">Validees</option>
+                <option value="rejected">Rejetees</option>
+              </select>
+            </label>
+            <label>
+              Source
+              <select id="adminJobSourceFilter">
+                <option value="">Toutes les sources</option>
+              </select>
+            </label>
+            <label>
+              Dates
+              <select id="adminJobDateFilter">
+                <option value="">Toutes</option>
+                <option value="expired">Expirees</option>
+                <option value="missing_closing">Sans cloture</option>
+                <option value="inconsistent">Dates incoherentes</option>
+                <option value="fresh">Recentes 14 jours</option>
+              </select>
+            </label>
+          </div>
+          <p class="form-note" id="adminJobsFilterSummary">Chargement des filtres moderation...</p>
+        </div>
         <div class="job-grid" id="adminJobsList"></div>
       </section>
     </main>

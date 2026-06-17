@@ -4,6 +4,7 @@ const ROOT = new URL("../", import.meta.url);
 const RAW_FILE = new URL("data/raw-items.json", ROOT);
 const OUTPUT_FILE = new URL("data/curated-jobs.json", ROOT);
 const EMPLOYER_LOGOS_FILE = new URL("data/employer-logos.json", ROOT);
+const SOURCES_FILE = new URL("data/sources.json", ROOT);
 
 const blockedTitles = [
   "a propos de rmo",
@@ -73,6 +74,7 @@ const blockedTitles = [
 const blockedTitlePatterns = [
   /^comment\s+/,
   /^all jobs$/,
+  /^every open position/,
   /^clear filters$/,
   /^skip to /,
   /^\d+\s+regles?\s+/,
@@ -94,7 +96,6 @@ const blockedTitlePatterns = [
   /se connecter/,
   /^ouagadougou \d+$/,
   /^[a-z\s.'&-]+ ouagadougou \d+$/,
-  /^vacancytitle:/,
 ];
 
 const nonEmploymentTitlePatterns = [
@@ -133,11 +134,72 @@ const nonBurkinaCountryPatterns = [
 const nonBurkinaTextPattern =
   /benin|burundi|cameroun|central african republic|centrafrique|congo|cote d'ivoire|cote-d-ivoire|france|gabon|ghana|guinee|liberia|mali|mauritanie|niger|nigeria|rdc|republique centrafricaine|senegal|sierra leone|tchad|togo/;
 
+const techKeywords = [
+  "ict",
+  "informatique",
+  "cyber",
+  "cybersecurity",
+  "cloud",
+  "software",
+  "sql",
+  "power bi",
+  "telecom",
+  "database",
+  "developer",
+  "developpeur",
+  "devops",
+  "it support",
+  "support it",
+  "it assistant",
+  "it officer",
+  "it manager",
+  "data analyst",
+  "data engineer",
+  "data scientist",
+  "data manager",
+  "information management",
+  "system administrator",
+  "administrateur systeme",
+  "administrateur reseau",
+  "reseau",
+  "network",
+  "full stack",
+  "frontend",
+  "backend",
+  "security analyst",
+  "information security",
+  "technicien support",
+];
+
 const categoryRules = [
+  {
+    category: "Informatique, data et systemes",
+    type: "CDD",
+    keywords: [
+      "ict",
+      "informatique",
+      "data",
+      "digital",
+      "systeme",
+      "systemes",
+      "cloud",
+      "cyber",
+      "developpeur",
+      "developer",
+      "sql",
+      "power bi",
+      "support it",
+      "reseau",
+      "telecom",
+      "software",
+      "database",
+      "security",
+    ],
+  },
   {
     category: "Stage",
     type: "Stage",
-    keywords: ["stage", "stagiaire", "internship", "apprenti", "apprentissage"],
+    keywords: ["stage", "stagiaire", "internship", "apprenti"],
   },
   {
     category: "ONG",
@@ -170,6 +232,7 @@ const categoryRules = [
       "artisan",
       "balayeur",
       "blanchisseur",
+      "boy",
       "boucher",
       "boulanger",
       "carreleur",
@@ -179,19 +242,25 @@ const categoryRules = [
       "couturier",
       "cuisinier",
       "electricien",
+      "fille de menage",
       "ferrailleur",
       "gardien",
       "journali",
       "macon",
       "mecanicien",
+      "manoeuvre",
       "menuisier",
       "nettoyage",
       "ouvrier",
       "peintre",
       "plombier",
+      "serveur",
+      "serveuse",
       "soudeur",
       "tailleur",
       "terrain",
+      "vendeur",
+      "vendeuse",
       "vigile",
     ],
   },
@@ -254,6 +323,36 @@ function decodeHtml(value) {
     .replace(/&nbsp;/g, " ")
     .replace(/\s+/g, " ")
     .trim();
+}
+
+function buildSourceIndex(sources = []) {
+  const byId = new Map();
+  const byName = new Map();
+  for (const source of sources) {
+    if (source?.id) byId.set(normalize(source.id), source);
+    if (source?.name) byName.set(normalize(source.name), source);
+  }
+  return { byId, byName };
+}
+
+function getSourceMeta(item = {}, sourceIndex = { byId: new Map(), byName: new Map() }) {
+  return (
+    sourceIndex.byId.get(normalize(item.sourceId)) ||
+    sourceIndex.byName.get(normalize(item.sourceName)) ||
+    null
+  );
+}
+
+function sourceHasSegment(source, segment) {
+  return Array.isArray(source?.segments) && source.segments.some((value) => normalize(value) === normalize(segment));
+}
+
+function isInternationalSource(source) {
+  return sourceHasSegment(source, "international_onu") || sourceHasSegment(source, "consulting_remote");
+}
+
+function isTrustedSource(source) {
+  return ["review_required", "official_link", "manual_only"].includes(source?.collection);
 }
 
 function validIsoDate(value) {
@@ -422,9 +521,23 @@ function normalizeDateFields(item) {
 function inferCategory(item) {
   const titleText = normalize(`${item.title} ${item.type}`);
   const bodyText = normalize(`${item.company} ${item.excerpt}`);
+  const techTitleHits = techKeywords.filter((keyword) => titleText.includes(normalize(keyword))).length;
+  const techBodyHits = techKeywords.filter((keyword) => bodyText.includes(normalize(keyword))).length;
+
+  if (/chauffeur|vendeur|vendeuse|macon|ma[çc]on|plombier|soudeur|coiffeur|couturier|cuisinier|gardien|vigile|mecanicien|menuisier|ouvrier|livreur|caissier|carreleur|electricien|artisan|manoeuvre|terrain|enqueteur/.test(titleText)) {
+    return "Metiers terrain et informels";
+  }
+
+  if (techTitleHits >= 1) {
+    return "Informatique, data et systemes";
+  }
 
   for (const rule of categoryRules) {
     if (rule.keywords.some((keyword) => titleText.includes(normalize(keyword)))) return rule.category;
+  }
+
+  if (techBodyHits >= 2) {
+    return "Informatique, data et systemes";
   }
 
   for (const rule of categoryRules.filter((entry) => entry.category !== "Concours")) {
@@ -476,6 +589,18 @@ function inferCity(item) {
   if (/ouahigouya/.test(titleText) || /ouahigouya/.test(explicitLocation)) return "Ouahigouya";
   if (/teletravail|remote/.test(titleText) || /teletravail|remote/.test(explicitLocation)) return "Teletravail";
   if (/ouaga|ouagadougou/.test(titleText) || /ouaga|ouagadougou/.test(explicitLocation)) return "Ouagadougou";
+  if (/mali/.test(titleText) || /mali/.test(explicitLocation) || /mali/.test(sourceCity)) return "Mali";
+  if (/niger/.test(titleText) || /niger/.test(explicitLocation) || /niger/.test(sourceCity)) return "Niger";
+  if (/senegal/.test(titleText) || /senegal/.test(explicitLocation) || /senegal/.test(sourceCity)) return "Senegal";
+  if (/tchad|chad/.test(titleText) || /tchad|chad/.test(explicitLocation) || /tchad|chad/.test(sourceCity)) return "Tchad";
+  if (/benin/.test(titleText) || /benin/.test(explicitLocation) || /benin/.test(sourceCity)) return "Benin";
+  if (/cameroun|cameroon/.test(titleText) || /cameroun|cameroon/.test(explicitLocation) || /cameroun|cameroon/.test(sourceCity)) return "Cameroun";
+  if (/rd congo|rdc|congo/.test(titleText) || /rd congo|rdc|congo/.test(explicitLocation) || /rd congo|rdc|congo/.test(sourceCity)) return "RDC";
+  if (/rwanda/.test(titleText) || /rwanda/.test(explicitLocation) || /rwanda/.test(sourceCity)) return "Rwanda";
+  if (/ethiopie|ethiopia/.test(titleText) || /ethiopie|ethiopia/.test(explicitLocation) || /ethiopie|ethiopia/.test(sourceCity)) return "Ethiopie";
+  if (/mauritanie|mauritania/.test(titleText) || /mauritanie|mauritania/.test(explicitLocation) || /mauritanie|mauritania/.test(sourceCity)) return "Mauritanie";
+  if (/liban|lebanon/.test(titleText) || /liban|lebanon/.test(explicitLocation) || /liban|lebanon/.test(sourceCity)) return "Liban";
+  if (/afghanistan/.test(titleText) || /afghanistan/.test(explicitLocation) || /afghanistan/.test(sourceCity)) return "Afghanistan";
   if (/burkina faso/.test(titleText) || /burkina faso/.test(explicitLocation) || /burkina faso/.test(normalizedExcerpt)) {
     return "Burkina Faso";
   }
@@ -538,7 +663,8 @@ function isLikelyCategoryPage(item) {
   return exactBlocked || patternBlocked || categoryUrl || genericRmoUrl;
 }
 
-function isOutsideBurkina(item) {
+function isOutsideBurkina(item, sourceMeta = null) {
+  if (isInternationalSource(sourceMeta)) return false;
   const url = normalize(item.url);
   const text = normalize(`${item.title} ${item.excerpt}`);
   const urlOutside = nonBurkinaCountryPatterns.some((pattern) => pattern.test(url));
@@ -552,7 +678,7 @@ function isLikelyJobTitle(item) {
   const title = normalize(item.title);
 
   if (/\(h\/f\)|\(f\/h\)|h\/f|f\/h/.test(title)) return true;
-  if (/responsable|assistant|charge|chef|directeur|manager|agent|technicien|commercial|magasinier|comptable|coordinateur|specialiste|officer|enqueteur|webdesigner|infographe/.test(title)) {
+  if (/responsable|assistant|charge|chef|directeur|manager|agent|technicien|commercial|magasinier|comptable|coordinateur|specialiste|officer|enqueteur|webdesigner|infographe|consultant|developer|developpeur|engineer|analyst|administrator|security|support/.test(title)) {
     return true;
   }
   if (/artisan|chauffeur|conducteur|cuisinier|electricien|gardien|macon|mecanicien|menuisier|ouvrier|peintre|plombier|soudeur|tailleur|vigile/.test(title)) {
@@ -574,7 +700,7 @@ function isNonEmploymentOpportunity(item) {
   return false;
 }
 
-function curate(items) {
+function curate(items, sourceIndex) {
   const seen = new Set();
   const softSeen = new Set();
   const blockedSoftKeys = new Set();
@@ -591,8 +717,9 @@ function curate(items) {
     });
 
   for (const item of rankedItems) {
+    const sourceMeta = getSourceMeta(item, sourceIndex);
     if (!item.title || !item.url || isLikelyCategoryPage(item)) continue;
-    if (isOutsideBurkina(item)) continue;
+    if (isOutsideBurkina(item, sourceMeta)) continue;
     if (normalize(item.title).length < 10) continue;
     if (item.title.includes("�")) continue;
     if (!isLikelyJobTitle(item)) continue;
@@ -605,7 +732,15 @@ function curate(items) {
     const softKey = normalize(`${item.title} ${item.company || item.sourceName} ${city}`).replace(/[^a-z0-9]+/g, "");
     const dateFields = normalizeDateFields(item);
     const excerpt = decodeHtml(item.excerpt || "").slice(0, 900);
-    const hasMeaningfulContent = excerpt.length >= 120 || dateFields.openingDateConfirmed || dateFields.closingDateConfirmed;
+    const trustedSource = isTrustedSource(sourceMeta);
+    const internationalSource = isInternationalSource(sourceMeta);
+    const hasMeaningfulContent =
+      excerpt.length >= 120 ||
+      dateFields.openingDateConfirmed ||
+      dateFields.closingDateConfirmed ||
+      (trustedSource && excerpt.length >= 80) ||
+      (internationalSource && excerpt.length >= 48 && decodeHtml(item.title).length >= 24) ||
+      (category === "Metiers terrain et informels" && excerpt.length >= 60);
 
     if (blockedSoftKeys.has(softKey)) continue;
     if (softSeen.has(softKey)) continue;
@@ -641,8 +776,23 @@ function curate(items) {
       sourceLogoUrl: cleanUrl(item.sourceLogoUrl),
       companyLogoUrl: cleanUrl(item.companyLogoUrl) || cleanUrl(item.sourceLogoUrl),
       riskScore: 0,
-      confidenceScore: item.excerpt ? 70 : 45,
-      tags: inferTags(item, category, city),
+      confidenceScore:
+        Math.min(
+          100,
+          (dateFields.closingDateConfirmed ? 18 : 0) +
+            (dateFields.openingDateConfirmed ? 12 : 0) +
+            (trustedSource ? 24 : 0) +
+            (internationalSource ? 12 : 0) +
+            (excerpt.length >= 120 ? 18 : excerpt.length >= 80 ? 10 : 0) +
+            20
+        ),
+      tags: [
+        ...new Set([
+          ...inferTags(item, category, city),
+          ...(internationalSource ? ["International"] : []),
+          ...(city === "Teletravail" ? ["Teletravail"] : []),
+        ]),
+      ].slice(0, 8),
       status: "needs_review",
       excerpt,
       collectedAt: item.collectedAt,
@@ -688,7 +838,8 @@ function diversifyBySource(items) {
 
 async function main() {
   const raw = JSON.parse(await readFile(RAW_FILE, "utf8"));
-  const curated = curate(raw);
+  const sources = JSON.parse(await readFile(SOURCES_FILE, "utf8"));
+  const curated = curate(raw, buildSourceIndex(sources));
 
   if (!curated.length) {
     try {

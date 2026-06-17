@@ -9,6 +9,74 @@ const ROBOTS_CACHE = new Map();
 const USER_AGENT = process.env.JOBFASO_CRAWLER_AGENT || "JobFasoBot/0.1 (+contact: contact@jobfaso.com)";
 const DETAIL_LIMIT_PER_SOURCE = Number(process.env.JOBFASO_DETAIL_LIMIT || 18);
 const REQUEST_DELAY_MS = Number(process.env.JOBFASO_REQUEST_DELAY_MS || 350);
+const FETCH_TIMEOUT_MS = Math.max(10000, Number(process.env.JOBFASO_TIMEOUT_MS || 16000));
+const FETCH_RETRIES = Math.max(1, Number(process.env.JOBFASO_FETCH_RETRIES || 2));
+const LISTING_EXPANSION_LIMIT = Math.max(3, Number(process.env.JOBFASO_LISTING_EXPANSION_LIMIT || 8));
+const LISTING_EXPANSION_BY_SOURCE = {
+  bfemploi: 3,
+  "travail-burkina": 10,
+  "lefaso-recrutement": 4,
+  "rmo-burkina": 2,
+};
+
+const nonBurkinaUrlPattern =
+  /\/(benin|burundi|cameroun|congo|cote-d-ivoire|cote_d_ivoire|gabon|ghana|guinee|liberia|mali|mauritanie|niger|nigeria|rdc|senegal|sierra-leone|tchad|togo)\//i;
+
+const listingLabelPatterns = [
+  /^offres?\s+d['’]?emploi\b/i,
+  /^offres?\s+de\s+stages?\b/i,
+  /^liste\s+des\s+annonces\b/i,
+  /^nos\s+offres?\s+d['’]?emploi\b/i,
+  /^emploi\s+et\s+recrutement\b/i,
+  /^bfemploi\.com$/i,
+  /^conseil\s+du\s+recruteur\b/i,
+  /^les\s+entreprises\s+qui\s+recrutent\b/i,
+  /^nos\s+partenaires\b/i,
+  /^inscription\s+candidats?\b/i,
+  /^erreur\s+404\b/i,
+  /^deposer?\s+un\s+dossier\b/i,
+];
+
+const blockedNestedLabelPatterns = [
+  /^lire\s+la\s+suite\b/i,
+  /^voir\s+plus\b/i,
+  /^en\s+savoir\s+plus\b/i,
+  /^postuler\b/i,
+  /^cliquez\b/i,
+  /^telecharger\b/i,
+  /^actualites?\b/i,
+];
+
+const listingUrlPatterns = [
+  /\/category\//i,
+  /\/tag\//i,
+  /\/author\//i,
+  /\/archives?\//i,
+  /\/page\/\d+/i,
+  /offres?-emploi\/?$/i,
+  /offres?-de-stages?\/?$/i,
+  /offres?-d-emploi/i,
+  /emplois?-annonces/i,
+  /nos-offres-emploi/i,
+  /recherche-jobs-burkina/i,
+  /\?page=offres/i,
+];
+
+const detailUrlPatternsBySource = {
+  bfemploi: [/annonce-details-\d+/i],
+  "travail-burkina": [/travail-burkina\.com\/(?!category\/)(?!offres-emploi\/?$)(?!offres-de-stages\/?$)[^?#]+\/?$/i],
+  "lefaso-recrutement": [/emploi\.lefaso\.net\/(?!\?page=offres)(?!-Conseil-du-recruteur-)(?!Les-entreprises-qui-recrutent-en-ce-moment)(?!Nos-partenaires)[^?#]+\.html$/i],
+  "rmo-burkina": [/rmo-jobcenter\.com\/fr\/burkina-faso\/offres-emploi\/[^?#]+\.html$/i],
+};
+
+const genericDetailUrlPatterns = [
+  /annonce-details-\d+/i,
+  /vacanc(?:y|ies)\/\d+/i,
+  /offres?-emploi\/[^?#]+\.html$/i,
+  /\/jobs?\/[^/?#]+/i,
+  /\/job\/[^/?#]+/i,
+  /\/\d{4}\/\d{2}\/[^/?#]+\/?$/i,
+];
 
 const monthNumbers = {
   jan: "01",
@@ -112,6 +180,10 @@ function absolutizeUrl(href, baseUrl) {
   } catch {
     return "";
   }
+}
+
+function cleanNavigableUrl(url = "") {
+  return String(url || "").replace(/#.*$/, "").replace(/\?utm_[^#]+/gi, "").trim();
 }
 
 function imageAttributes(html) {
@@ -283,23 +355,50 @@ async function loadSources() {
   return JSON.parse(await readFile(SOURCES_FILE, "utf8"));
 }
 
+async function readPreviousItems() {
+  try {
+    return JSON.parse(await readFile(OUTPUT_FILE, "utf8"));
+  } catch {
+    return [];
+  }
+}
+
 async function fetchText(url) {
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 12000);
+  let lastError = null;
 
-  const response = await fetch(url, {
-    signal: controller.signal,
-    headers: {
-      "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-      "user-agent": USER_AGENT,
-    },
-  }).finally(() => clearTimeout(timeout));
+  for (let attempt = 1; attempt <= FETCH_RETRIES; attempt += 1) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
 
-  if (!response.ok) {
-    throw new Error(`HTTP ${response.status} ${response.statusText}`);
+    try {
+      const response = await fetch(url, {
+        signal: controller.signal,
+        headers: {
+          "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+          "accept-language": "fr-FR,fr;q=0.9,en;q=0.8",
+          "user-agent": USER_AGENT,
+        },
+      });
+
+      if (!response.ok) {
+        if (attempt < FETCH_RETRIES && response.status >= 500) {
+          await sleep(450 * attempt);
+          continue;
+        }
+        throw new Error(`HTTP ${response.status} ${response.statusText}`);
+      }
+
+      return await response.text();
+    } catch (error) {
+      lastError = error;
+      if (attempt >= FETCH_RETRIES) break;
+      await sleep(500 * attempt);
+    } finally {
+      clearTimeout(timeout);
+    }
   }
 
-  return response.text();
+  throw lastError || new Error("fetch failed");
 }
 
 function parseRobots(text) {
@@ -400,7 +499,57 @@ function extractJsonLdJobs(html, source) {
   return jobs;
 }
 
-function extractLikelyJobLinks(html, source, sourceLogoUrl = "") {
+function sourceTargetsBurkina(source = {}) {
+  return /burkina/.test(normalize(`${source.id} ${source.name} ${source.url} ${source.notes}`));
+}
+
+function isGenericListingLabel(label = "") {
+  const cleanLabel = decodeHtml(String(label || "")).replace(/\s+/g, " ").trim();
+  return listingLabelPatterns.some((pattern) => pattern.test(cleanLabel));
+}
+
+function isListingLikeUrl(url = "") {
+  return listingUrlPatterns.some((pattern) => pattern.test(String(url || "")));
+}
+
+function isLikelyDetailUrl(url = "", source = {}) {
+  const patterns = detailUrlPatternsBySource[source.id] || genericDetailUrlPatterns;
+  if (patterns.some((pattern) => pattern.test(url))) return true;
+  if (isListingLikeUrl(url)) return false;
+  return /\/[^/?#]{18,}$/i.test(String(url || ""));
+}
+
+function linkMatchesSourceTerritory(url, source) {
+  if (!sourceTargetsBurkina(source)) return true;
+  const lowered = String(url || "").toLowerCase();
+  if (lowered.includes("/fr/fr/")) return false;
+  return !nonBurkinaUrlPattern.test(lowered);
+}
+
+function buildRawItem({ source, title, url, sourceLogoUrl = "" }) {
+  return {
+    id: fingerprint([source.id, title, url]),
+    sourceId: source.id,
+    sourceName: source.name,
+    sourceUrl: source.url,
+    sourceLogoUrl,
+    title: title.slice(0, 160),
+    company: source.name,
+    city: "Burkina Faso",
+    deadline: "",
+    openingDate: "",
+    closingDate: "",
+    companyLogoUrl: "",
+    url,
+    category: "A classer",
+    status: "needs_review",
+    excerpt: "",
+    collectedAt: new Date().toISOString(),
+  };
+}
+
+function extractLikelyJobLinks(html, source, sourceLogoUrl = "", options = {}) {
+  const { baseUrl = source.url, nestedContext = false } = options;
   const links = [...html.matchAll(/<a\s+[^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi)];
   const keywords = /(emploi|job|recrut|concours|stage|candidature|offre|career|carriere)/i;
   const blockedLabel = /(inscription|connexion|newsletter|deposer|deposez|publier|candidat|recruteur|conditions|telechargement|formation|freelance|voir plus|toutes les annonces|skip to main content|clear filters|all jobs|closing soon|remote\s*\/\s*roster\s*\/\s*roving|sort by|filter|reset)/i;
@@ -409,7 +558,7 @@ function extractLikelyJobLinks(html, source, sourceLogoUrl = "") {
 
   for (const [, href, labelHtml] of links) {
     const label = stripHtml(labelHtml);
-    const url = absolutizeUrl(href, source.url);
+    const url = cleanNavigableUrl(absolutizeUrl(href, baseUrl));
     const haystack = `${label} ${url}`;
     const normalizedUrl = normalize(url);
     const includeUrl = source.includeUrl || [];
@@ -417,32 +566,48 @@ function extractLikelyJobLinks(html, source, sourceLogoUrl = "") {
     const included = !includeUrl.length || includeUrl.some((pattern) => normalizedUrl.includes(normalize(pattern)));
     const excluded = excludeUrl.some((pattern) => normalizedUrl.includes(normalize(pattern)));
 
-    if (!url || !label || label.length < 8 || !keywords.test(haystack)) continue;
+    if (!url || !label || label.length < 8) continue;
+    if (!linkMatchesSourceTerritory(url, source)) continue;
     if (blockedUrl.test(url)) continue;
-    if (blockedLabel.test(label) || !included || excluded) continue;
+    if (blockedLabel.test(label) || blockedNestedLabelPatterns.some((pattern) => pattern.test(label)) || !included || excluded) continue;
 
-    items.push({
-      id: fingerprint([source.id, label, url]),
-      sourceId: source.id,
-      sourceName: source.name,
-      sourceUrl: source.url,
-      sourceLogoUrl,
-      title: label.slice(0, 160),
-      company: source.name,
-      city: "Burkina Faso",
-      deadline: "",
-      openingDate: "",
-      closingDate: "",
-      companyLogoUrl: "",
-      url,
-      category: "A classer",
-      status: "needs_review",
-      excerpt: "",
-      collectedAt: new Date().toISOString(),
-    });
+    if (nestedContext) {
+      if (isGenericListingLabel(label)) continue;
+      if (!isLikelyDetailUrl(url, source)) continue;
+    } else {
+      if (!keywords.test(haystack)) continue;
+    }
+
+    items.push(buildRawItem({ source, title: label, url, sourceLogoUrl }));
   }
 
   return items;
+}
+
+async function expandListingItems(source, items, sourceLogoUrl = "") {
+  const expansionLimit = LISTING_EXPANSION_BY_SOURCE[source.id] || LISTING_EXPANSION_LIMIT;
+  const listingItems = items.filter(
+    (item) => isGenericListingLabel(item.title) || isListingLikeUrl(item.url) || cleanNavigableUrl(item.url) === cleanNavigableUrl(source.url)
+  );
+  const nested = [];
+  const visited = new Set();
+
+  for (const item of listingItems.slice(0, expansionLimit)) {
+    const targetUrl = cleanNavigableUrl(item.url);
+    if (!targetUrl || visited.has(targetUrl)) continue;
+    visited.add(targetUrl);
+
+    try {
+      if (!(await isRobotsAllowed(targetUrl))) continue;
+      await sleep(REQUEST_DELAY_MS);
+      const html = await fetchText(targetUrl);
+      nested.push(...extractLikelyJobLinks(html, source, sourceLogoUrl, { baseUrl: targetUrl, nestedContext: true }));
+    } catch {
+      // Ignore a failed listing expansion and keep the base result set.
+    }
+  }
+
+  return nested;
 }
 
 async function enrichDetails(items) {
@@ -478,9 +643,10 @@ async function collectSource(source) {
   const sourceLogoUrl = source.logoUrl || extractLogoUrl(html, source.url, source.name) || extractOpenGraphImage(html, source.url);
   const structuredJobs = extractJsonLdJobs(html, source);
   const likelyLinks = extractLikelyJobLinks(html, source, sourceLogoUrl);
+  const expandedLinks = await expandListingItems(source, likelyLinks, sourceLogoUrl);
   const byId = new Map();
 
-  for (const item of [...structuredJobs, ...likelyLinks]) {
+  for (const item of [...structuredJobs, ...likelyLinks, ...expandedLinks]) {
     byId.set(item.id, { ...item, sourceLogoUrl: item.sourceLogoUrl || sourceLogoUrl });
   }
 
@@ -489,28 +655,42 @@ async function collectSource(source) {
 
 async function main() {
   const sources = await loadSources();
+  const previousItems = await readPreviousItems();
+  const previousBySourceId = previousItems.reduce((map, item) => {
+    const key = normalize(item.sourceId);
+    if (!key) return map;
+    if (!map.has(key)) map.set(key, []);
+    map.get(key).push(item);
+    return map;
+  }, new Map());
   const allItems = [];
   const errors = [];
+  let staleSources = 0;
+  let succeeded = 0;
 
   for (const source of sources) {
     try {
       const items = await collectSource(source);
       allItems.push(...items);
+      succeeded += 1;
       console.log(`${source.name}: ${items.length} item(s)`);
     } catch (error) {
       errors.push({ source: source.name, message: error.message });
+      const previousForSource = (previousBySourceId.get(normalize(source.id)) || []).map((item) => ({
+        ...item,
+        stale: true,
+        staleReason: error.message,
+        refreshedAt: new Date().toISOString(),
+      }));
+      if (previousForSource.length) {
+        allItems.push(...previousForSource);
+        staleSources += 1;
+      }
       console.warn(`${source.name}: ${error.message}`);
     }
   }
 
   const uniqueItems = [...new Map(allItems.map((item) => [item.id, item])).values()];
-  let previousItems = [];
-
-  try {
-    previousItems = JSON.parse(await readFile(OUTPUT_FILE, "utf8"));
-  } catch {
-    previousItems = [];
-  }
 
   if (!uniqueItems.length && previousItems.length) {
     console.warn("Collecte vide: conservation du precedent fichier raw-items.json.");
@@ -527,6 +707,10 @@ async function main() {
       {
         generatedAt: new Date().toISOString(),
         sources: sources.length,
+        succeeded,
+        failed: errors.length,
+        staleSources,
+        manualOnlySources: sources.filter((source) => source.collection === "manual_only").length,
         collectedItems: allItems.length,
         uniqueItems: uniqueItems.length,
         errorCount: errors.length,

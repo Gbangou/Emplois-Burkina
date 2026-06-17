@@ -288,6 +288,16 @@ function countBy(items, getter) {
   }, {});
 }
 
+function isExpiredJob(job) {
+  if (job?.expired) return true;
+  if (!job?.closingDate) return false;
+  const target = new Date(`${String(job.closingDate).slice(0, 10)}T23:59:59`);
+  if (Number.isNaN(target.getTime())) return false;
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return target < today;
+}
+
 function publicConfig(config) {
   return {
     siteName: config.siteName,
@@ -313,6 +323,7 @@ function summarizeJobs(jobs) {
     total: jobs.length,
     withClosingDate: jobs.filter((job) => job.closingDate).length,
     needsReview: jobs.filter((job) => job.status === "needs_review").length,
+    expired: jobs.filter((job) => isExpiredJob(job)).length,
     sources: Object.keys(sourceCounts).length,
     categories: Object.entries(categoryCounts).sort((a, b) => b[1] - a[1]),
     cities: Object.entries(cityCounts).sort((a, b) => b[1] - a[1]),
@@ -764,12 +775,14 @@ async function handleApi(req, res, url) {
     const category = cleanText(url.searchParams.get("category") || "", 80);
     const status = cleanText(url.searchParams.get("status") || "", 40);
     const includeRejected = url.searchParams.get("includeRejected") === "true";
+    const includeExpired = url.searchParams.get("includeExpired") === "true";
     const filtered = jobs.filter((job) => {
       const haystack = [job.title, job.company, job.city, job.category, job.type, job.sourceName, ...(job.tags || [])]
         .join(" ")
         .toLowerCase();
       return (
         (includeRejected || job.status !== "rejected") &&
+        (includeExpired || !isExpiredJob(job)) &&
         (!status || job.status === status) &&
         (!query || haystack.includes(query)) &&
         (!city || job.city === city) &&
@@ -780,8 +793,10 @@ async function handleApi(req, res, url) {
     sendJson(res, 200, {
       jobs: filtered,
       total: jobs.length,
+      active: jobs.filter((job) => !isExpiredJob(job) && job.status !== "rejected").length,
       sources: [...new Set(jobs.map((job) => job.sourceName).filter(Boolean))].length,
       withClosingDate: jobs.filter((job) => job.closingDate).length,
+      expired: jobs.filter((job) => isExpiredJob(job)).length,
     });
     return;
   }

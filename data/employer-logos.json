@@ -1,20 +1,29 @@
 [
   {
+    "name": "HumanitaireHub",
+    "logoUrl": "https://humanitairehub.com/favicon.ico",
+    "sector": "ONG",
+    "profileUrl": "https://humanitairehub.com/emploi/responsable-de-la-logistique-et-des-infrastructures-kbnp/",
+    "sourceName": "HumanitaireHub",
+    "jobs": 18,
+    "updatedAt": "2026-06-17T17:59:31.077Z"
+  },
+  {
     "name": "BFemploi",
     "logoUrl": "https://www.bfemploi.com/fouskoki/bfemploi/img/logo.png",
     "sector": "ONG",
     "profileUrl": "https://www.bfemploi.com/annonce-details-3866.html",
     "sourceName": "BFemploi",
-    "jobs": 7,
-    "updatedAt": "2026-06-16T09:27:57.141Z"
+    "jobs": 6,
+    "updatedAt": "2026-06-17T17:57:57.682Z"
   },
   {
-    "name": "HumanitaireHub",
-    "logoUrl": "https://humanitairehub.com/wp-content/uploads/2026/04/logo-navbar-1.svg",
-    "sector": "Transport et logistique",
-    "profileUrl": "https://humanitairehub.com/emploi/charge-de-securite-et-logistique-national/",
-    "sourceName": "HumanitaireHub",
-    "jobs": 2,
-    "updatedAt": "2026-06-16T09:29:49.907Z"
+    "name": "UN Talent Burkina Faso",
+    "logoUrl": "https://untalent.org/assets/img/logo.svg",
+    "sector": "Bureau",
+    "profileUrl": "https://untalent.org/jobs/clinicien-kaya-regional-office",
+    "sourceName": "UN Talent Burkina Faso",
+    "jobs": 4,
+    "updatedAt": "2026-06-17T17:59:58.874Z"
   }
 ]

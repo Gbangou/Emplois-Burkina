@@ -62,15 +62,19 @@ const fallbackJobs = [
 ];
 
 let jobs = [];
+let baseJobs = [];
 let sources = [];
 let employerLogos = [];
 let internationalFeeds = [];
 let sourceIndex = new Map();
+let jobSearchCache = new Map();
 let activeCategory = "";
 let activeJobId = "";
 let currentJobsPage = 1;
 let wordCloudAnimationFrame = 0;
+let jobsRenderTimer = 0;
 let savedJobs = new Set(JSON.parse(localStorage.getItem("jobfaso.savedJobs") || "[]"));
+const institutionFeedControllers = new WeakMap();
 const WHATSAPP_NUMBER = "";
 const LEADS_KEY = "jobfaso.leads";
 const EVENTS_KEY = "jobfaso.events";
@@ -123,6 +127,11 @@ const categoryStats = document.querySelector("#categoryStats");
 const regionStats = document.querySelector("#regionStats");
 const heroJobCount = document.querySelector("#heroJobCount");
 const heroTrustedCount = document.querySelector("#heroTrustedCount");
+const adminJobSearchInput = document.querySelector("#adminJobSearchInput");
+const adminJobStatusFilter = document.querySelector("#adminJobStatusFilter");
+const adminJobSourceFilter = document.querySelector("#adminJobSourceFilter");
+const adminJobDateFilter = document.querySelector("#adminJobDateFilter");
+const adminJobsFilterSummary = document.querySelector("#adminJobsFilterSummary");
 
 const demoProfiles = [
   {
@@ -165,6 +174,13 @@ function normalize(value = "") {
     .toLowerCase()
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "");
+}
+
+function tokenizeNormalized(value = "") {
+  return normalize(value)
+    .split(/[^a-z0-9]+/i)
+    .map((token) => token.trim())
+    .filter((token) => token.length >= 2);
 }
 
 const SEARCH_EQUIVALENTS = {
@@ -244,6 +260,41 @@ const SOURCE_SPOTLIGHTS = [
     limit: 12,
   },
   {
+    id: "international_tech",
+    anchor: "international-tech",
+    eyebrow: "Tech internationale",
+    title: "Informatique, data, systemes et cyber",
+    description:
+      "Selection orientee IT, data, infrastructure, support, cloud et cyber, issue de portails officiels internationaux, onusiens et ONG. Eligibilite exacte a relire sur chaque fiche source.",
+    segments: ["international_onu", "consulting_remote"],
+    sourceTypes: ["multilateral", "organization", "ngo"],
+    keywords: ["IT", "Data", "Systemes", "Cloud", "Cyber", "Digital"],
+    actionHref: "jobs.html?focus=onu-consultance&q=informatique",
+    actionLabel: "Explorer les offres tech",
+    searchShortcuts: [
+      {
+        label: "Informatique",
+        note: "Support IT, admin systeme, reseau, digital, infrastructure.",
+        query: "informatique",
+        focus: "onu-consultance",
+      },
+      {
+        label: "Data",
+        note: "Data analyst, BI, SQL, information management, reporting technique.",
+        query: "data",
+        focus: "onu-consultance",
+      },
+      {
+        label: "Cyber / systemes",
+        note: "Cybersecurite, cloud, systemes, securite de l'information.",
+        query: "cybersecurite",
+        focus: "onu-consultance",
+      },
+    ],
+    limit: 12,
+    mode: "tech",
+  },
+  {
     id: "consulting_remote",
     anchor: "consulting-remote",
     eyebrow: "Travail flexible",
@@ -305,7 +356,181 @@ const SPECIAL_JOB_FILTERS = {
       "freelance",
     ],
   },
+  "metiers informels": {
+    segments: [],
+    keywords: [
+      "informel",
+      "terrain",
+      "artisan",
+      "chauffeur",
+      "conducteur",
+      "vendeur",
+      "vendeuse",
+      "macon",
+      "plombier",
+      "soudeur",
+      "electricien",
+      "menuisier",
+      "gardien",
+      "vigile",
+      "ouvrier",
+      "livreur",
+      "caissier",
+      "cuisinier",
+      "couturier",
+      "coiffeur",
+      "chantier",
+    ],
+  },
+  informatique: {
+    segments: ["international_onu", "consulting_remote"],
+    keywords: [
+      "informatique",
+      "ict",
+      "data",
+      "digital",
+      "systeme",
+      "systemes",
+      "cloud",
+      "cyber",
+      "developer",
+      "developpeur",
+      "sql",
+      "power bi",
+      "support it",
+      "it support",
+      "reseau",
+      "telecom",
+      "software",
+      "database",
+      "meal",
+      "monitoring",
+      "evaluation",
+    ],
+  },
 };
+
+const INTERNATIONAL_TECH_PATTERNS = [
+  /\bict\b/,
+  /\bit support\b/,
+  /\bit assistant\b/,
+  /\bit officer\b/,
+  /\bit manager\b/,
+  /\bit operations?\b/,
+  /\boperations? informatiques?\b/,
+  /\binformation technology\b/,
+  /\binformation management\b/,
+  /\binformation security\b/,
+  /\binformation officer\b/,
+  /\binformation manager\b/,
+  /\beducational technology\b/,
+  /\bdigital pedagog(?:y|ies)\b/,
+  /\binformatique\b/,
+  /\bdata science\b/,
+  /\bdata scientist\b/,
+  /\bdata analyst\b/,
+  /\bdata engineer\b/,
+  /\bdata manager\b/,
+  /\bbusiness intelligence\b/,
+  /\bdatabase\b/,
+  /\bdatabase administrator\b/,
+  /\bsql\b/,
+  /\bpower bi\b/,
+  /\bdigital\b/,
+  /\bsoftware\b/,
+  /\bapplication support\b/,
+  /\bdeveloper\b/,
+  /\bdeveloppeur\b/,
+  /\bengineer\b/,
+  /\bdevops\b/,
+  /\bcloud\b/,
+  /\binfrastructure\b/,
+  /\bhelp desk\b/,
+  /\bit support\b/,
+  /\btechnical support\b/,
+  /\bnetwork\b/,
+  /\breseau\b/,
+  /\btelecom\b/,
+  /\bsystem administrator\b/,
+  /\badministrateur systeme\b/,
+  /\badministrateur reseau\b/,
+  /\bcyber\b/,
+  /\bcybersecurity\b/,
+  /\bcybersecurite\b/,
+  /\bsecurity analyst\b/,
+  /\bsecurity engineer\b/,
+];
+
+const INTERNATIONAL_ELIGIBILITY_BLOCKERS = [
+  /\binternal candidates only\b/,
+  /\bstaff only\b/,
+  /\bonly for [a-z\s-]+ nationals\b/,
+  /\bmust be a citizen\b/,
+  /\bfor nationals of\b/,
+];
+
+const INTERNATIONAL_TECH_TITLE_PATTERNS = [
+  /\bit support\b/,
+  /\bit assistant\b/,
+  /\bit officer\b/,
+  /\bit manager\b/,
+  /\bit operations?\b/,
+  /\boperations? informatiques?\b/,
+  /\binformation technology\b/,
+  /\beducational technology\b/,
+  /\bdigital pedagog(?:y|ies)\b/,
+  /\binformatique\b/,
+  /\bdata science\b/,
+  /\bdata scientist\b/,
+  /\bdata analyst\b/,
+  /\bdata engineer\b/,
+  /\bdata manager\b/,
+  /\bbusiness intelligence\b/,
+  /\bdatabase\b/,
+  /\bdatabase administrator\b/,
+  /\bsql\b/,
+  /\bpower bi\b/,
+  /\bdigital\b/,
+  /\bsoftware\b/,
+  /\bapplication support\b/,
+  /\bdeveloper\b/,
+  /\bdeveloppeur\b/,
+  /\bdevops\b/,
+  /\bcloud\b/,
+  /\binfrastructure\b/,
+  /\bhelp desk\b/,
+  /\btechnical support\b/,
+  /\bnetwork\b/,
+  /\breseau\b/,
+  /\btelecom\b/,
+  /\bsystem administrator\b/,
+  /\badministrateur systeme\b/,
+  /\badministrateur reseau\b/,
+  /\bcyber\b/,
+  /\bcybersecurity\b/,
+  /\bcybersecurite\b/,
+  /\bsecurity analyst\b/,
+  /\bsecurity engineer\b/,
+];
+
+const INTERNATIONAL_TECH_EXCLUSION_PATTERNS = [
+  /\bclinicien\b/,
+  /\bepidemiologiste\b/,
+  /\bmalaria\b/,
+  /\bnutrition\b/,
+  /\bwash\b/,
+  /\bprotection\b/,
+  /\blogistics?\b/,
+  /\bapprovisionnement\b/,
+  /\bprocurement\b/,
+  /\bhuman resources\b/,
+  /\bfinance\b/,
+  /\bcommunication officer\b/,
+  /\bproject officer\b/,
+  /\bprogramme associate\b/,
+  /\bprogramme assistant\b/,
+  /\bmonitoring intern\b/,
+];
 
 function readStorageArray(key) {
   try {
@@ -346,8 +571,380 @@ function sortSourcesByPriority(list = []) {
     .sort((a, b) => a.priority - b.priority || a.name.localeCompare(b.name, "fr"));
 }
 
+function getVerifiedSourceCount(list = sources) {
+  return list.filter((source) => ["official_link", "review_required"].includes(source?.collection)).length;
+}
+
 function getInternationalFeed(sourceId = "") {
   return internationalFeeds.find((feed) => normalize(feed.sourceId) === normalize(sourceId)) || null;
+}
+
+function getFeedJobAgeDays(job = {}) {
+  const reference = job.openingDate || String(job.updatedAt || job.collectedAt || "").slice(0, 10);
+  if (!reference) return null;
+  const date = new Date(`${String(reference).slice(0, 10)}T00:00:00`);
+  if (Number.isNaN(date.getTime())) return null;
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return Math.floor((today - date) / 86_400_000);
+}
+
+function isExpiredFeedJob(job = {}) {
+  if (job?.expired) return true;
+  if (!job?.closingDate) return false;
+  return daysUntil(job.closingDate) < 0;
+}
+
+function isStaleFeedJob(job = {}) {
+  if (job?.closingDate) return false;
+  const ageDays = getFeedJobAgeDays(job);
+  return typeof ageDays === "number" && ageDays > 21;
+}
+
+function isVisibleFeedJob(job = {}) {
+  return !isExpiredFeedJob(job) && !isStaleFeedJob(job);
+}
+
+function sortFeedJobs(list = []) {
+  return list
+    .slice()
+    .sort((a, b) => {
+      const hasClosingA = Boolean(a?.closingDate);
+      const hasClosingB = Boolean(b?.closingDate);
+      if (hasClosingA !== hasClosingB) return Number(hasClosingB) - Number(hasClosingA);
+
+      if (hasClosingA && hasClosingB) {
+        const remainingA = daysUntil(a.closingDate);
+        const remainingB = daysUntil(b.closingDate);
+        if (remainingA !== remainingB) return remainingA - remainingB;
+      }
+
+      const openingA = String(a?.openingDate || "");
+      const openingB = String(b?.openingDate || "");
+      if (openingA !== openingB) return openingB.localeCompare(openingA);
+
+      return String(a?.title || "").localeCompare(String(b?.title || ""), "fr");
+    });
+}
+
+function countFeedJobsWithDates(list = []) {
+  return list.filter((job) => job?.openingDate || job?.closingDate).length;
+}
+
+function getFeedMonitoringState(feed = {}) {
+  const jobs = Array.isArray(feed?.jobs) ? feed.jobs : [];
+  const visibleJobs = jobs.filter(isVisibleFeedJob);
+  return {
+    visibleCount: visibleJobs.length,
+    datedCount: countFeedJobsWithDates(visibleJobs),
+    hasError: Boolean(feed?.error),
+    isStale: Boolean(feed?.stale),
+    hasLiveSync: Boolean(visibleJobs.length) && !feed?.error && !feed?.stale,
+  };
+}
+
+function getRenderableFeedJobs(feed = {}, limit = 10) {
+  const jobs = Array.isArray(feed?.jobs) ? feed.jobs : [];
+  const visible = sortFeedJobs(jobs.filter(isVisibleFeedJob)).slice(0, limit);
+  const archived = sortFeedJobs(jobs.filter((job) => !isVisibleFeedJob(job)));
+  return { visible, archived };
+}
+
+function getFeedPortalState(feed = {}) {
+  const status = normalize(feed?.portalStatus || "");
+  if (["maintenance", "unavailable", "unreachable"].includes(status)) {
+    return {
+      unavailable: true,
+      status,
+      message:
+        feed?.statusMessage ||
+        "Le portail externe est temporairement indisponible. JobFaso garde la reference visible mais suspend l'ouverture directe.",
+    };
+  }
+
+  return {
+    unavailable: false,
+    status: status || "available",
+    message: "",
+  };
+}
+
+function daysSince(value) {
+  if (!value) return null;
+  const target = new Date(`${String(value).slice(0, 10)}T00:00:00`);
+  if (Number.isNaN(target.getTime())) return null;
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return Math.floor((today - target) / 86_400_000);
+}
+
+function isPublicSearchableFeedJob(job = {}) {
+  return isVisibleFeedJob(job) && Boolean(job?.title) && Boolean(job?.url);
+}
+
+function inferPublicCategoryFromFeedJob(job = {}, source = {}) {
+  const text = normalize([job.title, job.location, job.contract, job.excerpt].filter(Boolean).join(" "));
+  if (INTERNATIONAL_TECH_PATTERNS.some((pattern) => pattern.test(text))) return "Informatique, data et systemes";
+  if (/consultant|consultance|consultation|roster|call for|proposal/.test(text)) return "Consultation";
+  if (/terrain|driver|chauffeur|artisan|ma[çc]on|mason|soudeur|ouvrier|plombier|electricien|gardien|vigile/.test(text)) {
+    return "Metiers terrain et informels";
+  }
+  if (sourceHasSegment(source, "international_onu")) return "ONG";
+  return "Bureau";
+}
+
+function inferPublicTypeFromFeedJob(job = {}) {
+  const text = normalize([job.title, job.contract, job.excerpt].filter(Boolean).join(" "));
+  if (/consultant|consultance|consultation/.test(text)) return "Consultation";
+  if (/intern|internship|stage|stagiaire/.test(text)) return "Stage";
+  if (/volunteer|volontaire/.test(text)) return "Volontariat";
+  if (/remote|teletravail/.test(text)) return "Teletravail";
+  return job.contract || "A verifier";
+}
+
+function buildFeedJobTags(job = {}, source = {}, category = "", city = "") {
+  return [
+    category,
+    city,
+    source.name || "",
+    ...(sourceHasSegment(source, "international_onu") ? ["International", "ONU / ONG"] : []),
+    ...(sourceHasSegment(source, "consulting_remote") ? ["Consultance", "Teletravail"] : []),
+  ]
+    .filter(Boolean)
+    .slice(0, 8);
+}
+
+function normalizeFeedJobAsPublicJob(job = {}, feed = {}) {
+  const source = sourceIndex.get(normalize(feed.name)) || sources.find((entry) => normalize(entry.id) === normalize(feed.sourceId)) || {
+    id: feed.sourceId,
+    name: feed.name,
+    collection: feed.collection,
+    type: feed.type,
+    url: feed.url,
+  };
+  const category = inferPublicCategoryFromFeedJob(job, source);
+  const city = job.location || (sourceHasSegment(source, "consulting_remote") ? "Teletravail" : "International");
+
+  return {
+    id: `intl-${job.id || normalize(`${feed.sourceId}-${job.title}-${job.url}`)}`,
+    title: job.title,
+    company: source.name || feed.name || "Source internationale",
+    city,
+    category,
+    type: inferPublicTypeFromFeedJob(job),
+    salary: "Non communique",
+    deadline: job.closingDate ? formatJobDate(job.closingDate, "A verifier") : "A verifier",
+    openingDate: job.openingDate || "",
+    closingDate: job.closingDate || "",
+    openingDateConfirmed: Boolean(job.openingDate),
+    closingDateConfirmed: Boolean(job.closingDate),
+    inconsistentDates: false,
+    sourceName: source.name || feed.name || "",
+    sourceUrl: job.url || source.url || feed.url || "#",
+    canonicalUrl: job.url || source.url || feed.url || "#",
+    sourceLogoUrl: source.logoUrl || "",
+    companyLogoUrl: source.logoUrl || "",
+    riskScore: 0,
+    confidenceScore: 72 + (job.closingDate ? 10 : 0) + (job.openingDate ? 8 : 0),
+    tags: buildFeedJobTags(job, source, category, city),
+    status: "needs_review",
+    excerpt: job.excerpt || "",
+    collectedAt: feed.updatedAt || new Date().toISOString(),
+    sourceLabel: job.sourceLabel || "",
+    fromInternationalFeed: true,
+  };
+}
+
+function mergePublicJobs(baseList = []) {
+  const byCanonical = new Map();
+  const merged = [];
+
+  for (const job of baseList) {
+    const key = normalize(job.canonicalUrl || job.sourceUrl || job.id);
+    if (!key || byCanonical.has(key)) continue;
+    byCanonical.set(key, job.id);
+    merged.push(job);
+  }
+
+  for (const feed of internationalFeeds) {
+    for (const job of (feed.jobs || []).filter(isPublicSearchableFeedJob)) {
+      const normalizedJob = normalizeFeedJobAsPublicJob(job, feed);
+      const key = normalize(normalizedJob.canonicalUrl || normalizedJob.sourceUrl || normalizedJob.id);
+      if (!key || byCanonical.has(key)) continue;
+      byCanonical.set(key, normalizedJob.id);
+      merged.push(normalizedJob);
+    }
+  }
+
+  return merged;
+}
+
+function buildJobSearchCache(list = []) {
+  return new Map(
+    list.map((job) => [
+      job.id,
+      {
+        searchable: getJobSearchableText(job),
+        titleTokens: tokenizeNormalized(`${job.title} ${job.company}`),
+        companyTokens: tokenizeNormalized(job.company),
+        cityTokens: tokenizeNormalized(job.city),
+        categoryTokens: tokenizeNormalized(job.category),
+        typeTokens: tokenizeNormalized(job.type),
+        sourceTokens: tokenizeNormalized(job.sourceName),
+        tagTokens: tokenizeNormalized((job.tags || []).join(" ")),
+        excerptTokens: tokenizeNormalized(job.excerpt),
+      },
+    ])
+  );
+}
+
+function isLikelyInternationallyEligible(job = {}) {
+  const text = normalize([job.title, job.location, job.contract, job.excerpt].filter(Boolean).join(" "));
+  return !INTERNATIONAL_ELIGIBILITY_BLOCKERS.some((pattern) => pattern.test(text));
+}
+
+function isInternationalTechJob(job = {}) {
+  const title = normalize(job.title || "");
+  if (!title) return false;
+  if (INTERNATIONAL_TECH_EXCLUSION_PATTERNS.some((pattern) => pattern.test(title))) return false;
+  return INTERNATIONAL_TECH_TITLE_PATTERNS.some((pattern) => pattern.test(title));
+}
+
+function isFreshSpotlightJob(job = {}, maxAgeDays = 90) {
+  const closingIn = daysUntil(job.closingDate);
+  if (typeof closingIn === "number" && closingIn < 0) return false;
+
+  const openingAge = daysSince(job.openingDate);
+  if (typeof openingAge === "number") return openingAge <= maxAgeDays;
+
+  const closingAge = daysSince(job.closingDate);
+  if (typeof closingAge === "number") return closingAge <= maxAgeDays;
+
+  return true;
+}
+
+function matchesSpotlightFeedJob(job = {}, spotlight = {}) {
+  if (spotlight.mode === "tech") {
+    return isLikelyInternationallyEligible(job) && isFreshSpotlightJob(job) && isInternationalTechJob(job);
+  }
+  return true;
+}
+
+function getSpotlightFeedJobs(source, spotlight, limit = 10) {
+  const feed = getInternationalFeed(source?.id);
+  if (spotlight?.mode === "tech" && (feed?.stale || feed?.error)) return [];
+  const { visible } = getRenderableFeedJobs(feed, Math.max(limit * 4, limit));
+  return visible.filter((job) => matchesSpotlightFeedJob(job, spotlight)).slice(0, limit);
+}
+
+function sortSourcesForSpotlight(list = [], spotlight = {}) {
+  const uniqueSources = [];
+  const seen = new Set();
+  list.forEach((source) => {
+    const key = normalize(source?.id || source?.name);
+    if (!key || seen.has(key)) return;
+    seen.add(key);
+    uniqueSources.push(source);
+  });
+
+  return uniqueSources
+    .slice()
+    .sort((a, b) => {
+      const feedA = getInternationalFeed(a.id);
+      const feedB = getInternationalFeed(b.id);
+      const jobsA = getSpotlightFeedJobs(a, spotlight, 10);
+      const jobsB = getSpotlightFeedJobs(b, spotlight, 10);
+      const scoreA =
+        jobsA.length * 10 +
+        countFeedJobsWithDates(jobsA) * 3 +
+        (a.collection === "review_required" ? 2 : a.collection === "official_link" ? 1 : 0) -
+        (feedA?.error ? 4 : 0) -
+        (feedA?.stale ? 2 : 0);
+      const scoreB =
+        jobsB.length * 10 +
+        countFeedJobsWithDates(jobsB) * 3 +
+        (b.collection === "review_required" ? 2 : b.collection === "official_link" ? 1 : 0) -
+        (feedB?.error ? 4 : 0) -
+        (feedB?.stale ? 2 : 0);
+      return scoreB - scoreA || a.priority - b.priority || a.name.localeCompare(b.name, "fr");
+    });
+}
+
+function collectSpotlightAggregateJobs(entries = [], limit = 10) {
+  const queue = entries
+    .map(({ source, feedJobs }) => ({
+      source,
+      jobs: (feedJobs || []).slice(),
+      index: 0,
+    }))
+    .filter((entry) => entry.jobs.length);
+
+  const selected = [];
+  const seen = new Set();
+
+  while (queue.length && selected.length < limit) {
+    for (let i = 0; i < queue.length && selected.length < limit; i += 1) {
+      const entry = queue[i];
+      const job = entry.jobs[entry.index];
+      entry.index += 1;
+      if (!job) continue;
+      const key = job.id || `${normalize(job.title)}::${normalize(job.url)}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      selected.push({
+        ...job,
+        sourceLabel: entry.source?.name || job.sourceName || "",
+      });
+    }
+
+    for (let i = queue.length - 1; i >= 0; i -= 1) {
+      if (queue[i].index >= queue[i].jobs.length) queue.splice(i, 1);
+    }
+  }
+
+  return selected;
+}
+
+function collectPublicSpotlightJobs(spotlight = {}, limit = 10) {
+  const segments = Array.isArray(spotlight.segments) && spotlight.segments.length ? spotlight.segments : [spotlight.id];
+  const seen = new Set();
+  return jobs
+    .filter((job) => {
+      const source = getSourceRecord(job.sourceName);
+      return (
+        segments.some((segment) => sourceHasSegment(source, segment)) &&
+        (!spotlight.mode || matchesSpotlightFeedJob(job, spotlight))
+      );
+    })
+    .sort((a, b) => {
+      const hasClosingA = Boolean(a.closingDate);
+      const hasClosingB = Boolean(b.closingDate);
+      if (hasClosingA !== hasClosingB) return Number(hasClosingB) - Number(hasClosingA);
+      if (hasClosingA && hasClosingB) {
+        const daysA = daysUntil(a.closingDate);
+        const daysB = daysUntil(b.closingDate);
+        if (daysA !== daysB) return daysA - daysB;
+      }
+      return String(b.collectedAt || "").localeCompare(String(a.collectedAt || ""));
+    })
+    .filter((job) => {
+      const key = normalize(job.canonicalUrl || job.sourceUrl || job.id);
+      if (!key || seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    })
+    .slice(0, limit)
+    .map((job) => ({
+      id: job.id,
+      title: job.title,
+      url: job.sourceUrl || job.canonicalUrl,
+      location: job.city,
+      contract: job.type,
+      openingDate: job.openingDate,
+      closingDate: job.closingDate,
+      excerpt: job.excerpt,
+      sourceLabel: job.sourceName,
+    }));
 }
 
 function sortSpotlightSources(list = []) {
@@ -356,8 +953,8 @@ function sortSpotlightSources(list = []) {
     .sort((a, b) => {
       const feedA = getInternationalFeed(a.id);
       const feedB = getInternationalFeed(b.id);
-      const jobsA = Array.isArray(feedA?.jobs) ? feedA.jobs.length : 0;
-      const jobsB = Array.isArray(feedB?.jobs) ? feedB.jobs.length : 0;
+      const jobsA = getRenderableFeedJobs(feedA).visible.length;
+      const jobsB = getRenderableFeedJobs(feedB).visible.length;
       return jobsB - jobsA || a.priority - b.priority || a.name.localeCompare(b.name, "fr");
     });
 }
@@ -404,7 +1001,7 @@ function sourceReferenceDescriptor(source) {
     return {
       badge: "Lien officiel",
       actionLabel: "Ouvrir la reference officielle",
-      note: "Lien direct vers une source institutionnelle ou officielle citee par JobFaso.",
+      note: "Lien officiel.",
     };
   }
 
@@ -412,7 +1009,7 @@ function sourceReferenceDescriptor(source) {
     return {
       badge: "Veille humaine",
       actionLabel: "Ouvrir la reference citee",
-      note: "Annonce relayee depuis une veille humaine ou un partenaire. Relisez toujours la source d'origine avant de postuler.",
+      note: "Veille humaine.",
     };
   }
 
@@ -420,14 +1017,14 @@ function sourceReferenceDescriptor(source) {
     return {
       badge: "Source verifiee",
       actionLabel: "Ouvrir l'annonce source",
-      note: "Annonce issue d'une source suivie par JobFaso. Verifiez les pieces, contacts et delais sur la page source.",
+      note: "Source suivie.",
     };
   }
 
   return {
     badge: "Source citee",
     actionLabel: "Ouvrir la source",
-    note: "Relisez toujours l'annonce d'origine avant tout envoi de dossier ou paiement.",
+    note: "Source citee.",
   };
 }
 
@@ -436,10 +1033,7 @@ function getJobSourceDescriptor(job) {
 }
 
 function buildSearchGroups(query = "") {
-  const tokens = normalize(query)
-    .split(/\s+/)
-    .map((token) => token.trim())
-    .filter((token) => token.length >= 2);
+  const tokens = tokenizeNormalized(query);
 
   return tokens.map((token) => {
     const variants = new Set([token]);
@@ -455,11 +1049,59 @@ function buildSearchGroups(query = "") {
   });
 }
 
-function scoreTextAgainstGroups(text, groups, weight) {
-  if (!text) return 0;
+function boundedDistance(a = "", b = "", maxDistance = 1) {
+  if (!a || !b) return Number.MAX_SAFE_INTEGER;
+  if (Math.abs(a.length - b.length) > maxDistance) return Number.MAX_SAFE_INTEGER;
+  if (a === b) return 0;
+
+  const rows = Array.from({ length: a.length + 1 }, (_, index) => [index]);
+  for (let j = 1; j <= b.length; j += 1) rows[0][j] = j;
+
+  for (let i = 1; i <= a.length; i += 1) {
+    let rowMin = Number.MAX_SAFE_INTEGER;
+    for (let j = 1; j <= b.length; j += 1) {
+      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+      rows[i][j] = Math.min(rows[i - 1][j] + 1, rows[i][j - 1] + 1, rows[i - 1][j - 1] + cost);
+      rowMin = Math.min(rowMin, rows[i][j]);
+    }
+    if (rowMin > maxDistance) return Number.MAX_SAFE_INTEGER;
+  }
+
+  return rows[a.length][b.length];
+}
+
+function tokenMatchStrength(token, candidates = []) {
+  if (!token) return 0;
+  let best = 0;
+  for (const candidate of candidates) {
+    if (!candidate) continue;
+    if (candidate === token) return 1;
+    if (candidate.includes(token) || token.includes(candidate)) best = Math.max(best, 0.88);
+    if ((candidate.startsWith(token) || token.startsWith(candidate)) && Math.min(candidate.length, token.length) >= 4) {
+      best = Math.max(best, 0.78);
+    }
+    if (Math.min(candidate.length, token.length) >= 5 && boundedDistance(candidate, token, 1) <= 1) {
+      best = Math.max(best, 0.68);
+    }
+  }
+  return best;
+}
+
+function scoreTextAgainstGroups(text, groups, weight, fieldTokens = tokenizeNormalized(text)) {
+  if (!text && !fieldTokens.length) return 0;
   let score = 0;
   for (const group of groups) {
-    if (group.some((token) => text.includes(token))) score += weight;
+    let groupScore = 0;
+    for (const token of group) {
+      const normalizedToken = normalize(token);
+      if (!normalizedToken) continue;
+      if (text.includes(normalizedToken)) {
+        groupScore = Math.max(groupScore, 1);
+        continue;
+      }
+      groupScore = Math.max(groupScore, tokenMatchStrength(normalizedToken, fieldTokens));
+    }
+    score += Math.round(weight * groupScore);
   }
   return score;
 }
@@ -471,8 +1113,10 @@ function getJobSearchScore(job, query = "") {
   const groups = buildSearchGroups(normalizedQuery);
   if (!groups.length) return 0;
 
+  const cached = jobSearchCache.get(job.id);
+
   const fields = {
-    title: normalize(job.title),
+    title: cached?.searchable ? normalize(job.title) : normalize(job.title),
     company: normalize(job.company),
     city: normalize(job.city),
     category: normalize(job.category),
@@ -481,22 +1125,49 @@ function getJobSearchScore(job, query = "") {
     tags: normalize((job.tags || []).join(" ")),
     excerpt: normalize(job.excerpt),
   };
+  const fieldTokens = {
+    title: cached?.titleTokens || tokenizeNormalized(`${job.title} ${job.company}`),
+    company: cached?.companyTokens || tokenizeNormalized(job.company),
+    city: cached?.cityTokens || tokenizeNormalized(job.city),
+    category: cached?.categoryTokens || tokenizeNormalized(job.category),
+    type: cached?.typeTokens || tokenizeNormalized(job.type),
+    source: cached?.sourceTokens || tokenizeNormalized(job.sourceName),
+    tags: cached?.tagTokens || tokenizeNormalized((job.tags || []).join(" ")),
+    excerpt: cached?.excerptTokens || tokenizeNormalized(job.excerpt),
+  };
 
-  const searchable = Object.values(fields).join(" ");
-  const matchedGroups = groups.filter((group) => group.some((token) => searchable.includes(token)));
+  const searchable = cached?.searchable || Object.values(fields).join(" ");
+  const matchedGroups = groups.filter((group) =>
+    group.some((token) => {
+      const normalizedToken = normalize(token);
+      return (
+        searchable.includes(normalizedToken) ||
+        tokenMatchStrength(normalizedToken, [
+          ...fieldTokens.title,
+          ...fieldTokens.company,
+          ...fieldTokens.city,
+          ...fieldTokens.category,
+          ...fieldTokens.type,
+          ...fieldTokens.source,
+          ...fieldTokens.tags,
+          ...fieldTokens.excerpt,
+        ]) >= 0.68
+      );
+    })
+  );
   if (!matchedGroups.length) return 0;
   if (groups.length > 1 && matchedGroups.length < groups.length) return 0;
 
   let score = 0;
   if (searchable.includes(normalizedQuery)) score += 18;
-  score += scoreTextAgainstGroups(fields.title, groups, 9);
-  score += scoreTextAgainstGroups(fields.category, groups, 7);
-  score += scoreTextAgainstGroups(fields.tags, groups, 6);
-  score += scoreTextAgainstGroups(fields.company, groups, 5);
-  score += scoreTextAgainstGroups(fields.type, groups, 4);
-  score += scoreTextAgainstGroups(fields.city, groups, 4);
-  score += scoreTextAgainstGroups(fields.source, groups, 3);
-  score += scoreTextAgainstGroups(fields.excerpt, groups, 1);
+  score += scoreTextAgainstGroups(fields.title, groups, 9, fieldTokens.title);
+  score += scoreTextAgainstGroups(fields.category, groups, 7, fieldTokens.category);
+  score += scoreTextAgainstGroups(fields.tags, groups, 6, fieldTokens.tags);
+  score += scoreTextAgainstGroups(fields.company, groups, 5, fieldTokens.company);
+  score += scoreTextAgainstGroups(fields.type, groups, 4, fieldTokens.type);
+  score += scoreTextAgainstGroups(fields.city, groups, 4, fieldTokens.city);
+  score += scoreTextAgainstGroups(fields.source, groups, 3, fieldTokens.source);
+  score += scoreTextAgainstGroups(fields.excerpt, groups, 1, fieldTokens.excerpt);
   return score;
 }
 
@@ -637,6 +1308,12 @@ function daysUntil(value) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   return Math.ceil((target - today) / 86_400_000);
+}
+
+function isExpiredJob(job) {
+  if (job?.expired) return true;
+  const days = daysUntil(job?.closingDate);
+  return typeof days === "number" && days < 0;
 }
 
 function getDeadlineTarget(value) {
@@ -1030,7 +1707,9 @@ function renderTaxonomy(container, entries, baseHref) {
 }
 
 function initVisualEnhancements() {
-  if (typeof window === "undefined" || !("IntersectionObserver" in window)) return;
+  if (typeof window === "undefined") return;
+  initInstitutionFeedControls();
+  if (!("IntersectionObserver" in window)) return;
   const selectors = [
     ".portal-stats article",
     ".trust-strip article",
@@ -1065,6 +1744,153 @@ function initVisualEnhancements() {
       return;
     }
     window.jobFasoRevealObserver.observe(element);
+  });
+}
+
+function initInstitutionFeedControls() {
+  const shells = document.querySelectorAll(".institution-feed-shell");
+  if (!shells.length) return;
+
+  shells.forEach((shell) => {
+    const track = shell.querySelector(".institution-feed-track");
+    if (!track || institutionFeedControllers.has(shell)) return;
+
+    shell.tabIndex = 0;
+    shell.classList.add("js-feed-scroll");
+    const controller = {
+      shell,
+      track,
+      paused: false,
+      dragging: false,
+      pointerId: null,
+      lastClientY: 0,
+      resumeTimer: 0,
+      rafId: 0,
+      autoRemainder: 0,
+    };
+
+    const getLoopPoint = () => {
+      if (!shell.classList.contains("is-animated")) return 0;
+      return Math.max(0, Math.floor(track.scrollHeight / 2));
+    };
+
+    const normalizeLoop = () => {
+      const loopPoint = getLoopPoint();
+      if (!loopPoint) return;
+      if (shell.scrollTop >= loopPoint) shell.scrollTop -= loopPoint;
+      if (shell.scrollTop < 0) shell.scrollTop += loopPoint;
+    };
+
+    const canScroll = () => track.scrollHeight > shell.clientHeight + 6;
+
+    const pauseTemporarily = (delay = 1400) => {
+      controller.paused = true;
+      window.clearTimeout(controller.resumeTimer);
+      controller.resumeTimer = window.setTimeout(() => {
+        if (!controller.dragging && !shell.matches(":hover, :focus-within")) {
+          controller.paused = false;
+        }
+      }, delay);
+    };
+
+    const finishDrag = () => {
+      controller.dragging = false;
+      controller.pointerId = null;
+      shell.classList.remove("is-dragging");
+      pauseTemporarily(1100);
+    };
+
+    const step = () => {
+      if (!document.body.contains(shell)) return;
+      if (shell.dataset.feedAuto === "true" && !controller.paused && !controller.dragging && canScroll()) {
+        const nextOffset = controller.autoRemainder + 0.8;
+        const pixels = Math.floor(nextOffset);
+        controller.autoRemainder = nextOffset - pixels;
+        if (pixels > 0) {
+          shell.scrollTop += pixels;
+          normalizeLoop();
+        }
+      }
+      controller.rafId = window.requestAnimationFrame(step);
+    };
+
+    shell.addEventListener("mouseenter", () => {
+      controller.paused = true;
+    });
+    shell.addEventListener("mouseleave", () => {
+      if (!controller.dragging) controller.paused = false;
+    });
+    shell.addEventListener("focusin", () => {
+      controller.paused = true;
+    });
+    shell.addEventListener("focusout", () => {
+      if (!controller.dragging) controller.paused = false;
+    });
+    shell.addEventListener(
+      "wheel",
+      (event) => {
+        if (!canScroll()) return;
+        event.preventDefault();
+        pauseTemporarily();
+        shell.scrollTop += event.deltaY;
+        normalizeLoop();
+      },
+      { passive: false }
+    );
+    shell.addEventListener("pointerdown", (event) => {
+      if (!canScroll() || event.button !== 0) return;
+      if (event.target.closest("a, button")) return;
+      controller.dragging = true;
+      controller.pointerId = event.pointerId;
+      controller.lastClientY = event.clientY;
+      controller.paused = true;
+      shell.classList.add("is-dragging");
+      shell.setPointerCapture(event.pointerId);
+      event.preventDefault();
+    });
+    shell.addEventListener("pointermove", (event) => {
+      if (!controller.dragging || event.pointerId !== controller.pointerId) return;
+      const delta = event.clientY - controller.lastClientY;
+      controller.lastClientY = event.clientY;
+      shell.scrollTop -= delta;
+      normalizeLoop();
+    });
+    shell.addEventListener("pointerup", (event) => {
+      if (event.pointerId !== controller.pointerId) return;
+      finishDrag();
+    });
+    shell.addEventListener("pointercancel", finishDrag);
+    shell.addEventListener("lostpointercapture", finishDrag);
+    shell.addEventListener("keydown", (event) => {
+      if (!canScroll()) return;
+      const moves = {
+        ArrowDown: 48,
+        ArrowUp: -48,
+        PageDown: Math.max(120, shell.clientHeight - 48),
+        PageUp: -Math.max(120, shell.clientHeight - 48),
+      };
+      if (event.key in moves) {
+        event.preventDefault();
+        pauseTemporarily(1500);
+        shell.scrollTop += moves[event.key];
+        normalizeLoop();
+      } else if (event.key === "Home") {
+        event.preventDefault();
+        pauseTemporarily(1500);
+        shell.scrollTop = 0;
+      } else if (event.key === "End") {
+        event.preventDefault();
+        pauseTemporarily(1500);
+        shell.scrollTop = track.scrollHeight;
+        normalizeLoop();
+      }
+    });
+
+    if (shell.dataset.feedAuto === "true" && canScroll() && shell.scrollTop === 0) {
+      shell.scrollTop = 1;
+    }
+    controller.rafId = window.requestAnimationFrame(step);
+    institutionFeedControllers.set(shell, controller);
   });
 }
 
@@ -1261,6 +2087,46 @@ function hydrateSourceFilter() {
   sourceFilter.value = current;
 }
 
+function hydrateAdminSourceFilter() {
+  if (!adminJobSourceFilter) return;
+  const current = adminJobSourceFilter.value;
+  const values = [...new Set(jobs.map((job) => job.sourceName).filter(Boolean))].sort((a, b) => a.localeCompare(b, "fr"));
+  adminJobSourceFilter.innerHTML = `<option value="">Toutes les sources</option>${values
+    .map((source) => `<option value="${escapeHtml(source)}">${escapeHtml(source)}</option>`)
+    .join("")}`;
+  adminJobSourceFilter.value = values.includes(current) ? current : "";
+}
+
+function isFreshAdminJob(job) {
+  const reference = new Date(job.collectedAt || 0).getTime();
+  if (!reference) return false;
+  return reference >= Date.now() - 14 * 24 * 60 * 60 * 1000;
+}
+
+function getFilteredAdminJobs() {
+  const query = normalize(adminJobSearchInput?.value || "");
+  const status = adminJobStatusFilter?.value || "";
+  const source = adminJobSourceFilter?.value || "";
+  const dateMode = adminJobDateFilter?.value || "";
+
+  return jobs.filter((job) => {
+    const haystack = normalize(
+      [job.title, job.company, job.city, job.category, job.type, job.sourceName, job.deadline, ...(job.tags || [])].join(" ")
+    );
+    const matchesQuery = !query || haystack.includes(query) || getJobSearchScore(job, query) > 0;
+    const matchesStatus = !status || job.status === status;
+    const matchesSource = !source || job.sourceName === source;
+    const matchesDateMode =
+      !dateMode ||
+      (dateMode === "expired" && isExpiredJob(job)) ||
+      (dateMode === "missing_closing" && !job.closingDate) ||
+      (dateMode === "inconsistent" && Boolean(job.inconsistentDates)) ||
+      (dateMode === "fresh" && isFreshAdminJob(job));
+
+    return matchesQuery && matchesStatus && matchesSource && matchesDateMode;
+  });
+}
+
 function getFilteredJobs() {
   const query = searchInput?.value.trim() || "";
   const normalizedQuery = normalize(query);
@@ -1273,7 +2139,7 @@ function getFilteredJobs() {
   const filtered = jobs
     .map((job) => ({ job, searchScore: getJobSearchScore(job, normalizedQuery) }))
     .filter(({ job, searchScore }) => {
-      const haystack = getJobSearchableText(job);
+      const haystack = jobSearchCache.get(job.id)?.searchable || getJobSearchableText(job);
       const matchesQuery = !normalizedQuery || searchScore > 0 || haystack.includes(normalizedQuery);
       const matchesCity = !city || job.city === city || job.city === "Tout le Burkina" || job.city === "Burkina Faso";
       const matchesType =
@@ -1284,8 +2150,9 @@ function getFilteredJobs() {
       const matchesCategory = !activeCategory || matchesSpecialJobFilter(job, activeCategory) || job.category === activeCategory;
       const matchesSource = !source || job.sourceName === source;
       const matchesSaved = !savedOnly || savedJobs.has(job.id);
+      const matchesFreshness = adminJobsList ? true : !isExpiredJob(job);
 
-      return matchesQuery && matchesCity && matchesType && matchesCategory && matchesSource && matchesSaved;
+      return matchesQuery && matchesCity && matchesType && matchesCategory && matchesSource && matchesSaved && matchesFreshness;
     });
 
   return filtered
@@ -1316,9 +2183,6 @@ function renderJobCard(job, options = {}) {
       : `<span class="pill">Ouverture a confirmer</span>`,
     hasApplyUrl ? `<span class="pill source-pill">${escapeHtml(sourceDescriptor.badge)}</span>` : "",
   ].join("");
-  const dateNote = job.openingDateConfirmed
-    ? "Date d'ouverture confirmee sur la source."
-    : "Date d'ouverture non communiquee clairement par la source.";
 
   return `
     <article class="job-card ${isActive ? "active" : ""}" data-job-id="${escapeHtml(job.id)}" tabindex="${options.duplicate ? "-1" : "0"}" role="button" aria-label="Voir les details de ${escapeHtml(job.title)}"${duplicateAttrs}>
@@ -1338,7 +2202,6 @@ function renderJobCard(job, options = {}) {
       <div class="tag-row">
         ${(job.tags || []).slice(0, 4).map((tag) => `<span class="pill">${escapeHtml(tag)}</span>`).join("")}
       </div>
-      <p class="reference-note">${escapeHtml(dateNote)} ${escapeHtml(sourceDescriptor.note)}</p>
       <div class="job-actions">
         ${
           hasApplyUrl
@@ -1405,9 +2268,7 @@ function renderDetail(job) {
       <div class="tag-row">
         ${(job.tags || []).map((tag) => `<span class="pill">${escapeHtml(tag)}</span>`).join("")}
       </div>
-      <p class="moderation-note reference-note">
-        ${escapeHtml(sourceDescriptor.note)} Ne payez jamais de frais suspects pour postuler.
-      </p>
+      <p class="moderation-note reference-note">Verifiez la source avant de postuler.</p>
       <div class="detail-actions">
         ${sourceLink}
         <a class="secondary-link" href="${escapeHtml(getJobPagePath(job))}">Fiche JobFaso</a>
@@ -1558,7 +2419,7 @@ function renderJobs() {
   }
 
   if (jobCount) jobCount.textContent = jobs.length;
-  if (sourceCount) sourceCount.textContent = sources.length || getSources().length;
+  if (sourceCount) sourceCount.textContent = getVerifiedSourceCount(sources.length ? sources : getSources()) || sources.length || getSources().length;
   updateSavedStorage();
 
   if (resultsSummary) {
@@ -1594,11 +2455,14 @@ function renderSourceDirectory() {
   const automaticCount = sources.filter((source) => source.collection !== "manual_only").length;
   const manualCount = sources.length - automaticCount;
   const orderedSources = sortSourcesByPriority(sources);
+  const activeFeedCount = internationalFeeds.filter((feed) => getFeedMonitoringState(feed).visibleCount > 0).length;
+  const liveSyncCount = internationalFeeds.filter((feed) => getFeedMonitoringState(feed).hasLiveSync).length;
 
   if (sourceMetrics) {
     sourceMetrics.innerHTML = `
       <article><strong>${sources.length}</strong><span>sources surveillees</span></article>
-      <article><strong>${automaticCount}</strong><span>suivi automatise possible</span></article>
+      <article><strong>${activeFeedCount}</strong><span>flux avec offres visibles</span></article>
+      <article><strong>${liveSyncCount || automaticCount}</strong><span>suivi automatise exploitable</span></article>
       <article><strong>${manualCount}</strong><span>controle humain</span></article>
       <article><strong>${Object.keys(sourceTypes).length}</strong><span>types de sources</span></article>
     `;
@@ -1620,7 +2484,6 @@ function renderSourceDirectory() {
               <span class="pill">${getCollectionLabel(source.collection)}</span>
               <span class="pill">${getSourceMonitoringLabel(source)}</span>
             </div>
-            <p class="reference-note">${escapeHtml(descriptor.note)}</p>
             <a class="secondary-link" href="${escapeHtml(source.url)}" target="_blank" rel="noopener">${escapeHtml(descriptor.actionLabel)}</a>
           </article>
         `;
@@ -1631,32 +2494,49 @@ function renderSourceDirectory() {
   initVisualEnhancements();
 }
 
-function renderInstitutionFeedCard(source) {
+function renderInstitutionFeedCard(source, options = {}) {
   const descriptor = sourceReferenceDescriptor(source);
   const feed = getInternationalFeed(source.id);
-  const jobs = Array.isArray(feed?.jobs) ? feed.jobs.slice(0, 10) : [];
+  const jobs = Array.isArray(options.jobs) ? sortFeedJobs(options.jobs).slice(0, 10) : getRenderableFeedJobs(feed, 10).visible;
+  const feedState = getFeedMonitoringState(feed);
+  const portalState = getFeedPortalState(feed);
   const animated = jobs.length > 1;
   const trackMarkup = jobs.length
     ? [...jobs, ...(animated ? jobs : [])]
         .map(
           (job) => {
             const summaryBits = [job.location, job.contract].filter(Boolean).join(" - ");
+            const secondaryLabel = summaryBits || job.sourceLabel || source.name;
             const dateBits = [
-              job.openingDate ? `Depot: ${formatJobDate(job.openingDate)}` : "",
+              job.openingDate ? `Publie: ${formatJobDate(job.openingDate)}` : "",
               job.closingDate ? `Cloture: ${formatJobDate(job.closingDate)}` : "",
             ].filter(Boolean);
+            const href = !portalState.unavailable && job.url ? ` href="${escapeHtml(job.url)}" target="_blank" rel="noopener"` : "";
+            const tagName = portalState.unavailable ? "div" : "a";
+            const stateClass = portalState.unavailable ? " is-disabled" : "";
+            const statusLine = portalState.unavailable
+              ? escapeHtml(portalState.message)
+              : escapeHtml(dateBits.join(" | ") || "Date non lue");
 
             return `
-            <a class="institution-feed-item" href="${escapeHtml(job.url)}" target="_blank" rel="noopener">
+            <${tagName} class="institution-feed-item${stateClass}"${href}>
               <strong>${escapeHtml(job.title)}</strong>
-              <span>${escapeHtml(summaryBits || source.name)}</span>
-              <small>${escapeHtml(dateBits.join(" | ") || "Dates non lues clairement sur la source")}</small>
-            </a>
+              <span>${escapeHtml(secondaryLabel)}</span>
+              <small>${statusLine}</small>
+            </${tagName}>
           `;
           },
         )
         .join("")
-    : `<div class="institution-feed-empty">Aucune offre ouverte n'a encore ete detectee automatiquement pour cette institution. Ouvrez la source officielle.</div>`;
+    : `<div class="institution-feed-empty">${
+        feed?.error
+          ? "La derniere synchronisation automatique n'a pas abouti pour cette source. Ouvrez directement la reference officielle pendant la reprise."
+          : "Aucune offre ouverte n'a encore ete detectee automatiquement pour cette institution. Ouvrez la source officielle."
+      }</div>`;
+
+  const footerAction = portalState.unavailable
+    ? `<span class="secondary-link is-disabled" aria-disabled="true">${escapeHtml("Portail temporairement indisponible")}</span>`
+    : `<a class="secondary-link" href="${escapeHtml(source.url)}" target="_blank" rel="noopener">${escapeHtml(descriptor.actionLabel)}</a>`;
 
   return `
     <article class="source-card institution-source-card">
@@ -1668,17 +2548,50 @@ function renderInstitutionFeedCard(source) {
       <div class="job-meta">
         <span class="pill">${getCollectionLabel(source.collection)}</span>
         <span class="pill">${jobs.length} offre${jobs.length > 1 ? "s" : ""}</span>
+        ${feedState.datedCount ? `<span class="pill">${feedState.datedCount} date${feedState.datedCount > 1 ? "s" : ""} lue${feedState.datedCount > 1 ? "s" : ""}</span>` : ""}
+        ${feedState.isStale ? `<span class="pill">${escapeHtml("Dernier flux conserve")}</span>` : ""}
+        ${feedState.hasError && !feedState.isStale ? `<span class="pill">${escapeHtml("Controle requis")}</span>` : ""}
+        ${portalState.unavailable ? `<span class="pill">${escapeHtml("Maintenance externe")}</span>` : ""}
       </div>
-      <div class="institution-feed-shell ${animated ? "is-animated" : ""}">
+      <div
+        class="institution-feed-shell ${animated ? "is-animated" : ""}"
+        data-feed-auto="${animated ? "true" : "false"}"
+        aria-label="${escapeHtml("Liste d'offres defilante. Survolez puis utilisez la molette ou faites glisser pour monter et descendre.")}"
+      >
         <div class="institution-feed-track">
           ${trackMarkup}
         </div>
       </div>
-      <p class="reference-note">${escapeHtml(descriptor.note)}</p>
-      <p class="reference-note">Mise a jour du flux: ${escapeHtml(feed?.updatedAt ? new Date(feed.updatedAt).toLocaleDateString("fr-FR") : "date indisponible")}. Les dates de depot et cloture ne s'affichent que lorsqu'elles sont lues sur la source officielle.</p>
-      <a class="secondary-link" href="${escapeHtml(source.url)}" target="_blank" rel="noopener">${escapeHtml(descriptor.actionLabel)}</a>
+      ${footerAction}
     </article>
   `;
+}
+
+function renderAggregateTechFeedCard(entries = [], spotlight = {}) {
+  const aggregateJobs = collectSpotlightAggregateJobs(entries, 10);
+  const mergedJobs = [];
+  const seen = new Set();
+
+  aggregateJobs.forEach((job) => {
+    const key = normalize(job.url || job.id || job.title);
+    if (!key || seen.has(key)) return;
+    seen.add(key);
+    mergedJobs.push(job);
+  });
+
+  const aggregateSource = {
+    id: `${spotlight.id}-aggregate`,
+    name: "Offres internationales en informatique",
+    type: "organization",
+    collection: "review_required",
+    notes:
+      "Selection consolidee JobFaso a partir de sources internationales reelles, diversifiees et suivies pour l'IT, la data, les systemes et la cybersecurite.",
+    url: spotlight.actionHref || "jobs.html?focus=onu-consultance&q=informatique",
+  };
+
+  return renderInstitutionFeedCard(aggregateSource, {
+    jobs: mergedJobs,
+  });
 }
 
 function renderStrategicSourcePlaceholder(spotlight, message) {
@@ -1734,7 +2647,6 @@ function renderStrategicSourcePlaceholder(spotlight, message) {
               <div class="institution-feed-empty">Les liens officiels et les offres detectees s'afficheront ici automatiquement des que la synchronisation est terminee.</div>
             </div>
           </div>
-          <p class="reference-note">Vous pouvez deja ouvrir la recherche guidee ou revenir dans quelques secondes.</p>
           <a class="secondary-link" href="${escapeHtml(spotlight.actionHref)}">${escapeHtml(spotlight.actionLabel)}</a>
         </article>
       </div>
@@ -1779,18 +2691,29 @@ function renderStrategicSourceSections() {
     const spotlightSegments = Array.isArray(spotlight.segments) && spotlight.segments.length
       ? spotlight.segments
       : [spotlight.id];
-    const spotlightSources = sortSpotlightSources(
+    const spotlightCandidates = sortSourcesForSpotlight(
       sources.filter((source) =>
         spotlightSegments.some((segment) => sourceHasSegment(source, segment)) &&
         (!spotlight.sourceTypes?.length || spotlight.sourceTypes.includes(source.type))
-      )
-    )
-      .filter((source) => {
-        const feed = getInternationalFeed(source.id);
-        return Array.isArray(feed?.jobs) && feed.jobs.length > 0;
-      })
-      .slice(0, spotlight.limit);
-    const spotlightJobCount = jobs.filter((job) => matchesSpotlightJob(job, spotlight)).length;
+      ),
+      spotlight
+    );
+    const spotlightSources = spotlightCandidates
+      .map((source) => ({ source, feedJobs: getSpotlightFeedJobs(source, spotlight, 10) }))
+      .filter(({ feedJobs }) => feedJobs.length > 0)
+      .slice(0, spotlight.mode === "tech" ? Math.max(2, spotlight.limit) : spotlight.limit);
+    const spotlightJobCount =
+      spotlight.mode === "tech"
+        ? (() => {
+            const seen = new Set();
+            return collectSpotlightAggregateJobs(spotlightSources, 18).filter((job) => {
+              const key = normalize(job.url || job.id || job.title);
+              if (!key || seen.has(key)) return false;
+              seen.add(key);
+              return true;
+            }).length;
+          })()
+        : collectSpotlightAggregateJobs(spotlightSources, 18).length;
     const keywordMarkup = spotlight.keywords
       .map((keyword) => `<span class="pill">${escapeHtml(keyword)}</span>`)
       .join("");
@@ -1809,10 +2732,21 @@ function renderStrategicSourceSections() {
         `
       )
       .join("");
-    const cardsMarkup = spotlightSources.length
-      ? spotlightSources
-          .map((source) => renderInstitutionFeedCard(source))
-          .join("")
+    const shouldRenderShortcutGrid = spotlight.mode !== "tech" && Boolean(shortcutMarkup);
+    const spotlightCards =
+      spotlight.mode === "tech"
+        ? [
+            ...spotlightSources
+              .slice(0, 2)
+              .map(({ source, feedJobs }) => renderInstitutionFeedCard(source, { jobs: feedJobs })),
+            ...(spotlightSources.length
+              ? [renderAggregateTechFeedCard(spotlightSources, spotlight)]
+              : []),
+          ]
+        : spotlightSources.map(({ source, feedJobs }) => renderInstitutionFeedCard(source, { jobs: feedJobs }));
+
+    const cardsMarkup = spotlightCards.length
+      ? spotlightCards.join("")
       : `
         <article class="source-card institution-source-card">
           <div>
@@ -1844,9 +2778,7 @@ function renderStrategicSourceSections() {
             <span class="pill">Liens reels</span>
           </div>
         </div>
-        <div class="strategic-search-grid">
-          ${shortcutMarkup}
-        </div>
+        ${shouldRenderShortcutGrid ? `<div class="strategic-search-grid">${shortcutMarkup}</div>` : ""}
         <div class="tag-row keyword-row">${keywordMarkup}</div>
         <div class="source-directory-grid spotlight-grid">${cardsMarkup}</div>
         <div class="strategic-source-actions">
@@ -2123,19 +3055,28 @@ function renderAdmin() {
   const events = readStorageArray(EVENTS_KEY);
   const pipelineValue = leads.reduce((sum, lead) => sum + (lead.valueFcfa || 0), 0);
   const reviewJobs = jobs.filter((job) => job.status === "needs_review");
+  const expiredJobs = jobs.filter((job) => isExpiredJob(job));
+  const inconsistentJobs = jobs.filter((job) => job.inconsistentDates);
   const moderationJobs = jobs
+    .slice()
+    .sort((a, b) => Number(a.status === "needs_review") - Number(b.status === "needs_review"))
+    .reverse();
+  const filteredAdminJobs = getFilteredAdminJobs()
     .slice()
     .sort((a, b) => Number(a.status === "needs_review") - Number(b.status === "needs_review"))
     .reverse();
 
   if (leadCount) leadCount.textContent = leads.length;
   if (eventCount) eventCount.textContent = events.length;
+  hydrateAdminSourceFilter();
 
   if (adminSummary) {
     adminSummary.innerHTML = `
       <article><strong>${leads.length}</strong><span>leads captures</span></article>
       <article><strong>${formatFcfa(pipelineValue)}</strong><span>pipeline potentiel</span></article>
       <article><strong>${reviewJobs.length}</strong><span>offres a moderer</span></article>
+      <article><strong>${expiredJobs.length}</strong><span>expirees</span></article>
+      <article><strong>${inconsistentJobs.length}</strong><span>dates incoherentes</span></article>
       <article><strong>${events.length}</strong><span>evenements suivis</span></article>
     `;
   }
@@ -2158,9 +3099,13 @@ function renderAdmin() {
       : `<tr><td colspan="5">Aucun lead local pour le moment.</td></tr>`;
   }
 
+  if (adminJobsFilterSummary) {
+    adminJobsFilterSummary.textContent = `${filteredAdminJobs.length} offre${filteredAdminJobs.length > 1 ? "s" : ""} affichee${filteredAdminJobs.length > 1 ? "s" : ""} sur ${moderationJobs.length}. ${reviewJobs.length} a moderer, ${expiredJobs.length} expiree${expiredJobs.length > 1 ? "s" : ""}, ${inconsistentJobs.length} avec dates incoherentes.`;
+  }
+
   if (adminJobsList) {
-    adminJobsList.innerHTML = moderationJobs.length
-      ? moderationJobs
+    adminJobsList.innerHTML = filteredAdminJobs.length
+      ? filteredAdminJobs
           .slice(0, 24)
           .map(
             (job) => `
@@ -2171,6 +3116,9 @@ function renderAdmin() {
                 <div class="job-meta">
                   <span class="pill ${job.status === "needs_review" ? "warning" : ""}">${escapeHtml(job.status || "needs_review")}</span>
                   <span class="pill">${escapeHtml(job.sourceName || "Source")}</span>
+                  ${isExpiredJob(job) ? `<span class="pill warning">Expiree</span>` : ""}
+                  ${job.inconsistentDates ? `<span class="pill warning">Dates incoherentes</span>` : ""}
+                  ${!job.closingDate ? `<span class="pill">Cloture absente</span>` : ""}
                 </div>
                 ${job.moderationNote ? `<p class="muted">${escapeHtml(job.moderationNote)}</p>` : ""}
                 <div class="job-actions">
@@ -2199,18 +3147,37 @@ function renderAdmin() {
             `
           )
           .join("")
-      : `<p class="muted">Aucune offre chargee pour la moderation.</p>`;
+      : `<p class="muted">Aucune offre ne correspond aux filtres de moderation.</p>`;
   }
+}
+
+function refreshPublicJobs() {
+  jobs = mergePublicJobs(baseJobs.length ? baseJobs : jobs);
+  jobSearchCache = buildJobSearchCache(jobs);
+  hydrateSourceFilter();
+  applyUrlSearchParams();
+  renderPortalWidgets();
+  renderStrategicSourceSections();
+  renderJobs();
+  renderAdmin();
+}
+
+function scheduleRenderJobs(immediate = false) {
+  window.clearTimeout(jobsRenderTimer);
+  const delay = immediate ? 0 : 90;
+  jobsRenderTimer = window.setTimeout(() => {
+    renderJobs();
+  }, delay);
 }
 
 async function loadJobs() {
   if (!jobsList && !adminJobsList) return;
   try {
-    const adminQuery = adminJobsList ? "?includeRejected=true" : "";
+    const adminQuery = adminJobsList ? "?includeRejected=true&includeExpired=true" : "";
     const apiResponse = await fetch(`/api/jobs${adminQuery}`, { cache: "no-store" });
     if (apiResponse.ok) {
       const payload = await apiResponse.json();
-      jobs = payload.jobs?.length ? payload.jobs : fallbackJobs;
+      baseJobs = payload.jobs?.length ? payload.jobs : fallbackJobs;
     } else {
       throw new Error("API jobs unavailable");
     }
@@ -2219,21 +3186,16 @@ async function loadJobs() {
       const response = await fetch("data/curated-jobs.json", { cache: "no-store" });
       if (!response.ok) throw new Error("Impossible de charger les offres");
       const loadedJobs = await response.json();
-      jobs = loadedJobs.length ? loadedJobs : fallbackJobs;
+      baseJobs = loadedJobs.length ? loadedJobs : fallbackJobs;
     } catch (error) {
-      jobs = fallbackJobs;
+      baseJobs = fallbackJobs;
       if (resultsSummary) {
         resultsSummary.textContent =
           "Les offres locales sont affichees. Actualisez la page si la liste complete ne se charge pas.";
       }
     }
   }
-  hydrateSourceFilter();
-  applyUrlSearchParams();
-  renderPortalWidgets();
-  renderStrategicSourceSections();
-  renderJobs();
-  renderAdmin();
+  refreshPublicJobs();
 }
 
 async function loadSources() {
@@ -2247,11 +3209,9 @@ async function loadSources() {
   }
 
   rebuildSourceIndex();
-  if (sourceCount && sources.length) sourceCount.textContent = sources.length;
-  renderPortalWidgets();
+  if (sourceCount && sources.length) sourceCount.textContent = getVerifiedSourceCount(sources) || sources.length;
   renderSourceDirectory();
-  renderStrategicSourceSections();
-  renderAdmin();
+  refreshPublicJobs();
 }
 
 async function loadInternationalFeeds() {
@@ -2264,7 +3224,7 @@ async function loadInternationalFeeds() {
     internationalFeeds = [];
   }
 
-  renderStrategicSourceSections();
+  refreshPublicJobs();
 }
 
 async function loadEmployerLogos() {
@@ -2322,7 +3282,7 @@ document.addEventListener("click", (event) => {
 [searchInput, cityFilter, typeFilter, sourceFilter, sortFilter, savedOnlyFilter].forEach((control) => {
   control?.addEventListener("input", () => {
     resetJobsPage();
-    renderJobs();
+    scheduleRenderJobs();
   });
   control?.addEventListener("change", () => {
     recordEvent("job_filter_changed", {
@@ -2330,7 +3290,7 @@ document.addEventListener("click", (event) => {
       value: control.type === "checkbox" ? String(control.checked) : control.value,
     });
     resetJobsPage();
-    renderJobs();
+    scheduleRenderJobs(true);
   });
 });
 
@@ -2341,7 +3301,7 @@ filterButtons.forEach((button) => {
     activeCategory = button.dataset.category || "";
     recordEvent("category_filter_clicked", { label: activeCategory || "Toutes" });
     resetJobsPage();
-    renderJobs();
+    scheduleRenderJobs(true);
   });
 });
 
@@ -2743,6 +3703,11 @@ document.querySelector("#publishSocialButton")?.addEventListener("click", async 
   } catch (error) {
     setFormState(document.body, socialAdminMessage, error.message, "error");
   }
+});
+
+[adminJobSearchInput, adminJobStatusFilter, adminJobSourceFilter, adminJobDateFilter].forEach((control) => {
+  control?.addEventListener("input", renderAdmin);
+  control?.addEventListener("change", renderAdmin);
 });
 
 loadJobs();
