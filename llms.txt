@@ -12,5 +12,7 @@ Offres d'emploi, concours, stages, missions locales et alertes WhatsApp au Burki
 ## Fresh job feeds
 - https://jobfaso.com/sitemap.xml
 - https://jobfaso.com/data/curated-jobs.json
+- https://jobfaso.com/feed.xml
+- https://jobfaso.com/feed.json
 
 JobFaso aggregates public job opportunities, concours, internships and local missions in Burkina Faso. Candidates should always verify official sources before applying.

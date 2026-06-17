@@ -8,11 +8,70 @@ const JOBS_DIR = new URL("pages/jobs/", ROOT);
 const CATEGORIES_DIR = new URL("pages/categories/", ROOT);
 const CITIES_DIR = new URL("pages/villes/", ROOT);
 const GUIDES_DIR = new URL("pages/guides/", ROOT);
+const KEYWORDS_DIR = new URL("pages/recherche/", ROOT);
 const SITEMAP_FILE = new URL("sitemap.xml", ROOT);
 const ROBOTS_FILE = new URL("robots.txt", ROOT);
 const LLM_FILE = new URL("llms.txt", ROOT);
 const MANIFEST_FILE = new URL("site.webmanifest", ROOT);
 const INDEXNOW_FILE = new URL("indexnow-urls.txt", ROOT);
+const ADS_TXT_FILE = new URL("ads.txt", ROOT);
+const FEED_XML_FILE = new URL("feed.xml", ROOT);
+const FEED_JSON_FILE = new URL("feed.json", ROOT);
+const WELL_KNOWN_DIR = new URL(".well-known/", ROOT);
+const SECURITY_FILE = new URL(".well-known/security.txt", ROOT);
+
+const stopWords = new Set([
+  "avec",
+  "dans",
+  "pour",
+  "vous",
+  "nous",
+  "leur",
+  "etre",
+  "emploi",
+  "burkina",
+  "faso",
+  "poste",
+  "offre",
+  "offres",
+  "jobs",
+  "job",
+  "des",
+  "les",
+  "une",
+  "sur",
+  "par",
+  "aux",
+  "ses",
+  "the",
+  "and",
+  "from",
+  "with",
+  "dans",
+  "tout",
+  "tous",
+  "plus",
+  "h",
+  "f",
+]);
+
+const keywordAliases = {
+  assistant: ["assistante", "administration", "bureau"],
+  chauffeur: ["conducteur", "transport", "livraison"],
+  comptable: ["comptabilite", "finance", "gestion"],
+  consultant: ["consultance", "expert", "mission"],
+  concours: ["recrutement public", "fonction publique"],
+  enqueteur: ["terrain", "collecte", "chercheur"],
+  informel: ["terrain", "artisan", "journalier"],
+  logistique: ["stock", "fleet", "approvisionnement"],
+  ong: ["humanitaire", "projet", "developpement"],
+  remote: ["teletravail", "distance", "home based"],
+  sante: ["medical", "clinique", "paramedical"],
+  secretaire: ["secretariat", "assistant", "administration"],
+  stage: ["stagiaire", "internship", "debutant"],
+  teletravail: ["remote", "distance", "home based"],
+  vente: ["commercial", "vendeur", "commerce"],
+};
 
 const categoryGuides = {
   Bureau: {
@@ -195,6 +254,16 @@ function slugify(value) {
     .slice(0, 90);
 }
 
+function normalize(value = "") {
+  return String(value || "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9\s-]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 function displayDate(value) {
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return "Date a verifier";
@@ -255,6 +324,14 @@ function seoImage(config) {
   return `${config.baseUrl.replace(/\/$/, "")}/assets/jobfaso-og.svg`;
 }
 
+function feedDescription(job) {
+  const source = job.sourceName || job.company || "Source verifiee";
+  const opening = formatJobDate(job.openingDate, "A verifier");
+  const closing = formatJobDate(job.closingDate, job.deadline || "A verifier");
+  const category = job.category || "Opportunite";
+  return `${job.title} - ${source} - ${job.city || "Burkina Faso"}. Categorie: ${category}. Ouverture: ${opening}. Cloture: ${closing}. Consultez la fiche JobFaso puis verifiez la source officielle avant de postuler.`;
+}
+
 function baseOrganizationSchema(config) {
   return {
     "@context": "https://schema.org",
@@ -286,9 +363,12 @@ function layout(config, page) {
     <meta name="description" content="${escapeHtml(page.description)}" />
     <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" />
     <meta name="theme-color" content="#0f6b3d" />
+    <meta name="author" content="${escapeHtml(config.siteName || "JobFaso")}" />
     <link rel="canonical" href="${escapeHtml(canonical)}" />
     <link rel="alternate" hreflang="fr-BF" href="${escapeHtml(canonical)}" />
     <link rel="alternate" hreflang="x-default" href="${escapeHtml(canonical)}" />
+    <link rel="alternate" type="application/rss+xml" title="${escapeHtml(config.siteName || "JobFaso")} RSS" href="${escapeHtml(absolute(config, "feed.xml"))}" />
+    <link rel="alternate" type="application/feed+json" title="${escapeHtml(config.siteName || "JobFaso")} JSON Feed" href="${escapeHtml(absolute(config, "feed.json"))}" />
     <link rel="manifest" href="../../site.webmanifest" />
     <meta property="og:title" content="${escapeHtml(page.title)}" />
     <meta property="og:description" content="${escapeHtml(page.description)}" />
@@ -297,6 +377,7 @@ function layout(config, page) {
     <meta property="og:locale" content="fr_BF" />
     <meta property="og:site_name" content="${escapeHtml(config.siteName || "JobFaso")}" />
     <meta property="og:image" content="${escapeHtml(seoImage(config))}" />
+    <meta property="og:image:alt" content="${escapeHtml(config.siteName || "JobFaso")} - Offres d'emploi et recrutement au Burkina Faso" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${escapeHtml(page.title)}" />
     <meta name="twitter:description" content="${escapeHtml(page.description)}" />
@@ -368,6 +449,75 @@ function compactJobCards(jobs) {
       </a>`
     )
     .join("");
+}
+
+function tokenizeForKeywords(value = "") {
+  return normalize(value)
+    .split(" ")
+    .filter((token) => token.length >= 4 && !stopWords.has(token) && !/^\d+$/.test(token));
+}
+
+function keywordCandidates(jobs) {
+  const counts = new Map();
+
+  for (const job of jobs) {
+    const tokens = new Set([
+      ...tokenizeForKeywords(job.title),
+      ...tokenizeForKeywords(job.category),
+      ...(Array.isArray(job.tags) ? job.tags.flatMap((tag) => tokenizeForKeywords(tag)) : []),
+    ]);
+
+    for (const token of tokens) {
+      counts.set(token, (counts.get(token) || 0) + 1);
+    }
+  }
+
+  const manualPriority = Object.keys(keywordAliases);
+  return manualPriority.filter((term) => counts.has(term));
+}
+
+function keywordStructuredData(config, keyword, path, jobs) {
+  return [
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      name: `Emploi ${keyword} au Burkina Faso`,
+      description: `Offres, missions et opportunites ${keyword} au Burkina Faso sur JobFaso.`,
+      url: absolute(config, path),
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      itemListElement: jobs.slice(0, 10).map((job, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        url: absolute(config, generatedJobPath(job)),
+        name: stripHtml(job.title),
+      })),
+    },
+  ];
+}
+
+function keywordPageBody(keyword, jobs) {
+  const aliases = keywordAliases[keyword] || [];
+  const aliasesText = aliases.length ? `Mots proches : ${aliases.join(", ")}.` : "";
+  return `<main>
+    <section class="page-hero compact listing-hero">
+      <p class="eyebrow">Recherche metier</p>
+      <h1>Emploi ${escapeHtml(keyword)} au Burkina Faso</h1>
+      <p class="lead">Retrouvez les offres ${escapeHtml(keyword)}, les opportunites proches et les sources verifiees sur JobFaso. ${escapeHtml(aliasesText)}</p>
+    </section>
+    <section class="section content-with-rail">
+      <div class="content-main">
+        <article class="catalog-intro-card">
+          <strong>Requetes proches prises en compte</strong>
+          <span>${escapeHtml(aliasesText || "Cette page aide les moteurs a relier les recherches precises et les formulations voisines aux bonnes offres.")}</span>
+        </article>
+        <div class="job-grid">${jobs.map(jobCard).join("")}</div>
+      </div>
+      ${sponsorBlock()}
+    </section>
+  </main>`;
 }
 
 function relatedJobs(currentJob, jobs) {
@@ -499,6 +649,8 @@ async function main() {
   await mkdir(CATEGORIES_DIR, { recursive: true });
   await mkdir(CITIES_DIR, { recursive: true });
   await mkdir(GUIDES_DIR, { recursive: true });
+  await mkdir(KEYWORDS_DIR, { recursive: true });
+  await mkdir(WELL_KNOWN_DIR, { recursive: true });
 
   for (const job of jobs) {
     const path = generatedJobPath(job);
@@ -629,6 +781,28 @@ async function main() {
     });
   }
 
+  const keywords = keywordCandidates(jobs);
+  for (const keyword of keywords) {
+    const aliases = keywordAliases[keyword] || [];
+    const terms = new Set([keyword, ...aliases].map((item) => normalize(item)));
+    const keywordJobs = jobs
+      .filter((job) => {
+        const haystack = normalize([job.title, job.category, job.city, ...(job.tags || [])].join(" "));
+        return [...terms].some((term) => haystack.includes(term));
+      })
+      .slice(0, 18);
+    if (!keywordJobs.length) continue;
+
+    const path = `pages/recherche/${slugify(keyword)}.html`;
+    urls.push(path);
+    await writePage(config, path, {
+      title: `Emploi ${keyword} au Burkina Faso | JobFaso`,
+      description: `Offres ${keyword}, recherches proches et opportunites verifiees au Burkina Faso. ${aliases.length ? `Mots lies : ${aliases.join(", ")}.` : ""}`,
+      structuredData: keywordStructuredData(config, keyword, path, keywordJobs),
+      body: keywordPageBody(keyword, keywordJobs),
+    });
+  }
+
   for (const guide of evergreenGuides) {
     const path = `pages/guides/${guide.slug}.html`;
     urls.push(path);
@@ -659,6 +833,7 @@ async function main() {
   await cleanupGeneratedDirectory(JOBS_DIR, urls, "pages/jobs/");
   await cleanupGeneratedDirectory(CATEGORIES_DIR, urls, "pages/categories/");
   await cleanupGeneratedDirectory(CITIES_DIR, urls, "pages/villes/");
+  await cleanupGeneratedDirectory(KEYWORDS_DIR, urls, "pages/recherche/");
 
   const today = new Date().toISOString().slice(0, 10);
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
@@ -684,7 +859,7 @@ ${urls
   );
   await writeFile(
     LLM_FILE,
-    `# ${config.siteName || "JobFaso"}\n\n${config.description}\n\n## Core pages\n- ${absolute(config, "index.html")}\n- ${absolute(config, "jobs.html")}\n- ${absolute(config, "conseils.html")}\n- ${absolute(config, "grille-tarifaire.html")}\n- ${absolute(config, "contacts.html")}\n\n## Fresh job feeds\n- ${absolute(config, "sitemap.xml")}\n- ${absolute(config, "data/curated-jobs.json")}\n\nJobFaso aggregates public job opportunities, concours, internships and local missions in Burkina Faso. Candidates should always verify official sources before applying.\n`,
+    `# ${config.siteName || "JobFaso"}\n\n${config.description}\n\n## Core pages\n- ${absolute(config, "index.html")}\n- ${absolute(config, "jobs.html")}\n- ${absolute(config, "conseils.html")}\n- ${absolute(config, "grille-tarifaire.html")}\n- ${absolute(config, "contacts.html")}\n\n## Fresh job feeds\n- ${absolute(config, "sitemap.xml")}\n- ${absolute(config, "data/curated-jobs.json")}\n- ${absolute(config, "feed.xml")}\n- ${absolute(config, "feed.json")}\n\nJobFaso aggregates public job opportunities, concours, internships and local missions in Burkina Faso. Candidates should always verify official sources before applying.\n`,
     "utf8"
   );
   await writeFile(
@@ -708,6 +883,82 @@ ${urls
     "utf8"
   );
   await writeFile(INDEXNOW_FILE, `${urls.map((path) => absolute(config, path)).join("\n")}\n`, "utf8");
+  const adsensePublisher = String(config.adsenseClient || "").replace(/^ca-/, "");
+  const adsTxt = adsensePublisher.startsWith("pub-")
+    ? `google.com, ${adsensePublisher}, DIRECT, f08c47fec0942fa0\n`
+    : "# Configurez adsenseClient dans data/site-config.json pour generer ads.txt automatiquement.\n";
+  await writeFile(ADS_TXT_FILE, adsTxt, "utf8");
+
+  const rssItems = jobs
+    .slice(0, 50)
+    .map((job) => {
+      const link = absolute(config, generatedJobPath(job));
+      const pubDate = new Date(job.collectedAt || Date.now()).toUTCString();
+      return `  <item>
+    <title>${escapeHtml(job.title)}</title>
+    <link>${escapeHtml(link)}</link>
+    <guid isPermaLink="true">${escapeHtml(link)}</guid>
+    <description>${escapeHtml(feedDescription(job))}</description>
+    <category>${escapeHtml(job.category || "Opportunite")}</category>
+    <pubDate>${escapeHtml(pubDate)}</pubDate>
+  </item>`;
+    })
+    .join("\n");
+
+  await writeFile(
+    FEED_XML_FILE,
+    `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>${escapeHtml(config.siteName || "JobFaso")}</title>
+    <link>${escapeHtml(config.baseUrl)}</link>
+    <description>${escapeHtml(config.description || "Offres d'emploi et recrutement au Burkina Faso.")}</description>
+    <language>fr-BF</language>
+    <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
+${rssItems}
+  </channel>
+</rss>
+`,
+    "utf8"
+  );
+
+  await writeFile(
+    FEED_JSON_FILE,
+    `${JSON.stringify(
+      {
+        version: "https://jsonfeed.org/version/1.1",
+        title: config.siteName || "JobFaso",
+        home_page_url: config.baseUrl,
+        feed_url: absolute(config, "feed.json"),
+        description: config.description || "Offres d'emploi, concours, stages et missions au Burkina Faso.",
+        language: "fr-BF",
+        authors: [{ name: config.siteName || "JobFaso" }],
+        items: jobs.slice(0, 50).map((job) => ({
+          id: absolute(config, generatedJobPath(job)),
+          url: absolute(config, generatedJobPath(job)),
+          title: job.title,
+          content_text: feedDescription(job),
+          summary: stripHtml(job.excerpt || ""),
+          date_published: new Date(job.collectedAt || Date.now()).toISOString(),
+          tags: [job.category, ...(job.tags || [])].filter(Boolean),
+        })),
+      },
+      null,
+      2
+    )}\n`,
+    "utf8"
+  );
+
+  await writeFile(
+    SECURITY_FILE,
+    `Contact: mailto:${config.contactEmail || "contact@jobfaso.com"}
+Expires: ${new Date(Date.now() + 180 * 24 * 60 * 60 * 1000).toISOString()}
+Preferred-Languages: fr, en
+Canonical: ${absolute(config, ".well-known/security.txt")}
+Policy: ${absolute(config, "privacy.html")}
+`,
+    "utf8"
+  );
 
   console.log(`Generated SEO pages: ${urls.length}`);
   console.log(`Sitemap: ${SITEMAP_FILE.pathname}`);

@@ -1,0 +1,1 @@
+# Configurez adsenseClient dans data/site-config.json pour generer ads.txt automatiquement.

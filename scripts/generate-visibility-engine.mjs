@@ -143,13 +143,17 @@ ${templates.map((template) => `### ${template.subject}\n\n${template.body}`).joi
 }
 
 async function main() {
-  const [config, jobs, sources, rateCard, sitemap, robots] = await Promise.all([
+  const [config, jobs, sources, rateCard, sitemap, robots, adsTxt, feedXml, securityTxt, homepage] = await Promise.all([
     readJson(new URL("site-config.json", DATA_DIR), {}),
     readJson(new URL("curated-jobs.json", DATA_DIR), []),
     readJson(new URL("sources.json", DATA_DIR), []),
     readJson(new URL("rate-card.json", DATA_DIR), []),
     readText(new URL("sitemap.xml", ROOT)),
     readText(new URL("robots.txt", ROOT)),
+    readText(new URL("ads.txt", ROOT)),
+    readText(new URL("feed.xml", ROOT)),
+    readText(new URL(".well-known/security.txt", ROOT)),
+    readText(new URL("index.html", ROOT)),
   ]);
 
   await mkdir(GROWTH_DIR, { recursive: true });
@@ -165,13 +169,27 @@ async function main() {
   scoreCheck(checks, "trust_pages", "Pages confiance", staticTrustPages >= 4, 12, "Garder privacy, terms, contacts et tarifs.");
   scoreCheck(checks, "sitemap", "Sitemap riche", sitemapUrls >= 40, 12, "Executer npm run growth.");
   scoreCheck(checks, "robots", "Robots.txt propre", robots.includes("Sitemap:"), 8, "Regenerer robots.txt.");
+  scoreCheck(checks, "feed", "Flux RSS/JSON public", feedXml.includes("<rss"), 6, "Generer feed.xml et feed.json.");
   scoreCheck(checks, "content_depth", "Volume offres SEO", jobs.length >= 20, 12, "Automatiser plus de sources fiables.");
   scoreCheck(checks, "source_diversity", "Diversite des sources", sources.length >= 30, 10, "Ajouter partenaires/RSS/API autorises.");
   scoreCheck(checks, "guides", "Contenus utiles hors offres", guidePages >= 3, 8, "Publier guides candidats originaux.");
   scoreCheck(checks, "adsense", "AdSense pret a activer", Boolean(config.adsenseClient), 8, "Ajouter adsenseClient apres approbation Google.");
+  scoreCheck(checks, "ads_txt", "ads.txt present", /google\.com,\s*pub-/i.test(adsTxt), 6, "Generer ads.txt depuis adsenseClient.");
+  scoreCheck(checks, "search_action", "Recherche de site structuree", /SearchAction/.test(homepage), 6, "Conserver le schema SearchAction sur la page d'accueil.");
+  scoreCheck(checks, "security_txt", "Contact securite public", /Contact:\s*mailto:/i.test(securityTxt), 4, "Publier .well-known/security.txt.");
+  scoreCheck(
+    checks,
+    "social_profiles",
+    "Profils sociaux relies au schema",
+    Boolean(config.social?.facebook || config.social?.linkedin || config.social?.whatsappChannel),
+    6,
+    "Ajouter page Facebook, LinkedIn ou canal WhatsApp dans data/site-config.json."
+  );
   scoreCheck(checks, "monetization", "Produits revenus definis", rateCard.length >= 6, 10, "Maintenir data/rate-card.json.");
 
-  const score = checks.reduce((sum, check) => sum + (check.ok ? check.weight : 0), 0);
+  const totalWeight = checks.reduce((sum, check) => sum + check.weight, 0) || 1;
+  const earnedWeight = checks.reduce((sum, check) => sum + (check.ok ? check.weight : 0), 0);
+  const score = Math.round((earnedWeight / totalWeight) * 100);
   const priorities = checks
     .filter((check) => !check.ok)
     .sort((a, b) => b.weight - a.weight)
@@ -189,6 +207,8 @@ async function main() {
       jobs: jobs.length,
       sources: sources.length,
       sitemapUrls,
+      scoreEarnedWeight: earnedWeight,
+      scoreTotalWeight: totalWeight,
       rateProducts: rateCard.length,
       outreachTargets: targets.length,
       outreachTemplates: templates.length,

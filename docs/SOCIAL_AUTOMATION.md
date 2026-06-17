@@ -22,6 +22,9 @@ FACEBOOK_PAGE_ACCESS_TOKEN=
 SOCIAL_WEBHOOK_URL=
 SOCIAL_PUBLISH_LIVE=false
 SOCIAL_PUBLISH_LIMIT=3
+SOCIAL_AUTOPUBLISH=false
+WHATSAPP_PHONE_NUMBER_ID=
+WHATSAPP_ACCESS_TOKEN=
 ```
 
 ## Facebook
@@ -42,6 +45,57 @@ Sources officielles :
 Publer ou un autre outil. C'est souvent plus simple pour publier aussi vers
 LinkedIn, Telegram, WhatsApp Channel ou X selon les autorisations de chaque
 plateforme.
+
+Le payload webhook contient maintenant :
+
+- `item.shareUrls` avec URLs tracees `utm_source`
+- `item.channels.facebook`
+- `item.channels.linkedin`
+- `item.channels.whatsapp`
+- `platformPayloads` prets a router vers vos outils d'automatisation
+
+## Publication automatique
+
+Si vous voulez publier automatiquement apres chaque run d'automation :
+
+```env
+SOCIAL_AUTOPUBLISH=true
+SOCIAL_PUBLISH_LIVE=true
+```
+
+Puis lancer le daemon :
+
+```bash
+npm run automate:daemon
+```
+
+## WhatsApp
+
+Important : WhatsApp n'offre pas un mode universel "poster partout" comme une
+page Facebook. En pratique :
+
+- pour des messages 1:1 ou listes de diffusion conformes, passer par WhatsApp
+  Business Platform ;
+- pour un canal ou une communaute, utiliser un outil tiers/automation autorise
+  ou une action humaine assistee ;
+- pour le partage simple, JobFaso prepare deja les textes et URLs tracees.
+
+Source officielle utile :
+
+- https://business.whatsapp.com/developers/developer-hub
+
+## Reseaux a privilegier au lancement
+
+1. Facebook Page
+2. WhatsApp Business / canal
+3. LinkedIn Page
+4. Groupes partenaires et medias emploi
+
+Commencer par 1 a 3 publications par jour, avec :
+
+- 1 nouvelle offre chaude ;
+- 1 recap secteur ou ville ;
+- 1 guide utile candidat.
 
 ## Securite
 

@@ -24,6 +24,10 @@ const steps = [
   ["Rapport automation", "scripts/generate-automation-report.mjs"],
 ];
 
+if (process.env.SOCIAL_AUTOPUBLISH === "true") {
+  steps.push(["Publication sociale automatique", "scripts/publish-social.mjs"]);
+}
+
 async function runNodeScript(label, script, completedSteps) {
   return new Promise((resolve, reject) => {
     console.log(`\n== ${label} ==`);

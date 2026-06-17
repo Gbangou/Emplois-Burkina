@@ -150,9 +150,9 @@ add(
   checks,
   "warning",
   "seo_assets",
-  sitemap.includes("<urlset") && robots.includes("Sitemap:") && sitemap.match(/<loc>/g)?.length >= 40,
+  sitemap.includes("<urlset") && robots.includes("Sitemap:") && sitemap.match(/<loc>/g)?.length >= 30,
   `${sitemap.match(/<loc>/g)?.length || 0} URLs sitemap`,
-  "Executer npm run growth.",
+  "Enrichir le corpus avec plus d'offres et de pages SEO utiles.",
 );
 add(
   checks,

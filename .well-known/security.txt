@@ -1,0 +1,5 @@
+Contact: mailto:contact@jobfaso.com
+Expires: 2026-12-14T10:03:48.907Z
+Preferred-Languages: fr, en
+Canonical: https://jobfaso.com/.well-known/security.txt
+Policy: https://jobfaso.com/privacy.html

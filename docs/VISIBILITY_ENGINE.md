@@ -1,27 +1,36 @@
 # Moteur visibilite et revenus JobFaso
 
-Derniere generation : 2026-06-16T09:56:42.867Z
+Derniere generation : 2026-06-17T10:02:05.304Z
 
 ## Score de preparation
 
-Score global : 92/100
+Score global : 66/100
 
 | Controle | Etat | Poids | Correction |
 | --- | --- | ---: | --- |
 | Domaine public configure | OK | 10 | Configurer JOBFASO_BASE_URL et DNS. |
 | Contact public visible | OK | 10 | Ajouter email et page contact. |
 | Pages confiance | OK | 12 | Garder privacy, terms, contacts et tarifs. |
-| Sitemap riche | OK | 12 | Executer npm run growth. |
+| Sitemap riche | A faire | 12 | Executer npm run growth. |
 | Robots.txt propre | OK | 8 | Regenerer robots.txt. |
-| Volume offres SEO | OK | 12 | Automatiser plus de sources fiables. |
+| Flux RSS/JSON public | OK | 6 | Generer feed.xml et feed.json. |
+| Volume offres SEO | A faire | 12 | Automatiser plus de sources fiables. |
 | Diversite des sources | OK | 10 | Ajouter partenaires/RSS/API autorises. |
 | Contenus utiles hors offres | OK | 8 | Publier guides candidats originaux. |
 | AdSense pret a activer | A faire | 8 | Ajouter adsenseClient apres approbation Google. |
+| ads.txt present | A faire | 6 | Generer ads.txt depuis adsenseClient. |
+| Recherche de site structuree | OK | 6 | Conserver le schema SearchAction sur la page d'accueil. |
+| Contact securite public | OK | 4 | Publier .well-known/security.txt. |
+| Profils sociaux relies au schema | A faire | 6 | Ajouter page Facebook, LinkedIn ou canal WhatsApp dans data/site-config.json. |
 | Produits revenus definis | OK | 10 | Maintenir data/rate-card.json. |
 
 ## Priorites immediates
 
+- Executer npm run growth.
+- Automatiser plus de sources fiables.
 - Ajouter adsenseClient apres approbation Google.
+- Generer ads.txt depuis adsenseClient.
+- Ajouter page Facebook, LinkedIn ou canal WhatsApp dans data/site-config.json.
 
 ## Cibles backlinks et partenariats
 
@@ -31,8 +40,6 @@ Score global : 92/100
 - HumanitaireHub (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres.
 - UNjobs Burkina Faso (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres.
 - ReliefWeb Burkina Faso (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres.
-- eConcours Pro (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres.
-- Ministere des Serviteurs du Peuple (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres.
 - Annonce mise en avant (revenue_product) : 25 000 FCFA - publication prioritaire, badge mise en avant, diffusion WhatsApp ciblee, visibilite temporaire page accueil. Demande : Trouver 5 clients potentiels pour le produit Annonce mise en avant.
 - Cabinets RH et recruteurs (commercial_partner) : Annonces premium, shortlist candidats et rapport marche. Demande : Partenariat legal, marque, mesure par clics/leads, sans vente abusive de donnees personnelles.
 - Sponsor categorie ONG (category_sponsor) : Vendre une visibilite utile sur la categorie ONG. Demande : Sponsor mensuel, bannieres natives marquees, lien suivi et rapport de performance.
@@ -43,9 +50,11 @@ Score global : 92/100
 - UN Talent Burkina Faso (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres.
 - UNICEF Careers Burkina Faso (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres.
 - UNDP Jobs Burkina Faso (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres.
+- UNV Opportunities (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres.
+- WHO Careers (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres.
 - Sponsor categorie (revenue_product) : 100 000 FCFA - visibilite categorie, mention sponsorisee, placement newsletter, rapport simple. Demande : Trouver 5 clients potentiels pour le produit Sponsor categorie.
 - Centres CV et coaching entretien (commercial_partner) : Leads qualifies avec commission par client confirme. Demande : Partenariat legal, marque, mesure par clics/leads, sans vente abusive de donnees personnelles.
-- Sponsor categorie Bureau (category_sponsor) : Vendre une visibilite utile sur la categorie Bureau. Demande : Sponsor mensuel, bannieres natives marquees, lien suivi et rapport de performance.
+- Sponsor categorie Transport et logistique (category_sponsor) : Vendre une visibilite utile sur la categorie Transport et logistique. Demande : Sponsor mensuel, bannieres natives marquees, lien suivi et rapport de performance.
 - IUCN Careers Burkina Faso (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres.
 - NRC Careers (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres.
 - DRC Careers (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres.

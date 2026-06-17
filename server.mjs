@@ -37,10 +37,14 @@ const publicPaths = new Set([
   "/admin.html",
   "/sitemap.xml",
   "/robots.txt",
+  "/ads.txt",
   "/llms.txt",
+  "/feed.xml",
+  "/feed.json",
   "/site.webmanifest",
   "/indexnow-urls.txt",
   "/indexnow-key.txt",
+  "/.well-known/security.txt",
 ]);
 const publicDataPaths = new Set([
   "/data/curated-jobs.json",
@@ -154,6 +158,8 @@ function resolvePublicPath(pathname) {
     "/grille-tarifaire": "/grille-tarifaire.html",
     "/contacts/": "/contacts.html",
     "/contacts": "/contacts.html",
+    "/feed": "/feed.xml",
+    "/rss": "/feed.xml",
   };
   const safePath = pathname === "/" ? "/index.html" : aliases[pathname] || pathname;
   const normalized = normalize(safePath).replace(/^([/\\])+/, "");
@@ -174,6 +180,8 @@ function isPublicStaticPath(pathname) {
       "/grille-tarifaire",
       "/contacts/",
       "/contacts",
+      "/feed",
+      "/rss",
     ].includes(pathname)
   ) {
     return true;

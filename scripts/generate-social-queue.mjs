@@ -35,6 +35,14 @@ function absolute(config, path) {
   return `${baseUrl.replace(/\/$/, "")}/${path.replace(/^\//, "")}`;
 }
 
+function trackedUrl(url, source, campaign) {
+  const target = new URL(url);
+  target.searchParams.set("utm_source", source);
+  target.searchParams.set("utm_medium", "social");
+  target.searchParams.set("utm_campaign", campaign);
+  return target.toString();
+}
+
 function jobPath(job) {
   return `pages/jobs/${slugify(job.title)}-${String(job.id).slice(0, 8)}.html`;
 }
@@ -65,6 +73,51 @@ ${url}
 #JobFaso #EmploiBurkina #Recrutement #BurkinaFaso`);
 }
 
+function socialHashtags(job) {
+  const tags = new Set(["#JobFaso", "#EmploiBurkina", "#BurkinaFaso"]);
+  const category = clean(job.category || "");
+  const city = clean(job.city || "");
+
+  if (/ong|humanitaire|onu/i.test(category)) tags.add("#ONG");
+  if (/concours/i.test(category)) tags.add("#Concours");
+  if (/stage/i.test(category)) tags.add("#Stage");
+  if (/terrain|informel/i.test(category)) tags.add("#MetiersTerrain");
+  if (/remote|teletravail/i.test([job.title, ...(job.tags || [])].join(" "))) tags.add("#Teletravail");
+  if (city && city !== "Burkina Faso") tags.add(`#${slugify(city).replace(/-/g, "")}`);
+
+  return [...tags].slice(0, 6).join(" ");
+}
+
+function socialMessages(job, urls) {
+  const city = job.city || "Burkina Faso";
+  const organization = job.company || job.sourceName || "Organisation";
+  const hashtags = socialHashtags(job);
+  const closing = job.closingDate ? `Cloture: ${job.closingDate}\n` : "";
+
+  return {
+    facebook: cleanLines(`Nouvelle offre JobFaso
+
+${job.title}
+Organisation : ${organization}
+Ville : ${city}
+${closing}Postulez depuis la source officielle :
+${urls.facebook}
+
+${hashtags}`),
+    linkedin: cleanLines(`Offre reperee sur JobFaso
+
+${job.title}
+Organisation : ${organization}
+Ville : ${city}
+${closing}Details et source officielle :
+${urls.linkedin}`),
+    whatsapp: cleanLines(`JobFaso
+${job.title}
+${organization} - ${city}
+${closing}Details : ${urls.whatsapp}`),
+  };
+}
+
 async function main() {
   const jobs = await readJson(JOBS_FILE, []);
   const config = await readJson(CONFIG_FILE, {});
@@ -76,8 +129,15 @@ async function main() {
   const candidates = jobs
     .filter((job) => job.title && job.sourceUrl && !publishedJobIds.has(job.id))
     .slice(0, Number(process.env.SOCIAL_QUEUE_LIMIT || 20))
-    .map((job) => {
+    .map((job, index) => {
       const url = absolute(config, jobPath(job));
+      const shareUrls = {
+        canonical: url,
+        facebook: trackedUrl(url, "facebook", "job_post"),
+        linkedin: trackedUrl(url, "linkedin", "job_post"),
+        whatsapp: trackedUrl(url, "whatsapp", "job_post"),
+      };
+      const messages = socialMessages(job, shareUrls);
       const id = `social-${job.id}`;
       const previous = previousById.get(id);
       const status = previous?.status === "failed" ? "queued" : previous?.status || "queued";
@@ -89,11 +149,15 @@ async function main() {
         category: job.category || "Opportunite",
         sourceName: job.sourceName || "Source",
         url,
+        shareUrls,
         sourceUrl: job.sourceUrl,
-        message: postMessage(job, url),
+        message: postMessage(job, shareUrls.canonical),
+        channels: messages,
+        hashtags: socialHashtags(job),
         status,
         attempts: Number(previous?.attempts || 0),
         createdAt: previous?.createdAt || new Date().toISOString(),
+        scheduledAt: previous?.scheduledAt || new Date(Date.now() + index * 3_600_000).toISOString(),
         error: status === "queued" ? undefined : previous?.error,
       };
     });

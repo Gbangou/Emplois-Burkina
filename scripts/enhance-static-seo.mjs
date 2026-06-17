@@ -84,6 +84,7 @@ function imageUrl(config) {
 }
 
 function schema(config, page) {
+  const sameAs = [config.social?.facebook, config.social?.linkedin, config.social?.whatsappChannel].filter(Boolean);
   const base = {
     "@context": "https://schema.org",
     "@type": page.schemaType,
@@ -110,6 +111,7 @@ function schema(config, page) {
       url: config.baseUrl,
       email: config.contactEmail,
       areaServed: config.country || "Burkina Faso",
+      sameAs,
     },
   };
 
@@ -128,9 +130,12 @@ function seoBlock(config, page) {
     <meta name="description" content="${escapeHtml(page.description)}" />
     <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" />
     <meta name="theme-color" content="#0f6b3d" />
+    <meta name="author" content="${escapeHtml(config.siteName || "JobFaso")}" />
     <link rel="canonical" href="${escapeHtml(canonical)}" />
     <link rel="alternate" hreflang="fr-BF" href="${escapeHtml(canonical)}" />
     <link rel="alternate" hreflang="x-default" href="${escapeHtml(canonical)}" />
+    <link rel="alternate" type="application/rss+xml" title="${escapeHtml(config.siteName || "JobFaso")} RSS" href="${escapeHtml(absolute(config, "feed.xml"))}" />
+    <link rel="alternate" type="application/feed+json" title="${escapeHtml(config.siteName || "JobFaso")} JSON Feed" href="${escapeHtml(absolute(config, "feed.json"))}" />
     <link rel="manifest" href="site.webmanifest" />
     <meta property="og:title" content="${escapeHtml(page.title)}" />
     <meta property="og:description" content="${escapeHtml(page.description)}" />
@@ -139,6 +144,7 @@ function seoBlock(config, page) {
     <meta property="og:locale" content="fr_BF" />
     <meta property="og:site_name" content="${escapeHtml(config.siteName || "JobFaso")}" />
     <meta property="og:image" content="${escapeHtml(imageUrl(config))}" />
+    <meta property="og:image:alt" content="${escapeHtml(config.siteName || "JobFaso")} - Offres d'emploi et recrutement au Burkina Faso" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${escapeHtml(page.title)}" />
     <meta name="twitter:description" content="${escapeHtml(page.description)}" />

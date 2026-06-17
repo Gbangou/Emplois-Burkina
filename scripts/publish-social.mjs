@@ -29,12 +29,12 @@ async function publishFacebook(item) {
   }
 
   if (!LIVE) {
-    return { dryRun: true, platform: "facebook", message: item.message, link: item.url };
+    return { dryRun: true, platform: "facebook", message: item.channels?.facebook || item.message, link: item.shareUrls?.facebook || item.url };
   }
 
   const body = new URLSearchParams({
-    message: item.message,
-    link: item.url,
+    message: item.channels?.facebook || item.message,
+    link: item.shareUrls?.facebook || item.url,
     access_token: token,
   });
 
@@ -68,6 +68,20 @@ async function publishWebhook(item) {
       source: "jobfaso",
       type: "job_post",
       item,
+      platformPayloads: {
+        facebook: {
+          message: item.channels?.facebook || item.message,
+          link: item.shareUrls?.facebook || item.url,
+        },
+        linkedin: {
+          message: item.channels?.linkedin || item.message,
+          link: item.shareUrls?.linkedin || item.url,
+        },
+        whatsapp: {
+          message: item.channels?.whatsapp || item.message,
+          link: item.shareUrls?.whatsapp || item.url,
+        },
+      },
     }),
   });
 

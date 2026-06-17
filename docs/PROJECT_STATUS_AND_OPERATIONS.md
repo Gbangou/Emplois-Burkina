@@ -288,7 +288,11 @@ Fichiers generes :
 
 - `sitemap.xml`
 - `robots.txt`
+- `ads.txt`
+- `feed.xml`
+- `feed.json`
 - `llms.txt`
+- `.well-known/security.txt`
 - `site.webmanifest`
 - `indexnow-urls.txt`
 - `assets/jobfaso-og.svg`
@@ -341,6 +345,7 @@ Le mode live depend des variables :
 - `FACEBOOK_PAGE_ACCESS_TOKEN`
 - `SOCIAL_WEBHOOK_URL`
 - `SOCIAL_PUBLISH_LIVE`
+- `SOCIAL_AUTOPUBLISH`
 
 ## Commandes de verification
 
@@ -362,7 +367,11 @@ URLs locales :
 - `http://127.0.0.1:8088/api/db/status`
 - `http://127.0.0.1:8088/sitemap.xml`
 - `http://127.0.0.1:8088/robots.txt`
+- `http://127.0.0.1:8088/ads.txt`
+- `http://127.0.0.1:8088/feed.xml`
+- `http://127.0.0.1:8088/feed.json`
 - `http://127.0.0.1:8088/llms.txt`
+- `http://127.0.0.1:8088/.well-known/security.txt`
 
 ## Prochaines etapes propres
 

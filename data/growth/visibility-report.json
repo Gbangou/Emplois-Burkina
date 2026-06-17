@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-06-16T09:56:42.867Z",
-  "score": 92,
+  "generatedAt": "2026-06-17T10:02:05.304Z",
+  "score": 66,
   "checks": [
     {
       "id": "domain",
@@ -26,7 +26,7 @@
     {
       "id": "sitemap",
       "label": "Sitemap riche",
-      "ok": true,
+      "ok": false,
       "weight": 12,
       "fix": "Executer npm run growth."
     },
@@ -38,9 +38,16 @@
       "fix": "Regenerer robots.txt."
     },
     {
+      "id": "feed",
+      "label": "Flux RSS/JSON public",
+      "ok": true,
+      "weight": 6,
+      "fix": "Generer feed.xml et feed.json."
+    },
+    {
       "id": "content_depth",
       "label": "Volume offres SEO",
-      "ok": true,
+      "ok": false,
       "weight": 12,
       "fix": "Automatiser plus de sources fiables."
     },
@@ -66,6 +73,34 @@
       "fix": "Ajouter adsenseClient apres approbation Google."
     },
     {
+      "id": "ads_txt",
+      "label": "ads.txt present",
+      "ok": false,
+      "weight": 6,
+      "fix": "Generer ads.txt depuis adsenseClient."
+    },
+    {
+      "id": "search_action",
+      "label": "Recherche de site structuree",
+      "ok": true,
+      "weight": 6,
+      "fix": "Conserver le schema SearchAction sur la page d'accueil."
+    },
+    {
+      "id": "security_txt",
+      "label": "Contact securite public",
+      "ok": true,
+      "weight": 4,
+      "fix": "Publier .well-known/security.txt."
+    },
+    {
+      "id": "social_profiles",
+      "label": "Profils sociaux relies au schema",
+      "ok": false,
+      "weight": 6,
+      "fix": "Ajouter page Facebook, LinkedIn ou canal WhatsApp dans data/site-config.json."
+    },
+    {
       "id": "monetization",
       "label": "Produits revenus definis",
       "ok": true,
@@ -74,14 +109,20 @@
     }
   ],
   "priorities": [
-    "Ajouter adsenseClient apres approbation Google."
+    "Executer npm run growth.",
+    "Automatiser plus de sources fiables.",
+    "Ajouter adsenseClient apres approbation Google.",
+    "Generer ads.txt depuis adsenseClient.",
+    "Ajouter page Facebook, LinkedIn ou canal WhatsApp dans data/site-config.json."
   ],
   "totals": {
-    "jobs": 22,
-    "sources": 41,
-    "sitemapUrls": 50,
+    "jobs": 9,
+    "sources": 54,
+    "sitemapUrls": 36,
+    "scoreEarnedWeight": 84,
+    "scoreTotalWeight": 128,
     "rateProducts": 7,
-    "outreachTargets": 44,
+    "outreachTargets": 41,
     "outreachTemplates": 3
   }
 }

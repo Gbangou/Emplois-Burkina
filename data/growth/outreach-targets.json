@@ -48,22 +48,6 @@
     "ask": "Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres."
   },
   {
-    "type": "source_partner",
-    "name": "eConcours Pro",
-    "url": "https://econcours-pro.gov.bf/",
-    "priority": 1,
-    "angle": "Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire.",
-    "ask": "Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres."
-  },
-  {
-    "type": "source_partner",
-    "name": "Ministere des Serviteurs du Peuple",
-    "url": "https://www.fonction-publique.gov.bf/accueil",
-    "priority": 1,
-    "angle": "Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire.",
-    "ask": "Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres."
-  },
-  {
     "type": "revenue_product",
     "name": "Annonce mise en avant",
     "url": "",
@@ -144,6 +128,22 @@
     "ask": "Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres."
   },
   {
+    "type": "source_partner",
+    "name": "UNV Opportunities",
+    "url": "https://app.unv.org/opportunities",
+    "priority": 2,
+    "angle": "Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire.",
+    "ask": "Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres."
+  },
+  {
+    "type": "source_partner",
+    "name": "WHO Careers",
+    "url": "https://careers.who.int/careersection/ex/jobsearch.ftl",
+    "priority": 2,
+    "angle": "Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire.",
+    "ask": "Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres."
+  },
+  {
     "type": "revenue_product",
     "name": "Sponsor categorie",
     "url": "",
@@ -161,10 +161,10 @@
   },
   {
     "type": "category_sponsor",
-    "name": "Sponsor categorie Bureau",
+    "name": "Sponsor categorie Transport et logistique",
     "url": "",
     "priority": 3,
-    "angle": "Vendre une visibilite utile sur la categorie Bureau.",
+    "angle": "Vendre une visibilite utile sur la categorie Transport et logistique.",
     "ask": "Sponsor mensuel, bannieres natives marquees, lien suivi et rapport de performance."
   },
   {
@@ -265,10 +265,10 @@
   },
   {
     "type": "category_sponsor",
-    "name": "Sponsor categorie BTP et chantier",
+    "name": "Sponsor categorie Bureau",
     "url": "",
     "priority": 4,
-    "angle": "Vendre une visibilite utile sur la categorie BTP et chantier.",
+    "angle": "Vendre une visibilite utile sur la categorie Bureau.",
     "ask": "Sponsor mensuel, bannieres natives marquees, lien suivi et rapport de performance."
   },
   {
@@ -289,10 +289,10 @@
   },
   {
     "type": "category_sponsor",
-    "name": "Sponsor categorie Commerce et vente",
+    "name": "Sponsor categorie Sante",
     "url": "",
     "priority": 5,
-    "angle": "Vendre une visibilite utile sur la categorie Commerce et vente.",
+    "angle": "Vendre une visibilite utile sur la categorie Sante.",
     "ask": "Sponsor mensuel, bannieres natives marquees, lien suivi et rapport de performance."
   },
   {
@@ -305,10 +305,10 @@
   },
   {
     "type": "category_sponsor",
-    "name": "Sponsor categorie Finance et administration",
+    "name": "Sponsor categorie Metiers terrain et informels",
     "url": "",
     "priority": 6,
-    "angle": "Vendre une visibilite utile sur la categorie Finance et administration.",
+    "angle": "Vendre une visibilite utile sur la categorie Metiers terrain et informels.",
     "ask": "Sponsor mensuel, bannieres natives marquees, lien suivi et rapport de performance."
   },
   {
@@ -320,35 +320,11 @@
     "ask": "Trouver 5 clients potentiels pour le produit Shortlist candidat."
   },
   {
-    "type": "category_sponsor",
-    "name": "Sponsor categorie Transport et logistique",
-    "url": "",
-    "priority": 7,
-    "angle": "Vendre une visibilite utile sur la categorie Transport et logistique.",
-    "ask": "Sponsor mensuel, bannieres natives marquees, lien suivi et rapport de performance."
-  },
-  {
     "type": "revenue_product",
     "name": "Rapport tendances emploi",
     "url": "",
     "priority": 7,
     "angle": "50 000 FCFA - secteurs qui recrutent, villes actives, competences demandees, donnees agregees non personnelles.",
     "ask": "Trouver 5 clients potentiels pour le produit Rapport tendances emploi."
-  },
-  {
-    "type": "category_sponsor",
-    "name": "Sponsor categorie Metiers terrain et informels",
-    "url": "",
-    "priority": 8,
-    "angle": "Vendre une visibilite utile sur la categorie Metiers terrain et informels.",
-    "ask": "Sponsor mensuel, bannieres natives marquees, lien suivi et rapport de performance."
-  },
-  {
-    "type": "category_sponsor",
-    "name": "Sponsor categorie Sante",
-    "url": "",
-    "priority": 9,
-    "angle": "Vendre une visibilite utile sur la categorie Sante.",
-    "ask": "Sponsor mensuel, bannieres natives marquees, lien suivi et rapport de performance."
   }
 ]
