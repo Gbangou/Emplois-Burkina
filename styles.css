@@ -1283,167 +1283,6 @@ body {
   margin: 0;
 }
 
-.safeboda-inspired-section {
-  display: grid;
-  gap: 24px;
-}
-
-.service-heading {
-  align-items: center;
-}
-
-.service-showcase {
-  display: grid;
-  gap: 18px;
-}
-
-.service-panel {
-  align-items: stretch;
-  background:
-    linear-gradient(180deg, #ffffff, #f8fbfa),
-    radial-gradient(circle at top right, rgba(0, 94, 136, 0.06), transparent 18rem);
-  border: 1px solid #cfddd8;
-  border-radius: 8px;
-  box-shadow:
-    0 22px 58px rgba(17, 43, 59, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.84);
-  display: grid;
-  gap: clamp(18px, 4vw, 42px);
-  grid-template-columns: minmax(0, 0.95fr) minmax(320px, 1.05fr);
-  min-height: 430px;
-  overflow: hidden;
-  padding: clamp(18px, 3vw, 28px);
-  position: relative;
-}
-
-.service-panel:nth-child(even) {
-  grid-template-columns: minmax(320px, 1.05fr) minmax(0, 0.95fr);
-}
-
-.service-panel-featured {
-  background:
-    linear-gradient(120deg, rgba(255, 255, 255, 0.98), rgba(242, 249, 246, 0.95)),
-    radial-gradient(circle at 80% 20%, rgba(201, 0, 47, 0.08), transparent 18rem);
-}
-
-.service-panel-copy {
-  align-content: center;
-  display: grid;
-  gap: 14px;
-  padding: clamp(10px, 3vw, 28px);
-}
-
-.service-panel-copy > span {
-  color: var(--brand-red);
-  font-size: 0.82rem;
-  font-weight: 900;
-  text-transform: uppercase;
-}
-
-.service-panel-copy h3 {
-  color: var(--ink);
-  font-size: clamp(2rem, 4vw, 3.7rem);
-  line-height: 1.02;
-  margin: 0;
-  max-width: 620px;
-}
-
-.service-panel-copy p {
-  color: var(--muted);
-  font-size: 1.02rem;
-  font-weight: 700;
-  line-height: 1.7;
-  margin: 0;
-  max-width: 620px;
-}
-
-.service-panel-copy ul {
-  display: grid;
-  gap: 10px;
-  margin: 4px 0 8px;
-  padding: 0;
-}
-
-.service-panel-copy li {
-  align-items: center;
-  background: rgba(255, 255, 255, 0.76);
-  border: 1px solid #dce7e3;
-  border-radius: 8px;
-  color: var(--ink);
-  display: flex;
-  font-weight: 800;
-  gap: 10px;
-  list-style: none;
-  min-height: 44px;
-  padding: 9px 12px;
-}
-
-.service-panel-copy li::before {
-  background: linear-gradient(180deg, var(--brand-red), var(--brand-blue));
-  border-radius: 999px;
-  content: "";
-  flex: 0 0 auto;
-  height: 9px;
-  width: 9px;
-}
-
-.service-panel-media {
-  background-position: center;
-  background-size: cover;
-  border-radius: 8px;
-  box-shadow: 0 24px 60px rgba(8, 25, 35, 0.16);
-  min-height: 360px;
-  overflow: hidden;
-  position: relative;
-}
-
-.service-panel-media::after {
-  background:
-    linear-gradient(180deg, rgba(8, 25, 35, 0.02), rgba(8, 25, 35, 0.2)),
-    radial-gradient(circle at 80% 15%, rgba(255, 255, 255, 0.2), transparent 12rem);
-  content: "";
-  inset: 0;
-  position: absolute;
-}
-
-.service-media-search {
-  background-image: url("https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&fm=jpg&q=82&w=1400");
-}
-
-.service-media-source {
-  background-image: url("https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&fm=jpg&q=82&w=1400");
-}
-
-.service-media-recruiter {
-  background-image: url("https://images.unsplash.com/photo-1560264280-88b68371db39?auto=format&fit=crop&fm=jpg&q=82&w=1400");
-}
-
-.service-floating-note {
-  backdrop-filter: blur(18px);
-  background: linear-gradient(135deg, rgba(201, 0, 47, 0.94), rgba(0, 94, 136, 0.9));
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  border-radius: 8px;
-  box-shadow: 0 22px 44px rgba(8, 25, 35, 0.2);
-  color: #fff;
-  font-size: clamp(1.15rem, 2vw, 1.55rem);
-  font-weight: 900;
-  left: clamp(18px, 4vw, 42px);
-  max-width: 250px;
-  padding: 18px 20px;
-  position: absolute;
-  top: clamp(18px, 4vw, 42px);
-  z-index: 2;
-}
-
-.service-floating-note-light {
-  background: rgba(255, 255, 255, 0.9);
-  color: var(--ink);
-  left: auto;
-  right: clamp(18px, 4vw, 42px);
-  top: auto;
-  bottom: clamp(18px, 4vw, 42px);
-}
-
 .international-intelligence-section {
   display: grid;
   gap: 24px;
@@ -5216,7 +5055,6 @@ th {
   .finder-audience-grid,
   .finder-process-section,
   .finder-process-grid,
-  .service-panel,
   .international-intelligence-hero,
   .benchmark-layout,
   .benchmark-category-grid,
@@ -5309,15 +5147,6 @@ th {
 
   .process-image-collage {
     height: 130px;
-  }
-
-  .service-panel:nth-child(even) {
-    grid-template-columns: 1fr;
-  }
-
-  .service-panel-media {
-    min-height: 300px;
-    order: -1;
   }
 
   .benchmark-metrics {
@@ -5523,38 +5352,6 @@ th {
 
   .process-image-collage {
     height: 118px;
-  }
-
-  .service-panel {
-    min-height: 0;
-    padding: 16px;
-  }
-
-  .service-panel-copy {
-    padding: 4px;
-  }
-
-  .service-panel-copy h3 {
-    font-size: clamp(1.85rem, 10vw, 2.7rem);
-  }
-
-  .service-panel-media {
-    min-height: 240px;
-  }
-
-  .service-floating-note {
-    font-size: 1rem;
-    left: 16px;
-    max-width: calc(100% - 32px);
-    padding: 14px 16px;
-    top: 16px;
-  }
-
-  .service-floating-note-light {
-    bottom: 16px;
-    left: 16px;
-    right: auto;
-    top: auto;
   }
 
   .filters {
