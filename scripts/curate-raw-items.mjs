@@ -578,10 +578,6 @@ function inferCity(item) {
   const excerptText = decodeHtml(item.excerpt || "");
   const normalizedExcerpt = normalize(excerptText);
   const sourceCity = normalize(item.city);
-  const sourceCityLooksInvalid =
-    !sourceCity ||
-    /courant|mois|date|email|http|www|login|connexion|recherche|newsletter|inscription|candidat|employeur/.test(sourceCity) ||
-    sourceCity.length > 48;
   const explicitLocationMatch = excerptText.match(
     /(?:\bLieu\b|\bPays\b|\bCountry\b|\bDuty\s*station\b|📍)\s*[:\-]?\s*([A-Za-zÀ-ÿ' -]{3,80})/i
   );
@@ -611,7 +607,7 @@ function inferCity(item) {
   if (/ghana/.test(sourceCity) || /ghana/.test(explicitLocation)) return "Ghana";
   if (/senegal/.test(sourceCity) || /senegal/.test(explicitLocation)) return "Senegal";
   if (/burkina faso/.test(sourceCity)) return "Burkina Faso";
-  if (sourceCityLooksInvalid || /americaines|africaines|europeennes|membres|plusieurs secteurs/.test(sourceCity)) return "Burkina Faso";
+  if (!sourceCity || /americaines|africaines|europeennes|membres|plusieurs secteurs/.test(sourceCity)) return "Burkina Faso";
 
   return item.city || "Burkina Faso";
 }
