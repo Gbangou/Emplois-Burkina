@@ -1,32 +1,3 @@
-import {
-  INTERNATIONAL_ELIGIBILITY_BLOCKERS,
-  INTERNATIONAL_TECH_EXCLUSION_PATTERNS,
-  INTERNATIONAL_TECH_PATTERNS,
-  INTERNATIONAL_TECH_TITLE_PATTERNS,
-  SEARCH_EQUIVALENTS,
-  SOURCE_SPOTLIGHTS,
-  SPECIAL_JOB_FILTER_LABEL,
-  SPECIAL_JOB_FILTERS,
-} from "./assets/js/app-config.js";
-import {
-  boundedDistance,
-  daysUntil,
-  displayDate,
-  escapeHtml,
-  formatCountdown,
-  formatFcfa,
-  formatJobDate,
-  normalize,
-  readStorageArray,
-  slugify,
-  tokenizeNormalized,
-  writeStorageArray,
-} from "./assets/js/app-utils.js";
-import { createSearchHelpers } from "./assets/js/search-helpers.js";
-import { createFeedHelpers } from "./assets/js/feed-helpers.js";
-import { createAdminHelpers } from "./assets/js/admin-helpers.js";
-import { createSourceRenderers } from "./assets/js/source-renderers.js";
-
 const fallbackJobs = [
   {
     id: "demo-it-manager",
@@ -197,6 +168,383 @@ const demoProfiles = [
   },
 ];
 
+function normalize(value = "") {
+  return value
+    .toString()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+}
+
+function tokenizeNormalized(value = "") {
+  return normalize(value)
+    .split(/[^a-z0-9]+/i)
+    .map((token) => token.trim())
+    .filter((token) => token.length >= 2);
+}
+
+const SEARCH_EQUIVALENTS = {
+  admin: ["assistant", "bureau", "office", "secretariat"],
+  anglais: ["english", "bilingual", "bilingue"],
+  artisan: ["informel", "service", "terrain"],
+  assistant: ["admin", "bureau", "office", "secretaire"],
+  bureau: ["administration", "secretariat", "assistante"],
+  chauffeur: ["conducteur", "transport", "livraison", "logistique"],
+  commerce: ["vente", "vendeur", "vendeuse", "commercial"],
+  comptable: ["finance", "administration", "gestion"],
+  concours: ["fonction publique", "selection", "communique"],
+  consultance: ["consultant", "consultancy", "expert", "freelance", "mission"],
+  consultant: ["consultance", "consultancy", "expert", "mission"],
+  distance: ["remote", "teletravail", "homebased"],
+  driver: ["chauffeur", "conducteur", "transport"],
+  electricien: ["technique", "artisan", "chantier", "maintenance"],
+  english: ["anglais", "bilingual", "bilingue"],
+  freelance: ["consultance", "consultant", "remote", "teletravail"],
+  gardien: ["vigile", "securite"],
+  homebased: ["remote", "teletravail", "distance"],
+  informel: ["artisan", "terrain", "journalier", "service"],
+  internship: ["stage", "stagiaire", "trainee"],
+  journalier: ["mission", "terrain", "chantier"],
+  macon: ["btp", "chantier", "construction", "terrain"],
+  nurse: ["infirmier", "sante"],
+  ong: ["humanitaire", "programme", "projet", "international"],
+  plomberie: ["plombier", "artisan", "chantier"],
+  plombier: ["artisan", "chantier", "service"],
+  remote: ["teletravail", "distance", "homebased", "workfromhome"],
+  sante: ["medical", "clinique", "pediatre", "infirmier"],
+  secretaire: ["bureau", "administration", "assistante"],
+  soudeur: ["artisan", "chantier", "technique"],
+  stage: ["stagiaire", "apprentissage", "formation"],
+  teletravail: ["remote", "distance", "homebased"],
+  trainee: ["stage", "internship", "stagiaire"],
+  vendeur: ["vente", "commerce", "boutique"],
+  vendeuse: ["vente", "commerce", "boutique"],
+  volunteer: ["volontariat", "benevole", "unv"],
+  volontariat: ["volunteer", "benevole", "unv"],
+  workfromhome: ["remote", "teletravail"],
+};
+
+const SOURCE_SPOTLIGHTS = [
+  {
+    id: "international_onu",
+    anchor: "international-careers",
+    eyebrow: "Carriere internationale",
+    title: "Organisations internationales et systeme des Nations Unies",
+    description:
+      "Portes d'entree officielles et verifiees pour les agences onusiennes, ONG internationales, bailleurs et structures de developpement ou les Burkinabe peuvent postuler.",
+    segments: ["international_onu"],
+    sourceTypes: ["multilateral", "organization", "ngo"],
+    keywords: ["Burkina Faso", "Ouagadougou", "national", "programme", "consultant", "volunteer"],
+    actionHref: "jobs.html?focus=onu-consultance",
+    actionLabel: "Voir les offres ONG suivies",
+    searchShortcuts: [
+      {
+        label: "Offres onusiennes",
+        note: "UNICEF, PNUD, FAO, WFP, OMS, UNESCO et volontariat.",
+        query: "ONU",
+        focus: "onu-consultance",
+      },
+      {
+        label: "Organisations internationales",
+        note: "ONG, bailleurs, projets et postes a dimension regionale.",
+        query: "international",
+        focus: "onu-consultance",
+      },
+      {
+        label: "Consultance internationale",
+        note: "Consultant, expert, mission, terme de reference, home-based.",
+        query: "consultant",
+        focus: "onu-consultance",
+      },
+    ],
+    limit: 12,
+  },
+  {
+    id: "international_tech",
+    anchor: "international-tech",
+    eyebrow: "Tech internationale",
+    title: "Informatique, data, systemes et cyber",
+    description:
+      "Selection orientee IT, data, infrastructure, support, cloud et cyber, issue de portails officiels internationaux, onusiens et ONG. Eligibilite exacte a relire sur chaque fiche source.",
+    segments: ["international_onu", "consulting_remote"],
+    sourceTypes: ["multilateral", "organization", "ngo"],
+    keywords: ["IT", "Data", "Systemes", "Cloud", "Cyber", "Digital"],
+    actionHref: "jobs.html?focus=onu-consultance&q=informatique",
+    actionLabel: "Explorer les offres tech",
+    searchShortcuts: [
+      {
+        label: "Informatique",
+        note: "Support IT, admin systeme, reseau, digital, infrastructure.",
+        query: "informatique",
+        focus: "onu-consultance",
+      },
+      {
+        label: "Data",
+        note: "Data analyst, BI, SQL, information management, reporting technique.",
+        query: "data",
+        focus: "onu-consultance",
+      },
+      {
+        label: "Cyber / systemes",
+        note: "Cybersecurite, cloud, systemes, securite de l'information.",
+        query: "cybersecurite",
+        focus: "onu-consultance",
+      },
+    ],
+    limit: 12,
+    mode: "tech",
+  },
+  {
+    id: "consulting_remote",
+    anchor: "consulting-remote",
+    eyebrow: "Travail flexible",
+    title: "Consultance, freelance et travail a distance",
+    description:
+      "Sources serieuses pour missions de consultance, teletravail, freelance et opportunites internationales accessibles depuis le Burkina Faso.",
+    segments: ["consulting_remote"],
+    sourceTypes: ["multilateral", "organization", "ngo", "development_marketplace", "freelance_platform", "remote_board"],
+    keywords: ["consultant", "consultancy", "remote", "teletravail", "homebased", "freelance"],
+    actionHref: "jobs.html?focus=onu-consultance&q=consultant",
+    actionLabel: "Lancer une recherche guidee",
+    searchShortcuts: [
+      {
+        label: "Consultance",
+        note: "Missions courtes, experts, reporting, evaluation, assistance technique.",
+        query: "consultant",
+        focus: "onu-consultance",
+      },
+      {
+        label: "Travail a distance",
+        note: "Remote, teletravail, home-based et support digital.",
+        query: "teletravail",
+        focus: "onu-consultance",
+      },
+      {
+        label: "Freelance",
+        note: "Redaction, design, support, produit, data, developpement.",
+        query: "freelance",
+        focus: "onu-consultance",
+      },
+    ],
+    limit: 12,
+  },
+];
+
+const SPECIAL_JOB_FILTER_LABEL = "ONU / Consultance";
+const SPECIAL_JOB_FILTERS = {
+  "onu / consultance": {
+    segments: ["international_onu", "consulting_remote"],
+    keywords: [
+      "onu",
+      "unicef",
+      "undp",
+      "fao",
+      "wfp",
+      "unesco",
+      "who",
+      "unv",
+      "volunteer",
+      "volontariat",
+      "international",
+      "consultant",
+      "consultance",
+      "consultancy",
+      "expert",
+      "remote",
+      "teletravail",
+      "homebased",
+      "freelance",
+    ],
+  },
+  "metiers informels": {
+    segments: [],
+    keywords: [
+      "informel",
+      "terrain",
+      "artisan",
+      "chauffeur",
+      "conducteur",
+      "vendeur",
+      "vendeuse",
+      "macon",
+      "plombier",
+      "soudeur",
+      "electricien",
+      "menuisier",
+      "gardien",
+      "vigile",
+      "ouvrier",
+      "livreur",
+      "caissier",
+      "cuisinier",
+      "couturier",
+      "coiffeur",
+      "chantier",
+    ],
+  },
+  informatique: {
+    segments: ["international_onu", "consulting_remote"],
+    keywords: [
+      "informatique",
+      "ict",
+      "data",
+      "digital",
+      "systeme",
+      "systemes",
+      "cloud",
+      "cyber",
+      "developer",
+      "developpeur",
+      "sql",
+      "power bi",
+      "support it",
+      "it support",
+      "reseau",
+      "telecom",
+      "software",
+      "database",
+      "meal",
+      "monitoring",
+      "evaluation",
+    ],
+  },
+};
+
+const INTERNATIONAL_TECH_PATTERNS = [
+  /\bict\b/,
+  /\bit support\b/,
+  /\bit assistant\b/,
+  /\bit officer\b/,
+  /\bit manager\b/,
+  /\bit operations?\b/,
+  /\boperations? informatiques?\b/,
+  /\binformation technology\b/,
+  /\binformation management\b/,
+  /\binformation security\b/,
+  /\binformation officer\b/,
+  /\binformation manager\b/,
+  /\beducational technology\b/,
+  /\bdigital pedagog(?:y|ies)\b/,
+  /\binformatique\b/,
+  /\bdata science\b/,
+  /\bdata scientist\b/,
+  /\bdata analyst\b/,
+  /\bdata engineer\b/,
+  /\bdata manager\b/,
+  /\bbusiness intelligence\b/,
+  /\bdatabase\b/,
+  /\bdatabase administrator\b/,
+  /\bsql\b/,
+  /\bpower bi\b/,
+  /\bdigital\b/,
+  /\bsoftware\b/,
+  /\bapplication support\b/,
+  /\bdeveloper\b/,
+  /\bdeveloppeur\b/,
+  /\bengineer\b/,
+  /\bdevops\b/,
+  /\bcloud\b/,
+  /\binfrastructure\b/,
+  /\bhelp desk\b/,
+  /\bit support\b/,
+  /\btechnical support\b/,
+  /\bnetwork\b/,
+  /\breseau\b/,
+  /\btelecom\b/,
+  /\bsystem administrator\b/,
+  /\badministrateur systeme\b/,
+  /\badministrateur reseau\b/,
+  /\bcyber\b/,
+  /\bcybersecurity\b/,
+  /\bcybersecurite\b/,
+  /\bsecurity analyst\b/,
+  /\bsecurity engineer\b/,
+];
+
+const INTERNATIONAL_ELIGIBILITY_BLOCKERS = [
+  /\binternal candidates only\b/,
+  /\bstaff only\b/,
+  /\bonly for [a-z\s-]+ nationals\b/,
+  /\bmust be a citizen\b/,
+  /\bfor nationals of\b/,
+];
+
+const INTERNATIONAL_TECH_TITLE_PATTERNS = [
+  /\bit support\b/,
+  /\bit assistant\b/,
+  /\bit officer\b/,
+  /\bit manager\b/,
+  /\bit operations?\b/,
+  /\boperations? informatiques?\b/,
+  /\binformation technology\b/,
+  /\beducational technology\b/,
+  /\bdigital pedagog(?:y|ies)\b/,
+  /\binformatique\b/,
+  /\bdata science\b/,
+  /\bdata scientist\b/,
+  /\bdata analyst\b/,
+  /\bdata engineer\b/,
+  /\bdata manager\b/,
+  /\bbusiness intelligence\b/,
+  /\bdatabase\b/,
+  /\bdatabase administrator\b/,
+  /\bsql\b/,
+  /\bpower bi\b/,
+  /\bdigital\b/,
+  /\bsoftware\b/,
+  /\bapplication support\b/,
+  /\bdeveloper\b/,
+  /\bdeveloppeur\b/,
+  /\bdevops\b/,
+  /\bcloud\b/,
+  /\binfrastructure\b/,
+  /\bhelp desk\b/,
+  /\btechnical support\b/,
+  /\bnetwork\b/,
+  /\breseau\b/,
+  /\btelecom\b/,
+  /\bsystem administrator\b/,
+  /\badministrateur systeme\b/,
+  /\badministrateur reseau\b/,
+  /\bcyber\b/,
+  /\bcybersecurity\b/,
+  /\bcybersecurite\b/,
+  /\bsecurity analyst\b/,
+  /\bsecurity engineer\b/,
+];
+
+const INTERNATIONAL_TECH_EXCLUSION_PATTERNS = [
+  /\bclinicien\b/,
+  /\bepidemiologiste\b/,
+  /\bmalaria\b/,
+  /\bnutrition\b/,
+  /\bwash\b/,
+  /\bprotection\b/,
+  /\blogistics?\b/,
+  /\bapprovisionnement\b/,
+  /\bprocurement\b/,
+  /\bhuman resources\b/,
+  /\bfinance\b/,
+  /\bcommunication officer\b/,
+  /\bproject officer\b/,
+  /\bprogramme associate\b/,
+  /\bprogramme assistant\b/,
+  /\bmonitoring intern\b/,
+];
+
+function readStorageArray(key) {
+  try {
+    const data = JSON.parse(localStorage.getItem(key) || "[]");
+    return Array.isArray(data) ? data : [];
+  } catch {
+    return [];
+  }
+}
+
+function writeStorageArray(key, items) {
+  localStorage.setItem(key, JSON.stringify(items));
+}
+
 function rebuildSourceIndex() {
   sourceIndex = new Map(
     sources
@@ -217,114 +565,6 @@ function sourceHasSegment(source, segment) {
   return getSourceSegments(source).includes(normalize(segment));
 }
 
-const {
-  collectPublicSpotlightJobs,
-  collectSpotlightAggregateJobs,
-  countFeedJobsWithDates,
-  getFeedMonitoringState,
-  getFeedPortalState,
-  getInternationalFeed,
-  getRenderableFeedJobs,
-  getSpotlightFeedJobs,
-  isFreshSpotlightJob,
-  isInternationalTechJob,
-  isLikelyInternationallyEligible,
-  isVisibleFeedJob,
-  matchesSpotlightFeedJob,
-  mergePublicJobs,
-  sortFeedJobs,
-  sortSourcesForSpotlight,
-} = createFeedHelpers({
-  getSources: () => sources,
-  getSourceIndex: () => sourceIndex,
-  getSourceRecord,
-  getPublicJobs: () => jobs,
-  getInternationalFeeds: () => internationalFeeds,
-  sourceHasSegment,
-  normalize,
-  daysUntil,
-  formatJobDate,
-  internationalTechPatterns: INTERNATIONAL_TECH_PATTERNS,
-  internationalEligibilityBlockers: INTERNATIONAL_ELIGIBILITY_BLOCKERS,
-  internationalTechTitlePatterns: INTERNATIONAL_TECH_TITLE_PATTERNS,
-  internationalTechExclusionPatterns: INTERNATIONAL_TECH_EXCLUSION_PATTERNS,
-});
-
-const {
-  buildJobSearchCache,
-  getJobSearchScore,
-  getJobSearchableText,
-  matchesSpecialJobFilter,
-  matchesSpotlightJob,
-} = createSearchHelpers({
-  searchEquivalents: SEARCH_EQUIVALENTS,
-  specialJobFilters: SPECIAL_JOB_FILTERS,
-  getJobSearchCache: () => jobSearchCache,
-  getSourceRecord,
-  getSourceSegments,
-  normalize,
-  tokenizeNormalized,
-  boundedDistance,
-});
-
-const {
-  exportLeadsCsv,
-  handleDemoForm,
-  renderAdmin,
-  setFormState,
-} = createAdminHelpers({
-  adminJobSourceFilter,
-  adminJobSearchInput,
-  adminJobStatusFilter,
-  adminJobDateFilter,
-  leadCount,
-  eventCount,
-  adminSummary,
-  leadTable,
-  adminJobsFilterSummary,
-  adminJobsList,
-  readStorageArray,
-  leadsKey: LEADS_KEY,
-  eventsKey: EVENTS_KEY,
-  getJobs: () => jobs,
-  normalize,
-  getJobSearchScore,
-  isExpiredJob,
-  escapeHtml,
-  displayDate,
-  formatFcfa,
-  saveLead,
-  syncLeadToServer,
-});
-
-const {
-  renderSourceDirectory,
-  renderStrategicSourceSections,
-  sourceReferenceDescriptor,
-} = createSourceRenderers({
-  getSources: () => sources,
-  getInternationalFeeds: () => internationalFeeds,
-  sourceGrid,
-  sourceMetrics,
-  strategicSourceSections,
-  sourceSpotlights: SOURCE_SPOTLIGHTS,
-  sortSourcesByPriority,
-  sortSourcesForSpotlight,
-  getFeedMonitoringState,
-  getRenderableFeedJobs,
-  getFeedPortalState,
-  getSpotlightFeedJobs,
-  collectSpotlightAggregateJobs,
-  getInternationalFeed,
-  sortFeedJobs,
-  getVerifiedSourceCount,
-  sourceHasSegment,
-  normalize,
-  escapeHtml,
-  formatJobDate,
-  initVisualEnhancements,
-});
-
 function sortSourcesByPriority(list = []) {
   return list
     .slice()
@@ -335,8 +575,600 @@ function getVerifiedSourceCount(list = sources) {
   return list.filter((source) => ["official_link", "review_required"].includes(source?.collection)).length;
 }
 
+function getInternationalFeed(sourceId = "") {
+  return internationalFeeds.find((feed) => normalize(feed.sourceId) === normalize(sourceId)) || null;
+}
+
+function getFeedJobAgeDays(job = {}) {
+  const reference = job.openingDate || String(job.updatedAt || job.collectedAt || "").slice(0, 10);
+  if (!reference) return null;
+  const date = new Date(`${String(reference).slice(0, 10)}T00:00:00`);
+  if (Number.isNaN(date.getTime())) return null;
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return Math.floor((today - date) / 86_400_000);
+}
+
+function isExpiredFeedJob(job = {}) {
+  if (job?.expired) return true;
+  if (!job?.closingDate) return false;
+  return daysUntil(job.closingDate) < 0;
+}
+
+function isStaleFeedJob(job = {}) {
+  if (job?.closingDate) return false;
+  const ageDays = getFeedJobAgeDays(job);
+  return typeof ageDays === "number" && ageDays > 21;
+}
+
+function isVisibleFeedJob(job = {}) {
+  return !isExpiredFeedJob(job) && !isStaleFeedJob(job);
+}
+
+function sortFeedJobs(list = []) {
+  return list
+    .slice()
+    .sort((a, b) => {
+      const hasClosingA = Boolean(a?.closingDate);
+      const hasClosingB = Boolean(b?.closingDate);
+      if (hasClosingA !== hasClosingB) return Number(hasClosingB) - Number(hasClosingA);
+
+      if (hasClosingA && hasClosingB) {
+        const remainingA = daysUntil(a.closingDate);
+        const remainingB = daysUntil(b.closingDate);
+        if (remainingA !== remainingB) return remainingA - remainingB;
+      }
+
+      const openingA = String(a?.openingDate || "");
+      const openingB = String(b?.openingDate || "");
+      if (openingA !== openingB) return openingB.localeCompare(openingA);
+
+      return String(a?.title || "").localeCompare(String(b?.title || ""), "fr");
+    });
+}
+
+function countFeedJobsWithDates(list = []) {
+  return list.filter((job) => job?.openingDate || job?.closingDate).length;
+}
+
+function getFeedMonitoringState(feed = {}) {
+  const jobs = Array.isArray(feed?.jobs) ? feed.jobs : [];
+  const visibleJobs = jobs.filter(isVisibleFeedJob);
+  return {
+    visibleCount: visibleJobs.length,
+    datedCount: countFeedJobsWithDates(visibleJobs),
+    hasError: Boolean(feed?.error),
+    isStale: Boolean(feed?.stale),
+    hasLiveSync: Boolean(visibleJobs.length) && !feed?.error && !feed?.stale,
+  };
+}
+
+function getRenderableFeedJobs(feed = {}, limit = 10) {
+  const jobs = Array.isArray(feed?.jobs) ? feed.jobs : [];
+  const visible = sortFeedJobs(jobs.filter(isVisibleFeedJob)).slice(0, limit);
+  const archived = sortFeedJobs(jobs.filter((job) => !isVisibleFeedJob(job)));
+  return { visible, archived };
+}
+
+function getFeedPortalState(feed = {}) {
+  const status = normalize(feed?.portalStatus || "");
+  if (["maintenance", "unavailable", "unreachable"].includes(status)) {
+    return {
+      unavailable: true,
+      status,
+      message:
+        feed?.statusMessage ||
+        "Le portail externe est temporairement indisponible. JobFaso garde la reference visible mais suspend l'ouverture directe.",
+    };
+  }
+
+  return {
+    unavailable: false,
+    status: status || "available",
+    message: "",
+  };
+}
+
+function daysSince(value) {
+  if (!value) return null;
+  const target = new Date(`${String(value).slice(0, 10)}T00:00:00`);
+  if (Number.isNaN(target.getTime())) return null;
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return Math.floor((today - target) / 86_400_000);
+}
+
+function isPublicSearchableFeedJob(job = {}) {
+  return isVisibleFeedJob(job) && Boolean(job?.title) && Boolean(job?.url);
+}
+
+function inferPublicCategoryFromFeedJob(job = {}, source = {}) {
+  const text = normalize([job.title, job.location, job.contract, job.excerpt].filter(Boolean).join(" "));
+  if (INTERNATIONAL_TECH_PATTERNS.some((pattern) => pattern.test(text))) return "Informatique, data et systemes";
+  if (/consultant|consultance|consultation|roster|call for|proposal/.test(text)) return "Consultation";
+  if (/terrain|driver|chauffeur|artisan|ma[çc]on|mason|soudeur|ouvrier|plombier|electricien|gardien|vigile/.test(text)) {
+    return "Metiers terrain et informels";
+  }
+  if (sourceHasSegment(source, "international_onu")) return "ONG";
+  return "Bureau";
+}
+
+function inferPublicTypeFromFeedJob(job = {}) {
+  const text = normalize([job.title, job.contract, job.excerpt].filter(Boolean).join(" "));
+  if (/consultant|consultance|consultation/.test(text)) return "Consultation";
+  if (/intern|internship|stage|stagiaire/.test(text)) return "Stage";
+  if (/volunteer|volontaire/.test(text)) return "Volontariat";
+  if (/remote|teletravail/.test(text)) return "Teletravail";
+  return job.contract || "A verifier";
+}
+
+function buildFeedJobTags(job = {}, source = {}, category = "", city = "") {
+  return [
+    category,
+    city,
+    source.name || "",
+    ...(sourceHasSegment(source, "international_onu") ? ["International", "ONU / ONG"] : []),
+    ...(sourceHasSegment(source, "consulting_remote") ? ["Consultance", "Teletravail"] : []),
+  ]
+    .filter(Boolean)
+    .slice(0, 8);
+}
+
+function normalizeFeedJobAsPublicJob(job = {}, feed = {}) {
+  const source = sourceIndex.get(normalize(feed.name)) || sources.find((entry) => normalize(entry.id) === normalize(feed.sourceId)) || {
+    id: feed.sourceId,
+    name: feed.name,
+    collection: feed.collection,
+    type: feed.type,
+    url: feed.url,
+  };
+  const category = inferPublicCategoryFromFeedJob(job, source);
+  const city = job.location || (sourceHasSegment(source, "consulting_remote") ? "Teletravail" : "International");
+
+  return {
+    id: `intl-${job.id || normalize(`${feed.sourceId}-${job.title}-${job.url}`)}`,
+    title: job.title,
+    company: source.name || feed.name || "Source internationale",
+    city,
+    category,
+    type: inferPublicTypeFromFeedJob(job),
+    salary: "Non communique",
+    deadline: job.closingDate ? formatJobDate(job.closingDate, "A verifier") : "A verifier",
+    openingDate: job.openingDate || "",
+    closingDate: job.closingDate || "",
+    openingDateConfirmed: Boolean(job.openingDate),
+    closingDateConfirmed: Boolean(job.closingDate),
+    inconsistentDates: false,
+    sourceName: source.name || feed.name || "",
+    sourceUrl: job.url || source.url || feed.url || "#",
+    canonicalUrl: job.url || source.url || feed.url || "#",
+    sourceLogoUrl: source.logoUrl || "",
+    companyLogoUrl: source.logoUrl || "",
+    riskScore: 0,
+    confidenceScore: 72 + (job.closingDate ? 10 : 0) + (job.openingDate ? 8 : 0),
+    tags: buildFeedJobTags(job, source, category, city),
+    status: "needs_review",
+    excerpt: job.excerpt || "",
+    collectedAt: feed.updatedAt || new Date().toISOString(),
+    sourceLabel: job.sourceLabel || "",
+    fromInternationalFeed: true,
+  };
+}
+
+function mergePublicJobs(baseList = []) {
+  const byCanonical = new Map();
+  const merged = [];
+
+  for (const job of baseList) {
+    const key = normalize(job.canonicalUrl || job.sourceUrl || job.id);
+    if (!key || byCanonical.has(key)) continue;
+    byCanonical.set(key, job.id);
+    merged.push(job);
+  }
+
+  for (const feed of internationalFeeds) {
+    for (const job of (feed.jobs || []).filter(isPublicSearchableFeedJob)) {
+      const normalizedJob = normalizeFeedJobAsPublicJob(job, feed);
+      const key = normalize(normalizedJob.canonicalUrl || normalizedJob.sourceUrl || normalizedJob.id);
+      if (!key || byCanonical.has(key)) continue;
+      byCanonical.set(key, normalizedJob.id);
+      merged.push(normalizedJob);
+    }
+  }
+
+  return merged;
+}
+
+function buildJobSearchCache(list = []) {
+  return new Map(
+    list.map((job) => [
+      job.id,
+      {
+        searchable: getJobSearchableText(job),
+        titleTokens: tokenizeNormalized(`${job.title} ${job.company}`),
+        companyTokens: tokenizeNormalized(job.company),
+        cityTokens: tokenizeNormalized(job.city),
+        categoryTokens: tokenizeNormalized(job.category),
+        typeTokens: tokenizeNormalized(job.type),
+        sourceTokens: tokenizeNormalized(job.sourceName),
+        tagTokens: tokenizeNormalized((job.tags || []).join(" ")),
+        excerptTokens: tokenizeNormalized(job.excerpt),
+      },
+    ])
+  );
+}
+
+function isLikelyInternationallyEligible(job = {}) {
+  const text = normalize([job.title, job.location, job.contract, job.excerpt].filter(Boolean).join(" "));
+  return !INTERNATIONAL_ELIGIBILITY_BLOCKERS.some((pattern) => pattern.test(text));
+}
+
+function isInternationalTechJob(job = {}) {
+  const title = normalize(job.title || "");
+  if (!title) return false;
+  if (INTERNATIONAL_TECH_EXCLUSION_PATTERNS.some((pattern) => pattern.test(title))) return false;
+  return INTERNATIONAL_TECH_TITLE_PATTERNS.some((pattern) => pattern.test(title));
+}
+
+function isFreshSpotlightJob(job = {}, maxAgeDays = 90) {
+  const closingIn = daysUntil(job.closingDate);
+  if (typeof closingIn === "number" && closingIn < 0) return false;
+
+  const openingAge = daysSince(job.openingDate);
+  if (typeof openingAge === "number") return openingAge <= maxAgeDays;
+
+  const closingAge = daysSince(job.closingDate);
+  if (typeof closingAge === "number") return closingAge <= maxAgeDays;
+
+  return true;
+}
+
+function matchesSpotlightFeedJob(job = {}, spotlight = {}) {
+  if (spotlight.mode === "tech") {
+    return isLikelyInternationallyEligible(job) && isFreshSpotlightJob(job) && isInternationalTechJob(job);
+  }
+  return true;
+}
+
+function getSpotlightFeedJobs(source, spotlight, limit = 10) {
+  const feed = getInternationalFeed(source?.id);
+  if (spotlight?.mode === "tech" && (feed?.stale || feed?.error)) return [];
+  const { visible } = getRenderableFeedJobs(feed, Math.max(limit * 4, limit));
+  return visible.filter((job) => matchesSpotlightFeedJob(job, spotlight)).slice(0, limit);
+}
+
+function sortSourcesForSpotlight(list = [], spotlight = {}) {
+  const uniqueSources = [];
+  const seen = new Set();
+  list.forEach((source) => {
+    const key = normalize(source?.id || source?.name);
+    if (!key || seen.has(key)) return;
+    seen.add(key);
+    uniqueSources.push(source);
+  });
+
+  return uniqueSources
+    .slice()
+    .sort((a, b) => {
+      const feedA = getInternationalFeed(a.id);
+      const feedB = getInternationalFeed(b.id);
+      const jobsA = getSpotlightFeedJobs(a, spotlight, 10);
+      const jobsB = getSpotlightFeedJobs(b, spotlight, 10);
+      const scoreA =
+        jobsA.length * 10 +
+        countFeedJobsWithDates(jobsA) * 3 +
+        (a.collection === "review_required" ? 2 : a.collection === "official_link" ? 1 : 0) -
+        (feedA?.error ? 4 : 0) -
+        (feedA?.stale ? 2 : 0);
+      const scoreB =
+        jobsB.length * 10 +
+        countFeedJobsWithDates(jobsB) * 3 +
+        (b.collection === "review_required" ? 2 : b.collection === "official_link" ? 1 : 0) -
+        (feedB?.error ? 4 : 0) -
+        (feedB?.stale ? 2 : 0);
+      return scoreB - scoreA || a.priority - b.priority || a.name.localeCompare(b.name, "fr");
+    });
+}
+
+function collectSpotlightAggregateJobs(entries = [], limit = 10) {
+  const queue = entries
+    .map(({ source, feedJobs }) => ({
+      source,
+      jobs: (feedJobs || []).slice(),
+      index: 0,
+    }))
+    .filter((entry) => entry.jobs.length);
+
+  const selected = [];
+  const seen = new Set();
+
+  while (queue.length && selected.length < limit) {
+    for (let i = 0; i < queue.length && selected.length < limit; i += 1) {
+      const entry = queue[i];
+      const job = entry.jobs[entry.index];
+      entry.index += 1;
+      if (!job) continue;
+      const key = job.id || `${normalize(job.title)}::${normalize(job.url)}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      selected.push({
+        ...job,
+        sourceLabel: entry.source?.name || job.sourceName || "",
+      });
+    }
+
+    for (let i = queue.length - 1; i >= 0; i -= 1) {
+      if (queue[i].index >= queue[i].jobs.length) queue.splice(i, 1);
+    }
+  }
+
+  return selected;
+}
+
+function collectPublicSpotlightJobs(spotlight = {}, limit = 10) {
+  const segments = Array.isArray(spotlight.segments) && spotlight.segments.length ? spotlight.segments : [spotlight.id];
+  const seen = new Set();
+  return jobs
+    .filter((job) => {
+      const source = getSourceRecord(job.sourceName);
+      return (
+        segments.some((segment) => sourceHasSegment(source, segment)) &&
+        (!spotlight.mode || matchesSpotlightFeedJob(job, spotlight))
+      );
+    })
+    .sort((a, b) => {
+      const hasClosingA = Boolean(a.closingDate);
+      const hasClosingB = Boolean(b.closingDate);
+      if (hasClosingA !== hasClosingB) return Number(hasClosingB) - Number(hasClosingA);
+      if (hasClosingA && hasClosingB) {
+        const daysA = daysUntil(a.closingDate);
+        const daysB = daysUntil(b.closingDate);
+        if (daysA !== daysB) return daysA - daysB;
+      }
+      return String(b.collectedAt || "").localeCompare(String(a.collectedAt || ""));
+    })
+    .filter((job) => {
+      const key = normalize(job.canonicalUrl || job.sourceUrl || job.id);
+      if (!key || seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    })
+    .slice(0, limit)
+    .map((job) => ({
+      id: job.id,
+      title: job.title,
+      url: job.sourceUrl || job.canonicalUrl,
+      location: job.city,
+      contract: job.type,
+      openingDate: job.openingDate,
+      closingDate: job.closingDate,
+      excerpt: job.excerpt,
+      sourceLabel: job.sourceName,
+    }));
+}
+
+function sortSpotlightSources(list = []) {
+  return list
+    .slice()
+    .sort((a, b) => {
+      const feedA = getInternationalFeed(a.id);
+      const feedB = getInternationalFeed(b.id);
+      const jobsA = getRenderableFeedJobs(feedA).visible.length;
+      const jobsB = getRenderableFeedJobs(feedB).visible.length;
+      return jobsB - jobsA || a.priority - b.priority || a.name.localeCompare(b.name, "fr");
+    });
+}
+
+function getJobSearchableText(job) {
+  return normalize(
+    [
+      job.title,
+      job.company,
+      job.city,
+      job.category,
+      job.type,
+      job.salary,
+      job.deadline,
+      job.openingDate,
+      job.closingDate,
+      job.sourceName,
+      job.excerpt,
+      ...(job.tags || []),
+    ].join(" ")
+  );
+}
+
+function matchesSpecialJobFilter(job, filterValue = "") {
+  const config = SPECIAL_JOB_FILTERS[normalize(filterValue)];
+  if (!config) return false;
+
+  const source = getSourceRecord(job.sourceName);
+  const sourceSegments = new Set(getSourceSegments(source));
+  if ((config.segments || []).some((segment) => sourceSegments.has(normalize(segment)))) return true;
+
+  const searchable = getJobSearchableText(job);
+  return (config.keywords || []).some((keyword) => searchable.includes(normalize(keyword)));
+}
+
+function matchesSpotlightJob(job, spotlight) {
+  const source = getSourceRecord(job.sourceName);
+  const sourceSegments = new Set(getSourceSegments(source));
+  return (spotlight.segments || []).some((segment) => sourceSegments.has(normalize(segment)));
+}
+
+function sourceReferenceDescriptor(source) {
+  if (source?.collection === "official_link") {
+    return {
+      badge: "Lien officiel",
+      actionLabel: "Ouvrir la reference officielle",
+      note: "Lien officiel.",
+    };
+  }
+
+  if (source?.collection === "manual_only") {
+    return {
+      badge: "Veille humaine",
+      actionLabel: "Ouvrir la reference citee",
+      note: "Veille humaine.",
+    };
+  }
+
+  if (source?.collection === "review_required") {
+    return {
+      badge: "Source verifiee",
+      actionLabel: "Ouvrir l'annonce source",
+      note: "Source suivie.",
+    };
+  }
+
+  return {
+    badge: "Source citee",
+    actionLabel: "Ouvrir la source",
+    note: "Source citee.",
+  };
+}
+
 function getJobSourceDescriptor(job) {
   return sourceReferenceDescriptor(getSourceRecord(job.sourceName));
+}
+
+function buildSearchGroups(query = "") {
+  const tokens = tokenizeNormalized(query);
+
+  return tokens.map((token) => {
+    const variants = new Set([token]);
+    const related = SEARCH_EQUIVALENTS[token] || [];
+    related.forEach((value) => variants.add(normalize(value)));
+    for (const [keyword, equivalents] of Object.entries(SEARCH_EQUIVALENTS)) {
+      if (keyword.includes(token) || token.includes(keyword)) {
+        variants.add(normalize(keyword));
+        equivalents.forEach((value) => variants.add(normalize(value)));
+      }
+    }
+    return [...variants];
+  });
+}
+
+function boundedDistance(a = "", b = "", maxDistance = 1) {
+  if (!a || !b) return Number.MAX_SAFE_INTEGER;
+  if (Math.abs(a.length - b.length) > maxDistance) return Number.MAX_SAFE_INTEGER;
+  if (a === b) return 0;
+
+  const rows = Array.from({ length: a.length + 1 }, (_, index) => [index]);
+  for (let j = 1; j <= b.length; j += 1) rows[0][j] = j;
+
+  for (let i = 1; i <= a.length; i += 1) {
+    let rowMin = Number.MAX_SAFE_INTEGER;
+    for (let j = 1; j <= b.length; j += 1) {
+      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+      rows[i][j] = Math.min(rows[i - 1][j] + 1, rows[i][j - 1] + 1, rows[i - 1][j - 1] + cost);
+      rowMin = Math.min(rowMin, rows[i][j]);
+    }
+    if (rowMin > maxDistance) return Number.MAX_SAFE_INTEGER;
+  }
+
+  return rows[a.length][b.length];
+}
+
+function tokenMatchStrength(token, candidates = []) {
+  if (!token) return 0;
+  let best = 0;
+  for (const candidate of candidates) {
+    if (!candidate) continue;
+    if (candidate === token) return 1;
+    if (candidate.includes(token) || token.includes(candidate)) best = Math.max(best, 0.88);
+    if ((candidate.startsWith(token) || token.startsWith(candidate)) && Math.min(candidate.length, token.length) >= 4) {
+      best = Math.max(best, 0.78);
+    }
+    if (Math.min(candidate.length, token.length) >= 5 && boundedDistance(candidate, token, 1) <= 1) {
+      best = Math.max(best, 0.68);
+    }
+  }
+  return best;
+}
+
+function scoreTextAgainstGroups(text, groups, weight, fieldTokens = tokenizeNormalized(text)) {
+  if (!text && !fieldTokens.length) return 0;
+  let score = 0;
+  for (const group of groups) {
+    let groupScore = 0;
+    for (const token of group) {
+      const normalizedToken = normalize(token);
+      if (!normalizedToken) continue;
+      if (text.includes(normalizedToken)) {
+        groupScore = Math.max(groupScore, 1);
+        continue;
+      }
+      groupScore = Math.max(groupScore, tokenMatchStrength(normalizedToken, fieldTokens));
+    }
+    score += Math.round(weight * groupScore);
+  }
+  return score;
+}
+
+function getJobSearchScore(job, query = "") {
+  const normalizedQuery = normalize(query);
+  if (!normalizedQuery) return 0;
+
+  const groups = buildSearchGroups(normalizedQuery);
+  if (!groups.length) return 0;
+
+  const cached = jobSearchCache.get(job.id);
+
+  const fields = {
+    title: cached?.searchable ? normalize(job.title) : normalize(job.title),
+    company: normalize(job.company),
+    city: normalize(job.city),
+    category: normalize(job.category),
+    type: normalize(job.type),
+    source: normalize(job.sourceName),
+    tags: normalize((job.tags || []).join(" ")),
+    excerpt: normalize(job.excerpt),
+  };
+  const fieldTokens = {
+    title: cached?.titleTokens || tokenizeNormalized(`${job.title} ${job.company}`),
+    company: cached?.companyTokens || tokenizeNormalized(job.company),
+    city: cached?.cityTokens || tokenizeNormalized(job.city),
+    category: cached?.categoryTokens || tokenizeNormalized(job.category),
+    type: cached?.typeTokens || tokenizeNormalized(job.type),
+    source: cached?.sourceTokens || tokenizeNormalized(job.sourceName),
+    tags: cached?.tagTokens || tokenizeNormalized((job.tags || []).join(" ")),
+    excerpt: cached?.excerptTokens || tokenizeNormalized(job.excerpt),
+  };
+
+  const searchable = cached?.searchable || Object.values(fields).join(" ");
+  const matchedGroups = groups.filter((group) =>
+    group.some((token) => {
+      const normalizedToken = normalize(token);
+      return (
+        searchable.includes(normalizedToken) ||
+        tokenMatchStrength(normalizedToken, [
+          ...fieldTokens.title,
+          ...fieldTokens.company,
+          ...fieldTokens.city,
+          ...fieldTokens.category,
+          ...fieldTokens.type,
+          ...fieldTokens.source,
+          ...fieldTokens.tags,
+          ...fieldTokens.excerpt,
+        ]) >= 0.68
+      );
+    })
+  );
+  if (!matchedGroups.length) return 0;
+  if (groups.length > 1 && matchedGroups.length < groups.length) return 0;
+
+  let score = 0;
+  if (searchable.includes(normalizedQuery)) score += 18;
+  score += scoreTextAgainstGroups(fields.title, groups, 9, fieldTokens.title);
+  score += scoreTextAgainstGroups(fields.category, groups, 7, fieldTokens.category);
+  score += scoreTextAgainstGroups(fields.tags, groups, 6, fieldTokens.tags);
+  score += scoreTextAgainstGroups(fields.company, groups, 5, fieldTokens.company);
+  score += scoreTextAgainstGroups(fields.type, groups, 4, fieldTokens.type);
+  score += scoreTextAgainstGroups(fields.city, groups, 4, fieldTokens.city);
+  score += scoreTextAgainstGroups(fields.source, groups, 3, fieldTokens.source);
+  score += scoreTextAgainstGroups(fields.excerpt, groups, 1, fieldTokens.excerpt);
+  return score;
 }
 
 function sendServerEvent(type, payload = {}) {
@@ -372,6 +1204,10 @@ function recordEvent(type, payload = {}) {
   });
   writeStorageArray(EVENTS_KEY, events.slice(0, 250));
   sendServerEvent(type, payload);
+}
+
+function formatFcfa(value) {
+  return new Intl.NumberFormat("fr-FR").format(value || 0) + " FCFA";
 }
 
 function buildWhatsAppUrl(message) {
@@ -433,10 +1269,80 @@ async function syncLeadToServer(lead) {
   }
 }
 
+function escapeHtml(value = "") {
+  return value
+    .toString()
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function displayDate(value) {
+  if (!value) return "Date inconnue";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
+  return new Intl.DateTimeFormat("fr-BF", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  }).format(date);
+}
+
+function formatJobDate(value, fallback = "Date non precisee") {
+  if (!value) return fallback;
+  const date = new Date(`${String(value).slice(0, 10)}T00:00:00`);
+  if (Number.isNaN(date.getTime())) return fallback;
+  return new Intl.DateTimeFormat("fr-BF", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  }).format(date);
+}
+
+function daysUntil(value) {
+  if (!value) return null;
+  const target = new Date(`${String(value).slice(0, 10)}T23:59:59`);
+  if (Number.isNaN(target.getTime())) return null;
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return Math.ceil((target - today) / 86_400_000);
+}
+
 function isExpiredJob(job) {
   if (job?.expired) return true;
   const days = daysUntil(job?.closingDate);
   return typeof days === "number" && days < 0;
+}
+
+function getDeadlineTarget(value) {
+  if (!value) return null;
+  const target = new Date(`${String(value).slice(0, 10)}T23:59:59`);
+  return Number.isNaN(target.getTime()) ? null : target;
+}
+
+function millisecondsUntil(value) {
+  const target = getDeadlineTarget(value);
+  return target ? target.getTime() - Date.now() : null;
+}
+
+function formatCountdown(value) {
+  const remaining = millisecondsUntil(value);
+  if (remaining === null) return "";
+  if (remaining <= 0) return "00h 00mn 00s";
+
+  const totalSeconds = Math.floor(remaining / 1000);
+  const days = Math.floor(totalSeconds / 86_400);
+  const hours = Math.floor((totalSeconds % 86_400) / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  if (days > 0) {
+    return `${days}j ${String(hours).padStart(2, "0")}h ${String(minutes).padStart(2, "0")}mn`;
+  }
+
+  return `${String(hours).padStart(2, "0")}h ${String(minutes).padStart(2, "0")}mn ${String(seconds).padStart(2, "0")}s`;
 }
 
 function deadlineState(job) {
@@ -567,6 +1473,17 @@ function startWordCloudOrbit() {
   };
 
   wordCloudAnimationFrame = requestAnimationFrame(render);
+}
+
+function slugify(value = "") {
+  return String(value)
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/&/g, " et ")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 90);
 }
 
 function getJobPagePath(job) {
@@ -1123,6 +2040,44 @@ function renderEntityLogo(name, logoUrl, className = "job-logo") {
   `;
 }
 
+function getSourceTypeLabel(type) {
+  const labels = {
+    aggregator: "Agregateur",
+    classifieds: "Petites annonces",
+    development_marketplace: "Consultance",
+    freelance_platform: "Freelance",
+    government: "Officiel",
+    job_board: "Portail emploi",
+    marketplace: "Marketplace",
+    media: "Media",
+    multilateral: "Institution internationale",
+    ngo: "ONG / ONU",
+    organization: "Organisation",
+    recruiter: "Cabinet RH",
+    remote_board: "Teletravail",
+    social_group: "Groupe social",
+    social_jobs: "Reseau pro",
+  };
+
+  return labels[type] || "Source";
+}
+
+function getCollectionLabel(collection) {
+  const labels = {
+    manual_only: "Controle manuel",
+    official_link: "Lien officiel",
+    review_required: "Verification requise",
+  };
+
+  return labels[collection] || "Verification requise";
+}
+
+function getSourceMonitoringLabel(source) {
+  if (source.collection === "manual_only") return "Controle humain";
+  if (source.collection === "official_link") return "Source officielle";
+  return source.priority <= 1 ? "Veille prioritaire" : "Veille reguliere";
+}
+
 function hydrateSourceFilter() {
   if (!sourceFilter) return;
   const current = sourceFilter.value;
@@ -1130,6 +2085,46 @@ function hydrateSourceFilter() {
     .map((source) => `<option value="${escapeHtml(source)}">${escapeHtml(source)}</option>`)
     .join("")}`;
   sourceFilter.value = current;
+}
+
+function hydrateAdminSourceFilter() {
+  if (!adminJobSourceFilter) return;
+  const current = adminJobSourceFilter.value;
+  const values = [...new Set(jobs.map((job) => job.sourceName).filter(Boolean))].sort((a, b) => a.localeCompare(b, "fr"));
+  adminJobSourceFilter.innerHTML = `<option value="">Toutes les sources</option>${values
+    .map((source) => `<option value="${escapeHtml(source)}">${escapeHtml(source)}</option>`)
+    .join("")}`;
+  adminJobSourceFilter.value = values.includes(current) ? current : "";
+}
+
+function isFreshAdminJob(job) {
+  const reference = new Date(job.collectedAt || 0).getTime();
+  if (!reference) return false;
+  return reference >= Date.now() - 14 * 24 * 60 * 60 * 1000;
+}
+
+function getFilteredAdminJobs() {
+  const query = normalize(adminJobSearchInput?.value || "");
+  const status = adminJobStatusFilter?.value || "";
+  const source = adminJobSourceFilter?.value || "";
+  const dateMode = adminJobDateFilter?.value || "";
+
+  return jobs.filter((job) => {
+    const haystack = normalize(
+      [job.title, job.company, job.city, job.category, job.type, job.sourceName, job.deadline, ...(job.tags || [])].join(" ")
+    );
+    const matchesQuery = !query || haystack.includes(query) || getJobSearchScore(job, query) > 0;
+    const matchesStatus = !status || job.status === status;
+    const matchesSource = !source || job.sourceName === source;
+    const matchesDateMode =
+      !dateMode ||
+      (dateMode === "expired" && isExpiredJob(job)) ||
+      (dateMode === "missing_closing" && !job.closingDate) ||
+      (dateMode === "inconsistent" && Boolean(job.inconsistentDates)) ||
+      (dateMode === "fresh" && isFreshAdminJob(job));
+
+    return matchesQuery && matchesStatus && matchesSource && matchesDateMode;
+  });
 }
 
 function getFilteredJobs() {
@@ -1450,6 +2445,395 @@ function renderJobs() {
   initVisualEnhancements();
 }
 
+function renderSourceDirectory() {
+  if (!sourceGrid && !sourceMetrics) return;
+
+  const sourceTypes = sources.reduce((acc, source) => {
+    acc[source.type] = (acc[source.type] || 0) + 1;
+    return acc;
+  }, {});
+  const automaticCount = sources.filter((source) => source.collection !== "manual_only").length;
+  const manualCount = sources.length - automaticCount;
+  const orderedSources = sortSourcesByPriority(sources);
+  const activeFeedCount = internationalFeeds.filter((feed) => getFeedMonitoringState(feed).visibleCount > 0).length;
+  const liveSyncCount = internationalFeeds.filter((feed) => getFeedMonitoringState(feed).hasLiveSync).length;
+
+  if (sourceMetrics) {
+    sourceMetrics.innerHTML = `
+      <article><strong>${sources.length}</strong><span>sources surveillees</span></article>
+      <article><strong>${activeFeedCount}</strong><span>flux avec offres visibles</span></article>
+      <article><strong>${liveSyncCount || automaticCount}</strong><span>suivi automatise exploitable</span></article>
+      <article><strong>${manualCount}</strong><span>controle humain</span></article>
+      <article><strong>${Object.keys(sourceTypes).length}</strong><span>types de sources</span></article>
+    `;
+  }
+
+  if (sourceGrid) {
+    sourceGrid.innerHTML = orderedSources
+      .map(
+        (source) => {
+          const descriptor = sourceReferenceDescriptor(source);
+          return `
+          <article class="source-card">
+            <div>
+              <p class="eyebrow">${getSourceTypeLabel(source.type)}</p>
+              <h3>${escapeHtml(source.name)}</h3>
+              <p class="muted">${escapeHtml(source.notes || "Source a verifier avant publication.")}</p>
+            </div>
+            <div class="job-meta">
+              <span class="pill">${getCollectionLabel(source.collection)}</span>
+              <span class="pill">${getSourceMonitoringLabel(source)}</span>
+            </div>
+            <a class="secondary-link" href="${escapeHtml(source.url)}" target="_blank" rel="noopener">${escapeHtml(descriptor.actionLabel)}</a>
+          </article>
+        `;
+        }
+      )
+      .join("");
+  }
+  initVisualEnhancements();
+}
+
+function renderInstitutionFeedCard(source, options = {}) {
+  const descriptor = sourceReferenceDescriptor(source);
+  const feed = getInternationalFeed(source.id);
+  const jobs = Array.isArray(options.jobs) ? sortFeedJobs(options.jobs).slice(0, 10) : getRenderableFeedJobs(feed, 10).visible;
+  const feedState = getFeedMonitoringState(feed);
+  const portalState = getFeedPortalState(feed);
+  const animated = jobs.length > 1;
+  const trackMarkup = jobs.length
+    ? [...jobs, ...(animated ? jobs : [])]
+        .map(
+          (job) => {
+            const summaryBits = [job.location, job.contract].filter(Boolean).join(" - ");
+            const secondaryLabel = summaryBits || job.sourceLabel || source.name;
+            const dateBits = [
+              job.openingDate ? `Publie: ${formatJobDate(job.openingDate)}` : "",
+              job.closingDate ? `Cloture: ${formatJobDate(job.closingDate)}` : "",
+            ].filter(Boolean);
+            const href = !portalState.unavailable && job.url ? ` href="${escapeHtml(job.url)}" target="_blank" rel="noopener"` : "";
+            const tagName = portalState.unavailable ? "div" : "a";
+            const stateClass = portalState.unavailable ? " is-disabled" : "";
+            const statusLine = portalState.unavailable
+              ? escapeHtml(portalState.message)
+              : escapeHtml(dateBits.join(" | ") || "Date non lue");
+
+            return `
+            <${tagName} class="institution-feed-item${stateClass}"${href}>
+              <strong>${escapeHtml(job.title)}</strong>
+              <span>${escapeHtml(secondaryLabel)}</span>
+              <small>${statusLine}</small>
+            </${tagName}>
+          `;
+          },
+        )
+        .join("")
+    : `<div class="institution-feed-empty">${
+        feed?.error
+          ? "La derniere synchronisation automatique n'a pas abouti pour cette source. Ouvrez directement la reference officielle pendant la reprise."
+          : "Aucune offre ouverte n'a encore ete detectee automatiquement pour cette institution. Ouvrez la source officielle."
+      }</div>`;
+
+  const footerAction = portalState.unavailable
+    ? `<span class="secondary-link is-disabled" aria-disabled="true">${escapeHtml("Portail temporairement indisponible")}</span>`
+    : `<a class="secondary-link" href="${escapeHtml(source.url)}" target="_blank" rel="noopener">${escapeHtml(descriptor.actionLabel)}</a>`;
+
+  return `
+    <article class="source-card institution-source-card">
+      <div>
+        <p class="eyebrow">${getSourceTypeLabel(source.type)}</p>
+        <h3>${escapeHtml(source.name)}</h3>
+        <p class="muted">${escapeHtml(source.notes || "Source a verifier avant publication.")}</p>
+      </div>
+      <div class="job-meta">
+        <span class="pill">${getCollectionLabel(source.collection)}</span>
+        <span class="pill">${jobs.length} offre${jobs.length > 1 ? "s" : ""}</span>
+        ${feedState.datedCount ? `<span class="pill">${feedState.datedCount} date${feedState.datedCount > 1 ? "s" : ""} lue${feedState.datedCount > 1 ? "s" : ""}</span>` : ""}
+        ${feedState.isStale ? `<span class="pill">${escapeHtml("Dernier flux conserve")}</span>` : ""}
+        ${feedState.hasError && !feedState.isStale ? `<span class="pill">${escapeHtml("Controle requis")}</span>` : ""}
+        ${portalState.unavailable ? `<span class="pill">${escapeHtml("Maintenance externe")}</span>` : ""}
+      </div>
+      <div
+        class="institution-feed-shell ${animated ? "is-animated" : ""}"
+        data-feed-auto="${animated ? "true" : "false"}"
+        aria-label="${escapeHtml("Liste d'offres defilante. Survolez puis utilisez la molette ou faites glisser pour monter et descendre.")}"
+      >
+        <div class="institution-feed-track">
+          ${trackMarkup}
+        </div>
+      </div>
+      ${footerAction}
+    </article>
+  `;
+}
+
+function renderAggregateTechFeedCard(entries = [], spotlight = {}) {
+  const aggregateJobs = collectSpotlightAggregateJobs(entries, 10);
+  const mergedJobs = [];
+  const seen = new Set();
+
+  aggregateJobs.forEach((job) => {
+    const key = normalize(job.url || job.id || job.title);
+    if (!key || seen.has(key)) return;
+    seen.add(key);
+    mergedJobs.push(job);
+  });
+
+  const aggregateSource = {
+    id: `${spotlight.id}-aggregate`,
+    name: "Offres internationales en informatique",
+    type: "organization",
+    collection: "review_required",
+    notes:
+      "Selection consolidee JobFaso a partir de sources internationales reelles, diversifiees et suivies pour l'IT, la data, les systemes et la cybersecurite.",
+    url: spotlight.actionHref || "jobs.html?focus=onu-consultance&q=informatique",
+  };
+
+  return renderInstitutionFeedCard(aggregateSource, {
+    jobs: mergedJobs,
+  });
+}
+
+function renderStrategicSourcePlaceholder(spotlight, message) {
+  const keywordMarkup = spotlight.keywords
+    .map((keyword) => `<span class="pill">${escapeHtml(keyword)}</span>`)
+    .join("");
+  const shortcutMarkup = (spotlight.searchShortcuts || [])
+    .map(
+      (shortcut) => `
+        <button
+          class="strategic-search-card"
+          type="button"
+          data-portal-focus="${escapeHtml(shortcut.focus || "")}"
+          data-portal-query="${escapeHtml(shortcut.query || "")}"
+        >
+          <strong>${escapeHtml(shortcut.label)}</strong>
+          <span>${escapeHtml(shortcut.note)}</span>
+        </button>
+      `
+    )
+    .join("");
+
+  return `
+    <section class="strategic-source-section strategic-source-band" id="${escapeHtml(spotlight.anchor)}">
+      <div class="strategic-source-lead">
+        <div>
+          <p class="eyebrow">${escapeHtml(spotlight.eyebrow)}</p>
+          <h3>${escapeHtml(spotlight.title)}</h3>
+          <p class="muted">${escapeHtml(spotlight.description)}</p>
+        </div>
+        <div class="strategic-source-meta">
+          <span class="pill">Synchronisation</span>
+          <span class="pill">Sources reelles</span>
+        </div>
+      </div>
+      <div class="strategic-search-grid">
+        ${shortcutMarkup}
+      </div>
+      <div class="tag-row keyword-row">${keywordMarkup}</div>
+      <div class="source-directory-grid spotlight-grid">
+        <article class="source-card institution-source-card">
+          <div>
+            <p class="eyebrow">${escapeHtml(spotlight.eyebrow)}</p>
+            <h3>Chargement des references</h3>
+            <p class="muted">${escapeHtml(message)}</p>
+          </div>
+          <div class="job-meta">
+            <span class="pill">Patientez</span>
+            <span class="pill">Verification en cours</span>
+          </div>
+          <div class="institution-feed-shell">
+            <div class="institution-feed-track">
+              <div class="institution-feed-empty">Les liens officiels et les offres detectees s'afficheront ici automatiquement des que la synchronisation est terminee.</div>
+            </div>
+          </div>
+          <a class="secondary-link" href="${escapeHtml(spotlight.actionHref)}">${escapeHtml(spotlight.actionLabel)}</a>
+        </article>
+      </div>
+      <div class="strategic-source-actions">
+        <a class="secondary-link" href="${escapeHtml(spotlight.actionHref)}">${escapeHtml(spotlight.actionLabel)}</a>
+        <a class="secondary-link" href="conseils.html">Voir les conseils de candidature</a>
+      </div>
+    </section>
+  `;
+}
+
+function renderStrategicSourceSections() {
+  if (!strategicSourceSections) return;
+
+  if (!sources.length) {
+    strategicSourceSections.innerHTML = SOURCE_SPOTLIGHTS
+      .map((spotlight) =>
+        renderStrategicSourcePlaceholder(
+          spotlight,
+          "Les sources internationales sont en cours de chargement. La rubrique reste visible pour eviter tout ecran vide."
+        )
+      )
+      .join("");
+    initVisualEnhancements();
+    return;
+  }
+
+  if (!internationalFeeds.length) {
+    strategicSourceSections.innerHTML = SOURCE_SPOTLIGHTS
+      .map((spotlight) =>
+        renderStrategicSourcePlaceholder(
+          spotlight,
+          "Les flux d'offres internationales sont en cours de synchronisation. Les references officielles seront injectees automatiquement."
+        )
+      )
+      .join("");
+    initVisualEnhancements();
+    return;
+  }
+
+  strategicSourceSections.innerHTML = SOURCE_SPOTLIGHTS.map((spotlight) => {
+    const spotlightSegments = Array.isArray(spotlight.segments) && spotlight.segments.length
+      ? spotlight.segments
+      : [spotlight.id];
+    const spotlightCandidates = sortSourcesForSpotlight(
+      sources.filter((source) =>
+        spotlightSegments.some((segment) => sourceHasSegment(source, segment)) &&
+        (!spotlight.sourceTypes?.length || spotlight.sourceTypes.includes(source.type))
+      ),
+      spotlight
+    );
+    const spotlightSources = spotlightCandidates
+      .map((source) => ({ source, feedJobs: getSpotlightFeedJobs(source, spotlight, 10) }))
+      .filter(({ feedJobs }) => feedJobs.length > 0)
+      .slice(0, spotlight.mode === "tech" ? Math.max(2, spotlight.limit) : spotlight.limit);
+    const spotlightJobCount =
+      spotlight.mode === "tech"
+        ? (() => {
+            const seen = new Set();
+            return collectSpotlightAggregateJobs(spotlightSources, 18).filter((job) => {
+              const key = normalize(job.url || job.id || job.title);
+              if (!key || seen.has(key)) return false;
+              seen.add(key);
+              return true;
+            }).length;
+          })()
+        : collectSpotlightAggregateJobs(spotlightSources, 18).length;
+    const keywordMarkup = spotlight.keywords
+      .map((keyword) => `<span class="pill">${escapeHtml(keyword)}</span>`)
+      .join("");
+    const shortcutMarkup = (spotlight.searchShortcuts || [])
+      .map(
+        (shortcut) => `
+          <button
+            class="strategic-search-card"
+            type="button"
+            data-portal-focus="${escapeHtml(shortcut.focus || "")}"
+            data-portal-query="${escapeHtml(shortcut.query || "")}"
+          >
+            <strong>${escapeHtml(shortcut.label)}</strong>
+            <span>${escapeHtml(shortcut.note)}</span>
+          </button>
+        `
+      )
+      .join("");
+    const shouldRenderShortcutGrid = spotlight.mode !== "tech" && Boolean(shortcutMarkup);
+    const spotlightCards =
+      spotlight.mode === "tech"
+        ? [
+            ...spotlightSources
+              .slice(0, 2)
+              .map(({ source, feedJobs }) => renderInstitutionFeedCard(source, { jobs: feedJobs })),
+            ...(spotlightSources.length
+              ? [renderAggregateTechFeedCard(spotlightSources, spotlight)]
+              : []),
+          ]
+        : spotlightSources.map(({ source, feedJobs }) => renderInstitutionFeedCard(source, { jobs: feedJobs }));
+
+    const cardsMarkup = spotlightCards.length
+      ? spotlightCards.join("")
+      : `
+        <article class="source-card institution-source-card">
+          <div>
+            <p class="eyebrow">${escapeHtml(spotlight.eyebrow)}</p>
+            <h3>Flux en cours de synchronisation</h3>
+            <p class="muted">Les institutions internationales sont bien configurees, mais aucune offre exploitable n'a encore ete chargee dans cette rubrique a cet instant.</p>
+          </div>
+          <div class="institution-feed-shell">
+            <div class="institution-feed-track">
+              <div class="institution-feed-empty">Rechargez la page dans quelques instants ou ouvrez directement les references officielles ci-dessous.</div>
+            </div>
+          </div>
+          <div class="strategic-source-actions">
+            <a class="secondary-link" href="${escapeHtml(spotlight.actionHref)}">${escapeHtml(spotlight.actionLabel)}</a>
+          </div>
+        </article>`;
+
+    return `
+      <section class="strategic-source-section strategic-source-band" id="${escapeHtml(spotlight.anchor)}">
+        <div class="strategic-source-lead">
+          <div>
+            <p class="eyebrow">${escapeHtml(spotlight.eyebrow)}</p>
+            <h3>${escapeHtml(spotlight.title)}</h3>
+            <p class="muted">${escapeHtml(spotlight.description)}</p>
+          </div>
+          <div class="strategic-source-meta">
+            <span class="pill">${spotlightSources.length} source${spotlightSources.length > 1 ? "s" : ""}</span>
+            <span class="pill">${spotlightJobCount} offre${spotlightJobCount > 1 ? "s" : ""} reliee${spotlightJobCount > 1 ? "s" : ""}</span>
+            <span class="pill">Liens reels</span>
+          </div>
+        </div>
+        ${shouldRenderShortcutGrid ? `<div class="strategic-search-grid">${shortcutMarkup}</div>` : ""}
+        <div class="tag-row keyword-row">${keywordMarkup}</div>
+        <div class="source-directory-grid spotlight-grid">${cardsMarkup}</div>
+        <div class="strategic-source-actions">
+          <a class="secondary-link" href="${escapeHtml(spotlight.actionHref)}">${escapeHtml(spotlight.actionLabel)}</a>
+          <a class="secondary-link" href="conseils.html">Voir les conseils de candidature</a>
+        </div>
+      </section>
+    `;
+  }).join("");
+
+  initVisualEnhancements();
+}
+
+function getLeadLabel(kind) {
+  const labels = {
+    alert: "Alerte candidat",
+    publish: "Publication",
+    sponsor: "Commercial",
+    contact: "Contact",
+  };
+  return labels[kind] || "Lead";
+}
+
+function leadContact(lead) {
+  return lead.data?.contact || lead.data?.phone || lead.data?.email || "";
+}
+
+function leadName(lead) {
+  return lead.data?.organization || lead.data?.name || lead.data?.title || "Sans nom";
+}
+
+function exportLeadsCsv() {
+  const leads = readStorageArray(LEADS_KEY);
+  const headers = ["date", "type", "nom", "contact", "valeur_fcfa", "statut", "details"];
+  const rows = leads.map((lead) => [
+    displayDate(lead.createdAt),
+    getLeadLabel(lead.kind),
+    leadName(lead),
+    leadContact(lead),
+    lead.valueFcfa || 0,
+    lead.status,
+    JSON.stringify(lead.data || {}),
+  ]);
+  const csv = [headers, ...rows]
+    .map((row) => row.map((cell) => `"${String(cell).replaceAll('"', '""')}"`).join(","))
+    .join("\n");
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = `jobfaso-leads-${new Date().toISOString().slice(0, 10)}.csv`;
+  link.click();
+  URL.revokeObjectURL(url);
+}
+
 function adminToken() {
   return localStorage.getItem("jobfaso.adminToken") || "";
 }
@@ -1666,6 +3050,107 @@ async function loadSocialQueue() {
   }
 }
 
+function renderAdmin() {
+  const leads = readStorageArray(LEADS_KEY);
+  const events = readStorageArray(EVENTS_KEY);
+  const pipelineValue = leads.reduce((sum, lead) => sum + (lead.valueFcfa || 0), 0);
+  const reviewJobs = jobs.filter((job) => job.status === "needs_review");
+  const expiredJobs = jobs.filter((job) => isExpiredJob(job));
+  const inconsistentJobs = jobs.filter((job) => job.inconsistentDates);
+  const moderationJobs = jobs
+    .slice()
+    .sort((a, b) => Number(a.status === "needs_review") - Number(b.status === "needs_review"))
+    .reverse();
+  const filteredAdminJobs = getFilteredAdminJobs()
+    .slice()
+    .sort((a, b) => Number(a.status === "needs_review") - Number(b.status === "needs_review"))
+    .reverse();
+
+  if (leadCount) leadCount.textContent = leads.length;
+  if (eventCount) eventCount.textContent = events.length;
+  hydrateAdminSourceFilter();
+
+  if (adminSummary) {
+    adminSummary.innerHTML = `
+      <article><strong>${leads.length}</strong><span>leads captures</span></article>
+      <article><strong>${formatFcfa(pipelineValue)}</strong><span>pipeline potentiel</span></article>
+      <article><strong>${reviewJobs.length}</strong><span>offres a moderer</span></article>
+      <article><strong>${expiredJobs.length}</strong><span>expirees</span></article>
+      <article><strong>${inconsistentJobs.length}</strong><span>dates incoherentes</span></article>
+      <article><strong>${events.length}</strong><span>evenements suivis</span></article>
+    `;
+  }
+
+  if (leadTable) {
+    leadTable.innerHTML = leads.length
+      ? leads
+          .map(
+            (lead) => `
+              <tr>
+                <td>${escapeHtml(displayDate(lead.createdAt))}</td>
+                <td>${escapeHtml(getLeadLabel(lead.kind))}</td>
+                <td>${escapeHtml(leadName(lead))}</td>
+                <td>${escapeHtml(leadContact(lead))}</td>
+                <td>${escapeHtml(formatFcfa(lead.valueFcfa))}</td>
+              </tr>
+            `
+          )
+          .join("")
+      : `<tr><td colspan="5">Aucun lead local pour le moment.</td></tr>`;
+  }
+
+  if (adminJobsFilterSummary) {
+    adminJobsFilterSummary.textContent = `${filteredAdminJobs.length} offre${filteredAdminJobs.length > 1 ? "s" : ""} affichee${filteredAdminJobs.length > 1 ? "s" : ""} sur ${moderationJobs.length}. ${reviewJobs.length} a moderer, ${expiredJobs.length} expiree${expiredJobs.length > 1 ? "s" : ""}, ${inconsistentJobs.length} avec dates incoherentes.`;
+  }
+
+  if (adminJobsList) {
+    adminJobsList.innerHTML = filteredAdminJobs.length
+      ? filteredAdminJobs
+          .slice(0, 24)
+          .map(
+            (job) => `
+              <article class="job-card" data-job-id="${escapeHtml(job.id)}">
+                <p class="eyebrow">${escapeHtml(job.category || "A classer")}</p>
+                <h3>${escapeHtml(job.title)}</h3>
+                <p class="muted">${escapeHtml(job.company || job.sourceName || "")} - ${escapeHtml(job.city || "Burkina Faso")}</p>
+                <div class="job-meta">
+                  <span class="pill ${job.status === "needs_review" ? "warning" : ""}">${escapeHtml(job.status || "needs_review")}</span>
+                  <span class="pill">${escapeHtml(job.sourceName || "Source")}</span>
+                  ${isExpiredJob(job) ? `<span class="pill warning">Expiree</span>` : ""}
+                  ${job.inconsistentDates ? `<span class="pill warning">Dates incoherentes</span>` : ""}
+                  ${!job.closingDate ? `<span class="pill">Cloture absente</span>` : ""}
+                </div>
+                ${job.moderationNote ? `<p class="muted">${escapeHtml(job.moderationNote)}</p>` : ""}
+                <div class="job-actions">
+                  <a class="secondary-link" href="${escapeHtml(job.sourceUrl || "#")}" target="_blank" rel="noopener" data-track="admin_source_open" data-track-label="${escapeHtml(job.title)}">Verifier</a>
+                  <button class="secondary-button moderation-button" type="button" data-job-id="${escapeHtml(job.id)}" data-status="validated">Valider</button>
+                  <button class="secondary-button moderation-button" type="button" data-job-id="${escapeHtml(job.id)}" data-status="needs_review">Revoir</button>
+                  <button class="secondary-button moderation-button" type="button" data-job-id="${escapeHtml(job.id)}" data-status="rejected">Rejeter</button>
+                </div>
+                <details class="admin-edit">
+                  <summary>Modifier l'offre</summary>
+                  <form class="admin-edit-form" data-job-id="${escapeHtml(job.id)}">
+                    <label>Titre<input name="title" value="${escapeHtml(job.title || "")}" required /></label>
+                    <label>Entreprise<input name="company" value="${escapeHtml(job.company || "")}" /></label>
+                    <label>Ville<input name="city" value="${escapeHtml(job.city || "")}" /></label>
+                    <label>Categorie<input name="category" value="${escapeHtml(job.category || "")}" /></label>
+                    <label>Type<input name="type" value="${escapeHtml(job.type || "")}" /></label>
+                    <label>Ouverture<input name="openingDate" type="date" value="${escapeHtml(job.openingDate || "")}" /></label>
+                    <label>Cloture<input name="closingDate" type="date" value="${escapeHtml(job.closingDate || "")}" /></label>
+                    <label>Source<input name="sourceName" value="${escapeHtml(job.sourceName || "")}" /></label>
+                    <label>URL source<input name="sourceUrl" value="${escapeHtml(job.sourceUrl || "")}" /></label>
+                    <label>Tags<input name="tags" value="${escapeHtml((job.tags || []).join(", "))}" /></label>
+                    <button type="submit">Enregistrer</button>
+                  </form>
+                </details>
+              </article>
+            `
+          )
+          .join("")
+      : `<p class="muted">Aucune offre ne correspond aux filtres de moderation.</p>`;
+  }
+}
+
 function refreshPublicJobs() {
   jobs = mergePublicJobs(baseJobs.length ? baseJobs : jobs);
   jobSearchCache = buildJobSearchCache(jobs);
@@ -1685,12 +3170,11 @@ function scheduleRenderJobs(immediate = false) {
   }, delay);
 }
 
-async function loadJobs(options = {}) {
-  const { refresh = true } = options;
+async function loadJobs() {
   if (!jobsList && !adminJobsList) return;
   try {
     const adminQuery = adminJobsList ? "?includeRejected=true&includeExpired=true" : "";
-    const apiResponse = await fetch(`/api/jobs${adminQuery}`);
+    const apiResponse = await fetch(`/api/jobs${adminQuery}`, { cache: "no-store" });
     if (apiResponse.ok) {
       const payload = await apiResponse.json();
       baseJobs = payload.jobs?.length ? payload.jobs : fallbackJobs;
@@ -1699,7 +3183,7 @@ async function loadJobs(options = {}) {
     }
   } catch {
     try {
-      const response = await fetch("data/curated-jobs.json");
+      const response = await fetch("data/curated-jobs.json", { cache: "no-store" });
       if (!response.ok) throw new Error("Impossible de charger les offres");
       const loadedJobs = await response.json();
       baseJobs = loadedJobs.length ? loadedJobs : fallbackJobs;
@@ -1711,14 +3195,13 @@ async function loadJobs(options = {}) {
       }
     }
   }
-  if (refresh) refreshPublicJobs();
+  refreshPublicJobs();
 }
 
-async function loadSources(options = {}) {
-  const { refresh = true } = options;
+async function loadSources() {
   if (!sourceGrid && !sourceMetrics && !strategicSourceSections) return;
   try {
-    const response = await fetch("data/sources.json");
+    const response = await fetch("data/sources.json", { cache: "no-store" });
     if (!response.ok) throw new Error("Impossible de charger les sources");
     sources = await response.json();
   } catch {
@@ -1727,57 +3210,33 @@ async function loadSources(options = {}) {
 
   rebuildSourceIndex();
   if (sourceCount && sources.length) sourceCount.textContent = getVerifiedSourceCount(sources) || sources.length;
-  if (refresh) {
-    renderSourceDirectory();
-    refreshPublicJobs();
-  }
+  renderSourceDirectory();
+  refreshPublicJobs();
 }
 
-async function loadInternationalFeeds(options = {}) {
-  const { refresh = true } = options;
+async function loadInternationalFeeds() {
   if (!strategicSourceSections) return;
   try {
-    const response = await fetch("data/international-feeds.json");
+    const response = await fetch("data/international-feeds.json", { cache: "no-store" });
     if (!response.ok) throw new Error("Impossible de charger les flux internationaux");
     internationalFeeds = await response.json();
   } catch {
     internationalFeeds = [];
   }
 
-  if (refresh) refreshPublicJobs();
+  refreshPublicJobs();
 }
 
-async function loadEmployerLogos(options = {}) {
-  const { refresh = true } = options;
+async function loadEmployerLogos() {
   if (!employerCarousel) return;
   try {
-    const response = await fetch("data/employer-logos.json");
+    const response = await fetch("data/employer-logos.json", { cache: "no-store" });
     if (!response.ok) throw new Error("Impossible de charger les logos");
     employerLogos = await response.json();
   } catch {
     employerLogos = [];
   }
-  if (refresh) renderPortalWidgets();
-}
-
-async function bootstrapApp() {
-  await Promise.all([
-    loadJobs({ refresh: false }),
-    loadEmployerLogos({ refresh: false }),
-    loadSources({ refresh: false }),
-    loadInternationalFeeds({ refresh: false }),
-  ]);
-
-  if (sourceGrid || sourceMetrics || strategicSourceSections) {
-    renderSourceDirectory();
-  }
-
-  refreshPublicJobs();
-  initVisualEnhancements();
-
-  if (leadTable || eventCount || adminSummary) {
-    loadServerAdminData();
-  }
+  renderPortalWidgets();
 }
 
 if (quickSearch) {
@@ -1936,6 +3395,53 @@ document.addEventListener("click", (event) => {
     focus: button.dataset.portalFocus || "",
   });
 });
+
+function validateLead(kind, data) {
+  const contact = data.phone || data.contact || data.email || "";
+  if (kind === "alert" && !/(\+?\d[\d\s.-]{6,})/.test(contact)) {
+    return "Ajoutez un numero WhatsApp valide.";
+  }
+  if (!Object.values(data).some((value) => String(value || "").trim())) {
+    return "Veuillez remplir les informations demandees.";
+  }
+  return "";
+}
+
+function setFormState(form, message, text, state = "info") {
+  if (!message) return;
+  message.textContent = text;
+  message.dataset.state = state;
+  form.dataset.state = state;
+}
+
+function handleDemoForm(form, messageId, successText) {
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const message = document.querySelector(messageId);
+    const data = Object.fromEntries(new FormData(form).entries());
+    const kind = form.dataset.leadType || "contact";
+    const error = validateLead(kind, data);
+    if (error) {
+      setFormState(form, message, error, "error");
+      return;
+    }
+
+    const submitButton = form.querySelector("button[type='submit']");
+    submitButton?.setAttribute("disabled", "disabled");
+    setFormState(form, message, "Envoi en cours...", "info");
+    const lead = saveLead(kind, data);
+
+    try {
+      const serverId = await syncLeadToServer(lead);
+      setFormState(form, message, serverId ? `${successText} Reference: ${serverId.slice(0, 8)}.` : successText, "success");
+      form.reset();
+    } catch {
+      setFormState(form, message, successText, "success");
+    } finally {
+      submitButton?.removeAttribute("disabled");
+    }
+  });
+}
 
 if (alertForm) {
   handleDemoForm(
@@ -2204,5 +3710,12 @@ document.querySelector("#publishSocialButton")?.addEventListener("click", async 
   control?.addEventListener("change", renderAdmin);
 });
 
-bootstrapApp();
+loadJobs();
+loadEmployerLogos();
+loadSources();
+loadInternationalFeeds();
+initVisualEnhancements();
 setInterval(updateCountdowns, 1000);
+if (leadTable || eventCount || adminSummary) {
+  loadServerAdminData();
+}

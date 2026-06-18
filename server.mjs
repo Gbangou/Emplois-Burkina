@@ -115,51 +115,6 @@ function sendJson(res, status, payload) {
   send(res, status, JSON.stringify(payload), { "Content-Type": "application/json; charset=utf-8" });
 }
 
-function staticCachePolicy(pathname, ext) {
-  if ([".png", ".jpg", ".jpeg", ".webp", ".svg", ".ico"].includes(ext)) {
-    return "public, max-age=604800, stale-while-revalidate=86400";
-  }
-
-  if ([".css", ".js", ".webmanifest"].includes(ext)) {
-    return "public, max-age=86400, stale-while-revalidate=43200";
-  }
-
-  if (pathname.startsWith("/data/") && ext === ".json") {
-    return "public, max-age=300, stale-while-revalidate=900";
-  }
-
-  if ([".xml", ".txt"].includes(ext)) {
-    return "public, max-age=3600, stale-while-revalidate=3600";
-  }
-
-  if (ext === ".html" || pathname === "/") {
-    return "no-cache";
-  }
-
-  return "no-cache";
-}
-
-function staticEtag(info) {
-  return `"${createHash("sha1").update(`${info.size}-${info.mtimeMs}`).digest("hex")}"`;
-}
-
-function requestAcceptsCachedVersion(req, etag, info) {
-  const ifNoneMatch = req.headers["if-none-match"];
-  if (typeof ifNoneMatch === "string" && ifNoneMatch.split(",").map((value) => value.trim()).includes(etag)) {
-    return true;
-  }
-
-  const ifModifiedSince = req.headers["if-modified-since"];
-  if (typeof ifModifiedSince === "string") {
-    const since = new Date(ifModifiedSince);
-    if (!Number.isNaN(since.getTime()) && Math.floor(since.getTime() / 1000) >= Math.floor(info.mtime.getTime() / 1000)) {
-      return true;
-    }
-  }
-
-  return false;
-}
-
 function clientIp(req) {
   return req.headers["x-forwarded-for"]?.split(",")[0]?.trim() || req.socket.remoteAddress || "unknown";
 }
@@ -1272,30 +1227,12 @@ async function serveStatic(req, res, url) {
     if (!info.isFile()) throw new Error("Not a file");
 
     const ext = extname(filePath).toLowerCase();
-    const cacheControl = staticCachePolicy(publicPathname, ext);
-    const etag = staticEtag(info);
-    const lastModified = info.mtime.toUTCString();
-    const baseHeaders = {
+    const cacheable = !publicPaths.has(url.pathname) && [".css", ".js", ".png", ".jpg", ".jpeg", ".webp", ".svg"].includes(ext);
+    res.writeHead(200, {
       ...securityHeaders(),
       "Content-Type": contentTypes[ext] || "application/octet-stream",
-      "Cache-Control": cacheControl,
-      ETag: etag,
-      "Last-Modified": lastModified,
-      Vary: "Accept-Encoding",
-    };
-
-    if (requestAcceptsCachedVersion(req, etag, info)) {
-      res.writeHead(304, baseHeaders);
-      res.end();
-      return;
-    }
-
-    res.writeHead(200, baseHeaders);
-    if (req.method === "HEAD") {
-      res.end();
-      return;
-    }
-
+      "Cache-Control": cacheable ? "public, max-age=86400" : "no-cache",
+    });
     createReadStream(filePath).pipe(res);
   } catch {
     send(res, 404, "Not found", { "Content-Type": "text/plain; charset=utf-8" });

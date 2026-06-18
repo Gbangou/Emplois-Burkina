@@ -1,36 +1,5 @@
 # Architecture cible
 
-## Etat actuel du front
-
-Le front public repose encore sur un point d'entree unique `app.js`, mais il a deja ete decoupe en modules metier:
-
-- `assets/js/app-config.js`
-  - constantes de configuration, segments, patterns de recherche et de spotlight
-- `assets/js/app-utils.js`
-  - normalisation, dates, echappement HTML, stockage local
-- `assets/js/search-helpers.js`
-  - indexation locale, scoring, recherche approximative et filtres speciaux
-- `assets/js/feed-helpers.js`
-  - logique des flux internationaux, freshness, eligibility et agrégation
-- `assets/js/admin-helpers.js`
-  - rendu admin, filtres admin, export CSV, formulaires de leads
-- `assets/js/source-renderers.js`
-  - rendu des sources, cartes ONU/international et sections strategiques
-
-`app.js` garde pour l'instant le role d'orchestrateur:
-
-- bootstrap des donnees
-- branchement DOM
-- evenements UI
-- rendu principal des offres
-- synchro entre recherche, details, admin et sections strategiques
-
-Objectif de la prochaine phase:
-
-- extraire encore le rendu principal des offres
-- sortir les listeners complexes dans des modules UI
-- reduire `app.js` a un vrai fichier d'assemblage
-
 ## Vue d'ensemble
 
 ```text
@@ -58,8 +27,6 @@ Responsable de :
 - vendre le premium.
 
 Stack recommandee : Next.js, TypeScript, Tailwind ou CSS modules.
-
-Dans l'etat actuel du repo, la web app est une base HTML/CSS/JS modulaire, optimisee pour rester simple a deplacer plus tard vers une architecture plus typed et plus frameworkee si necessaire.
 
 ### API
 
