@@ -1222,17 +1222,6 @@ function hydrateSourceFilter() {
   sourceFilter.value = current;
 }
 
-function updateFilterCounts() {
-  if (!filterButtons.length) return;
-  filterButtons.forEach((button) => {
-    const category = button.dataset.category || "";
-    const count = category
-      ? jobs.filter((job) => matchesSpecialJobFilter(job, category) || job.category === category).length
-      : jobs.length;
-    button.dataset.count = String(count);
-  });
-}
-
 function getFilteredJobs() {
   const query = searchInput?.value.trim() || "";
   const normalizedQuery = normalize(query);
@@ -1532,7 +1521,6 @@ function renderJobs() {
 
   if (jobCount) jobCount.textContent = jobs.length;
   if (sourceCount) sourceCount.textContent = getVerifiedSourceCount(sources.length ? sources : getSources()) || sources.length || getSources().length;
-  updateFilterCounts();
   updateSavedStorage();
 
   if (resultsSummary) {
