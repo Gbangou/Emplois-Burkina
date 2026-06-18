@@ -91,6 +91,20 @@
                       <span>tri par secteur, source, region et favoris</span>
                     </article>
                   </div>
+                  <div class="hero-signal-grid" aria-label="Principes de navigation">
+                    <article class="hero-signal-card">
+                      <strong>Entree simple</strong>
+                      <span>Mot-cle, region, domaine: la structure la plus efficace pour demarrer vite.</span>
+                    </article>
+                    <article class="hero-signal-card">
+                      <strong>Filtrage progressif</strong>
+                      <span>Les options avancees viennent apres la recherche, pas avant.</span>
+                    </article>
+                    <article class="hero-signal-card">
+                      <strong>Comparaison stable</strong>
+                      <span>Resultats a gauche, detail a droite, sans casser la lecture.</span>
+                    </article>
+                  </div>
                 </div>
                 <div class="hero-quick-actions">
                   <a href="#offres">Toutes les offres</a>
@@ -178,6 +192,20 @@
               <button class="search-chip" type="button" data-search-query="enqueteur" data-search-type="Metiers terrain et informels">Enqueteur terrain</button>
               <button class="search-chip" type="button" data-search-query="international" data-search-type="ONU / Consultance">International</button>
               <button class="search-chip" type="button" data-search-query="teletravail" data-search-city="Teletravail">Teletravail</button>
+            </div>
+            <div class="search-context-strip" aria-label="Acces rapides par univers">
+              <article>
+                <strong>Bureau</strong>
+                <span>Assistanat, finance, administration, support et coordination.</span>
+              </article>
+              <article>
+                <strong>Terrain</strong>
+                <span>Chantier, transport, enquete, maintenance, conduite et missions.</span>
+              </article>
+              <article>
+                <strong>ONU / Remote</strong>
+                <span>Consultance, teletravail, humanitaire et digital international.</span>
+              </article>
             </div>
           </div>
         </div>
@@ -361,6 +389,31 @@
             <h2>Opportunites disponibles</h2>
           </div>
         </div>
+        <div class="catalog-shell">
+          <aside class="catalog-sidebar catalog-rail">
+            <article class="catalog-rail-card catalog-rail-highlight">
+              <p class="eyebrow">Navigation</p>
+              <h3>Recherche, lecture, comparaison</h3>
+              <p>Ce panneau reste sobre pour aider a cadrer la recherche sans ralentir la lecture des resultats.</p>
+            </article>
+            <article class="catalog-rail-card">
+              <strong>Utilisez d'abord</strong>
+              <div class="catalog-rail-list">
+                <span>le mot-cle</span>
+                <span>le domaine</span>
+                <span>la source</span>
+                <span>les favoris</span>
+              </div>
+            </article>
+            <article class="catalog-rail-card">
+              <strong>Acces directs</strong>
+              <div class="catalog-rail-links">
+                <a class="secondary-link" href="#international-careers">Bloc international</a>
+                <a class="secondary-link" href="conseils.html">Conseils candidats</a>
+              </div>
+            </article>
+          </aside>
+          <div class="catalog-main">
             <div class="catalog-intro-card">
               <div>
                 <strong>Catalogue principal</strong>
@@ -410,7 +463,9 @@
               <div class="job-grid" id="jobsList"></div>
               <aside class="detail-panel" id="jobDetail" aria-live="polite"></aside>
             </div>
-            <nav class="pagination" id="jobsPagination" aria-label="Pagination des offres"></nav>
+          </div>
+        </div>
+        <nav class="pagination" id="jobsPagination" aria-label="Pagination des offres"></nav>
       </section>
     </main>
 
@@ -423,6 +478,6 @@
         <a href="contacts.html">Contact</a>
       </span>
     </footer>
-    <script src="app.js"></script>
+    <script type="module" src="app.js"></script>
   </body>
 </html>

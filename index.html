@@ -105,6 +105,20 @@
                       <span>recherche par metier, ville ou domaine</span>
                     </article>
                   </div>
+                  <div class="hero-signal-grid" aria-label="Reperes de recherche">
+                    <article class="hero-signal-card">
+                      <strong>Local et international</strong>
+                      <span>Un meme point d'entree pour bureau, terrain, ONU, consultance et teletravail.</span>
+                    </article>
+                    <article class="hero-signal-card">
+                      <strong>Verification mieux placee</strong>
+                      <span>Source, delai et confiance sont plus visibles des le premier coup d'oeil.</span>
+                    </article>
+                    <article class="hero-signal-card">
+                      <strong>Lecture plus rapide</strong>
+                      <span>Recherche simple au debut, filtres ensuite, comme sur les meilleurs standards produit.</span>
+                    </article>
+                  </div>
                 </div>
                 <div class="hero-quick-actions">
                   <a href="jobs.html">Toutes les offres</a>
@@ -198,6 +212,20 @@
               <button class="search-chip" type="button" data-search-query="chantier" data-search-type="Metiers terrain et informels">Chantier</button>
               <button class="search-chip" type="button" data-search-query="ONU" data-search-type="ONU / Consultance">ONU / Consultance</button>
               <button class="search-chip" type="button" data-search-query="teletravail" data-search-city="Teletravail">Teletravail</button>
+            </div>
+            <div class="search-context-strip" aria-label="Entrees populaires">
+              <article>
+                <strong>Formel</strong>
+                <span>Administration, ONG, concours, stage, finance et sante.</span>
+              </article>
+              <article>
+                <strong>Informel</strong>
+                <span>Chantier, conduite, vente, artisanat, securite et missions.</span>
+              </article>
+              <article>
+                <strong>International</strong>
+                <span>ONU, consultance, remote, digital et organisations suivies.</span>
+              </article>
             </div>
           </div>
         </div>
@@ -430,40 +458,67 @@
           </div>
           <a class="secondary-link" href="jobs.html">Toutes les offres</a>
         </div>
-        <div class="filters" aria-label="Filtres d'offres">
-          <button class="filter-button active" data-category="">Toutes</button>
-          <button class="filter-button" data-category="Bureau">Bureau</button>
-          <button class="filter-button" data-category="ONG">ONG</button>
-          <button class="filter-button" data-category="Concours">Concours</button>
-          <button class="filter-button" data-category="Metiers terrain et informels">Metiers informels</button>
-          <button class="filter-button filter-button-featured" data-category="ONU / Consultance">ONU / Consultance</button>
-          <button class="filter-button" data-category="BTP et chantier">BTP</button>
-          <button class="filter-button" data-category="Technique et maintenance">Technique</button>
-          <button class="filter-button" data-category="Finance et administration">Finance/Admin</button>
-          <button class="filter-button" data-category="Stage">Stages</button>
-        </div>
-        <div class="toolbar" aria-label="Outils de recherche">
-          <label>
-            <span>Source</span>
-            <select id="sourceFilter"><option value="">Toutes les sources</option></select>
-          </label>
-          <label>
-            <span>Tri</span>
-            <select id="sortFilter">
-              <option value="recent">Plus recentes</option>
-              <option value="title">Titre A-Z</option>
-              <option value="source">Source A-Z</option>
-            </select>
-          </label>
-          <label class="check-row">
-            <input id="savedOnlyFilter" type="checkbox" />
-            <span>Favoris seulement</span>
-          </label>
-        </div>
-        <div class="results-summary" id="resultsSummary" aria-live="polite"></div>
-        <div class="job-layout portal-job-layout">
-          <div class="job-grid" id="jobsList"></div>
-          <aside class="detail-panel" id="jobDetail" aria-live="polite"></aside>
+        <div class="catalog-shell">
+          <aside class="catalog-sidebar catalog-rail">
+            <article class="catalog-rail-card catalog-rail-highlight">
+              <p class="eyebrow">Parcours candidat</p>
+              <h3>Un catalogue plus net et plus utile</h3>
+              <p>La recherche reste legere au debut, puis la comparaison devient plus precise avec le detail de l'offre.</p>
+            </article>
+            <article class="catalog-rail-card">
+              <strong>Ce que vous gagnez</strong>
+              <div class="catalog-rail-list">
+                <span>resultats plus lisibles</span>
+                <span>filtres progressifs</span>
+                <span>source toujours reliee</span>
+                <span>date plus facile a verifier</span>
+              </div>
+            </article>
+            <article class="catalog-rail-card">
+              <strong>Acces rapides</strong>
+              <div class="catalog-rail-links">
+                <a class="secondary-link" href="jobs.html?focus=onu-consultance">Voir ONU / consultance</a>
+                <a class="secondary-link" href="jobs.html?category=Metiers%20terrain%20et%20informels">Voir metiers informels</a>
+              </div>
+            </article>
+          </aside>
+          <div class="catalog-main">
+            <div class="filters" aria-label="Filtres d'offres">
+              <button class="filter-button active" data-category="">Toutes</button>
+              <button class="filter-button" data-category="Bureau">Bureau</button>
+              <button class="filter-button" data-category="ONG">ONG</button>
+              <button class="filter-button" data-category="Concours">Concours</button>
+              <button class="filter-button" data-category="Metiers terrain et informels">Metiers informels</button>
+              <button class="filter-button filter-button-featured" data-category="ONU / Consultance">ONU / Consultance</button>
+              <button class="filter-button" data-category="BTP et chantier">BTP</button>
+              <button class="filter-button" data-category="Technique et maintenance">Technique</button>
+              <button class="filter-button" data-category="Finance et administration">Finance/Admin</button>
+              <button class="filter-button" data-category="Stage">Stages</button>
+            </div>
+            <div class="toolbar" aria-label="Outils de recherche">
+              <label>
+                <span>Source</span>
+                <select id="sourceFilter"><option value="">Toutes les sources</option></select>
+              </label>
+              <label>
+                <span>Tri</span>
+                <select id="sortFilter">
+                  <option value="recent">Plus recentes</option>
+                  <option value="title">Titre A-Z</option>
+                  <option value="source">Source A-Z</option>
+                </select>
+              </label>
+              <label class="check-row">
+                <input id="savedOnlyFilter" type="checkbox" />
+                <span>Favoris seulement</span>
+              </label>
+            </div>
+            <div class="results-summary" id="resultsSummary" aria-live="polite"></div>
+            <div class="job-layout portal-job-layout">
+              <div class="job-grid" id="jobsList"></div>
+              <aside class="detail-panel" id="jobDetail" aria-live="polite"></aside>
+            </div>
+          </div>
         </div>
         <nav class="pagination" id="jobsPagination" aria-label="Pagination des offres"></nav>
       </section>
@@ -571,6 +626,6 @@
       </span>
     </footer>
 
-    <script src="app.js"></script>
+    <script type="module" src="app.js"></script>
   </body>
 </html>
