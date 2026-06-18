@@ -494,7 +494,7 @@
   {
     "id": "ifad-jobs",
     "name": "IFAD Jobs",
-    "url": "https://www.ifad.org/en/work-with-us",
+    "url": "https://jobs.ifad.org/",
     "type": "multilateral",
     "priority": 2,
     "collection": "manual_only",
@@ -554,7 +554,7 @@
   {
     "id": "oxfam-careers",
     "name": "Oxfam Careers",
-    "url": "https://www.oxfam.org/en/take-action/jobs",
+    "url": "https://careers.oxfam.org.uk/",
     "type": "ngo",
     "priority": 3,
     "collection": "manual_only",
@@ -566,7 +566,7 @@
   {
     "id": "care-international-careers",
     "name": "CARE Careers",
-    "url": "https://www.care.org/careers/",
+    "url": "https://careers.care.org/",
     "type": "ngo",
     "priority": 3,
     "collection": "manual_only",
@@ -590,7 +590,7 @@
   {
     "id": "mercy-corps-careers",
     "name": "Mercy Corps Careers",
-    "url": "https://www.mercycorps.org/careers",
+    "url": "https://careers.mercycorps.org/",
     "type": "ngo",
     "priority": 3,
     "collection": "manual_only",
@@ -614,7 +614,7 @@
   {
     "id": "acted-careers",
     "name": "ACTED Careers",
-    "url": "https://www.acted.org/en/get-involved/join-us/vacancies/",
+    "url": "https://careers.acted.org/",
     "type": "ngo",
     "priority": 3,
     "collection": "manual_only",
@@ -650,7 +650,7 @@
   {
     "id": "technoserve-jobs",
     "name": "TechnoServe Jobs",
-    "url": "https://www.technoserve.org/join-the-mission/careers/",
+    "url": "https://jobs.technoserve.org/",
     "type": "organization",
     "priority": 3,
     "collection": "manual_only",

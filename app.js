@@ -641,17 +641,11 @@ function setQuickCategory(category) {
   });
 }
 
-function syncQuickCategoryFromType(value = "") {
-  const hasMatchingButton = [...filterButtons].some((button) => (button.dataset.category || "") === value);
-  setQuickCategory(hasMatchingButton ? value : "");
-}
-
 function applyUrlSearchParams() {
   const params = new URLSearchParams(window.location.search);
   const query = params.get("q") || params.get("search") || "";
   const category = params.get("category") || "";
   const city = params.get("city") || "";
-  const source = params.get("source") || "";
   const focus = params.get("focus") || "";
 
   if (query && searchInput) searchInput.value = query;
@@ -670,30 +664,6 @@ function applyUrlSearchParams() {
   if (city && cityFilter && [...cityFilter.options].some((option) => option.value === city || option.textContent === city)) {
     cityFilter.value = city;
   }
-  if (source && sourceFilter && [...sourceFilter.options].some((option) => option.value === source || option.textContent === source)) {
-    sourceFilter.value = source;
-  }
-}
-
-function syncSearchUrl() {
-  if (!jobsList || !window.history?.replaceState) return;
-  const path = window.location.pathname.split("/").pop() || "index.html";
-  if (path !== "jobs.html") return;
-
-  const params = new URLSearchParams();
-  const query = searchInput?.value.trim() || "";
-  const city = cityFilter?.value || "";
-  const type = typeFilter?.value || "";
-  const source = sourceFilter?.value || "";
-
-  if (query) params.set("q", query);
-  if (city) params.set("city", city);
-  if (source) params.set("source", source);
-  if (activeCategory) params.set("category", activeCategory);
-  else if (type) params.set("category", type);
-
-  const nextUrl = params.toString() ? `jobs.html?${params.toString()}` : "jobs.html";
-  window.history.replaceState({}, "", nextUrl);
 }
 
 function applyExplorerSearch({ type, value }) {
@@ -723,8 +693,6 @@ function applyExplorerSearch({ type, value }) {
 
 function applyPortalSearch({ query = "", focus = "", category = "", type = "" }) {
   if (searchInput) searchInput.value = query;
-  if (cityFilter) cityFilter.value = "";
-  if (sourceFilter) sourceFilter.value = "";
 
   const resolvedType = focus === "onu-consultance" ? SPECIAL_JOB_FILTER_LABEL : type;
   const resolvedCategory = focus === "onu-consultance" ? SPECIAL_JOB_FILTER_LABEL : category;
@@ -745,7 +713,6 @@ function applyPortalSearch({ query = "", focus = "", category = "", type = "" })
     label: query || resolvedCategory || focus || "shortcut",
     focus,
   });
-  syncSearchUrl();
   renderJobs();
   document.querySelector("#offres")?.scrollIntoView({ behavior: "smooth", block: "start" });
 }
@@ -2059,14 +2026,12 @@ async function bootstrapApp() {
 if (quickSearch) {
   quickSearch.addEventListener("submit", (event) => {
     event.preventDefault();
-    syncQuickCategoryFromType(typeFilter?.value || activeCategory || "");
     recordEvent("quick_search", {
       label: searchInput?.value || "recherche accueil",
       city: cityFilter?.value || "",
       category: activeCategory,
     });
     resetJobsPage();
-    syncSearchUrl();
     renderJobs();
     document.querySelector("#offres")?.scrollIntoView({ behavior: "smooth" });
   });
@@ -2080,17 +2045,13 @@ document.addEventListener("click", (event) => {
   const city = button.dataset.searchCity || "";
   const type = button.dataset.searchType || "";
 
-  if (searchInput) searchInput.value = query;
-  if (cityFilter) {
-    cityFilter.value =
-      city && [...cityFilter.options].some((option) => option.value === city || option.textContent === city) ? city : "";
+  if (searchInput && query) searchInput.value = query;
+  if (cityFilter && city && [...cityFilter.options].some((option) => option.value === city || option.textContent === city)) {
+    cityFilter.value = city;
   }
-  if (sourceFilter) sourceFilter.value = "";
-  if (typeFilter) {
-    typeFilter.value =
-      type && [...typeFilter.options].some((option) => option.value === type || option.textContent === type) ? type : "";
+  if (typeFilter && type && [...typeFilter.options].some((option) => option.value === type || option.textContent === type)) {
+    typeFilter.value = type;
   }
-  setQuickCategory(type || "");
 
   recordEvent("search_chip_clicked", {
     label: query || type || city || "preset",
@@ -2098,7 +2059,6 @@ document.addEventListener("click", (event) => {
     type,
   });
   resetJobsPage();
-  syncSearchUrl();
   renderJobs();
   document.querySelector("#offres")?.scrollIntoView({ behavior: "smooth" });
 });
@@ -2113,9 +2073,7 @@ document.addEventListener("click", (event) => {
       label: control.id || control.name || "filtre",
       value: control.type === "checkbox" ? String(control.checked) : control.value,
     });
-    if (control === typeFilter) syncQuickCategoryFromType(control.value);
     resetJobsPage();
-    syncSearchUrl();
     scheduleRenderJobs(true);
   });
 });
@@ -2125,10 +2083,8 @@ filterButtons.forEach((button) => {
     filterButtons.forEach((item) => item.classList.remove("active"));
     button.classList.add("active");
     activeCategory = button.dataset.category || "";
-    if (typeFilter) typeFilter.value = activeCategory;
     recordEvent("category_filter_clicked", { label: activeCategory || "Toutes" });
     resetJobsPage();
-    syncSearchUrl();
     scheduleRenderJobs(true);
   });
 });
