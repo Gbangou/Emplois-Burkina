@@ -26,7 +26,69 @@ import { createSearchHelpers } from "./assets/js/search-helpers.js";
 import { createFeedHelpers } from "./assets/js/feed-helpers.js";
 import { createAdminHelpers } from "./assets/js/admin-helpers.js";
 import { createSourceRenderers } from "./assets/js/source-renderers.js";
-import { demoProfiles, fallbackJobs } from "./assets/js/demo-data.js";
+
+const fallbackJobs = [
+  {
+    id: "demo-it-manager",
+    title: "IT Manager",
+    company: "Entreprise telecom",
+    city: "Ouagadougou",
+    category: "Bureau",
+    type: "CDI",
+    salary: "900k - 1.5M FCFA",
+    deadline: "15 juin",
+    sourceName: "Demo JobFaso",
+    sourceUrl: "#",
+    tags: ["Informatique", "Management", "Urgent"],
+    status: "validated",
+    collectedAt: "2026-06-09T11:20:01.631Z",
+  },
+  {
+    id: "demo-programme-officer",
+    title: "Charge de programme",
+    company: "ONG internationale",
+    city: "Ouagadougou",
+    category: "ONG",
+    type: "CDD",
+    salary: "Non communique",
+    deadline: "21 juin",
+    sourceName: "Demo JobFaso",
+    sourceUrl: "#",
+    tags: ["ONG", "Projet", "Bilingue"],
+    status: "validated",
+    collectedAt: "2026-06-09T11:20:01.631Z",
+  },
+  {
+    id: "demo-concours",
+    title: "Concours agent administratif",
+    company: "Fonction publique",
+    city: "Tout le Burkina",
+    category: "Concours",
+    type: "Concours",
+    salary: "Selon grille",
+    deadline: "30 juin",
+    sourceName: "Demo JobFaso",
+    sourceUrl: "#",
+    tags: ["Concours", "BAC", "Dossier"],
+    status: "validated",
+    collectedAt: "2026-06-09T11:20:01.631Z",
+  },
+  {
+    id: "demo-macon",
+    title: "Macon qualifie",
+    company: "Chantier prive",
+    city: "Bobo-Dioulasso",
+    category: "Metiers terrain et informels",
+    type: "Mission",
+    salary: "8k - 15k FCFA / jour",
+    deadline: "Cette semaine",
+    sourceName: "Demo JobFaso",
+    sourceUrl: "#",
+    tags: ["Construction", "Experience", "Terrain"],
+    status: "validated",
+    collectedAt: "2026-06-09T11:20:01.631Z",
+  },
+];
 
 let jobs = [];
 let baseJobs = [];
@@ -99,6 +161,41 @@ const adminJobStatusFilter = document.querySelector("#adminJobStatusFilter");
 const adminJobSourceFilter = document.querySelector("#adminJobSourceFilter");
 const adminJobDateFilter = document.querySelector("#adminJobDateFilter");
 const adminJobsFilterSummary = document.querySelector("#adminJobsFilterSummary");
+
+const demoProfiles = [
+  {
+    code: "Profil N°003101",
+    title: "Assistant comptable",
+    experience: "2 ans",
+    education: "Bac+3 Finance",
+    city: "Ouagadougou",
+    skills: ["Sage", "Excel", "Fiscalite"],
+  },
+  {
+    code: "Profil N°003102",
+    title: "Technicien terrain",
+    experience: "5 ans",
+    education: "BEP / Maintenance",
+    city: "Bobo-Dioulasso",
+    skills: ["Maintenance", "HSE", "Logistique"],
+  },
+  {
+    code: "Profil N°003103",
+    title: "Charge de projet ONG",
+    experience: "4 ans",
+    education: "Master gestion projet",
+    city: "Ouagadougou",
+    skills: ["MEAL", "Reporting", "Anglais"],
+  },
+  {
+    code: "Profil N°003104",
+    title: "Developpeur web",
+    experience: "3 ans",
+    education: "Licence informatique",
+    city: "Teletravail",
+    skills: ["JavaScript", "API", "React"],
+  },
+];
 
 function rebuildSourceIndex() {
   sourceIndex = new Map(
