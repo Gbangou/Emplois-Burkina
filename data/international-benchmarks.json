@@ -1,0 +1,139 @@
+{
+  "generatedFrom": "High-quality international job boards benchmark",
+  "positioning": {
+    "title": "International Career Intelligence",
+    "subtitle": "UN, ONG, remote tech, cyber, multinationales et cabinets internationaux",
+    "summary": "JobFaso classe les meilleures plateformes internationales par usage pour aider les profils burkinabe a chercher plus vite, comparer les sources et postuler sur les canaux officiels."
+  },
+  "profileFit": [
+    "Information Management Officer",
+    "ICT Officer",
+    "Cybersecurity Specialist",
+    "Digital Transformation Advisor",
+    "Data Manager",
+    "Information Systems Officer",
+    "International civil service roles"
+  ],
+  "categories": [
+    {
+      "id": "global-aggregators",
+      "label": "Job boards internationaux",
+      "bestFor": "Volume mondial, entreprises multinationales, recherche par pays ou metier",
+      "accent": "blue",
+      "sites": [
+        { "name": "LinkedIn Jobs", "url": "https://www.linkedin.com/jobs", "bestFor": "Global professional jobs across all sectors", "query": "Burkina Faso information systems OR remote" },
+        { "name": "Indeed", "url": "https://www.indeed.com", "bestFor": "One of the largest job aggregators worldwide", "query": "remote ICT Burkina Faso" },
+        { "name": "Glassdoor", "url": "https://www.glassdoor.com", "bestFor": "Jobs, salary information and company reviews", "query": "digital transformation Africa" },
+        { "name": "Monster", "url": "https://www.monster.com", "bestFor": "International corporate opportunities", "query": "IT officer international" },
+        { "name": "CareerBuilder", "url": "https://www.careerbuilder.com", "bestFor": "Large multinational employers", "query": "cybersecurity analyst remote" },
+        { "name": "Jobrapido", "url": "https://www.jobrapido.com", "bestFor": "Aggregated jobs from many countries", "query": "information management officer" },
+        { "name": "Jooble", "url": "https://jooble.org", "bestFor": "Global search engine for jobs", "query": "Burkina Faso ICT remote" },
+        { "name": "SimplyHired", "url": "https://www.simplyhired.com", "bestFor": "International job aggregation", "query": "data manager NGO remote" }
+      ]
+    },
+    {
+      "id": "un-international",
+      "label": "Nations Unies et organisations internationales",
+      "bestFor": "Postes officiels ONU, institutions internationales, developpement, gouvernance et IT",
+      "accent": "green",
+      "sites": [
+        { "name": "UN Careers", "url": "https://careers.un.org", "bestFor": "UN Secretariat positions", "query": "information systems officer" },
+        { "name": "UNDP Jobs", "url": "https://jobs.undp.org", "bestFor": "Development and governance roles", "query": "digital transformation governance" },
+        { "name": "UNICEF Careers", "url": "https://jobs.unicef.org", "bestFor": "ICT, program, health, education jobs", "query": "ICT officer Burkina Faso" },
+        { "name": "WFP Careers", "url": "https://www.wfp.org/careers", "bestFor": "Humanitarian and technology positions", "query": "data management supply chain" },
+        { "name": "WHO Careers", "url": "https://www.who.int/careers", "bestFor": "Public health and data management", "query": "data manager Africa" },
+        { "name": "UNHCR Careers", "url": "https://www.unhcr.org/careers.html", "bestFor": "Refugee and information management jobs", "query": "information management officer" },
+        { "name": "World Bank Careers", "url": "https://www.worldbank.org/en/about/careers", "bestFor": "Development, digital transformation, IT", "query": "digital development consultant" },
+        { "name": "African Development Bank Careers", "url": "https://www.afdb.org/en/about-careers", "bestFor": "African regional opportunities", "query": "ICT digital transformation" },
+        { "name": "European Union Careers", "url": "https://epso.europa.eu", "bestFor": "EU institutions", "query": "information systems security" },
+        { "name": "NATO Careers", "url": "https://www.nato.int/cps/en/natohq/recruitment.htm", "bestFor": "Security, cyber, intelligence support", "query": "cyber security" }
+      ]
+    },
+    {
+      "id": "ngo-humanitarian",
+      "label": "ONG et humanitaire",
+      "bestFor": "Humanitaire, developpement international, ONG, impact social et missions terrain",
+      "accent": "red",
+      "sites": [
+        { "name": "ReliefWeb Jobs", "url": "https://reliefweb.int/jobs", "bestFor": "Best humanitarian job board globally", "query": "Burkina Faso information management" },
+        { "name": "Impactpool", "url": "https://www.impactpool.org", "bestFor": "UN, NGOs, IFIs and international organizations", "query": "ICT officer data manager" },
+        { "name": "Devex Careers", "url": "https://www.devex.com/jobs", "bestFor": "International development jobs", "query": "digital transformation Africa" },
+        { "name": "CharityJob", "url": "https://www.charityjob.co.uk", "bestFor": "NGOs and non-profits", "query": "remote programme data" },
+        { "name": "Idealist", "url": "https://www.idealist.org", "bestFor": "NGOs and social impact careers", "query": "remote social impact technology" }
+      ]
+    },
+    {
+      "id": "remote-tech",
+      "label": "Remote et startups",
+      "bestFor": "Teletravail, startups, tech, produit, support digital et contrats internationaux",
+      "accent": "gold",
+      "sites": [
+        { "name": "We Work Remotely", "url": "https://weworkremotely.com", "bestFor": "Fully remote jobs", "query": "support engineer data analyst" },
+        { "name": "Remote OK", "url": "https://remoteok.com", "bestFor": "Tech and remote work", "query": "cybersecurity data remote" },
+        { "name": "FlexJobs", "url": "https://www.flexjobs.com", "bestFor": "Verified remote opportunities", "query": "information systems remote" },
+        { "name": "Remotive", "url": "https://remotive.com", "bestFor": "Remote startups and tech jobs", "query": "IT support remote" },
+        { "name": "Wellfound", "url": "https://wellfound.com", "bestFor": "Startup jobs", "query": "startup cybersecurity remote" }
+      ]
+    },
+    {
+      "id": "tech-cyber",
+      "label": "Technologie et cybersécurité",
+      "bestFor": "IT, software engineering, cybersecurite, infosec, data et startups techniques",
+      "accent": "navy",
+      "sites": [
+        { "name": "Dice", "url": "https://www.dice.com", "bestFor": "IT and software engineering", "query": "cloud security analyst" },
+        { "name": "CyberSecJobs", "url": "https://cybersecjobs.com", "bestFor": "Cybersecurity roles", "query": "GRC SOC analyst remote" },
+        { "name": "Infosec Jobs", "url": "https://infosec-jobs.com", "bestFor": "Cybersecurity worldwide", "query": "cybersecurity Africa remote" },
+        { "name": "Hacker News Jobs", "url": "https://news.ycombinator.com/jobs", "bestFor": "Startup engineering jobs", "query": "remote engineer" },
+        { "name": "GitHub", "url": "https://github.com", "bestFor": "Companies hiring through GitHub and open source", "query": "security engineer remote jobs" }
+      ]
+    },
+    {
+      "id": "executive",
+      "label": "Roles seniors et cabinets internationaux",
+      "bestFor": "Leadership, management, conseil, transformation et postes mieux remuneres",
+      "accent": "dark",
+      "sites": [
+        { "name": "Robert Walters", "url": "https://www.robertwalters.com", "bestFor": "Senior professional roles", "query": "technology manager Africa" },
+        { "name": "Michael Page", "url": "https://www.michaelpage.com", "bestFor": "International management jobs", "query": "digital transformation manager" },
+        { "name": "Hays Recruitment", "url": "https://www.hays.com", "bestFor": "Global professional recruitment", "query": "IT project manager" },
+        { "name": "Korn Ferry Careers", "url": "https://www.kornferry.com", "bestFor": "Executive and leadership positions", "query": "cybersecurity director" }
+      ]
+    }
+  ],
+  "prioritySources": [
+    { "rank": 1, "name": "Impactpool", "url": "https://www.impactpool.org", "reason": "Tres fort alignement UN, ONG, IFI, profils internationaux et missions specialisees." },
+    { "rank": 2, "name": "ReliefWeb Jobs", "url": "https://reliefweb.int/jobs", "reason": "Reference humanitaire mondiale, utile pour information management, data et operations terrain." },
+    { "rank": 3, "name": "UN Careers", "url": "https://careers.un.org", "reason": "Canal officiel Secretariat ONU pour postes internationaux." },
+    { "rank": 4, "name": "UNICEF Careers", "url": "https://jobs.unicef.org", "reason": "Fort potentiel ICT, education, sante, data et programme." },
+    { "rank": 5, "name": "WHO Careers", "url": "https://www.who.int/careers", "reason": "Public health, data management, digital health et systemes d'information." },
+    { "rank": 6, "name": "World Bank Careers", "url": "https://www.worldbank.org/en/about/careers", "reason": "Digital transformation, gouvernance, IT et projets de developpement." },
+    { "rank": 7, "name": "LinkedIn Jobs", "url": "https://www.linkedin.com/jobs", "reason": "Volume mondial, reseau professionnel et recherche par alerte." },
+    { "rank": 8, "name": "Devex Careers", "url": "https://www.devex.com/jobs", "reason": "Developpement international, consulting, bailleurs et projets." },
+    { "rank": 9, "name": "African Development Bank Careers", "url": "https://www.afdb.org/en/about-careers", "reason": "Opportunites africaines regionales, banque de developpement et digital." },
+    { "rank": 10, "name": "Infosec Jobs", "url": "https://infosec-jobs.com", "reason": "Specialisation cybersecurite mondiale et opportunites remote." }
+  ],
+  "journeys": [
+    {
+      "id": "un-ict",
+      "label": "Profil SI / ONU",
+      "query": "ICT officer information management",
+      "focus": "onu-consultance",
+      "steps": ["Verifier Impactpool et UN Careers", "Chercher ICT officer / Information Management", "Comparer eligibility, deadline et duty station"]
+    },
+    {
+      "id": "cyber-remote",
+      "label": "Cyber remote",
+      "query": "cybersecurity remote",
+      "focus": "tech-remote",
+      "steps": ["Lancer Infosec Jobs et Remote OK", "Filtrer remote / Africa-friendly", "Adapter CV cyber, GRC, SOC ou cloud security"]
+    },
+    {
+      "id": "development-consulting",
+      "label": "Consultance developpement",
+      "query": "digital transformation consultant Africa",
+      "focus": "onu-consultance",
+      "steps": ["Comparer Devex, World Bank, AfDB", "Chercher consultant / digital transformation", "Preparer references projet et note technique"]
+    }
+  ]
+}

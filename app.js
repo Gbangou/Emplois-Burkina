@@ -33,6 +33,7 @@ let baseJobs = [];
 let sources = [];
 let employerLogos = [];
 let internationalFeeds = [];
+let internationalBenchmarks = null;
 let sourceIndex = new Map();
 let jobSearchCache = new Map();
 let activeCategory = "";
@@ -87,6 +88,9 @@ const analyticsSummary = document.querySelector("#analyticsSummary");
 const analyticsTable = document.querySelector("#analyticsTable");
 const visibilitySummary = document.querySelector("#visibilitySummary");
 const visibilityTable = document.querySelector("#visibilityTable");
+const offerQualitySummary = document.querySelector("#offerQualitySummary");
+const offerQualityIssues = document.querySelector("#offerQualityIssues");
+const offerQualityTable = document.querySelector("#offerQualityTable");
 const employerCarousel = document.querySelector("#employerCarousel");
 const featuredJobsCarousel = document.querySelector("#featuredJobsCarousel");
 const profileCarousel = document.querySelector("#profileCarousel");
@@ -94,6 +98,10 @@ const categoryStats = document.querySelector("#categoryStats");
 const regionStats = document.querySelector("#regionStats");
 const heroJobCount = document.querySelector("#heroJobCount");
 const heroTrustedCount = document.querySelector("#heroTrustedCount");
+const benchmarkMetrics = document.querySelector("#benchmarkMetrics");
+const prioritySourceList = document.querySelector("#prioritySourceList");
+const benchmarkCategoryGrid = document.querySelector("#benchmarkCategoryGrid");
+const benchmarkJourneyStrip = document.querySelector("#benchmarkJourneyStrip");
 const adminJobSearchInput = document.querySelector("#adminJobSearchInput");
 const adminJobStatusFilter = document.querySelector("#adminJobStatusFilter");
 const adminJobSourceFilter = document.querySelector("#adminJobSourceFilter");
@@ -384,6 +392,39 @@ function deadlineState(job) {
     label: formatCountdown(job.closingDate),
     tone: "success",
     helper: "Candidature encore ouverte.",
+  };
+}
+
+function displayJobLocation(job = {}) {
+  const city = String(job.city || "").trim();
+  if (!city || /courant|mois|date|email|http|www|login|connexion|recherche/i.test(city) || city.length > 56) {
+    return "Burkina Faso";
+  }
+  if (/\b(RDC|Mali|Niger|Senegal|Tchad|Benin|Cameroun|Rwanda|Ethiopie|Mauritanie|Liban|Afghanistan|Ghana)\b/i.test(city)) {
+    return `International - ${city}`;
+  }
+  return city;
+}
+
+function jobVerificationState(job = {}) {
+  if (job.status === "validated" && job.closingDateConfirmed) {
+    return {
+      label: "Verifiee",
+      tone: "verified",
+      helper: "Offre et date confirmees par la moderation JobFaso.",
+    };
+  }
+  if (job.closingDateConfirmed || job.closingDate) {
+    return {
+      label: "Source suivie",
+      tone: "review",
+      helper: "Date extraite de la source. Relisez l'annonce officielle avant de postuler.",
+    };
+  }
+  return {
+    label: "A verifier",
+    tone: "warning",
+    helper: "Date limite absente ou non confirmee. Ouvrez la source officielle.",
   };
 }
 
@@ -692,11 +733,157 @@ function renderTaxonomy(container, entries, baseHref) {
     : `<p class="muted">Les statistiques seront disponibles apres la prochaine collecte.</p>`;
 }
 
+function getBenchmarkAccentClass(value = "") {
+  return `benchmark-accent-${normalize(value || "blue") || "blue"}`;
+}
+
+function renderInternationalBenchmarks() {
+  if (!benchmarkMetrics && !prioritySourceList && !benchmarkCategoryGrid && !benchmarkJourneyStrip) return;
+  const benchmark = internationalBenchmarks || {};
+  const metrics = benchmark.metrics || {};
+  const categories = Array.isArray(benchmark.categories) ? benchmark.categories : [];
+  const prioritySources = Array.isArray(benchmark.prioritySources) ? benchmark.prioritySources : [];
+  const journeys = Array.isArray(benchmark.journeys) ? benchmark.journeys : [];
+
+  if (benchmarkMetrics) {
+    const items = [
+      [metrics.sites || 0, "plateformes benchmarkees"],
+      [metrics.prioritySources || 0, "sources prioritaires"],
+      [metrics.trackedByJobFaso || 0, "deja reliees a JobFaso"],
+      [metrics.profileFits || 0, "profils SI/cyber couverts"],
+    ];
+    benchmarkMetrics.innerHTML = items
+      .map(
+        ([value, label]) => `
+          <article>
+            <strong>${escapeHtml(value)}</strong>
+            <span>${escapeHtml(label)}</span>
+          </article>
+        `
+      )
+      .join("");
+  }
+
+  if (prioritySourceList) {
+    prioritySourceList.innerHTML = prioritySources.length
+      ? prioritySources
+          .slice(0, 10)
+          .map(
+            (source) => `
+              <a href="${escapeHtml(source.url)}" target="_blank" rel="noopener" class="priority-source-card">
+                <span>${escapeHtml(String(source.rank).padStart(2, "0"))}</span>
+                <strong>${escapeHtml(source.name)}</strong>
+                <small>${escapeHtml(source.reason)}</small>
+              </a>
+            `
+          )
+          .join("")
+      : `<p class="muted">Les sources prioritaires seront disponibles apres synchronisation.</p>`;
+  }
+
+  if (benchmarkCategoryGrid) {
+    benchmarkCategoryGrid.innerHTML = categories.length
+      ? categories
+          .map(
+            (category) => `
+              <article class="benchmark-category-card ${getBenchmarkAccentClass(category.accent)}">
+                <div>
+                  <p class="eyebrow">${escapeHtml(category.bestFor || "Benchmark")}</p>
+                  <h3>${escapeHtml(category.label)}</h3>
+                </div>
+                <div class="benchmark-site-list">
+                  ${(category.sites || [])
+                    .slice(0, 5)
+                    .map(
+                      (site) => `
+                        <a href="${escapeHtml(site.url)}" target="_blank" rel="noopener">
+                          <span>${escapeHtml(site.name)}</span>
+                          <small>${escapeHtml(site.trackedByJobFaso ? "Suivi par JobFaso" : site.bestFor || "Source externe")}</small>
+                        </a>
+                      `
+                    )
+                    .join("")}
+                </div>
+              </article>
+            `
+          )
+          .join("")
+      : `<p class="muted">Aucun benchmark international charge.</p>`;
+  }
+
+  if (benchmarkJourneyStrip) {
+    benchmarkJourneyStrip.innerHTML = journeys.length
+      ? journeys
+          .map(
+            (journey) => `
+              <article>
+                <span>${escapeHtml(journey.label)}</span>
+                <strong>${escapeHtml(journey.query)}</strong>
+                <p>${escapeHtml((journey.steps || []).join(" - "))}</p>
+                <button type="button" data-portal-query="${escapeHtml(journey.query)}" data-portal-focus="${escapeHtml(journey.focus || "onu-consultance")}">
+                  Lancer ce parcours
+                </button>
+              </article>
+            `
+          )
+          .join("")
+      : "";
+  }
+}
+
+function initScrollStoryMotion() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const stories = [...document.querySelectorAll(".scroll-story")];
+  if (!stories.length) return;
+
+  const updateStoryMotion = () => {
+    window.jobFasoStoryMotionFrame = 0;
+    const viewportHeight = window.innerHeight || 1;
+    stories.forEach((story) => {
+      const rect = story.getBoundingClientRect();
+      const progress = Math.min(1, Math.max(0, (viewportHeight - rect.top) / (viewportHeight + rect.height)));
+      const centered = progress - 0.5;
+      story.style.setProperty("--story-copy-shift", `${Math.round(centered * -42)}px`);
+      story.style.setProperty("--story-photo-shift", `${Math.round(centered * 58)}px`);
+    });
+  };
+
+  const requestStoryMotion = () => {
+    if (window.jobFasoStoryMotionFrame) return;
+    window.jobFasoStoryMotionFrame = window.requestAnimationFrame(updateStoryMotion);
+  };
+
+  if (!window.jobFasoStoryMotionBound) {
+    window.addEventListener("scroll", requestStoryMotion, { passive: true });
+    window.addEventListener("resize", requestStoryMotion);
+    window.jobFasoStoryMotionBound = true;
+  }
+
+  requestStoryMotion();
+}
+
 function initVisualEnhancements() {
   if (typeof window === "undefined") return;
   initInstitutionFeedControls();
+  initScrollStoryMotion();
   if (!("IntersectionObserver" in window)) return;
   const selectors = [
+    ".hero-surface",
+    ".hero-flow-image",
+    ".hero-photo-badge",
+    ".hero-floating-card",
+    ".finder-audience-grid article",
+    ".finder-process-lead",
+    ".process-photo",
+    ".finder-process-grid article",
+    ".benchmark-metrics article",
+    ".priority-source-card",
+    ".benchmark-category-card",
+    ".benchmark-journey-strip article",
+    ".scroll-story",
+    ".scroll-story-card",
+    ".story-photo",
+    ".portal-heading",
     ".portal-stats article",
     ".trust-strip article",
     ".job-card",
@@ -1083,6 +1270,8 @@ function renderJobCard(job, options = {}) {
   const duplicateAttrs = options.duplicate ? ` aria-hidden="true"` : "";
   const duplicateInteractiveAttrs = options.duplicate ? ` tabindex="-1"` : "";
   const displayType = normalize(job.type) === "a verifier" ? "" : job.type;
+  const verification = jobVerificationState(job);
+  const location = displayJobLocation(job);
   const metaPills = [
     displayType ? `<span class="pill">${escapeHtml(displayType)}</span>` : "",
     job.closingDate ? `<span class="pill deadline-pill">Cloture : ${escapeHtml(formatJobDate(job.closingDate))}</span>` : "",
@@ -1090,6 +1279,7 @@ function renderJobCard(job, options = {}) {
       ? `<span class="pill">Ouverture verifiee</span>`
       : `<span class="pill">Ouverture a confirmer</span>`,
     hasApplyUrl ? `<span class="pill source-pill">${escapeHtml(sourceDescriptor.badge)}</span>` : "",
+    `<span class="pill verification-pill ${verification.tone}">${escapeHtml(verification.label)}</span>`,
   ].join("");
 
   return `
@@ -1099,7 +1289,7 @@ function renderJobCard(job, options = {}) {
         <div>
           <p class="eyebrow">${escapeHtml(job.category || "Autre")}</p>
           <h3>${escapeHtml(job.title)}</h3>
-          <p class="muted">${escapeHtml(job.company || "Organisation non precisee")} - ${escapeHtml(job.city || "Burkina Faso")}</p>
+          <p class="muted">${escapeHtml(job.company || "Organisation non precisee")} - ${escapeHtml(location)}</p>
         </div>
       </div>
       ${renderDeadlineStrip(job)}
@@ -1150,6 +1340,8 @@ function renderDetail(job) {
       ? `<a class="nav-action inline-action" href="${escapeHtml(job.sourceUrl)}" target="_blank" rel="noopener" data-track="source_apply_click" data-track-label="${escapeHtml(job.title)}">${escapeHtml(sourceDescriptor.actionLabel)}</a>`
       : "";
   const logoUrl = job.companyLogoUrl || job.sourceLogoUrl || "";
+  const verification = jobVerificationState(job);
+  const location = displayJobLocation(job);
 
   jobDetail.innerHTML = `
     <div class="detail-sticky">
@@ -1164,12 +1356,13 @@ function renderDetail(job) {
       ${renderDeadlineStrip(job)}
       ${renderTimeline(job)}
       <dl class="detail-list">
-        <div><dt>Ville</dt><dd>${escapeHtml(job.city || "Burkina Faso")}</dd></div>
+        <div><dt>Localisation</dt><dd>${escapeHtml(location)}</dd></div>
         <div><dt>Date d'ouverture</dt><dd>${escapeHtml(openingDateDetail)}</dd></div>
         <div><dt>Date de cloture</dt><dd>${escapeHtml(formatJobDate(job.closingDate, "Consulter la source"))}</dd></div>
         <div><dt>Temps restant</dt><dd>${job.closingDate ? `<span data-countdown="${escapeHtml(job.closingDate)}">${escapeHtml(formatCountdown(job.closingDate))}</span>` : "Consulter la source"}</dd></div>
         <div><dt>Source</dt><dd>${escapeHtml(job.sourceName || "JobFaso")}</dd></div>
         <div><dt>Verification</dt><dd>${escapeHtml(sourceDescriptor.badge)}</dd></div>
+        <div><dt>Controle JobFaso</dt><dd>${escapeHtml(verification.label)} - ${escapeHtml(verification.helper)}</dd></div>
         <div><dt>Statut date</dt><dd>${job.openingDateConfirmed ? "Date d'ouverture confirmee" : "Date d'ouverture non communiquee par la source"}</dd></div>
         <div><dt>Collecte</dt><dd>${escapeHtml(displayDate(job.collectedAt))}</dd></div>
       </dl>
@@ -1465,6 +1658,112 @@ async function loadVisibilityEngine() {
   }
 }
 
+function formatQualityIssue(issueId = "") {
+  const labels = {
+    expired: "Delai depasse",
+    feed_expired: "Delai depasse",
+    missing_closing_date: "Date absente",
+    feed_missing_closing_date: "Date absente",
+    inconsistent_dates: "Dates incoherentes",
+    missing_source: "Source absente",
+    not_validated: "Non validee",
+    suspicious_city: "Ville douteuse",
+    foreign_city_without_context: "International a confirmer",
+    feed_source_error: "Source a relancer",
+    feed_missing_source: "Source absente",
+  };
+  return labels[issueId] || issueId.replaceAll("_", " ");
+}
+
+function qualitySeverityClass(issues = []) {
+  if (issues.some((issue) => issue.severity === "critical")) return "critical";
+  if (issues.some((issue) => issue.severity === "high")) return "warning";
+  return "review";
+}
+
+async function loadOfferQualityReport() {
+  if (!offerQualitySummary && !offerQualityIssues && !offerQualityTable) return;
+
+  try {
+    const response = await fetch("/api/quality/offers");
+    if (!response.ok) throw new Error("Offer quality report unavailable");
+    const report = await response.json();
+    const curated = report.curated || {};
+    const feeds = report.internationalFeeds || {};
+    const topIssues = [...(curated.topIssues || []), ...(feeds.topIssues || [])];
+    const reviewItems = [
+      ...(curated.reviewItems || []).map((item) => ({ ...item, scope: "Curated" })),
+      ...(feeds.reviewItems || []).map((item) => ({ ...item, scope: "Flux international" })),
+    ];
+
+    if (offerQualitySummary) {
+      offerQualitySummary.innerHTML = `
+        <article><strong>${escapeHtml(curated.total ?? 0)}</strong><span>offres curees</span></article>
+        <article><strong>${escapeHtml(curated.withIssues ?? 0)}</strong><span>a revoir</span></article>
+        <article><strong>${escapeHtml(curated.critical ?? 0)}</strong><span>critiques</span></article>
+        <article><strong>${escapeHtml(feeds.jobs ?? 0)}</strong><span>jobs internationaux</span></article>
+        <article><strong>${escapeHtml(feeds.withIssues ?? 0)}</strong><span>flux a controler</span></article>
+        <article><strong>${escapeHtml(displayDate(report.generatedAt))}</strong><span>rapport genere</span></article>
+      `;
+    }
+
+    if (offerQualityIssues) {
+      offerQualityIssues.innerHTML = topIssues.length
+        ? topIssues
+            .slice(0, 8)
+            .map(
+              ([issue, count]) =>
+                `<span><strong>${escapeHtml(count)}</strong> ${escapeHtml(formatQualityIssue(issue))}</span>`,
+            )
+            .join("")
+        : `<span>Aucune anomalie detectee.</span>`;
+    }
+
+    if (offerQualityTable) {
+      offerQualityTable.innerHTML = reviewItems.length
+        ? reviewItems
+            .slice(0, 18)
+            .map((item) => {
+              const issues = Array.isArray(item.issues) ? item.issues : [];
+              return `
+                <tr>
+                  <td>
+                    <strong>${escapeHtml(item.title || "Offre sans titre")}</strong>
+                    <br><span class="muted">${escapeHtml(item.scope)} - ${escapeHtml(item.city || "Localisation a confirmer")}</span>
+                  </td>
+                  <td>${escapeHtml(item.closingDate ? displayDate(item.closingDate) : "Date a confirmer")}</td>
+                  <td>
+                    <div class="quality-tags">
+                      ${issues
+                        .map(
+                          (issue) =>
+                            `<span class="quality-tag ${qualitySeverityClass([issue])}">${escapeHtml(formatQualityIssue(issue.id))}</span>`,
+                        )
+                        .join("")}
+                    </div>
+                  </td>
+                  <td>
+                    ${
+                      item.sourceUrl
+                        ? `<a class="secondary-link" href="${escapeHtml(item.sourceUrl)}" target="_blank" rel="noopener">${escapeHtml(item.sourceName || "Verifier")}</a>`
+                        : escapeHtml(item.sourceName || "Source a confirmer")
+                    }
+                  </td>
+                </tr>
+              `;
+            })
+            .join("")
+        : `<tr><td colspan="4">Aucune offre a revoir.</td></tr>`;
+    }
+  } catch {
+    if (offerQualitySummary) {
+      offerQualitySummary.innerHTML = `<article><strong>Audit</strong><span>rapport indisponible</span></article>`;
+    }
+    if (offerQualityIssues) offerQualityIssues.innerHTML = `<span>Impossible de lire le rapport qualite.</span>`;
+    if (offerQualityTable) offerQualityTable.innerHTML = `<tr><td colspan="4">Rapport indisponible.</td></tr>`;
+  }
+}
+
 async function loadAutomationStatus() {
   if (!automationStatus) return;
 
@@ -1650,6 +1949,29 @@ async function loadInternationalFeeds(options = {}) {
   if (refresh) refreshPublicJobs();
 }
 
+async function loadInternationalBenchmarks(options = {}) {
+  const { refresh = true } = options;
+  if (!benchmarkMetrics && !prioritySourceList && !benchmarkCategoryGrid && !benchmarkJourneyStrip) return;
+  try {
+    const response = await fetch("/api/international-benchmarks");
+    if (!response.ok) throw new Error("Impossible de charger les benchmarks internationaux");
+    internationalBenchmarks = await response.json();
+  } catch {
+    try {
+      const response = await fetch("data/international-benchmarks.json");
+      if (!response.ok) throw new Error("Impossible de charger les benchmarks internationaux");
+      internationalBenchmarks = await response.json();
+    } catch {
+      internationalBenchmarks = null;
+    }
+  }
+
+  if (refresh) {
+    renderInternationalBenchmarks();
+    initVisualEnhancements();
+  }
+}
+
 async function loadEmployerLogos(options = {}) {
   const { refresh = true } = options;
   if (!employerCarousel) return;
@@ -1669,6 +1991,7 @@ async function bootstrapApp() {
     loadEmployerLogos({ refresh: false }),
     loadSources({ refresh: false }),
     loadInternationalFeeds({ refresh: false }),
+    loadInternationalBenchmarks({ refresh: false }),
   ]);
 
   if (sourceGrid || sourceMetrics || strategicSourceSections) {
@@ -1676,10 +1999,15 @@ async function bootstrapApp() {
   }
 
   refreshPublicJobs();
+  renderInternationalBenchmarks();
   initVisualEnhancements();
 
   if (leadTable || eventCount || adminSummary) {
     loadServerAdminData();
+  }
+
+  if (offerQualitySummary || offerQualityIssues || offerQualityTable) {
+    loadOfferQualityReport();
   }
 }
 

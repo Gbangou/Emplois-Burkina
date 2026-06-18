@@ -18,6 +18,7 @@ const AUTOMATION_REPORT_FILE = join(DATA_DIR, "automation-report.json");
 const AUTOMATION_QUALITY_FILE = join(DATA_DIR, "automation-quality.json");
 const DATE_REVIEW_QUEUE_FILE = join(DATA_DIR, "date-review-queue.json");
 const DATE_OVERRIDES_FILE = join(DATA_DIR, "date-overrides.json");
+const OFFER_QUALITY_REPORT_FILE = join(ROOT, "data", "offer-quality-report.json");
 const PORT = Number(process.env.PORT || 8088);
 const NODE_ENV = process.env.NODE_ENV || "development";
 const ADMIN_TOKEN = process.env.JOBFASO_ADMIN_TOKEN || process.env.ADMIN_TOKEN || "";
@@ -373,6 +374,63 @@ function summarizeJobs(jobs) {
     categories: Object.entries(categoryCounts).sort((a, b) => b[1] - a[1]),
     cities: Object.entries(cityCounts).sort((a, b) => b[1] - a[1]),
     sourceCounts: Object.entries(sourceCounts).sort((a, b) => b[1] - a[1]),
+  };
+}
+
+function normalizeBenchmarkName(value = "") {
+  return String(value)
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "");
+}
+
+function findTrackedBenchmarkSource(site = {}, sources = []) {
+  const targetName = normalizeBenchmarkName(site.name);
+  const targetUrl = normalizeBenchmarkName(site.url);
+  if (!targetName && !targetUrl) return null;
+
+  return (
+    sources.find((source) => {
+      const sourceKey = normalizeBenchmarkName(`${source.name || ""} ${source.url || ""}`);
+      return (
+        (targetName && (sourceKey.includes(targetName) || targetName.includes(sourceKey.slice(0, Math.min(14, sourceKey.length))))) ||
+        (targetUrl && sourceKey.includes(targetUrl.slice(0, Math.min(22, targetUrl.length))))
+      );
+    }) || null
+  );
+}
+
+function summarizeInternationalBenchmarks(benchmark = {}, sources = []) {
+  const categories = Array.isArray(benchmark.categories) ? benchmark.categories : [];
+  const enrichedCategories = categories.map((category) => ({
+    ...category,
+    sites: (Array.isArray(category.sites) ? category.sites : []).map((site) => {
+      const tracked = findTrackedBenchmarkSource(site, sources);
+      return {
+        ...site,
+        trackedByJobFaso: Boolean(tracked),
+        sourceId: tracked?.id || "",
+        sourceCollection: tracked?.collection || "",
+      };
+    }),
+  }));
+  const totalSites = enrichedCategories.reduce((sum, category) => sum + category.sites.length, 0);
+  const trackedSites = enrichedCategories.reduce(
+    (sum, category) => sum + category.sites.filter((site) => site.trackedByJobFaso).length,
+    0
+  );
+
+  return {
+    ...benchmark,
+    categories: enrichedCategories,
+    metrics: {
+      categories: enrichedCategories.length,
+      sites: totalSites,
+      prioritySources: Array.isArray(benchmark.prioritySources) ? benchmark.prioritySources.length : 0,
+      trackedByJobFaso: trackedSites,
+      profileFits: Array.isArray(benchmark.profileFit) ? benchmark.profileFit.length : 0,
+    },
   };
 }
 
@@ -789,6 +847,25 @@ async function handleApi(req, res, url) {
       monetization: db.monetization,
       generatedAt: db.generatedAt,
     });
+    return;
+  }
+
+  if (url.pathname === "/api/international-benchmarks" && req.method === "GET") {
+    const [benchmark, sources] = await Promise.all([
+      readJson(join(ROOT, "data", "international-benchmarks.json"), {}),
+      readJson(join(ROOT, "data", "sources.json"), []),
+    ]);
+    sendJson(res, 200, summarizeInternationalBenchmarks(benchmark, sources));
+    return;
+  }
+
+  if (url.pathname === "/api/quality/offers" && req.method === "GET") {
+    const report = await readJson(OFFER_QUALITY_REPORT_FILE, null);
+    if (!report) {
+      sendJson(res, 404, { error: "Rapport de verification des offres indisponible. Executez npm run audit:offers." });
+      return;
+    }
+    sendJson(res, 200, report);
     return;
   }
 

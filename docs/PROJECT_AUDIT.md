@@ -1,6 +1,6 @@
 # Audit projet JobFaso
 
-Genere le : 2026-06-18T10:47:59.839Z
+Genere le : 2026-06-18T16:13:05.347Z
 
 Score : 100/100
 Statut : passed
@@ -10,7 +10,7 @@ Statut : passed
 - Checks critiques en echec : 0
 - Warnings : 0
 - Fichiers verifies : 23
-- Routes API attendues : 13
+- Routes API attendues : 14
 - Scripts npm attendus : 11
 
 ## Checks
@@ -55,6 +55,7 @@ Statut : passed
 | critical | route:/api/platform | OK | Route API attendue | Ajouter ou documenter la route. |
 | critical | route:/api/db/status | OK | Route API attendue | Ajouter ou documenter la route. |
 | critical | route:/api/jobs | OK | Route API attendue | Ajouter ou documenter la route. |
+| critical | route:/api/quality/offers | OK | Route API attendue | Ajouter ou documenter la route. |
 | critical | route:/api/leads | OK | Route API attendue | Ajouter ou documenter la route. |
 | critical | route:/api/events | OK | Route API attendue | Ajouter ou documenter la route. |
 | critical | route:/api/admin/db/sqlite/sync | OK | Route API attendue | Ajouter ou documenter la route. |
