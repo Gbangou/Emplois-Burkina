@@ -1614,11 +1614,17 @@ function setQuickCategory(category) {
   });
 }
 
+function syncQuickCategoryFromType(value = "") {
+  const hasMatchingButton = [...filterButtons].some((button) => (button.dataset.category || "") === value);
+  setQuickCategory(hasMatchingButton ? value : "");
+}
+
 function applyUrlSearchParams() {
   const params = new URLSearchParams(window.location.search);
   const query = params.get("q") || params.get("search") || "";
   const category = params.get("category") || "";
   const city = params.get("city") || "";
+  const source = params.get("source") || "";
   const focus = params.get("focus") || "";
 
   if (query && searchInput) searchInput.value = query;
@@ -1637,6 +1643,30 @@ function applyUrlSearchParams() {
   if (city && cityFilter && [...cityFilter.options].some((option) => option.value === city || option.textContent === city)) {
     cityFilter.value = city;
   }
+  if (source && sourceFilter && [...sourceFilter.options].some((option) => option.value === source || option.textContent === source)) {
+    sourceFilter.value = source;
+  }
+}
+
+function syncSearchUrl() {
+  if (!jobsList || !window.history?.replaceState) return;
+  const path = window.location.pathname.split("/").pop() || "index.html";
+  if (path !== "jobs.html") return;
+
+  const params = new URLSearchParams();
+  const query = searchInput?.value.trim() || "";
+  const city = cityFilter?.value || "";
+  const type = typeFilter?.value || "";
+  const source = sourceFilter?.value || "";
+
+  if (query) params.set("q", query);
+  if (city) params.set("city", city);
+  if (source) params.set("source", source);
+  if (activeCategory) params.set("category", activeCategory);
+  else if (type) params.set("category", type);
+
+  const nextUrl = params.toString() ? `jobs.html?${params.toString()}` : "jobs.html";
+  window.history.replaceState({}, "", nextUrl);
 }
 
 function applyExplorerSearch({ type, value }) {
@@ -1660,12 +1690,15 @@ function applyExplorerSearch({ type, value }) {
 
   resetJobsPage();
   recordEvent("employment_explorer_search", { label: term, type });
+  syncSearchUrl();
   renderJobs();
   document.querySelector("#offres")?.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 function applyPortalSearch({ query = "", focus = "", category = "", type = "" }) {
   if (searchInput) searchInput.value = query;
+  if (cityFilter) cityFilter.value = "";
+  if (sourceFilter) sourceFilter.value = "";
 
   const resolvedType = focus === "onu-consultance" ? SPECIAL_JOB_FILTER_LABEL : type;
   const resolvedCategory = focus === "onu-consultance" ? SPECIAL_JOB_FILTER_LABEL : category;
@@ -1686,8 +1719,18 @@ function applyPortalSearch({ query = "", focus = "", category = "", type = "" })
     label: query || resolvedCategory || focus || "shortcut",
     focus,
   });
+  syncSearchUrl();
   renderJobs();
   document.querySelector("#offres")?.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function updateFilterCounts() {
+  if (!filterButtons.length) return;
+  filterButtons.forEach((button) => {
+    const category = button.dataset.category || "";
+    const count = category ? jobs.filter((job) => matchesSpecialJobFilter(job, category) || job.category === category).length : jobs.length;
+    button.dataset.count = String(count);
+  });
 }
 
 function renderTaxonomy(container, entries, baseHref) {
@@ -1711,6 +1754,10 @@ function initVisualEnhancements() {
   initInstitutionFeedControls();
   if (!("IntersectionObserver" in window)) return;
   const selectors = [
+    ".blueprint-card",
+    ".journey-photo",
+    ".journey-steps article",
+    ".matching-grid article",
     ".portal-stats article",
     ".trust-strip article",
     ".job-card",
@@ -2165,6 +2212,22 @@ function getFilteredJobs() {
     .map(({ job }) => job);
 }
 
+function getVisibleMatchScore(job) {
+  const query = searchInput?.value.trim() || "";
+  const type = typeFilter?.value || activeCategory || "";
+  const city = cityFilter?.value || "";
+  let score = query ? Math.min(100, 45 + getJobSearchScore(job, normalize(query)) * 3) : 62;
+  if (type && (matchesSpecialJobFilter(job, type) || normalize(job.type).includes(normalize(type)) || normalize(job.category).includes(normalize(type)))) {
+    score += 14;
+  }
+  if (city && (job.city === city || job.city === "Tout le Burkina" || job.city === "Burkina Faso")) {
+    score += 10;
+  }
+  if (job.closingDate && !isExpiredJob(job)) score += 6;
+  if (getSourceRecord(job.sourceName)) score += 4;
+  return Math.max(48, Math.min(99, Math.round(score)));
+}
+
 function renderJobCard(job, options = {}) {
   const isActive = job.id === activeJobId;
   const isSaved = savedJobs.has(job.id);
@@ -2175,6 +2238,7 @@ function renderJobCard(job, options = {}) {
   const duplicateAttrs = options.duplicate ? ` aria-hidden="true"` : "";
   const duplicateInteractiveAttrs = options.duplicate ? ` tabindex="-1"` : "";
   const displayType = normalize(job.type) === "a verifier" ? "" : job.type;
+  const matchScore = getVisibleMatchScore(job);
   const metaPills = [
     displayType ? `<span class="pill">${escapeHtml(displayType)}</span>` : "",
     job.closingDate ? `<span class="pill deadline-pill">Cloture : ${escapeHtml(formatJobDate(job.closingDate))}</span>` : "",
@@ -2192,6 +2256,10 @@ function renderJobCard(job, options = {}) {
           <p class="eyebrow">${escapeHtml(job.category || "Autre")}</p>
           <h3>${escapeHtml(job.title)}</h3>
           <p class="muted">${escapeHtml(job.company || "Organisation non precisee")} - ${escapeHtml(job.city || "Burkina Faso")}</p>
+        </div>
+        <div class="match-score" aria-label="Score de pertinence">
+          <strong>${escapeHtml(matchScore)}%</strong>
+          <span>match</span>
         </div>
       </div>
       ${renderDeadlineStrip(job)}
@@ -2236,6 +2304,7 @@ function renderDetail(job) {
     `Bonjour JobFaso, je veux recevoir les alertes pour: ${job.title} (${job.sourceName || "source"})`
   );
   const sourceDescriptor = getJobSourceDescriptor(job);
+  const matchScore = getVisibleMatchScore(job);
   const openingDateDetail = formatJobDate(job.openingDate, "Non communiquee par la source");
   const sourceLink =
     job.sourceUrl && job.sourceUrl !== "#"
@@ -2256,6 +2325,7 @@ function renderDetail(job) {
       ${renderDeadlineStrip(job)}
       ${renderTimeline(job)}
       <dl class="detail-list">
+        <div><dt>Score de matching</dt><dd>${escapeHtml(matchScore)}% selon la recherche actuelle</dd></div>
         <div><dt>Ville</dt><dd>${escapeHtml(job.city || "Burkina Faso")}</dd></div>
         <div><dt>Date d'ouverture</dt><dd>${escapeHtml(openingDateDetail)}</dd></div>
         <div><dt>Date de cloture</dt><dd>${escapeHtml(formatJobDate(job.closingDate, "Consulter la source"))}</dd></div>
@@ -2420,6 +2490,7 @@ function renderJobs() {
 
   if (jobCount) jobCount.textContent = jobs.length;
   if (sourceCount) sourceCount.textContent = getVerifiedSourceCount(sources.length ? sources : getSources()) || sources.length || getSources().length;
+  updateFilterCounts();
   updateSavedStorage();
 
   if (resultsSummary) {
@@ -2430,7 +2501,8 @@ function renderJobs() {
     const datedCount = filtered.filter((job) => job.closingDate).length;
     const openingConfirmedCount = filtered.filter((job) => job.openingDateConfirmed).length;
     const trustedCount = filtered.filter((job) => ["official_link", "review_required"].includes(getSourceRecord(job.sourceName)?.collection)).length;
-    resultsSummary.textContent = `${filtered.length} ${label} sur ${jobs.length}.${pageLabel} ${openingConfirmedCount} avec date d'ouverture confirmee. ${datedCount} avec date de cloture confirmee. ${trustedCount} issues de liens officiels ou de sources suivies.`;
+    const queryLabel = searchInput?.value.trim() ? ` Recherche : "${searchInput.value.trim()}".` : "";
+    resultsSummary.textContent = `${filtered.length} ${label} sur ${jobs.length}.${pageLabel}${queryLabel} ${openingConfirmedCount} avec date d'ouverture confirmee. ${datedCount} avec date de cloture confirmee. ${trustedCount} issues de liens officiels ou de sources suivies.`;
   }
 
   jobsList.innerHTML = visibleJobs.length
@@ -3242,12 +3314,14 @@ async function loadEmployerLogos() {
 if (quickSearch) {
   quickSearch.addEventListener("submit", (event) => {
     event.preventDefault();
+    syncQuickCategoryFromType(typeFilter?.value || activeCategory || "");
     recordEvent("quick_search", {
       label: searchInput?.value || "recherche accueil",
       city: cityFilter?.value || "",
       category: activeCategory,
     });
     resetJobsPage();
+    syncSearchUrl();
     renderJobs();
     document.querySelector("#offres")?.scrollIntoView({ behavior: "smooth" });
   });
@@ -3261,13 +3335,17 @@ document.addEventListener("click", (event) => {
   const city = button.dataset.searchCity || "";
   const type = button.dataset.searchType || "";
 
-  if (searchInput && query) searchInput.value = query;
-  if (cityFilter && city && [...cityFilter.options].some((option) => option.value === city || option.textContent === city)) {
-    cityFilter.value = city;
+  if (searchInput) searchInput.value = query;
+  if (cityFilter) {
+    cityFilter.value =
+      city && [...cityFilter.options].some((option) => option.value === city || option.textContent === city) ? city : "";
   }
-  if (typeFilter && type && [...typeFilter.options].some((option) => option.value === type || option.textContent === type)) {
-    typeFilter.value = type;
+  if (sourceFilter) sourceFilter.value = "";
+  if (typeFilter) {
+    typeFilter.value =
+      type && [...typeFilter.options].some((option) => option.value === type || option.textContent === type) ? type : "";
   }
+  setQuickCategory(type || "");
 
   recordEvent("search_chip_clicked", {
     label: query || type || city || "preset",
@@ -3275,6 +3353,7 @@ document.addEventListener("click", (event) => {
     type,
   });
   resetJobsPage();
+  syncSearchUrl();
   renderJobs();
   document.querySelector("#offres")?.scrollIntoView({ behavior: "smooth" });
 });
@@ -3289,7 +3368,9 @@ document.addEventListener("click", (event) => {
       label: control.id || control.name || "filtre",
       value: control.type === "checkbox" ? String(control.checked) : control.value,
     });
+    if (control === typeFilter) syncQuickCategoryFromType(control.value);
     resetJobsPage();
+    syncSearchUrl();
     scheduleRenderJobs(true);
   });
 });
@@ -3299,8 +3380,10 @@ filterButtons.forEach((button) => {
     filterButtons.forEach((item) => item.classList.remove("active"));
     button.classList.add("active");
     activeCategory = button.dataset.category || "";
+    if (typeFilter) typeFilter.value = activeCategory;
     recordEvent("category_filter_clicked", { label: activeCategory || "Toutes" });
     resetJobsPage();
+    syncSearchUrl();
     scheduleRenderJobs(true);
   });
 });
@@ -3325,6 +3408,7 @@ employmentExplorer?.addEventListener("click", (event) => {
     if (sourceFilter) sourceFilter.value = "";
     setQuickCategory("");
     resetJobsPage();
+    syncSearchUrl();
     recordEvent("employment_explorer_reset", { label: "Tous les tags" });
     renderJobs();
     return;

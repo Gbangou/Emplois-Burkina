@@ -1,8 +1,8 @@
 # Audit des liens JobFaso
 
-Genere le : 2026-06-17T17:08:16.893Z
+Genere le : 2026-06-23T14:39:34.941Z
 
-- Base locale : http://127.0.0.1:8088
+- Base locale : http://127.0.0.1:8136
 - Fichiers analyses : 52
 - Liens uniques : 168
 - Liens internes casses : 0

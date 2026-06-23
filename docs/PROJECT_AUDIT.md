@@ -1,6 +1,6 @@
 # Audit projet JobFaso
 
-Genere le : 2026-06-18T19:07:46.005Z
+Genere le : 2026-06-23T14:39:02.507Z
 
 Score : 100/100
 Statut : passed
