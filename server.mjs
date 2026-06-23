@@ -16,6 +16,7 @@ const SQLITE_DB_FILE = join(DATA_DIR, "jobfaso.sqlite");
 const AUTOMATION_STATE_FILE = join(DATA_DIR, "automation-state.json");
 const AUTOMATION_REPORT_FILE = join(DATA_DIR, "automation-report.json");
 const AUTOMATION_QUALITY_FILE = join(DATA_DIR, "automation-quality.json");
+const OFFER_QUALITY_REPORT_FILE = join(DATA_DIR, "offer-quality-report.json");
 const DATE_REVIEW_QUEUE_FILE = join(DATA_DIR, "date-review-queue.json");
 const DATE_OVERRIDES_FILE = join(DATA_DIR, "date-overrides.json");
 const PORT = Number(process.env.PORT || 8088);
@@ -296,6 +297,16 @@ function isExpiredJob(job) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   return target < today;
+}
+
+function hasUsableClosingDate(job) {
+  if (!job?.closingDate) return false;
+  const target = new Date(`${String(job.closingDate).slice(0, 10)}T23:59:59`);
+  return !Number.isNaN(target.getTime());
+}
+
+function isPublicActiveJob(job) {
+  return job?.status !== "rejected" && hasUsableClosingDate(job) && !isExpiredJob(job);
 }
 
 function publicConfig(config) {
@@ -726,7 +737,7 @@ async function handleApi(req, res, url) {
 
   if (url.pathname === "/api/platform" && req.method === "GET") {
     const db = await readLocalDb();
-    const publicJobs = db.jobs.filter((job) => job.status !== "rejected");
+    const publicJobs = db.jobs.filter((job) => isPublicActiveJob(job));
     const stats = summarizeJobs(publicJobs);
     const featuredJobs = publicJobs
       .slice()
@@ -776,6 +787,7 @@ async function handleApi(req, res, url) {
     const status = cleanText(url.searchParams.get("status") || "", 40);
     const includeRejected = url.searchParams.get("includeRejected") === "true";
     const includeExpired = url.searchParams.get("includeExpired") === "true";
+    const includeUndated = url.searchParams.get("includeUndated") === "true";
     const filtered = jobs.filter((job) => {
       const haystack = [job.title, job.company, job.city, job.category, job.type, job.sourceName, ...(job.tags || [])]
         .join(" ")
@@ -783,6 +795,7 @@ async function handleApi(req, res, url) {
       return (
         (includeRejected || job.status !== "rejected") &&
         (includeExpired || !isExpiredJob(job)) &&
+        (includeUndated || hasUsableClosingDate(job)) &&
         (!status || job.status === status) &&
         (!query || haystack.includes(query)) &&
         (!city || job.city === city) &&
@@ -793,7 +806,7 @@ async function handleApi(req, res, url) {
     sendJson(res, 200, {
       jobs: filtered,
       total: jobs.length,
-      active: jobs.filter((job) => !isExpiredJob(job) && job.status !== "rejected").length,
+      active: jobs.filter((job) => isPublicActiveJob(job)).length,
       sources: [...new Set(jobs.map((job) => job.sourceName).filter(Boolean))].length,
       withClosingDate: jobs.filter((job) => job.closingDate).length,
       expired: jobs.filter((job) => isExpiredJob(job)).length,
@@ -803,7 +816,7 @@ async function handleApi(req, res, url) {
 
   if (url.pathname === "/api/admin/automation/status" && req.method === "GET") {
     if (!requireAdmin(req, res)) return;
-    const [db, sources, rawItems, events, automationState, automationReport, automationQuality, dateReviewQueue] = await Promise.all([
+    const [db, sources, rawItems, events, automationState, automationReport, automationQuality, offerQualityReport, dateReviewQueue] = await Promise.all([
       readLocalDb(),
       readJson(join(ROOT, "data", "sources.json"), []),
       readJson(join(ROOT, "data", "raw-items.json"), []),
@@ -811,6 +824,7 @@ async function handleApi(req, res, url) {
       readJson(AUTOMATION_STATE_FILE, {}),
       readJson(AUTOMATION_REPORT_FILE, {}),
       readJson(AUTOMATION_QUALITY_FILE, {}),
+      readJson(OFFER_QUALITY_REPORT_FILE, {}),
       readJson(DATE_REVIEW_QUEUE_FILE, []),
     ]);
     const jobs = db.jobs || [];
@@ -828,6 +842,7 @@ async function handleApi(req, res, url) {
       automationState,
       automationReport,
       automationQuality,
+      offerQualityReport,
       dateReviewQueue: dateReviewQueue.slice(0, 30),
       latestEvents: events.slice(0, 10),
       sqlite: await sqliteStatus(),

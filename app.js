@@ -3026,6 +3026,8 @@ async function loadAutomationStatus() {
     const state = status.automationState || {};
     const report = status.automationReport || {};
     const quality = status.automationQuality || report.quality || {};
+    const offerQuality = status.offerQualityReport || {};
+    const offerTotals = offerQuality.totals || {};
     const totals = report.totals || {};
     const duration = state.durationMs ? `${Math.round(state.durationMs / 1000)}s` : "-";
     automationStatus.innerHTML = `
@@ -3044,6 +3046,10 @@ async function loadAutomationStatus() {
       <article><strong>${escapeHtml(quality.score ?? "-")}/100</strong><span>score qualite</span></article>
       <article><strong>${escapeHtml(quality.failedCritical ?? "-")}</strong><span>checks critiques</span></article>
       <article><strong>${escapeHtml(quality.failedWarnings ?? "-")}</strong><span>warnings qualite</span></article>
+      <article><strong>${escapeHtml(offerQuality.score ?? "-")}/100</strong><span>score offres</span></article>
+      <article><strong>${escapeHtml(offerTotals.publishable ?? "-")}</strong><span>offres publiables</span></article>
+      <article><strong>${escapeHtml(offerTotals.expired ?? "-")}</strong><span>offres expirees</span></article>
+      <article><strong>${escapeHtml(offerTotals.closingCoveragePercent ?? "-")}%</strong><span>couverture deadlines</span></article>
     `;
     if (state.lastSuccessAt) {
       automationStatus.insertAdjacentHTML(
@@ -3245,7 +3251,7 @@ function scheduleRenderJobs(immediate = false) {
 async function loadJobs() {
   if (!jobsList && !adminJobsList) return;
   try {
-    const adminQuery = adminJobsList ? "?includeRejected=true&includeExpired=true" : "";
+    const adminQuery = adminJobsList ? "?includeRejected=true&includeExpired=true&includeUndated=true" : "";
     const apiResponse = await fetch(`/api/jobs${adminQuery}`, { cache: "no-store" });
     if (apiResponse.ok) {
       const payload = await apiResponse.json();

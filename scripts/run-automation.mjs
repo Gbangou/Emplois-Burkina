@@ -20,6 +20,7 @@ const steps = [
   ["Synchronisation SQLite", "scripts/sync-sqlite-db.mjs"],
   ["Preparation reseaux sociaux", "scripts/generate-social-queue.mjs"],
   ["File revue dates", "scripts/generate-date-review-queue.mjs"],
+  ["Audit verification offres", "scripts/audit-offers.mjs"],
   ["Quality gate", "scripts/automation-quality-gate.mjs"],
   ["Rapport automation", "scripts/generate-automation-report.mjs"],
 ];
