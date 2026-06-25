@@ -396,7 +396,23 @@ manuelle, la production doit utiliser :
   reussi dans la fenetre attendue ;
 - `npm run revenue:autopilot` dans le pipeline pour produire les actions
   commerciales prioritaires apres chaque collecte.
+- `npm run ads:autopilot` dans le pipeline pour piloter le trafic naturel,
+  AdSense, display direct, affiliation utile et les contenus evergreen.
 
 SQLite/JSON sont acceptables en local et pre-lancement, mais insuffisants pour
 un produit durable : ils ne remplacent pas une base production sauvegardee,
 surveillee et partagee entre API, web, automation et paiements.
+
+## Strategie trafic et publicite
+
+La croissance doit d'abord venir du contenu et de la distribution automatique :
+
+- pages offres, villes, categories, recherches et guides longs indexables ;
+- schema.org `JobPosting`, `Article`, `ItemList`, `SearchAction` et sitemap ;
+- Search Console, Bing Webmaster Tools, IndexNow, RSS, JSON Feed et `llms.txt` ;
+- posts sociaux avec UTM vers les pages guides et offres ;
+- AdSense apres validation, puis emplacements display directs sur pages longues ;
+- affiliation utile et marquee vers formations, outils CV ou services pertinents.
+
+Ne jamais pousser les candidats a cliquer sur les publicites, ne jamais cacher
+une annonce en bouton de candidature, et garder l'acces aux offres gratuit.

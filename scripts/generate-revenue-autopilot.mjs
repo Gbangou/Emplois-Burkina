@@ -213,15 +213,32 @@ ${report.requiredIntegrations.map((item) => `- ${item}`).join("\n")}
 
 async function main() {
   await mkdir(GROWTH_DIR, { recursive: true });
-  const [jobs, rateCard, intelligence, visibility] = await Promise.all([
+  const [jobs, rateCard, intelligence, visibility, adMonetization] = await Promise.all([
     readJson(new URL("curated-jobs.json", DATA_DIR), []),
     readJson(new URL("rate-card.json", DATA_DIR), []),
     readJson(new URL("growth/market-intelligence.json", DATA_DIR), {}),
     readJson(new URL("growth/visibility-report.json", DATA_DIR), {}),
+    readJson(new URL("growth/ad-monetization-autopilot.json", DATA_DIR), {}),
   ]);
 
   const publishedJobs = jobs.filter((job) => job.status !== "rejected");
   const report = buildRevenuePlan({ jobs: publishedJobs, rateCard, intelligence, visibility });
+
+  if (adMonetization.estimates?.totalTrafficRevenueFcfa) {
+    report.plan.unshift({
+      id: "adsense_display_affiliate",
+      channel: "AdSense, display et affiliation utile",
+      offer: "Pages guides/offres/villes monetisees par trafic, annonces automatiques et liens utiles marques",
+      targetCustomers: "Google AdSense, reseaux publicitaires, partenaires formation/outils utiles",
+      targetUnits: 1,
+      priceFcfa: adMonetization.estimates.totalTrafficRevenueFcfa || 0,
+      closeRate: 1,
+      trigger: `${adMonetization.estimates.usefulPages || 0} pages utiles indexables.`,
+      nextAction: "Configurer AdSense, ads.txt, Search Console, Bing Webmaster Tools et analytics revenu.",
+    });
+    report.estimatedMonthlyRevenueFcfa += adMonetization.estimates.totalTrafficRevenueFcfa;
+    report.revenueGapFcfa = Math.max(0, report.revenueTargetFcfa - report.estimatedMonthlyRevenueFcfa);
+  }
 
   await writeFile(new URL("revenue-autopilot.json", GROWTH_DIR), JSON.stringify(report, null, 2), "utf8");
   await writeFile(new URL("REVENUE_AUTOPILOT.md", DOCS_DIR), buildMarkdown(report), "utf8");

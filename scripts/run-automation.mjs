@@ -16,6 +16,7 @@ const steps = [
   ["Generation croissance", "scripts/generate-growth-assets.mjs"],
   ["Moteur visibilite", "scripts/generate-visibility-engine.mjs"],
   ["Autopilote revenu", "scripts/generate-revenue-autopilot.mjs"],
+  ["Autopilote trafic et AdSense", "scripts/generate-ad-monetization-autopilot.mjs"],
   ["Export PostgreSQL", "scripts/export-postgres-seed.mjs"],
   ["Synchronisation DB locale", "scripts/sync-local-db.mjs"],
   ["Synchronisation SQLite", "scripts/sync-sqlite-db.mjs"],

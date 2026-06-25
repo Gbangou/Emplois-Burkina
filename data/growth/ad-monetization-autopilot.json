@@ -1,0 +1,241 @@
+{
+  "generatedAt": "2026-06-25T13:51:42.541Z",
+  "estimates": {
+    "usefulPages": 104,
+    "monthlyPageviews": 18720,
+    "rpmFcfa": 650,
+    "adsenseMonthlyFcfa": 12168,
+    "affiliateMonthlyFcfa": 23400,
+    "directDisplayMonthlyFcfa": 50000,
+    "totalTrafficRevenueFcfa": 85568
+  },
+  "distribution": [
+    {
+      "channel": "Google Search",
+      "automation": "Sitemap, schema.org JobPosting/Article, Search Console, contenu evergreen et Core Web Vitals.",
+      "nextAction": "Soumettre https://emplois-burkina.com/sitemap.xml et surveiller pages indexees, impressions et CTR.",
+      "revenueImpact": "Source principale pour AdSense durable."
+    },
+    {
+      "channel": "Bing, Yahoo, DuckDuckGo, Yandex",
+      "automation": "IndexNow + sitemap + robots propre.",
+      "nextAction": "Soumettre 104 URLs via indexnow-urls.txt apres chaque generation.",
+      "revenueImpact": "Trafic additionnel peu couteux, utile pour diversifier."
+    },
+    {
+      "channel": "Google Discover et actualites emploi",
+      "automation": "Titres clairs, images OG, guides utiles, flux RSS/JSON, pages fraiches.",
+      "nextAction": "Publier des guides longs et des syntheses hebdomadaires non dupliquees.",
+      "revenueImpact": "Pics de trafic compatibles display si contenu original."
+    },
+    {
+      "channel": "Facebook, LinkedIn, WhatsApp, Telegram",
+      "automation": "File de posts, digest, liens UTM, opt-in et desinscription.",
+      "nextAction": "Programmer 76 posts utiles avec liens vers pages guides/offres.",
+      "revenueImpact": "Amene l'audience vers les pages monetisees sans faire payer les lecteurs."
+    },
+    {
+      "channel": "Crawlers IA et assistants",
+      "automation": "llms.txt, flux structures, pages FAQ et donnees propres.",
+      "nextAction": "Garder llms.txt a jour et creer des pages de reponses directes.",
+      "revenueImpact": "Visibilite de marque, backlinks et citations indirectes."
+    }
+  ],
+  "contentClusters": [
+    {
+      "id": "concours-publics",
+      "theme": "Concours, resultats et dossiers administratifs",
+      "searchIntent": "Requetes permanentes autour des concours, communiques, resultats, dossiers et dates.",
+      "contentToCreate": [
+        "Calendrier concours Burkina Faso par mois",
+        "Documents a fournir pour concours au Burkina Faso",
+        "Comment verifier un communique officiel de concours"
+      ],
+      "monetization": "AdSense display + liens utiles sponsorisables par formations de preparation."
+    },
+    {
+      "id": "cv-lettre-entretien",
+      "theme": "CV, lettre de motivation et entretien",
+      "searchIntent": "Trafic evergreen candidat avec fort volume et faible dependance aux offres du jour.",
+      "contentToCreate": [
+        "Modele CV Burkina Faso gratuit",
+        "Exemple lettre de motivation ONG",
+        "Questions entretien emploi au Burkina Faso"
+      ],
+      "monetization": "AdSense + affiliation outils CV + sponsors formation/coaching clairement marques."
+    },
+    {
+      "id": "metiers-salaires",
+      "theme": "Metiers, salaires et formations",
+      "searchIntent": "Recherche d'orientation, reconversion, salaires et formations locales.",
+      "contentToCreate": [
+        "Salaire comptable Burkina Faso",
+        "Metiers qui recrutent a Ouagadougou",
+        "Formations courtes pour trouver du travail"
+      ],
+      "monetization": "AdSense + affiliation formation + rapports agreges pour institutions."
+    },
+    {
+      "id": "categorie-bureau",
+      "theme": "Guide complet Bureau",
+      "searchIntent": "21 offres actuelles donnent un angle naturel pour capter les recherches Bureau.",
+      "contentToCreate": [
+        "Comment trouver un emploi Bureau au Burkina Faso",
+        "Competences demandees en Bureau",
+        "Sources fiables pour offres Bureau"
+      ],
+      "monetization": "AdSense sur guide long + sponsor categorie si un partenaire pertinent existe."
+    },
+    {
+      "id": "categorie-ong",
+      "theme": "Guide complet ONG",
+      "searchIntent": "12 offres actuelles donnent un angle naturel pour capter les recherches ONG.",
+      "contentToCreate": [
+        "Comment trouver un emploi ONG au Burkina Faso",
+        "Competences demandees en ONG",
+        "Sources fiables pour offres ONG"
+      ],
+      "monetization": "AdSense sur guide long + sponsor categorie si un partenaire pertinent existe."
+    },
+    {
+      "id": "categorie-finance-et-administration",
+      "theme": "Guide complet Finance et administration",
+      "searchIntent": "5 offres actuelles donnent un angle naturel pour capter les recherches Finance et administration.",
+      "contentToCreate": [
+        "Comment trouver un emploi Finance et administration au Burkina Faso",
+        "Competences demandees en Finance et administration",
+        "Sources fiables pour offres Finance et administration"
+      ],
+      "monetization": "AdSense sur guide long + sponsor categorie si un partenaire pertinent existe."
+    },
+    {
+      "id": "categorie-informatique-data-et-systemes",
+      "theme": "Guide complet Informatique, data et systemes",
+      "searchIntent": "4 offres actuelles donnent un angle naturel pour capter les recherches Informatique, data et systemes.",
+      "contentToCreate": [
+        "Comment trouver un emploi Informatique, data et systemes au Burkina Faso",
+        "Competences demandees en Informatique, data et systemes",
+        "Sources fiables pour offres Informatique, data et systemes"
+      ],
+      "monetization": "AdSense sur guide long + sponsor categorie si un partenaire pertinent existe."
+    },
+    {
+      "id": "categorie-metiers-terrain-et-informels",
+      "theme": "Guide complet Metiers terrain et informels",
+      "searchIntent": "4 offres actuelles donnent un angle naturel pour capter les recherches Metiers terrain et informels.",
+      "contentToCreate": [
+        "Comment trouver un emploi Metiers terrain et informels au Burkina Faso",
+        "Competences demandees en Metiers terrain et informels",
+        "Sources fiables pour offres Metiers terrain et informels"
+      ],
+      "monetization": "AdSense sur guide long + sponsor categorie si un partenaire pertinent existe."
+    },
+    {
+      "id": "categorie-stage",
+      "theme": "Guide complet Stage",
+      "searchIntent": "4 offres actuelles donnent un angle naturel pour capter les recherches Stage.",
+      "contentToCreate": [
+        "Comment trouver un emploi Stage au Burkina Faso",
+        "Competences demandees en Stage",
+        "Sources fiables pour offres Stage"
+      ],
+      "monetization": "AdSense sur guide long + sponsor categorie si un partenaire pertinent existe."
+    },
+    {
+      "id": "categorie-transport-et-logistique",
+      "theme": "Guide complet Transport et logistique",
+      "searchIntent": "3 offres actuelles donnent un angle naturel pour capter les recherches Transport et logistique.",
+      "contentToCreate": [
+        "Comment trouver un emploi Transport et logistique au Burkina Faso",
+        "Competences demandees en Transport et logistique",
+        "Sources fiables pour offres Transport et logistique"
+      ],
+      "monetization": "AdSense sur guide long + sponsor categorie si un partenaire pertinent existe."
+    },
+    {
+      "id": "categorie-commerce-et-vente",
+      "theme": "Guide complet Commerce et vente",
+      "searchIntent": "2 offres actuelles donnent un angle naturel pour capter les recherches Commerce et vente.",
+      "contentToCreate": [
+        "Comment trouver un emploi Commerce et vente au Burkina Faso",
+        "Competences demandees en Commerce et vente",
+        "Sources fiables pour offres Commerce et vente"
+      ],
+      "monetization": "AdSense sur guide long + sponsor categorie si un partenaire pertinent existe."
+    },
+    {
+      "id": "ville-burkina-faso",
+      "theme": "Emploi et opportunites a Burkina Faso",
+      "searchIntent": "27 offres actuelles soutiennent une page locale indexable.",
+      "contentToCreate": [
+        "Offres d'emploi a Burkina Faso",
+        "Entreprises et ONG qui recrutent a Burkina Faso",
+        "Alertes emploi Burkina Faso"
+      ],
+      "monetization": "AdSense local + partenaires utiles locaux, sans facturer les candidats."
+    },
+    {
+      "id": "ville-ouagadougou",
+      "theme": "Emploi et opportunites a Ouagadougou",
+      "searchIntent": "18 offres actuelles soutiennent une page locale indexable.",
+      "contentToCreate": [
+        "Offres d'emploi a Ouagadougou",
+        "Entreprises et ONG qui recrutent a Ouagadougou",
+        "Alertes emploi Ouagadougou"
+      ],
+      "monetization": "AdSense local + partenaires utiles locaux, sans facturer les candidats."
+    },
+    {
+      "id": "ville-rdc",
+      "theme": "Emploi et opportunites a RDC",
+      "searchIntent": "4 offres actuelles soutiennent une page locale indexable.",
+      "contentToCreate": [
+        "Offres d'emploi a RDC",
+        "Entreprises et ONG qui recrutent a RDC",
+        "Alertes emploi RDC"
+      ],
+      "monetization": "AdSense local + partenaires utiles locaux, sans facturer les candidats."
+    },
+    {
+      "id": "ville-senegal",
+      "theme": "Emploi et opportunites a Senegal",
+      "searchIntent": "3 offres actuelles soutiennent une page locale indexable.",
+      "contentToCreate": [
+        "Offres d'emploi a Senegal",
+        "Entreprises et ONG qui recrutent a Senegal",
+        "Alertes emploi Senegal"
+      ],
+      "monetization": "AdSense local + partenaires utiles locaux, sans facturer les candidats."
+    },
+    {
+      "id": "ville-bagassi",
+      "theme": "Emploi et opportunites a Bagassi",
+      "searchIntent": "1 offre actuelle soutiennent une page locale indexable.",
+      "contentToCreate": [
+        "Offres d'emploi a Bagassi",
+        "Entreprises et ONG qui recrutent a Bagassi",
+        "Alertes emploi Bagassi"
+      ],
+      "monetization": "AdSense local + partenaires utiles locaux, sans facturer les candidats."
+    },
+    {
+      "id": "ville-ethiopie",
+      "theme": "Emploi et opportunites a Ethiopie",
+      "searchIntent": "1 offre actuelle soutiennent une page locale indexable.",
+      "contentToCreate": [
+        "Offres d'emploi a Ethiopie",
+        "Entreprises et ONG qui recrutent a Ethiopie",
+        "Alertes emploi Ethiopie"
+      ],
+      "monetization": "AdSense local + partenaires utiles locaux, sans facturer les candidats."
+    }
+  ],
+  "requirements": [
+    "AdSense approuve et ads.txt configure",
+    "Search Console et Bing Webmaster Tools connectes",
+    "Sitemap soumis automatiquement",
+    "Posts sociaux avec UTM",
+    "Analytics trafic/revenu",
+    "Contenu original long et renouvelable"
+  ]
+}

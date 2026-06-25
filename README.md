@@ -182,6 +182,17 @@ Ce rapport genere `data/growth/revenue-autopilot.json` et
 `docs/REVENUE_AUTOPILOT.md` pour prioriser les canaux a vendre, les sponsors,
 les offres recruteurs, les services candidats et les rapports marche.
 
+Autopilote trafic, referencement et AdSense :
+
+```bash
+npm run ads:autopilot
+```
+
+Ce rapport genere `data/growth/ad-monetization-autopilot.json` et
+`docs/TRAFFIC_ADSENSE_AUTOPILOT.md` pour prioriser le trafic naturel, les
+clusters de contenu evergreen, les moteurs de recherche, les reseaux sociaux,
+AdSense, display direct et affiliation utile.
+
 Fichiers publics importants :
 
 - `sitemap.xml` pour Google, Bing, Yandex et autres moteurs.
@@ -227,6 +238,7 @@ Le script cree `indexnow-key.txt` localement et soumet les URLs de
 - `docs/IMPLEMENTATION_STEPS.md`
 - `docs/EXTRAORDINARY_PRODUCT_BLUEPRINT.md`
 - `docs/REVENUE_AUTOPILOT.md`
+- `docs/TRAFFIC_ADSENSE_AUTOPILOT.md`
 
 ## Pre-lancement commercial
 
