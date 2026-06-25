@@ -1,18 +1,15 @@
-const CACHE_VERSION = "emplois-burkina-pwa-v1";
+const CACHE_VERSION = "emplois-burkina-pwa-v2";
 const APP_SHELL = [
   "/",
   "/index.html",
   "/jobs.html",
+  "/international.html",
   "/annonceurs.html",
   "/contacts.html",
   "/styles.css",
   "/app.js",
   "/site.webmanifest",
   "/assets/emplois-burkina-og.svg",
-  "/data/curated-jobs.json",
-  "/data/sources.json",
-  "/data/employer-logos.json",
-  "/data/international-feeds.json",
 ];
 
 const RUNTIME_CACHE_PREFIX = "emplois-burkina-runtime-";

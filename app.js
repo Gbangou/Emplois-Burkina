@@ -3453,7 +3453,7 @@ async function loadJobs() {
   if (!jobsList && !adminJobsList) return;
   try {
     const adminQuery = adminJobsList ? "?includeRejected=true&includeExpired=true&includeUndated=true" : "";
-    const apiResponse = await fetch(`/api/jobs${adminQuery}`, { cache: "no-store" });
+    const apiResponse = await fetch(`/api/jobs${adminQuery}`, adminJobsList ? { cache: "no-store" } : undefined);
     if (apiResponse.ok) {
       const payload = await apiResponse.json();
       baseJobs = payload.jobs?.length ? payload.jobs : fallbackJobs;
@@ -3462,7 +3462,7 @@ async function loadJobs() {
     }
   } catch {
     try {
-      const response = await fetch("data/curated-jobs.json", { cache: "no-store" });
+      const response = await fetch("data/curated-jobs.json");
       if (!response.ok) throw new Error("Impossible de charger les offres");
       const loadedJobs = await response.json();
       baseJobs = loadedJobs.length ? loadedJobs : fallbackJobs;
@@ -3480,7 +3480,7 @@ async function loadJobs() {
 async function loadSources() {
   if (!sourceGrid && !sourceMetrics && !strategicSourceSections) return;
   try {
-    const response = await fetch("data/sources.json", { cache: "no-store" });
+    const response = await fetch("data/sources.json");
     if (!response.ok) throw new Error("Impossible de charger les sources");
     sources = await response.json();
   } catch {
@@ -3496,7 +3496,7 @@ async function loadSources() {
 async function loadInternationalFeeds() {
   if (!strategicSourceSections) return;
   try {
-    const response = await fetch("data/international-feeds.json", { cache: "no-store" });
+    const response = await fetch("data/international-feeds.json");
     if (!response.ok) throw new Error("Impossible de charger les flux internationaux");
     internationalFeeds = await response.json();
   } catch {
@@ -3509,7 +3509,7 @@ async function loadInternationalFeeds() {
 async function loadEmployerLogos() {
   if (!employerCarousel) return;
   try {
-    const response = await fetch("data/employer-logos.json", { cache: "no-store" });
+    const response = await fetch("data/employer-logos.json");
     if (!response.ok) throw new Error("Impossible de charger les logos");
     employerLogos = await response.json();
   } catch {

@@ -5,6 +5,7 @@ import { createServer } from "node:http";
 import { extname, join, normalize, resolve, sep } from "node:path";
 import { spawn } from "node:child_process";
 import { fileURLToPath } from "node:url";
+import { createBrotliCompress, createGzip } from "node:zlib";
 
 const ROOT = fileURLToPath(new URL(".", import.meta.url));
 const ROOT_DIR = resolve(ROOT);
@@ -75,6 +76,17 @@ const contentTypes = {
   ".webmanifest": "application/manifest+json; charset=utf-8",
 };
 
+const compressibleTypes = new Set([
+  ".html",
+  ".css",
+  ".js",
+  ".json",
+  ".xml",
+  ".txt",
+  ".svg",
+  ".webmanifest",
+]);
+
 const rateBuckets = new Map();
 
 function securityHeaders() {
@@ -119,6 +131,14 @@ function send(res, status, body, headers = {}) {
 
 function sendJson(res, status, payload) {
   send(res, status, JSON.stringify(payload), { "Content-Type": "application/json; charset=utf-8" });
+}
+
+function acceptedCompression(req, ext, size) {
+  if (!compressibleTypes.has(ext) || size < 1024) return "";
+  const accept = req.headers["accept-encoding"] || "";
+  if (/\bbr\b/.test(accept)) return "br";
+  if (/\bgzip\b/.test(accept)) return "gzip";
+  return "";
 }
 
 function clientIp(req) {
@@ -1364,6 +1384,7 @@ async function serveStatic(req, res, url) {
     if (!info.isFile()) throw new Error("Not a file");
 
     const ext = extname(filePath).toLowerCase();
+    const encoding = acceptedCompression(req, ext, info.size);
     const cacheable =
       !publicPaths.has(url.pathname) &&
       [".css", ".js", ".png", ".jpg", ".jpeg", ".webp", ".svg"].includes(ext);
@@ -1372,13 +1393,38 @@ async function serveStatic(req, res, url) {
         ? "no-cache"
         : cacheable
           ? "public, max-age=86400"
+          : publicDataPaths.has(url.pathname)
+            ? "public, max-age=60, stale-while-revalidate=3600"
           : "no-cache";
-    res.writeHead(200, {
+    const headers = {
       ...securityHeaders(),
       "Content-Type": contentTypes[ext] || "application/octet-stream",
       "Cache-Control": cacheControl,
+      "Last-Modified": info.mtime.toUTCString(),
+      "Vary": "Accept-Encoding",
+    };
+    if (encoding) headers["Content-Encoding"] = encoding;
+    else headers["Content-Length"] = String(info.size);
+
+    res.writeHead(200, {
+      ...headers,
     });
-    createReadStream(filePath).pipe(res);
+
+    if (req.method === "HEAD") {
+      res.end();
+      return;
+    }
+
+    const stream = createReadStream(filePath);
+    if (encoding === "br") {
+      stream.pipe(createBrotliCompress()).pipe(res);
+      return;
+    }
+    if (encoding === "gzip") {
+      stream.pipe(createGzip()).pipe(res);
+      return;
+    }
+    stream.pipe(res);
   } catch {
     send(res, 404, "Not found", { "Content-Type": "text/plain; charset=utf-8" });
   }
