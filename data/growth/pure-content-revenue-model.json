@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-06-25T16:40:39.067Z",
+  "generatedAt": "2026-06-25T17:04:01.639Z",
   "adsenseThresholdUsd": 100,
   "usdToFcfa": 600,
   "adsenseThresholdFcfa": 60000,
   "minimumRangeFcfa": {
-    "min": 8136,
-    "max": 13221
+    "min": 4068,
+    "max": 9153
   },
   "scenarios": [
     {
@@ -23,43 +23,43 @@
       "id": "current_low",
       "label": "Demarrage prudent",
       "monthlyPageviews": 20340,
-      "rpmFcfa": 400,
+      "rpmFcfa": 200,
       "probability": "Conservateur",
-      "interpretation": "Trafic encore faible, RPM bas, paiement seulement apres accumulation.",
-      "monthlyRevenueFcfa": 8136,
-      "payoutEveryMonths": 8,
+      "interpretation": "Trafic encore faible, RPM bas, paiement seulement apres plusieurs mois.",
+      "monthlyRevenueFcfa": 4068,
+      "payoutEveryMonths": 15,
       "reachesMonthlyThreshold": false
     },
     {
       "id": "current_base",
       "label": "Base actuelle du modele",
       "monthlyPageviews": 20340,
-      "rpmFcfa": 650,
+      "rpmFcfa": 450,
       "probability": "Realiste apres indexation initiale",
-      "interpretation": "Le contenu commence a tourner, mais le paiement mensuel n'est pas encore garanti.",
-      "monthlyRevenueFcfa": 13221,
-      "payoutEveryMonths": 5,
+      "interpretation": "Le contenu commence a tourner, mais le paiement mensuel reste improbable.",
+      "monthlyRevenueFcfa": 9153,
+      "payoutEveryMonths": 7,
       "reachesMonthlyThreshold": false
     },
     {
       "id": "local_scale",
       "label": "Site local qui prend",
       "monthlyPageviews": 100000,
-      "rpmFcfa": 650,
+      "rpmFcfa": 500,
       "probability": "Possible avec SEO, reseaux sociaux et contenu original regulier",
-      "interpretation": "Premier niveau ou un paiement mensuel devient plausible.",
-      "monthlyRevenueFcfa": 65000,
-      "payoutEveryMonths": 1,
-      "reachesMonthlyThreshold": true
+      "interpretation": "Premier niveau ou le paiement mensuel devient presque regulier.",
+      "monthlyRevenueFcfa": 50000,
+      "payoutEveryMonths": 2,
+      "reachesMonthlyThreshold": false
     },
     {
       "id": "regional_scale",
       "label": "Afrique francophone",
       "monthlyPageviews": 500000,
-      "rpmFcfa": 800,
+      "rpmFcfa": 650,
       "probability": "Ambitieux, demande marque plus large et contenu vraiment utile",
-      "interpretation": "Revenu interessant, mais il faut eviter les pages dupliquees et pauvres.",
-      "monthlyRevenueFcfa": 400000,
+      "interpretation": "Revenu correct, mais exige une vraie audience et beaucoup de pages utiles.",
+      "monthlyRevenueFcfa": 325000,
       "payoutEveryMonths": 1,
       "reachesMonthlyThreshold": true
     },
@@ -67,10 +67,10 @@
       "id": "international_scale",
       "label": "International emploi/remote",
       "monthlyPageviews": 1000000,
-      "rpmFcfa": 1200,
+      "rpmFcfa": 900,
       "probability": "Tres ambitieux, concurrence forte",
       "interpretation": "Possible seulement avec une vraie experience produit et contenu differencie.",
-      "monthlyRevenueFcfa": 1200000,
+      "monthlyRevenueFcfa": 900000,
       "payoutEveryMonths": 1,
       "reachesMonthlyThreshold": true
     }

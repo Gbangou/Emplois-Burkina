@@ -45,40 +45,40 @@ function buildScenarios(basePageviews) {
     {
       id: "current_low",
       label: "Demarrage prudent",
-      monthlyPageviews: Math.max(basePageviews, 10_000),
-      rpmFcfa: 400,
+      monthlyPageviews: Math.max(basePageviews, 8_000),
+      rpmFcfa: 200,
       probability: "Conservateur",
-      interpretation: "Trafic encore faible, RPM bas, paiement seulement apres accumulation.",
+      interpretation: "Trafic encore faible, RPM bas, paiement seulement apres plusieurs mois.",
     },
     {
       id: "current_base",
       label: "Base actuelle du modele",
-      monthlyPageviews: Math.max(basePageviews, 18_000),
-      rpmFcfa: 650,
+      monthlyPageviews: Math.max(basePageviews, 20_000),
+      rpmFcfa: 450,
       probability: "Realiste apres indexation initiale",
-      interpretation: "Le contenu commence a tourner, mais le paiement mensuel n'est pas encore garanti.",
+      interpretation: "Le contenu commence a tourner, mais le paiement mensuel reste improbable.",
     },
     {
       id: "local_scale",
       label: "Site local qui prend",
       monthlyPageviews: 100_000,
-      rpmFcfa: 650,
+      rpmFcfa: 500,
       probability: "Possible avec SEO, reseaux sociaux et contenu original regulier",
-      interpretation: "Premier niveau ou un paiement mensuel devient plausible.",
+      interpretation: "Premier niveau ou le paiement mensuel devient presque regulier.",
     },
     {
       id: "regional_scale",
       label: "Afrique francophone",
       monthlyPageviews: 500_000,
-      rpmFcfa: 800,
+      rpmFcfa: 650,
       probability: "Ambitieux, demande marque plus large et contenu vraiment utile",
-      interpretation: "Revenu interessant, mais il faut eviter les pages dupliquees et pauvres.",
+      interpretation: "Revenu correct, mais exige une vraie audience et beaucoup de pages utiles.",
     },
     {
       id: "international_scale",
       label: "International emploi/remote",
       monthlyPageviews: 1_000_000,
-      rpmFcfa: 1200,
+      rpmFcfa: 900,
       probability: "Tres ambitieux, concurrence forte",
       interpretation: "Possible seulement avec une vraie experience produit et contenu differencie.",
     },
@@ -134,12 +134,21 @@ est approuve par AdSense, indexe, utile, rapide, conforme et s'il obtient du
 trafic humain reel. Sans approbation AdSense ou sans trafic, le revenu contenu
 pur est de ${formatFcfa(0)}.
 
-La projection minimale prudente actuelle est basse : entre ${formatFcfa(report.minimumRangeFcfa.min)}
-et ${formatFcfa(report.minimumRangeFcfa.max)} par mois au demarrage apres
-approbation, puis davantage seulement si le trafic monte. Le seuil de paiement
-AdSense est modelise ici a environ ${formatFcfa(report.adsenseThresholdFcfa)}
-(${ADSENSE_THRESHOLD_USD} USD x ${USD_TO_FCFA} FCFA). Si le mois ne depasse pas
-ce seuil, le solde s'accumule jusqu'au paiement.
+La projection minimale prudente actuelle est volontairement basse : entre
+${formatFcfa(report.minimumRangeFcfa.min)} et ${formatFcfa(report.minimumRangeFcfa.max)}
+par mois au demarrage apres approbation. Ce n'est pas encore un revenu regulier
+mensuel, car le seuil de paiement AdSense est modelise ici a environ
+${formatFcfa(report.adsenseThresholdFcfa)} (${ADSENSE_THRESHOLD_USD} USD x
+${USD_TO_FCFA} FCFA). Si le mois ne depasse pas ce seuil, le solde s'accumule
+jusqu'au paiement.
+
+Mon estimation sincere :
+
+- 0 FCFA/mois tant qu'AdSense n'est pas approuve ou que le trafic est trop faible.
+- ${formatFcfa(report.minimumRangeFcfa.min)}-${formatFcfa(report.minimumRangeFcfa.max)}/mois au debut si le site est approuve et commence a etre visite.
+- ${formatFcfa(50_000)}-${formatFcfa(120_000)}/mois avec environ 100 000 a 200 000 pages vues mensuelles qualifiees.
+- ${formatFcfa(250_000)}-${formatFcfa(600_000)}/mois devient possible seulement avec plusieurs centaines de milliers de pages vues mensuelles, des guides originaux et une bonne retention.
+- Plus de ${formatFcfa(1_000_000)}/mois avec contenu pur uniquement est possible mais non minimal ; il faut une audience massive, regionale/internationale, et une execution SEO tres forte.
 
 ## Scenarios AdSense uniquement
 
@@ -155,10 +164,23 @@ ${report.scenarios
 ## Mobile Money
 
 AdSense ne doit pas etre modelise comme un paiement direct Orange Money ou Mobile
-Money. Le chemin realiste est : AdSense -> compte bancaire compatible -> transfert
-vers Orange Money/Mobile Money si ta banque le permet. Pour recevoir directement
-sur Mobile Money, il faudrait des reseaux publicitaires, affiliations ou paiements
-locaux qui supportent ce mode, mais ce ne serait plus AdSense pur.
+Money au Burkina Faso. Le chemin realiste est : AdSense -> virement bancaire
+international -> transfert vers Orange Money/Mobile Money si ta banque le permet.
+Pour recevoir directement sur Mobile Money, il faudrait des reseaux publicitaires,
+affiliations ou paiements locaux qui supportent explicitement ce mode, mais ce ne
+serait plus AdSense pur.
+
+## Modele automatise a forte valeur ajoutee
+
+Pour maximiser les revenus sans faire payer les candidats pauvres, il faut
+automatiser quatre etages :
+
+- Etage 1 : AdSense sur pages offres, guides, villes, metiers, salaires et concours.
+- Etage 2 : affiliation utile et ethique vers formations, outils CV, cours, livres, outils remote.
+- Etage 3 : produits numeriques automatises, par exemple CV ATS, lettres, packs entretien, traduction FR/EN.
+- Etage 4 : donnees agregees anonymes et rapports marche, sans donnees personnelles.
+
+Le contenu seul peut demarrer le revenu, mais le revenu important vient du mix.
 
 ## Scraping international
 

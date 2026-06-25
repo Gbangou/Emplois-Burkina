@@ -1,6 +1,6 @@
 # Modele revenu contenu pur
 
-Derniere generation : 2026-06-25T16:40:39.067Z
+Derniere generation : 2026-06-25T17:04:01.639Z
 
 ## Reponse serieuse
 
@@ -10,31 +10,53 @@ est approuve par AdSense, indexe, utile, rapide, conforme et s'il obtient du
 trafic humain reel. Sans approbation AdSense ou sans trafic, le revenu contenu
 pur est de 0 FCFA.
 
-La projection minimale prudente actuelle est basse : entre 8 136 FCFA
-et 13 221 FCFA par mois au demarrage apres
-approbation, puis davantage seulement si le trafic monte. Le seuil de paiement
-AdSense est modelise ici a environ 60 000 FCFA
-(100 USD x 600 FCFA). Si le mois ne depasse pas
-ce seuil, le solde s'accumule jusqu'au paiement.
+La projection minimale prudente actuelle est volontairement basse : entre
+4 068 FCFA et 9 153 FCFA
+par mois au demarrage apres approbation. Ce n'est pas encore un revenu regulier
+mensuel, car le seuil de paiement AdSense est modelise ici a environ
+60 000 FCFA (100 USD x
+600 FCFA). Si le mois ne depasse pas ce seuil, le solde s'accumule
+jusqu'au paiement.
+
+Mon estimation sincere :
+
+- 0 FCFA/mois tant qu'AdSense n'est pas approuve ou que le trafic est trop faible.
+- 4 068 FCFA-9 153 FCFA/mois au debut si le site est approuve et commence a etre visite.
+- 50 000 FCFA-120 000 FCFA/mois avec environ 100 000 a 200 000 pages vues mensuelles qualifiees.
+- 250 000 FCFA-600 000 FCFA/mois devient possible seulement avec plusieurs centaines de milliers de pages vues mensuelles, des guides originaux et une bonne retention.
+- Plus de 1 000 000 FCFA/mois avec contenu pur uniquement est possible mais non minimal ; il faut une audience massive, regionale/internationale, et une execution SEO tres forte.
 
 ## Scenarios AdSense uniquement
 
 | Scenario | Pages vues/mois | RPM | Revenu/mois | Paiement mensuel ? | Delai estime avant paiement |
 | --- | ---: | ---: | ---: | --- | --- |
 | Sans approbation AdSense | 20 340 | 0 FCFA | 0 FCFA | Non | Aucun paiement |
-| Demarrage prudent | 20 340 | 400 FCFA | 8 136 FCFA | Non | 8 mois |
-| Base actuelle du modele | 20 340 | 650 FCFA | 13 221 FCFA | Non | 5 mois |
-| Site local qui prend | 100 000 | 650 FCFA | 65 000 FCFA | Oui | 1 mois |
-| Afrique francophone | 500 000 | 800 FCFA | 400 000 FCFA | Oui | 1 mois |
-| International emploi/remote | 1 000 000 | 1 200 FCFA | 1 200 000 FCFA | Oui | 1 mois |
+| Demarrage prudent | 20 340 | 200 FCFA | 4 068 FCFA | Non | 15 mois |
+| Base actuelle du modele | 20 340 | 450 FCFA | 9 153 FCFA | Non | 7 mois |
+| Site local qui prend | 100 000 | 500 FCFA | 50 000 FCFA | Non | 2 mois |
+| Afrique francophone | 500 000 | 650 FCFA | 325 000 FCFA | Oui | 1 mois |
+| International emploi/remote | 1 000 000 | 900 FCFA | 900 000 FCFA | Oui | 1 mois |
 
 ## Mobile Money
 
 AdSense ne doit pas etre modelise comme un paiement direct Orange Money ou Mobile
-Money. Le chemin realiste est : AdSense -> compte bancaire compatible -> transfert
-vers Orange Money/Mobile Money si ta banque le permet. Pour recevoir directement
-sur Mobile Money, il faudrait des reseaux publicitaires, affiliations ou paiements
-locaux qui supportent ce mode, mais ce ne serait plus AdSense pur.
+Money au Burkina Faso. Le chemin realiste est : AdSense -> virement bancaire
+international -> transfert vers Orange Money/Mobile Money si ta banque le permet.
+Pour recevoir directement sur Mobile Money, il faudrait des reseaux publicitaires,
+affiliations ou paiements locaux qui supportent explicitement ce mode, mais ce ne
+serait plus AdSense pur.
+
+## Modele automatise a forte valeur ajoutee
+
+Pour maximiser les revenus sans faire payer les candidats pauvres, il faut
+automatiser quatre etages :
+
+- Etage 1 : AdSense sur pages offres, guides, villes, metiers, salaires et concours.
+- Etage 2 : affiliation utile et ethique vers formations, outils CV, cours, livres, outils remote.
+- Etage 3 : produits numeriques automatises, par exemple CV ATS, lettres, packs entretien, traduction FR/EN.
+- Etage 4 : donnees agregees anonymes et rapports marche, sans donnees personnelles.
+
+Le contenu seul peut demarrer le revenu, mais le revenu important vient du mix.
 
 ## Scraping international
 
