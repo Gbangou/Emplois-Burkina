@@ -5,11 +5,14 @@ import {
   Briefcase,
   Building2,
   CheckCircle,
+  CircleDollarSign,
   Globe,
+  Layers3,
   MapPin,
   Rss,
   Share2,
   ShieldCheck,
+  Sparkles,
   TrendingUp,
   Zap
 } from "lucide-react";
@@ -49,6 +52,45 @@ const FEATURES = [
   { icon: TrendingUp, title: "Analytics recruteur", desc: "Vues, leads, taux de réponse, benchmark concurrentiel — tableau de bord complet.", color: "text-amber-600" },
   { icon: MapPin, title: "Toutes les villes", desc: "Ouagadougou, Bobo, Koudougou, Banfora et toutes les communes — pas seulement la capitale.", color: "text-red-600" },
   { icon: Rss, title: "Flux RSS & API", desc: "Exportez les offres vers votre propre app, chatbot ou système de notification.", color: "text-cyan-600" }
+];
+
+const OPPORTUNITY_OS = [
+  {
+    icon: Sparkles,
+    title: "Assistant candidature",
+    desc: "Analyse une offre, explique le niveau de confiance, prépare une checklist de documents et aide le candidat à adapter CV et lettre sans inventer son parcours.",
+    metric: "Candidat",
+    tone: "bg-emerald-50 text-emerald-700 border-emerald-200"
+  },
+  {
+    icon: TrendingUp,
+    title: "Radar marché",
+    desc: "Transforme les offres collectées en signaux : métiers qui recrutent, villes actives, salaires visibles, sources fiables et secteurs à pousser sur WhatsApp.",
+    metric: "Marché",
+    tone: "bg-blue-50 text-blue-700 border-blue-200"
+  },
+  {
+    icon: Building2,
+    title: "Recruteur augmenté",
+    desc: "Publie une annonce, suggère la meilleure catégorie, estime le prix sponsorisé, prépare la diffusion sociale et mesure les leads reçus.",
+    metric: "Revenu",
+    tone: "bg-amber-50 text-amber-800 border-amber-200"
+  },
+  {
+    icon: ShieldCheck,
+    title: "Trust engine",
+    desc: "Score antifraude, preuve de source, détection de liens douteux, file de modération et signalements publics pour protéger la marque.",
+    metric: "Sécurité",
+    tone: "bg-red-50 text-red-700 border-red-200"
+  }
+];
+
+const NEXT_BUILD_SEQUENCE = [
+  "Comptes candidats et recruteurs avec sessions sécurisées",
+  "Recherche hybride : filtres, synonymes locaux, score et recommandations",
+  "Alertes WhatsApp Business avec opt-in, segments et journal d'envoi",
+  "Paiements Mobile Money pour annonces, sponsorisation et packs recruteurs",
+  "Analytics produit : sources, conversions, valeur pipeline et qualité des offres"
 ];
 
 function ConfidenceDot({ score }: { score: number }) {
@@ -241,6 +283,69 @@ export default async function HomePage() {
                 </CardContent>
               </Card>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── OPPORTUNITY OS ────────────────────────────── */}
+      <section className="container py-16">
+        <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] items-start">
+          <div className="lg:sticky lg:top-24">
+            <p className="text-xs font-black text-primary uppercase tracking-widest mb-2 flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-primary inline-block" />
+              Opportunity OS
+            </p>
+            <h2 className="text-2xl lg:text-3xl font-black text-foreground">
+              Le système qui transforme les offres en décisions utiles.
+            </h2>
+            <p className="text-muted-foreground font-semibold mt-3 leading-relaxed">
+              La vision n'est pas de copier un job board international. Emplois Burkina doit devenir
+              l'infrastructure emploi du pays : collecte propre, intelligence marché, confiance,
+              alertes WhatsApp et revenus recruteurs.
+            </p>
+            <div className="mt-6 grid gap-2.5">
+              {NEXT_BUILD_SEQUENCE.map((item, index) => (
+                <div key={item} className="flex items-start gap-3 rounded-xl border border-border bg-white px-4 py-3">
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-foreground text-[11px] font-black text-white">
+                    {index + 1}
+                  </span>
+                  <p className="text-sm font-bold text-foreground leading-snug">{item}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            {OPPORTUNITY_OS.map((item) => (
+              <article key={item.title} className="rounded-xl border border-border bg-white p-5 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-muted">
+                    <item.icon size={20} className="text-primary" />
+                  </div>
+                  <span className={`rounded-full border px-2.5 py-1 text-[11px] font-black uppercase tracking-wide ${item.tone}`}>
+                    {item.metric}
+                  </span>
+                </div>
+                <h3 className="mt-5 text-base font-black text-foreground">{item.title}</h3>
+                <p className="mt-2 text-sm font-semibold leading-relaxed text-muted-foreground">{item.desc}</p>
+              </article>
+            ))}
+
+            <article className="sm:col-span-2 rounded-xl border border-border bg-foreground p-6 text-white">
+              <div className="flex flex-wrap items-center gap-3">
+                <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-black text-white">
+                  <Layers3 size={14} /> Stack cible
+                </span>
+                <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-black text-white">
+                  <CircleDollarSign size={14} /> Monétisation intégrée
+                </span>
+              </div>
+              <p className="mt-4 text-sm font-semibold leading-relaxed text-white/72">
+                Next.js, NestJS, Prisma, PostgreSQL, recherche vectorielle, analytics, observabilité,
+                PWA, WhatsApp Business, Mobile Money, workflows IA et modération humaine doivent
+                fonctionner comme un seul système produit.
+              </p>
+            </article>
           </div>
         </div>
       </section>

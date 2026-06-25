@@ -215,6 +215,7 @@ Le script cree `indexnow-key.txt` localement et soumet les URLs de
 - `docs/SPONSOR_KIT.md`
 - `docs/SEO_CONTENT_PLAN.md`
 - `docs/IMPLEMENTATION_STEPS.md`
+- `docs/EXTRAORDINARY_PRODUCT_BLUEPRINT.md`
 
 ## Pre-lancement commercial
 
