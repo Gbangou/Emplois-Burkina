@@ -26,6 +26,13 @@ const pages = [
     schemaType: "CollectionPage",
   },
   {
+    path: "international.html",
+    title: "Emplois internationaux et remote pour l'Afrique | Emplois Burkina",
+    description:
+      "Guides, sources et opportunites internationales, ONG, ONU, remote et freelance pour candidats bases en Afrique francophone.",
+    schemaType: "CollectionPage",
+  },
+  {
     path: "grille-tarifaire.html",
     title: "Tarifs recruteurs et publicite emploi - Emplois Burkina",
     description:
@@ -158,6 +165,7 @@ function injectSeo(html, config, page) {
     .replace(/\s*<meta\s+name=["']description["'][^>]*>/gi, "")
     .replace(/\s*<meta\s+name=["']robots["'][^>]*>/gi, "")
     .replace(/\s*<meta\s+name=["']theme-color["'][^>]*>/gi, "")
+    .replace(/\s*<meta\s+name=["']author["'][^>]*>/gi, "")
     .replace(/\s*<link\s+rel=["']canonical["'][^>]*>/gi, "")
     .replace(/\s*<link\s+rel=["']alternate["'][^>]*>/gi, "")
     .replace(/\s*<link\s+rel=["']manifest["'][^>]*>/gi, "")

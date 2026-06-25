@@ -732,6 +732,7 @@ async function main() {
     "index.html",
     "jobs.html",
     "conseils.html",
+    "international.html",
     "grille-tarifaire.html",
     "annonceurs.html",
     "contacts.html",
@@ -955,7 +956,7 @@ ${urls
   );
   await writeFile(
     LLM_FILE,
-    `# ${config.siteName || "Emplois Burkina"}\n\n${config.description}\n\n## Core pages\n- ${absolute(config, "index.html")}\n- ${absolute(config, "jobs.html")}\n- ${absolute(config, "conseils.html")}\n- ${absolute(config, "grille-tarifaire.html")}\n- ${absolute(config, "contacts.html")}\n\n## Fresh job feeds\n- ${absolute(config, "sitemap.xml")}\n- ${absolute(config, "data/curated-jobs.json")}\n- ${absolute(config, "feed.xml")}\n- ${absolute(config, "feed.json")}\n\nEmplois Burkina aggregates public job opportunities, concours, internships and local missions in Burkina Faso. Candidates should always verify official sources before applying.\n`,
+    `# ${config.siteName || "Emplois Burkina"}\n\n${config.description}\n\n## Core pages\n- ${absolute(config, "index.html")}\n- ${absolute(config, "jobs.html")}\n- ${absolute(config, "conseils.html")}\n- ${absolute(config, "international.html")}\n- ${absolute(config, "grille-tarifaire.html")}\n- ${absolute(config, "contacts.html")}\n\n## Fresh job feeds\n- ${absolute(config, "sitemap.xml")}\n- ${absolute(config, "data/curated-jobs.json")}\n- ${absolute(config, "feed.xml")}\n- ${absolute(config, "feed.json")}\n\nEmplois Burkina aggregates public job opportunities, concours, internships and local missions in Burkina Faso. Candidates should always verify official sources before applying.\n`,
     "utf8"
   );
   await writeFile(

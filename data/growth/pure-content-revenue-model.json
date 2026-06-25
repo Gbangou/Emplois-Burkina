@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-06-25T16:33:24.992Z",
+  "generatedAt": "2026-06-25T16:40:39.067Z",
   "adsenseThresholdUsd": 100,
   "usdToFcfa": 600,
   "adsenseThresholdFcfa": 60000,
   "minimumRangeFcfa": {
-    "min": 8064,
-    "max": 13104
+    "min": 8136,
+    "max": 13221
   },
   "scenarios": [
     {
       "id": "not_approved",
       "label": "Sans approbation AdSense",
-      "monthlyPageviews": 20160,
+      "monthlyPageviews": 20340,
       "rpmFcfa": 0,
       "probability": "Possible tant que le site n'est pas valide par Google",
       "interpretation": "Revenu AdSense nul meme si le site a du trafic.",
@@ -22,22 +22,22 @@
     {
       "id": "current_low",
       "label": "Demarrage prudent",
-      "monthlyPageviews": 20160,
+      "monthlyPageviews": 20340,
       "rpmFcfa": 400,
       "probability": "Conservateur",
       "interpretation": "Trafic encore faible, RPM bas, paiement seulement apres accumulation.",
-      "monthlyRevenueFcfa": 8064,
+      "monthlyRevenueFcfa": 8136,
       "payoutEveryMonths": 8,
       "reachesMonthlyThreshold": false
     },
     {
       "id": "current_base",
       "label": "Base actuelle du modele",
-      "monthlyPageviews": 20160,
+      "monthlyPageviews": 20340,
       "rpmFcfa": 650,
       "probability": "Realiste apres indexation initiale",
       "interpretation": "Le contenu commence a tourner, mais le paiement mensuel n'est pas encore garanti.",
-      "monthlyRevenueFcfa": 13104,
+      "monthlyRevenueFcfa": 13221,
       "payoutEveryMonths": 5,
       "reachesMonthlyThreshold": false
     },

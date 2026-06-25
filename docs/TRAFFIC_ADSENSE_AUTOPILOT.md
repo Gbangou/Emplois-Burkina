@@ -1,6 +1,6 @@
 # Autopilote trafic, referencement et AdSense
 
-Derniere generation : 2026-06-25T16:33:24.932Z
+Derniere generation : 2026-06-25T16:40:39.013Z
 
 ## Objectif
 
@@ -12,20 +12,20 @@ faire payer les chercheurs d'emploi.
 
 ## Estimation trafic et revenu publicitaire
 
-- Pages utiles indexables : 112
-- Pages vues mensuelles visees a court terme : 20 160
+- Pages utiles indexables : 113
+- Pages vues mensuelles visees a court terme : 20 340
 - RPM AdSense prudent : 650 FCFA
-- AdSense estime : 13 104 FCFA
-- Affiliation utile estimee : 25 200 FCFA
+- AdSense estime : 13 221 FCFA
+- Affiliation utile estimee : 25 425 FCFA
 - Display direct estime : 50 000 FCFA
-- Total trafic estime : 88 304 FCFA
+- Total trafic estime : 88 646 FCFA
 
 ## Reseau de distribution automatique
 
 | Canal | Automatisation | Action suivante | Impact revenu |
 | --- | --- | --- | --- |
 | Google Search | Sitemap, schema.org JobPosting/Article, Search Console, contenu evergreen et Core Web Vitals. | Soumettre https://emplois-burkina.com/sitemap.xml et surveiller pages indexees, impressions et CTR. | Source principale pour AdSense durable. |
-| Bing, Yahoo, DuckDuckGo, Yandex | IndexNow + sitemap + robots propre. | Soumettre 112 URLs via indexnow-urls.txt apres chaque generation. | Trafic additionnel peu couteux, utile pour diversifier. |
+| Bing, Yahoo, DuckDuckGo, Yandex | IndexNow + sitemap + robots propre. | Soumettre 113 URLs via indexnow-urls.txt apres chaque generation. | Trafic additionnel peu couteux, utile pour diversifier. |
 | Google Discover et actualites emploi | Titres clairs, images OG, guides utiles, flux RSS/JSON, pages fraiches. | Publier des guides longs et des syntheses hebdomadaires non dupliquees. | Pics de trafic compatibles display si contenu original. |
 | Facebook, LinkedIn, WhatsApp, Telegram | File de posts, digest, liens UTM, opt-in et desinscription. | Programmer 76 posts utiles avec liens vers pages guides/offres. | Amene l'audience vers les pages monetisees sans faire payer les lecteurs. |
 | Crawlers IA et assistants | llms.txt, flux structures, pages FAQ et donnees propres. | Garder llms.txt a jour et creer des pages de reponses directes. | Visibilite de marque, backlinks et citations indirectes. |

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-25T16:33:25.084Z",
+  "generatedAt": "2026-06-25T16:40:39.151Z",
   "plays": [
     {
       "id": "programmatic_later",
@@ -8,7 +8,7 @@
       "automation": "AdSense d'abord, puis reseaux plus premium quand le trafic est stable.",
       "humanEffort": "moyen",
       "risk": "moyen, depend du volume et de la qualite trafic",
-      "nextAction": "Ne pas optimiser trop tot : revenu AdSense actuel estime 13 104 FCFA."
+      "nextAction": "Ne pas optimiser trop tot : revenu AdSense actuel estime 13 221 FCFA."
     },
     {
       "id": "remote_international",
@@ -35,7 +35,7 @@
       "automation": "Generation de guides longs, FAQ, pages metiers, pages villes et pages remote.",
       "humanEffort": "faible",
       "risk": "faible si contenu utile et original",
-      "nextAction": "Passer de 112 pages indexables a 300 pages utiles avant de chercher plus agressif."
+      "nextAction": "Passer de 113 pages indexables a 300 pages utiles avant de chercher plus agressif."
     },
     {
       "id": "affiliate_tools",
@@ -53,13 +53,13 @@
       "automation": "SEO, IndexNow, sitemap, posts sociaux UTM et pages longues.",
       "humanEffort": "faible",
       "risk": "faible si trafic organique reel",
-      "nextAction": "Faire monter les pages vues de 20 160 a 100 000/mois."
+      "nextAction": "Faire monter les pages vues de 20 340 a 100 000/mois."
     }
   ],
   "metrics": {
-    "usefulPages": 112,
-    "currentContentOnlyMinFcfa": 8064,
-    "currentContentOnlyMaxFcfa": 13104,
+    "usefulPages": 113,
+    "currentContentOnlyMinFcfa": 8136,
+    "currentContentOnlyMaxFcfa": 13221,
     "sources": 87,
     "jobs": 58
   }

@@ -1,6 +1,6 @@
 # Moteur visibilite et revenus Emplois Burkina
 
-Derniere generation : 2026-06-25T16:33:24.895Z
+Derniere generation : 2026-06-25T16:40:38.968Z
 
 ## Score de preparation
 
