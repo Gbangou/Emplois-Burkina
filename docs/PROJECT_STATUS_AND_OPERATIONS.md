@@ -382,3 +382,21 @@ URLs locales :
 5. Appliquer `database/seed.sql` pour initialiser sources, raw items, jobs et
    pages SEO.
 6. Brancher Search Console/Bing apres deploiement.
+
+## Mode autopilote permanent
+
+Pour que les offres restent disponibles et se renouvellent sans intervention
+manuelle, la production doit utiliser :
+
+- une base PostgreSQL managee pour conserver offres, leads, alertes,
+  paiements, logs d'envoi, corrections et historiques de moderation ;
+- le daemon `npm run automate:daemon` ou PM2 avec
+  `EMPLOIS_BURKINA_AUTOMATION_INTERVAL_MINUTES=30` a `60` ;
+- `npm run automate:health` en healthcheck externe, avec alerte si aucun run
+  reussi dans la fenetre attendue ;
+- `npm run revenue:autopilot` dans le pipeline pour produire les actions
+  commerciales prioritaires apres chaque collecte.
+
+SQLite/JSON sont acceptables en local et pre-lancement, mais insuffisants pour
+un produit durable : ils ne remplacent pas une base production sauvegardee,
+surveillee et partagee entre API, web, automation et paiements.

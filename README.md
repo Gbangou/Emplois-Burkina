@@ -172,6 +172,16 @@ Generer toutes les pages SEO, metas sociales, sitemap, robots, manifest,
 npm run growth
 ```
 
+Autopilote revenu :
+
+```bash
+npm run revenue:autopilot
+```
+
+Ce rapport genere `data/growth/revenue-autopilot.json` et
+`docs/REVENUE_AUTOPILOT.md` pour prioriser les canaux a vendre, les sponsors,
+les offres recruteurs, les services candidats et les rapports marche.
+
 Fichiers publics importants :
 
 - `sitemap.xml` pour Google, Bing, Yandex et autres moteurs.
@@ -216,6 +226,7 @@ Le script cree `indexnow-key.txt` localement et soumet les URLs de
 - `docs/SEO_CONTENT_PLAN.md`
 - `docs/IMPLEMENTATION_STEPS.md`
 - `docs/EXTRAORDINARY_PRODUCT_BLUEPRINT.md`
+- `docs/REVENUE_AUTOPILOT.md`
 
 ## Pre-lancement commercial
 

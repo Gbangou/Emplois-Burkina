@@ -1,0 +1,162 @@
+{
+  "generatedAt": "2026-06-25T13:45:01.554Z",
+  "readinessScore": 90,
+  "revenueTargetFcfa": 1000000,
+  "estimatedMonthlyRevenueFcfa": 398200,
+  "revenueGapFcfa": 601800,
+  "activeJobs": 58,
+  "trustedJobs": 15,
+  "topCategories": [
+    {
+      "label": "Bureau",
+      "count": 21
+    },
+    {
+      "label": "ONG",
+      "count": 12
+    },
+    {
+      "label": "Finance et administration",
+      "count": 5
+    },
+    {
+      "label": "Informatique, data et systemes",
+      "count": 4
+    },
+    {
+      "label": "Metiers terrain et informels",
+      "count": 4
+    }
+  ],
+  "topCities": [
+    {
+      "label": "Burkina Faso",
+      "count": 27
+    },
+    {
+      "label": "Ouagadougou",
+      "count": 18
+    },
+    {
+      "label": "RDC",
+      "count": 4
+    },
+    {
+      "label": "Senegal",
+      "count": 3
+    },
+    {
+      "label": "Bagassi",
+      "count": 1
+    }
+  ],
+  "topSources": [
+    {
+      "label": "Emploiburkina",
+      "count": 20
+    },
+    {
+      "label": "UN Talent Burkina Faso",
+      "count": 16
+    },
+    {
+      "label": "HumanitaireHub",
+      "count": 10
+    },
+    {
+      "label": "BFemploi",
+      "count": 6
+    },
+    {
+      "label": "LeFaso.net Recrutement",
+      "count": 3
+    },
+    {
+      "label": "UNjobs Burkina Faso",
+      "count": 3
+    }
+  ],
+  "plan": [
+    {
+      "id": "premium_job_posts",
+      "channel": "Annonces recruteurs premium",
+      "offer": "Publication + mise en avant + diffusion WhatsApp/Facebook + rapport simple",
+      "targetCustomers": "Entreprises, ONG, cabinets RH, PME locales",
+      "targetUnits": 12,
+      "priceFcfa": 25000,
+      "closeRate": 0.35,
+      "trigger": "15 offres fiables et 58 offres avec dates exploitables.",
+      "nextAction": "Prospecter 30 recruteurs lies a Bureau et Burkina Faso."
+    },
+    {
+      "id": "category_sponsorship",
+      "channel": "Sponsoring categorie",
+      "offer": "Sponsor mensuel de la categorie Bureau",
+      "targetCustomers": "Centres de formation, fintech, telecoms, ecoles professionnelles",
+      "targetUnits": 4,
+      "priceFcfa": 100000,
+      "closeRate": 0.25,
+      "trigger": "Categorie dominante : Bureau.",
+      "nextAction": "Envoyer 20 propositions sponsor avec preuve trafic/offres et placement clair."
+    },
+    {
+      "id": "whatsapp_digest_sponsor",
+      "channel": "Digest WhatsApp sponsorise",
+      "offer": "Sponsor discret du digest hebdomadaire d'offres",
+      "targetCustomers": "Formations, banques, telecoms, assurance, mobile money",
+      "targetUnits": 4,
+      "priceFcfa": 50000,
+      "closeRate": 0.3,
+      "trigger": "WhatsApp est le canal le plus naturel pour l'audience locale.",
+      "nextAction": "Preparer un kit sponsor WhatsApp avec limites de frequence et mention sponsorisee."
+    },
+    {
+      "id": "cv_services",
+      "channel": "Services candidats optionnels",
+      "offer": "CV ATS, lettre, traduction FR/EN, preparation entretien",
+      "targetCustomers": "Candidats actifs, jeunes diplomes, profils ONG/tech",
+      "targetUnits": 120,
+      "priceFcfa": 2000,
+      "closeRate": 0.18,
+      "trigger": "Top source actuelle : Emploiburkina.",
+      "nextAction": "Ajouter CTA service CV sur fiches offres fortes et guides candidats."
+    },
+    {
+      "id": "market_reports",
+      "channel": "Rapports marche agreges",
+      "offer": "Rapport mensuel secteurs, villes, sources, competences et tendances",
+      "targetCustomers": "Ecoles, ONG, cabinets RH, investisseurs, institutions",
+      "targetUnits": 3,
+      "priceFcfa": 150000,
+      "closeRate": 0.2,
+      "trigger": "Score marche : 100/100, score revenu : 85/100.",
+      "nextAction": "Generer un exemple PDF/HTML de rapport marche avec donnees non personnelles."
+    },
+    {
+      "id": "source_partnerships",
+      "channel": "Partenariats sources et backlinks",
+      "offer": "Flux propre, attribution, backlink, page partenaire",
+      "targetCustomers": "Sites RH, medias, institutions, ecoles, cabinets",
+      "targetUnits": 10,
+      "priceFcfa": 0,
+      "closeRate": 0.4,
+      "trigger": "Les partenariats augmentent le SEO et reduisent le scraping fragile.",
+      "nextAction": "Demander flux RSS/API ou autorisation explicite aux sources prioritaires."
+    }
+  ],
+  "zeroTouchOperatingModel": [
+    "Automatisation toutes les 30 a 60 minutes en production.",
+    "Base PostgreSQL managee pour conserver offres, leads, paiements et logs.",
+    "Alertes healthcheck si aucun run reussi dans la fenetre attendue.",
+    "Moderation humaine seulement pour les offres a risque ou les partenaires payants.",
+    "Rapport revenu genere a chaque run pour guider prospection, sponsors et contenus."
+  ],
+  "requiredIntegrations": [
+    "PostgreSQL manage Supabase ou Neon",
+    "WhatsApp Business Cloud API",
+    "Paiement Mobile Money via aggregateur local/regional",
+    "AdSense apres validation Google",
+    "Email transactionnel pour factures et relances",
+    "Analytics produit et erreurs"
+  ]
+}
