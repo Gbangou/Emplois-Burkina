@@ -60,7 +60,7 @@ const queue = jobs
     return rank[a.priority] - rank[b.priority] || a.sourceName.localeCompare(b.sourceName, "fr");
   });
 
-const markdown = `# File de revue des dates JobFaso
+const markdown = `# File de revue des dates Emplois Burkina
 
 Genere le : ${new Date().toISOString()}
 

@@ -1,12 +1,19 @@
 {
-  "name": "jobfaso",
+  "name": "emplois-burkina",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "pnpm@10.14.0",
   "type": "module",
-  "description": "JobFaso - plateforme emploi, concours, alertes WhatsApp et monetisation recruteurs au Burkina Faso.",
+  "description": "Emplois Burkina - plateforme emploi, concours, alertes WhatsApp et monetisation recruteurs au Burkina Faso.",
   "scripts": {
-    "start": "node server.mjs",
-    "dev": "node server.mjs",
+    "dev": "pnpm --parallel --filter @emplois-burkina/api --filter @emplois-burkina/web dev",
+    "dev:web": "pnpm --filter @emplois-burkina/web dev",
+    "dev:api": "pnpm --filter @emplois-burkina/api dev",
+    "build": "pnpm --filter @emplois-burkina/api build && pnpm --filter @emplois-burkina/web build",
+    "start": "pnpm --filter @emplois-burkina/api start:prod",
+    "start:web": "pnpm --filter @emplois-burkina/web start",
+    "legacy:start": "node server.mjs",
+    "legacy:dev": "node server.mjs",
     "automate": "node scripts/run-automation.mjs",
     "automate:daemon": "node scripts/automation-daemon.mjs",
     "automate:health": "node scripts/automation-health.mjs",
@@ -27,7 +34,9 @@
     "social:queue": "node scripts/generate-social-queue.mjs",
     "social:dry": "node scripts/publish-social.mjs",
     "social:publish": "node scripts/publish-social.mjs --live",
-    "check": "node --check app.js && node --check server.mjs && node --check scripts/jobfaso-scraper.mjs && node --check scripts/international-feeds-scraper.mjs && node --check scripts/curate-raw-items.mjs && node --check scripts/generate-seo-pages.mjs && node --check scripts/enhance-static-seo.mjs && node --check scripts/generate-growth-assets.mjs && node --check scripts/generate-visibility-engine.mjs && node --check scripts/audit-project.mjs && node --check scripts/audit-offers.mjs && node --check scripts/generate-social-queue.mjs && node --check scripts/generate-date-review-queue.mjs && node --check scripts/publish-social.mjs && node --check scripts/sync-local-db.mjs && node --check scripts/sync-sqlite-db.mjs && node --check scripts/export-postgres-seed.mjs && node --check scripts/submit-indexnow.mjs && node --check scripts/check-schema.mjs && node --check scripts/automation-state.mjs && node --check scripts/automation-daemon.mjs && node --check scripts/automation-health.mjs && node --check scripts/automation-quality-gate.mjs && node --check scripts/generate-automation-report.mjs && node --check scripts/run-automation.mjs && node scripts/check-schema.mjs && node scripts/audit-project.mjs"
+    "check": "pnpm run check:legacy",
+    "check:modern": "pnpm --filter @emplois-burkina/api typecheck && pnpm --filter @emplois-burkina/web lint",
+    "check:legacy": "node --check app.js && node --check sw.js && node --check server.mjs && node --check scripts/emplois-burkina-scraper.mjs && node --check scripts/international-feeds-scraper.mjs && node --check scripts/curate-raw-items.mjs && node --check scripts/generate-seo-pages.mjs && node --check scripts/enhance-static-seo.mjs && node --check scripts/generate-growth-assets.mjs && node --check scripts/generate-visibility-engine.mjs && node --check scripts/audit-project.mjs && node --check scripts/audit-offers.mjs && node --check scripts/generate-social-queue.mjs && node --check scripts/generate-date-review-queue.mjs && node --check scripts/publish-social.mjs && node --check scripts/sync-local-db.mjs && node --check scripts/sync-sqlite-db.mjs && node --check scripts/export-postgres-seed.mjs && node --check scripts/submit-indexnow.mjs && node --check scripts/check-schema.mjs && node --check scripts/automation-state.mjs && node --check scripts/automation-daemon.mjs && node --check scripts/automation-health.mjs && node --check scripts/automation-quality-gate.mjs && node --check scripts/generate-automation-report.mjs && node --check scripts/run-automation.mjs && node -e \"JSON.parse(require('fs').readFileSync('data/product-modules.json','utf8'))\" && node scripts/check-schema.mjs && node scripts/audit-project.mjs"
   },
   "engines": {
     "node": ">=20"

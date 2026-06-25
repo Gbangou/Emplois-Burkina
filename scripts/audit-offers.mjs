@@ -178,7 +178,7 @@ const report = {
   items,
 };
 
-const markdown = `# Audit de verification des offres JobFaso
+const markdown = `# Audit de verification des offres Emplois Burkina
 
 Genere le : ${report.generatedAt}
 

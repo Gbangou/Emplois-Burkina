@@ -1,218 +1,626 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://jobfaso.com/index.html</loc>
-    <lastmod>2026-06-17</lastmod>
+    <loc>https://emplois-burkina.com/index.html</loc>
+    <lastmod>2026-06-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://jobfaso.com/jobs.html</loc>
-    <lastmod>2026-06-17</lastmod>
+    <loc>https://emplois-burkina.com/jobs.html</loc>
+    <lastmod>2026-06-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://jobfaso.com/conseils.html</loc>
-    <lastmod>2026-06-17</lastmod>
+    <loc>https://emplois-burkina.com/conseils.html</loc>
+    <lastmod>2026-06-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://jobfaso.com/grille-tarifaire.html</loc>
-    <lastmod>2026-06-17</lastmod>
+    <loc>https://emplois-burkina.com/grille-tarifaire.html</loc>
+    <lastmod>2026-06-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://jobfaso.com/annonceurs.html</loc>
-    <lastmod>2026-06-17</lastmod>
+    <loc>https://emplois-burkina.com/annonceurs.html</loc>
+    <lastmod>2026-06-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://jobfaso.com/contacts.html</loc>
-    <lastmod>2026-06-17</lastmod>
+    <loc>https://emplois-burkina.com/contacts.html</loc>
+    <lastmod>2026-06-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://jobfaso.com/contact.html</loc>
-    <lastmod>2026-06-17</lastmod>
+    <loc>https://emplois-burkina.com/contact.html</loc>
+    <lastmod>2026-06-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://jobfaso.com/privacy.html</loc>
-    <lastmod>2026-06-17</lastmod>
+    <loc>https://emplois-burkina.com/privacy.html</loc>
+    <lastmod>2026-06-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://jobfaso.com/terms.html</loc>
-    <lastmod>2026-06-17</lastmod>
+    <loc>https://emplois-burkina.com/terms.html</loc>
+    <lastmod>2026-06-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://jobfaso.com/pages/jobs/coordinateur-administratif-et-logistique-a8c21595.html</loc>
-    <lastmod>2026-06-17</lastmod>
+    <loc>https://emplois-burkina.com/pages/jobs/volunteer-specialist-d323737c.html</loc>
+    <lastmod>2026-06-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://jobfaso.com/pages/jobs/charge-de-securite-et-logistique-national-599fc205.html</loc>
-    <lastmod>2026-06-17</lastmod>
+    <loc>https://emplois-burkina.com/pages/jobs/technico-commercial-en-climatisation-haut-de-gamme-ouagadougou-4a1ec186.html</loc>
+    <lastmod>2026-06-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://jobfaso.com/pages/jobs/responsable-de-recherche-5114bd32.html</loc>
-    <lastmod>2026-06-17</lastmod>
+    <loc>https://emplois-burkina.com/pages/jobs/responsable-meal-rcce-responsabilisation-et-protection-7b678429.html</loc>
+    <lastmod>2026-06-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://jobfaso.com/pages/jobs/pediatre-referent-hf-f66f33f4.html</loc>
-    <lastmod>2026-06-17</lastmod>
+    <loc>https://emplois-burkina.com/pages/jobs/avis-de-recrutement-d-un-e-coordonnateur-trice-de-projet-f69dcfb6.html</loc>
+    <lastmod>2026-06-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://jobfaso.com/pages/jobs/enqueteurs-chercheurs-de-terrain-ac8e8a25.html</loc>
-    <lastmod>2026-06-17</lastmod>
+    <loc>https://emplois-burkina.com/pages/jobs/mch-et-nutrition-officer-kaya-e53429d1.html</loc>
+    <lastmod>2026-06-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://jobfaso.com/pages/jobs/responsable-relations-bailleurs-h-f-tout-pays-085b3a6f.html</loc>
-    <lastmod>2026-06-17</lastmod>
+    <loc>https://emplois-burkina.com/pages/jobs/vacancytitle-finance-assistant-location-ouagadougou-ec155659.html</loc>
+    <lastmod>2026-06-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://jobfaso.com/pages/jobs/appel-a-propositions-pour-la-mise-en-uvre-d-une-enquete-de-couverture-post-campagne-de-sup-e05b148d.html</loc>
-    <lastmod>2026-06-17</lastmod>
+    <loc>https://emplois-burkina.com/pages/jobs/coordinateur-administratif-et-logistique-a8c21595.html</loc>
+    <lastmod>2026-06-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://jobfaso.com/pages/jobs/cash-academy-program-coordinator-b511815e.html</loc>
-    <lastmod>2026-06-17</lastmod>
+    <loc>https://emplois-burkina.com/pages/jobs/magazine-keeper-junior-magasinier-h-f-bagassi-dd07b607.html</loc>
+    <lastmod>2026-06-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://jobfaso.com/pages/jobs/programme-officer-school-meals-dd10c613.html</loc>
-    <lastmod>2026-06-17</lastmod>
+    <loc>https://emplois-burkina.com/pages/jobs/responsable-meal-ipc-wash-c6c03780.html</loc>
+    <lastmod>2026-06-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://jobfaso.com/pages/categories/bureau.html</loc>
-    <lastmod>2026-06-17</lastmod>
+    <loc>https://emplois-burkina.com/pages/jobs/05-postes-a-pourvoir-au-sein-d-une-mutuelle-nationale-e9239113.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/jobs/social-et-behavior-change-officer-no-1-ta-364-days-ouagadougou-burkina-faso-wcar-7630d6d3.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/jobs/vacancytitle-finance-assistant-smc-location-ouagadougou-f09ac040.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/jobs/delegado-a-de-salud-agua-y-saneamiento-651e1ed0.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/jobs/charge-e-d-operations-et-developpement-ouagadougou-ff4e325a.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/jobs/assistant-aux-achats-c06905e9.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/jobs/medecins-oncologues-medical-et-chirurgical-3d61cd45.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/jobs/coordinateur-administratif-et-logistique-f-h-97a21600.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/jobs/communications-and-marketing-specialist-pathfinder-portuguese-et-english-countries-1d382472.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/jobs/coordinateur-trice-financier-e-ca4c8f74.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/jobs/directeur-general-enseignement-superieur-telecom-ouaga-875ee4aa.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/jobs/assistant-principal-rh-b492e3fd.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/jobs/chai-clinton-health-access-initiative-453c94d7.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/jobs/responsable-de-recherche-5114bd32.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/jobs/blastman-h-f-mogtedo-et-boungou-7b76d300.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/jobs/assistant-administratif-525798f4.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/jobs/et-eacute-pidemiologiste-analyste-de-recherche-malaria-epidemiologist-research-analyst-pal-3dbe4702.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/jobs/enqueteurs-chercheurs-de-terrain-ac8e8a25.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/jobs/stagiaire-secretaire-comptable-stage-de-pre-emploi-ouagadougou-00953728.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/jobs/danish-refugee-council-drc-j-13-02-chefs-d-et-rsquo-equipe-de-protection-ethiopie-cdd-prot-434580f6.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/jobs/associate-malaria-case-management-et-supply-chain-management-071f2c97.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/jobs/stagiaire-communication-marketing-ouagadougou-66022624.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/jobs/responsable-du-suivi-et-de-l-et-rsquo-evaluation-2e3bd7ca.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/jobs/clinicien-kaya-regional-office-fc7357dc.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/jobs/stagiaire-en-infographie-et-montage-video-ouagadougou-b0427968.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/jobs/fhi-360-recrute-04-postes-b6253de6.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/jobs/clinician-koudougou-regional-office-1ffcefc7.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/jobs/stagiaire-ingenieur-technico-commercial-electricite-ouagadougou-7530670d.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/jobs/charge-e-de-projet-principal-e-nutrition-c0378ef3.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/jobs/charge-des-ressources-humaines-f8e877d3.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/jobs/chauffeur-particulier-ouagadougou-d6caa8f6.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/jobs/mag-recrute-02-postes-0d0fccf5.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/jobs/drc-danish-refugee-council-3b400021.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/jobs/responsable-qhse-h-f-ouagadougou-b1a9e70e.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/jobs/specialiste-de-la-chaine-d-approvisionnement-supply-chain-specialist-feb47682.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/jobs/professeur-particulier-toutes-les-villes-77022179.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/jobs/charge-e-principal-e-des-achats-1ecbc9e8.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/jobs/commercial-terrain-ouagadougou-62999b03.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/jobs/charg-e-e-de-la-chaine-d-approvisionnement-supply-chain-officer-e6001fc8.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/jobs/coursier-conducteur-de-vehicules-automobiles-poids-leger-ouagadougou-6209f3fb.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/jobs/specialiste-en-sante-maternelle-et-infantile-et-en-vaccination-mch-et-immunization-special-5dd00f80.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/jobs/developpeur-euse-backend-ouagadougou-af5f530c.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/jobs/responsable-de-projet-multisectoriel-7885887a.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/jobs/technico-commercial-e-ouagadougou-f1ac7d90.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/jobs/agencies-offices-and-departments-0138bdaa.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/jobs/expert-e-en-developpement-et-maintenance-de-systemes-applicatifs-international-862715d3.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/jobs/expert-e-en-developpement-d-applications-mobiles-et-solutions-digital-international-0776b5b3.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/jobs/test-and-validation-engineer-m-f-63bddfbc.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/jobs/charge-e-d-affaires-securite-privee-et-gardiennage-ouagadougou-a4dc16f4.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/categories/btp-et-chantier.html</loc>
+    <lastmod>2026-06-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://jobfaso.com/pages/categories/metiers-terrain-et-informels.html</loc>
-    <lastmod>2026-06-17</lastmod>
+    <loc>https://emplois-burkina.com/pages/categories/bureau.html</loc>
+    <lastmod>2026-06-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://jobfaso.com/pages/categories/ong.html</loc>
-    <lastmod>2026-06-17</lastmod>
+    <loc>https://emplois-burkina.com/pages/categories/commerce-et-vente.html</loc>
+    <lastmod>2026-06-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://jobfaso.com/pages/categories/sante.html</loc>
-    <lastmod>2026-06-17</lastmod>
+    <loc>https://emplois-burkina.com/pages/categories/finance-et-administration.html</loc>
+    <lastmod>2026-06-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://jobfaso.com/pages/categories/transport-et-logistique.html</loc>
-    <lastmod>2026-06-17</lastmod>
+    <loc>https://emplois-burkina.com/pages/categories/informatique-data-et-systemes.html</loc>
+    <lastmod>2026-06-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://jobfaso.com/pages/villes/burkina-faso.html</loc>
-    <lastmod>2026-06-17</lastmod>
+    <loc>https://emplois-burkina.com/pages/categories/metiers-terrain-et-informels.html</loc>
+    <lastmod>2026-06-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://jobfaso.com/pages/villes/ouagadougou.html</loc>
-    <lastmod>2026-06-17</lastmod>
+    <loc>https://emplois-burkina.com/pages/categories/ong.html</loc>
+    <lastmod>2026-06-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://jobfaso.com/pages/recherche/concours.html</loc>
-    <lastmod>2026-06-17</lastmod>
+    <loc>https://emplois-burkina.com/pages/categories/sante.html</loc>
+    <lastmod>2026-06-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://jobfaso.com/pages/recherche/logistique.html</loc>
-    <lastmod>2026-06-17</lastmod>
+    <loc>https://emplois-burkina.com/pages/categories/stage.html</loc>
+    <lastmod>2026-06-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://jobfaso.com/pages/recherche/sante.html</loc>
-    <lastmod>2026-06-17</lastmod>
+    <loc>https://emplois-burkina.com/pages/categories/transport-et-logistique.html</loc>
+    <lastmod>2026-06-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://jobfaso.com/pages/guides/faire-un-cv-au-burkina-faso.html</loc>
-    <lastmod>2026-06-17</lastmod>
+    <loc>https://emplois-burkina.com/pages/villes/bagassi.html</loc>
+    <lastmod>2026-06-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://jobfaso.com/pages/guides/eviter-fausses-offres-emploi.html</loc>
-    <lastmod>2026-06-17</lastmod>
+    <loc>https://emplois-burkina.com/pages/villes/burkina-faso.html</loc>
+    <lastmod>2026-06-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://jobfaso.com/pages/guides/postuler-ong-burkina.html</loc>
-    <lastmod>2026-06-17</lastmod>
+    <loc>https://emplois-burkina.com/pages/villes/du-poste.html</loc>
+    <lastmod>2026-06-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://jobfaso.com/pages/guides/preparer-un-concours.html</loc>
-    <lastmod>2026-06-17</lastmod>
+    <loc>https://emplois-burkina.com/pages/villes/ethiopie.html</loc>
+    <lastmod>2026-06-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://jobfaso.com/pages/guides/rediger-une-lettre-de-motivation.html</loc>
-    <lastmod>2026-06-17</lastmod>
+    <loc>https://emplois-burkina.com/pages/villes/koudougou.html</loc>
+    <lastmod>2026-06-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://jobfaso.com/pages/guides/preparer-un-entretien-emploi.html</loc>
-    <lastmod>2026-06-17</lastmod>
+    <loc>https://emplois-burkina.com/pages/villes/niger.html</loc>
+    <lastmod>2026-06-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://jobfaso.com/pages/guides/documents-pour-postuler.html</loc>
-    <lastmod>2026-06-17</lastmod>
+    <loc>https://emplois-burkina.com/pages/villes/ouagadougou.html</loc>
+    <lastmod>2026-06-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://jobfaso.com/pages/guides/secteurs-qui-recrutent-burkina-faso.html</loc>
-    <lastmod>2026-06-17</lastmod>
+    <loc>https://emplois-burkina.com/pages/villes/rdc.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/villes/senegal.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/villes/dans-le-courant-des-mois-de-mai-et-juin.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/recherche/assistant.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/recherche/chauffeur.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/recherche/comptable.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/recherche/concours.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/recherche/logistique.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/recherche/sante.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/recherche/secretaire.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/recherche/stage.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/recherche/vente.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/guides/faire-un-cv-au-burkina-faso.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/guides/eviter-fausses-offres-emploi.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/guides/postuler-ong-burkina.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/guides/preparer-un-concours.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/guides/rediger-une-lettre-de-motivation.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/guides/preparer-un-entretien-emploi.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/guides/documents-pour-postuler.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://emplois-burkina.com/pages/guides/secteurs-qui-recrutent-burkina-faso.html</loc>
+    <lastmod>2026-06-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>

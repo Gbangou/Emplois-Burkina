@@ -1,90 +1,97 @@
-# Rapport automation JobFaso
+# Rapport automation Emplois Burkina
 
-Genere le : 2026-06-16T09:57:10.751Z
+Genere le : 2026-06-25T12:23:39.793Z
 
 ## Resume
 
-- Etat : success
-- Dernier succes : 2026-06-16T09:31:50.353Z
-- Duree derniere run : 234s
-- Runs : 1 total, 1 succes, 0 echecs
-- Quality gate : passed (100 / 100)
+- Etat : running
+- Dernier succes : 2026-06-25T10:08:05.524Z
+- Duree derniere run : 625s
+- Runs : 5 total, 3 succes, 0 echecs
+- Quality gate : warning (89 / 100)
 - Checks critiques en echec : 0
-- Warnings quality gate : 0
-- Sources : 41 (14 automatiques, 27 manuelles)
-- Items bruts : 391
-- Offres : 22
-- Offres a moderer : 22
-- Offres avec date de cloture : 12
-- Offres sans date de cloture : 10
-- Offres cloturant sous 7 jours : 7
+- Warnings quality gate : 2
+- Sources : 87 (14 automatiques, 73 manuelles)
+- Items bruts : 418
+- Offres : 58
+- Offres a moderer : 58
+- Offres avec date de cloture : 16
+- Offres sans date de cloture : 42
+- Offres cloturant sous 7 jours : 5
 - Offres expirees : 0
-- Posts sociaux en file : 56
-- Dates en file de revue : 10
-- Score visibilite : 92 / 100
+- Posts sociaux en file : 76
+- Dates en file de revue : 42
+- Score visibilite : 84 / 100
 - Audit projet : passed (100 / 100)
-- Cibles backlinks/partenariats : 44
-- URLs sitemap : 50
-- Taille SQLite locale : 741376 octets
+- Cibles backlinks/partenariats : 46
+- URLs sitemap : 104
+- Taille SQLite locale : 868352 octets
 - Erreurs scraper : 2
-- Taille seed SQL : 747759 octets
+- Taille seed SQL : 906752 octets
 
 ## Categories
 
 | Nom | Total |
 | --- | ---: |
-| Bureau | 8 |
-| ONG | 6 |
-| Finance et administration | 2 |
-| Transport et logistique | 2 |
+| Bureau | 21 |
+| ONG | 12 |
+| Finance et administration | 5 |
+| Informatique, data et systemes | 4 |
+| Metiers terrain et informels | 4 |
+| Stage | 4 |
+| Transport et logistique | 3 |
+| Commerce et vente | 2 |
+| Sante | 2 |
 | BTP et chantier | 1 |
-| Commerce et vente | 1 |
-| Metiers terrain et informels | 1 |
-| Sante | 1 |
 
 ## Villes
 
 | Nom | Total |
 | --- | ---: |
-| Burkina Faso | 16 |
-| Ouagadougou | 5 |
+| Burkina Faso | 27 |
+| Ouagadougou | 18 |
+| RDC | 4 |
+| Senegal | 3 |
 | Bagassi | 1 |
+| dans le courant des mois de mai et juin | 1 |
+| DU POSTE | 1 |
+| Ethiopie | 1 |
+| Koudougou | 1 |
+| Niger | 1 |
 
 ## Sources publiees
 
 | Nom | Total |
 | --- | ---: |
-| BFemploi | 8 |
-| Emploiburkina | 7 |
-| HumanitaireHub | 4 |
-| Burkina24 Emploi | 1 |
-| LeFaso.net Recrutement | 1 |
-| UNjobs Burkina Faso | 1 |
+| Emploiburkina | 20 |
+| UN Talent Burkina Faso | 16 |
+| HumanitaireHub | 10 |
+| BFemploi | 6 |
+| LeFaso.net Recrutement | 3 |
+| UNjobs Burkina Faso | 3 |
 
 ## Deadlines proches
 
-- 0j : Specialiste Safeguarding Regional (BFemploi) - 2026-06-15
-- 1j : Cash Academy Program Coordinator (BFemploi) - 2026-06-16
-- 1j : Programme Officer - School Meals (BFemploi) - 2026-06-16
-- 5j : OIBT J-4 Programme de bourses de l&rsquo;OIBT 📍 Pays Membres de l'OIBT 📋 Bourses/Etudes Plusieurs Secteurs (HumanitaireHub) - 2026-06-20
-- 6j : Appel à propositions pour la mise en œuvre d’une enquête de couverture post-campagne de supplémentation en vitamine a (BFemploi) - 2026-06-21
-- 7j : Pédiatre Référent (HF) (HumanitaireHub) - 2026-06-22
-- 7j : Responsable Relations Bailleurs H/F Tout Pays (BFemploi) - 2026-06-22
+- 2j : Enquêteurs / Chercheurs de terrain (BFemploi) - 2026-06-26
+- 6j : Coordinateur·trice Financier·e (BFemploi) - 2026-06-30
+- 6j : Responsable de Recherche (BFemploi) - 2026-06-30
+- 6j : MAG recrute 02 postes (HumanitaireHub) - 2026-06-30
+- 7j : Chargé(e) de projet principal(e) – Nutrition (HumanitaireHub) - 2026-07-01
 
 ## Offres sans date de cloture
 
-- CAGEI | Appel à candidatures : Recrutement 6ième promotion pour la formation certifiante en Analyse de données (Data Analyst) (Burkina24 Emploi) - Bureau
 - Technico Commercial en Climatisation Haut de Gamme- Ouagadougou (Emploiburkina) - BTP et chantier
 - Avis de recrutement d’un(e) Coordonnateur(trice) de Projet (LeFaso.net Recrutement) - ONG
-- Communications and Marketing Specialist, Pathfinder Portuguese & English Countries (UNjobs Burkina Faso) - Commerce et vente
-- Sécretaire Comptable- Ouagadougou (Emploiburkina) - Finance et administration
-- Executive Secretary- Ouagadougou (Emploiburkina) - Bureau
+- MCH & Nutrition Officer - Kaya (UN Talent Burkina Faso) - ONG
+- VacancyTitle: Finance Assistant, Location: Ouagadougou (UNjobs Burkina Faso) - Finance et administration
 - Magazine Keeper Junior (Magasinier) H/F- Bagassi (Emploiburkina) - Transport et logistique
-- Manager- Work From Home (Emploiburkina) - Bureau
-- Secrétaire- Ouagadougou (Emploiburkina) - Finance et administration
-- ANGULAR Developer (M/F) (Emploiburkina) - Bureau
+- 05 postes à pourvoir au sein d’une mutuelle nationale (LeFaso.net Recrutement) - Bureau
+- Social & Behavior Change Officer, NO-1, TA, 364 days, Ouagadougou, Burkina-Faso - WCAR (UN Talent Burkina Faso) - ONG
+- VacancyTitle: Finance Assistant SMC, Location: Ouagadougou (UNjobs Burkina Faso) - Finance et administration
+- Chargé(e) d’Opérations et Développement- Ouagadougou (Emploiburkina) - Bureau
+- Médecins Oncologues médical et chirurgical (LeFaso.net Recrutement) - Sante
 
 ## Erreurs scraper recentes
 
-- UN Talent Burkina Faso: HTTP 403 Forbidden
-- Agence Faso Mebo: fetch failed
+- UNjobs Burkina Faso: robots.txt interdit la collecte de cette source
+- Jooble Burkina Faso: HTTP 403 Forbidden

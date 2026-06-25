@@ -1,0 +1,51 @@
+[
+  {
+    "id": "search_engine",
+    "reference": "Indeed / ZipRecruiter",
+    "principle": "Recherche d'abord, friction minimale",
+    "emploisBurkinaMove": "Barre de recherche centrale, suggestions metiers locaux, filtres progressifs et resultats rapides.",
+    "impact": "Les candidats commencent meme avec un mot simple comme chauffeur, chantier, ONG ou concours."
+  },
+  {
+    "id": "trust_layer",
+    "reference": "Glassdoor / Getwork",
+    "principle": "Confiance visible avant candidature",
+    "emploisBurkinaMove": "Source, deadline, score, risque, statut de verification et signalement d'offre douteuse.",
+    "impact": "Moins de fausses offres, moins de perte de temps, meilleure credibilite publique."
+  },
+  {
+    "id": "networking_profile",
+    "reference": "LinkedIn Jobs",
+    "principle": "Profil et relation recruteur-candidat",
+    "emploisBurkinaMove": "Favoris, CV, preferences, historique candidature et contact WhatsApp quand le recruteur est verifie.",
+    "impact": "Emplois Burkina devient un outil quotidien, pas seulement une liste d'annonces."
+  },
+  {
+    "id": "remote_flexible",
+    "reference": "FlexJobs / Remote",
+    "principle": "Remote, consultance et flexible bien separes",
+    "emploisBurkinaMove": "Segments ONU, consultance, teletravail, missions courtes et opportunites internationales.",
+    "impact": "Les profils burkinabe voient les opportunites locales et internationales dans un parcours coherent."
+  },
+  {
+    "id": "clean_indexing",
+    "reference": "HiringCafe",
+    "principle": "Indexer les sources directes et eviter les duplications",
+    "emploisBurkinaMove": "Priorite aux pages carrieres officielles, flux RSS/API, sources citees, hash anti-doublons et moderation.",
+    "impact": "Catalogue plus propre, moins d'annonces recyclees, meilleure qualite SEO."
+  },
+  {
+    "id": "recruiter_ops",
+    "reference": "Greenhouse / Workable / Freshteam",
+    "principle": "Mini ATS et analytics recruteur",
+    "emploisBurkinaMove": "Publication annonce, validation admin, pipeline leads, packs sponsorises, reporting et messages modeles.",
+    "impact": "Les recruteurs paient pour de la visibilite mesurable et un workflow simple."
+  },
+  {
+    "id": "ethical_scraping",
+    "reference": "RFC 9309 / Google Search Central",
+    "principle": "Collecte responsable et defendable",
+    "emploisBurkinaMove": "Respect robots.txt, delais par source, user-agent clair, attribution, stockage brut separe et suppression sur demande.",
+    "impact": "Croissance data sans mettre la marque ni les sources en risque inutile."
+  }
+]

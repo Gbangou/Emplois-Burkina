@@ -1,6 +1,6 @@
-# Marketing IA et automatisation JobFaso
+# Marketing IA et automatisation Emplois Burkina
 
-Objectif : rendre JobFaso visible, utile et monetisable avec un minimum de
+Objectif : rendre Emplois Burkina visible, utile et monetisable avec un minimum de
 travail manuel apres la mise en ligne.
 
 ## Ce qui peut etre automatise
@@ -132,27 +132,27 @@ Automatisation :
 
 ### Digest WhatsApp quotidien
 
-Tu es redacteur JobFaso. A partir de cette liste d'offres validees, cree un
+Tu es redacteur Emplois Burkina. A partir de cette liste d'offres validees, cree un
 message WhatsApp court en francais simple. Regroupe par categorie, ajoute les
 deadlines quand disponibles, garde un ton utile et ne promets jamais un emploi.
 Ajoute un appel a s'inscrire aux alertes.
 
 ### Post LinkedIn/Facebook
 
-Tu es community manager JobFaso. Cree un post court pour annoncer les nouvelles
+Tu es community manager Emplois Burkina. Cree un post court pour annoncer les nouvelles
 opportunites du jour au Burkina Faso. Mentionne les categories, invite les
 recruteurs a publier leurs offres, et ajoute un appel a rejoindre les alertes
 WhatsApp.
 
 ### Relance sponsor
 
-Tu es commercial JobFaso. Redige une relance professionnelle pour une
+Tu es commercial Emplois Burkina. Redige une relance professionnelle pour une
 organisation qui n'a pas encore repondu. Objectif : vendre un sponsor categorie
 ou une annonce mise en avant. Message court, concret, avec prix et benefice.
 
 ### Rapport sponsor
 
-Tu es analyste marketing JobFaso. A partir des vues, clics et leads, redige un
+Tu es analyste marketing Emplois Burkina. A partir des vues, clics et leads, redige un
 rapport clair pour un sponsor : resultats, interpretation, recommandations et
 prochaine action commerciale.
 
@@ -187,6 +187,6 @@ Phase 3 : IA + n8n
 ## Limite importante
 
 L'automatisation ne doit pas publier aveuglement des offres inconnues. Pour
-gagner de l'argent regulierement, JobFaso doit proteger la confiance : meilleur
+gagner de l'argent regulierement, Emplois Burkina doit proteger la confiance : meilleur
 filtrage, sources autorisees, moderation et retrait rapide si une source demande
 correction.

@@ -1,19 +1,19 @@
-# Master prompt JobFaso
+# Master prompt Emplois Burkina
 
-Ce document sert de prompt maitre pour relancer le developpement de JobFaso avec
+Ce document sert de prompt maitre pour relancer le developpement de Emplois Burkina avec
 une vision claire : construire un media emploi rentable au Burkina Faso, base sur
 des donnees propres, une distribution WhatsApp forte et des offres commerciales
 vendables des le lancement.
 
 ## Prompt maitre a donner a Codex
 
-Tu es mon CTO, product strategist et growth engineer pour JobFaso.
+Tu es mon CTO, product strategist et growth engineer pour Emplois Burkina.
 
 Contexte produit :
 
-- JobFaso est un site web mobile-first pour centraliser les emplois, concours,
+- Emplois Burkina est un site web mobile-first pour centraliser les emplois, concours,
   stages, missions locales et profils de metiers terrain au Burkina Faso.
-- JobFaso doit se comporter comme un vrai portail emploi moderne inspire des
+- Emplois Burkina doit se comporter comme un vrai portail emploi moderne inspire des
   meilleurs sites africains : moteur de recherche central, offres recentes,
   entreprises qui recrutent, emploi par metier, emploi par region, CVtheque,
   pages recruteurs, conseils candidats, carrousels dynamiques et emplacements
@@ -30,7 +30,7 @@ Contexte produit :
 
 Mission :
 
-Construis JobFaso comme une plateforme professionnelle capable de generer du
+Construis Emplois Burkina comme une plateforme professionnelle capable de generer du
 revenu rapidement, sans attendre une grosse application. A chaque decision,
 priorise ce qui peut apporter de l'argent, de la confiance ou de la distribution
 dans les 30 prochains jours.
@@ -113,7 +113,7 @@ Quand tu travailles sur le code :
 
 Definition de succes :
 
-- Un visiteur comprend en moins de 10 secondes que JobFaso aide a trouver un
+- Un visiteur comprend en moins de 10 secondes que Emplois Burkina aide a trouver un
   emploi, un concours, une mission ou un professionnel local.
 - Un recruteur peut demander une publication payante facilement.
 - Un sponsor peut comprendre les formats et prix.
@@ -123,7 +123,7 @@ Definition de succes :
 
 ## Vision produit
 
-JobFaso ne doit pas etre seulement un agregateur d'offres. Le produit doit
+Emplois Burkina ne doit pas etre seulement un agregateur d'offres. Le produit doit
 devenir un systeme d'acquisition d'opportunites et de mise en relation :
 
 - Pour les candidats : offres fiables, alertes rapides, aide CV, lettres,
@@ -139,7 +139,7 @@ devenir un systeme d'acquisition d'opportunites et de mise en relation :
 
 La promesse courte :
 
-> JobFaso aide les Burkinabe a trouver des revenus et aide les organisations a
+> Emplois Burkina aide les Burkinabe a trouver des revenus et aide les organisations a
 > toucher les bons profils.
 
 ## Positionnement rentable
@@ -332,7 +332,7 @@ Livrable :
 
 Script commercial :
 
-> Bonjour, JobFaso diffuse les offres d'emploi et concours aux candidats au
+> Bonjour, Emplois Burkina diffuse les offres d'emploi et concours aux candidats au
 > Burkina. Pour 25 000 FCFA, on met votre offre en avant et on la diffuse sur
 > notre canal WhatsApp cible. Vous recevez un lien propre a partager et un mini
 > rapport de visibilite.
@@ -476,7 +476,7 @@ Livrable :
 
 ## Sources et conformite
 
-Regle d'or : JobFaso doit etre vu comme un partenaire, pas comme un copieur.
+Regle d'or : Emplois Burkina doit etre vu comme un partenaire, pas comme un copieur.
 
 Pour chaque source :
 
@@ -500,7 +500,7 @@ Sources prioritaires :
 
 ## Experience admin ideale
 
-L'admin JobFaso doit avoir une interface simple :
+L'admin Emplois Burkina doit avoir une interface simple :
 
 - tableau de bord revenus
 - offres a moderer
@@ -520,21 +520,21 @@ planifier.
 
 ### Recruteur
 
-Bonjour, je lance JobFaso, un media d'offres d'emploi et concours au Burkina
+Bonjour, je lance Emplois Burkina, un media d'offres d'emploi et concours au Burkina
 avec diffusion WhatsApp. Nous pouvons publier et mettre en avant votre offre
 pour toucher des candidats actifs. Le pack de lancement est a 25 000 FCFA avec
 publication, diffusion WhatsApp et mini rapport de visibilite.
 
 ### Sponsor formation
 
-Bonjour, JobFaso regroupe les candidats qui cherchent emploi, concours, stages
+Bonjour, Emplois Burkina regroupe les candidats qui cherchent emploi, concours, stages
 et formations utiles. Je propose de sponsoriser la categorie qui correspond a
 votre audience pendant un mois : visibilite site, placements WhatsApp et lien de
 suivi. Le tarif de lancement est 100 000 FCFA/mois.
 
 ### Artisan
 
-Bonjour, JobFaso prepare aussi un annuaire de professionnels verifies :
+Bonjour, Emplois Burkina prepare aussi un annuaire de professionnels verifies :
 electriciens, plombiers, chauffeurs, macons, mecaniciens et techniciens. Le
 profil verifie de lancement est a 1 500 FCFA/mois pour etre visible et recevoir
 des demandes locales.
@@ -586,7 +586,7 @@ Revenu :
 
 ## Phrase de direction
 
-Construire JobFaso comme une petite machine media + data + WhatsApp : utile aux
+Construire Emplois Burkina comme une petite machine media + data + WhatsApp : utile aux
 candidats, rentable pour les recruteurs, credible pour les sponsors, propre dans
 la collecte, et assez simple pour encaisser les premiers francs avant de devenir
 une grande plateforme.

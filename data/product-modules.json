@@ -1,0 +1,182 @@
+[
+  {
+    "id": "jobs_catalog",
+    "name": "Catalogue offres",
+    "domain": "core",
+    "status": "in_progress",
+    "priority": "critical",
+    "backend": "API /api/jobs, DB locale, SQLite, moderation dates",
+    "frontend": "Liste offres, detail, filtres, compteur deadline",
+    "nextMilestone": "Garantir 95% d'offres publiques avec date de cloture exploitable.",
+    "acceptanceCriteria": [
+      "Aucune offre expiree dans le flux public",
+      "Lien source reel obligatoire",
+      "Date de cloture obligatoire pour publication active"
+    ]
+  },
+  {
+    "id": "source_ingestion",
+    "name": "Collecte et scraping",
+    "domain": "data",
+    "status": "in_progress",
+    "priority": "critical",
+    "backend": "Scrapers, raw-items, curation, audit offres",
+    "frontend": "Statuts sources dans admin",
+    "nextMilestone": "Stabiliser les sources Burkina, ONG, concours, remote et regionales.",
+    "acceptanceCriteria": [
+      "Sources auditees et classees par fiabilite",
+      "Historique erreurs par source",
+      "Respect robots.txt et flux officiels quand disponibles"
+    ]
+  },
+  {
+    "id": "moderation",
+    "name": "Back-office moderation",
+    "domain": "admin",
+    "status": "in_progress",
+    "priority": "critical",
+    "backend": "Routes admin moderation, corrections dates, audit automation",
+    "frontend": "Admin offres, file dates, score qualite",
+    "nextMilestone": "Ajouter file sources a probleme et historique moderateur.",
+    "acceptanceCriteria": [
+      "Valider, rejeter et corriger une offre",
+      "Voir les offres expirees ou sans deadline",
+      "Tracer les corrections importantes"
+    ]
+  },
+  {
+    "id": "search_matching",
+    "name": "Recherche et matching",
+    "domain": "candidate",
+    "status": "in_progress",
+    "priority": "high",
+    "backend": "Index recherche, score pertinence, synonymes metiers locaux",
+    "frontend": "Recherche simple, filtres ville/source/categorie, tri pertinence, score explique",
+    "nextMilestone": "Ajouter un index persistant avec poids par champ et synonymes metiers locaux audites.",
+    "acceptanceCriteria": [
+      "Recherche par metier, ville, source et categorie",
+      "Tri par pertinence, urgence et confiance",
+      "Score visible et comprehensible"
+    ]
+  },
+  {
+    "id": "alerts_whatsapp",
+    "name": "Alertes WhatsApp",
+    "domain": "growth",
+    "status": "in_progress",
+    "priority": "high",
+    "backend": "Leads alertes, criteres de recherche, segments persistants, templates, journal d'envoi",
+    "frontend": "Formulaires alertes, preferences metier/ville, alerte depuis recherche courante",
+    "nextMilestone": "Ajouter opt-in explicite, templates et journal d'envoi WhatsApp Business.",
+    "acceptanceCriteria": [
+      "Inscription alerte par ville et metier",
+      "Desinscription claire",
+      "Alerte sponsorisee identifiee"
+    ]
+  },
+  {
+    "id": "employer_portal",
+    "name": "Espace recruteur",
+    "domain": "revenue",
+    "status": "planned",
+    "priority": "high",
+    "backend": "Employeurs, annonces payantes, verification, paiements",
+    "frontend": "Publication annonce, grille tarifaire, leads recruteurs",
+    "nextMilestone": "Creer workflow soumission annonce + validation admin.",
+    "acceptanceCriteria": [
+      "Soumettre une annonce sans compte complexe",
+      "Verifier source et entreprise",
+      "Convertir sponsorisation via Mobile Money"
+    ]
+  },
+  {
+    "id": "candidate_profile",
+    "name": "Profil candidat",
+    "domain": "candidate",
+    "status": "planned",
+    "priority": "medium",
+    "backend": "Compte candidat, CV, favoris, historique candidatures",
+    "frontend": "Profil, favoris, preferences, documents",
+    "nextMilestone": "Favoris persistants et preferences d'alertes.",
+    "acceptanceCriteria": [
+      "Sauvegarder offres favorites",
+      "Definir metiers et villes cibles",
+      "Exporter ou reutiliser un CV"
+    ]
+  },
+  {
+    "id": "ai_assistance",
+    "name": "Assistance IA candidature",
+    "domain": "premium",
+    "status": "planned",
+    "priority": "medium",
+    "backend": "Generation CV, lettre, analyse ATS, garde-fous",
+    "frontend": "Assistant CV/lettre et conseils contextualises",
+    "nextMilestone": "Prototype lettre de motivation a partir d'une offre validee.",
+    "acceptanceCriteria": [
+      "Ne jamais inventer une experience candidat",
+      "Adapter la lettre a l'offre sourcee",
+      "Signaler les limites de l'IA"
+    ]
+  },
+  {
+    "id": "mobile_pwa_shell",
+    "name": "Shell mobile et PWA",
+    "domain": "candidate",
+    "status": "in_progress",
+    "priority": "high",
+    "backend": "Manifest, API publiques rapides, cache statique, endpoints sante",
+    "frontend": "Navigation mobile fixe, surfaces tactiles, recherche rapide, favoris et alertes",
+    "nextMilestone": "Ajouter service worker, installation PWA et etats hors-ligne utiles.",
+    "acceptanceCriteria": [
+      "Navigation principale utilisable d'une main sur mobile",
+      "Pages critiques chargees rapidement",
+      "Favoris et recherches recentes conserves localement"
+    ]
+  },
+  {
+    "id": "trust_safety",
+    "name": "Confiance et securite",
+    "domain": "operations",
+    "status": "in_progress",
+    "priority": "critical",
+    "backend": "Headers securite, rate limit, token admin, validation payloads, audits offres",
+    "frontend": "Source visible, dates lisibles, signalement offres douteuses, mentions claires",
+    "nextMilestone": "Ajouter signalement public d'offre et file admin anti-arnaque.",
+    "acceptanceCriteria": [
+      "Chaque offre publique expose sa source",
+      "Les offres douteuses passent par moderation",
+      "Les actions admin restent protegees par token"
+    ]
+  },
+  {
+    "id": "analytics_quality",
+    "name": "Analytics et qualite",
+    "domain": "operations",
+    "status": "in_progress",
+    "priority": "high",
+    "backend": "Events, leads, audits, rapports qualite",
+    "frontend": "Dashboard admin et KPI operations",
+    "nextMilestone": "Relier chaque KPI a une action de correction.",
+    "acceptanceCriteria": [
+      "Voir offres actives, expirees, sans deadline",
+      "Voir sources actives et erreurs",
+      "Voir leads et valeur pipeline"
+    ]
+  },
+  {
+    "id": "payments_monetization",
+    "name": "Paiements et monetisation",
+    "domain": "revenue",
+    "status": "planned",
+    "priority": "medium",
+    "backend": "Mobile Money, factures, plans sponsorises",
+    "frontend": "Checkout simple, offres sponsorisees, facture",
+    "nextMilestone": "Choisir aggregateur paiement adapte au Burkina Faso.",
+    "acceptanceCriteria": [
+      "Paiement tracable",
+      "Annonce sponsorisee clairement marquee",
+      "Rapport commercial pour recruteur"
+    ]
+  }
+]

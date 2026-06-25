@@ -119,7 +119,7 @@ const report = {
     projectAuditStatus: projectAudit.status,
     outreachTargets: visibilityReport.totals?.outreachTargets || 0,
     sitemapUrls: visibilityReport.totals?.sitemapUrls || 0,
-    sqliteBytes: await fileSize(join(RUNTIME_DIR, "jobfaso.sqlite")),
+    sqliteBytes: await fileSize(join(RUNTIME_DIR, "emplois-burkina.sqlite")),
     scraperErrors: scraperReport.errorCount || 0,
     seedSqlBytes: await fileSize(join(ROOT, "database", "seed.sql")),
   },
@@ -140,7 +140,7 @@ const report = {
   scraperErrors: (scraperReport.errors || []).slice(0, 20),
 };
 
-const markdown = `# Rapport automation JobFaso
+const markdown = `# Rapport automation Emplois Burkina
 
 Genere le : ${report.generatedAt}
 

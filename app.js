@@ -8,7 +8,7 @@ const fallbackJobs = [
     type: "CDI",
     salary: "900k - 1.5M FCFA",
     deadline: "15 juin",
-    sourceName: "Demo JobFaso",
+    sourceName: "Demo Emplois Burkina",
     sourceUrl: "#",
     tags: ["Informatique", "Management", "Urgent"],
     status: "validated",
@@ -23,7 +23,7 @@ const fallbackJobs = [
     type: "CDD",
     salary: "Non communique",
     deadline: "21 juin",
-    sourceName: "Demo JobFaso",
+    sourceName: "Demo Emplois Burkina",
     sourceUrl: "#",
     tags: ["ONG", "Projet", "Bilingue"],
     status: "validated",
@@ -38,7 +38,7 @@ const fallbackJobs = [
     type: "Concours",
     salary: "Selon grille",
     deadline: "30 juin",
-    sourceName: "Demo JobFaso",
+    sourceName: "Demo Emplois Burkina",
     sourceUrl: "#",
     tags: ["Concours", "BAC", "Dossier"],
     status: "validated",
@@ -53,7 +53,7 @@ const fallbackJobs = [
     type: "Mission",
     salary: "8k - 15k FCFA / jour",
     deadline: "Cette semaine",
-    sourceName: "Demo JobFaso",
+    sourceName: "Demo Emplois Burkina",
     sourceUrl: "#",
     tags: ["Construction", "Experience", "Terrain"],
     status: "validated",
@@ -73,11 +73,11 @@ let activeJobId = "";
 let currentJobsPage = 1;
 let wordCloudAnimationFrame = 0;
 let jobsRenderTimer = 0;
-let savedJobs = new Set(JSON.parse(localStorage.getItem("jobfaso.savedJobs") || "[]"));
+let savedJobs = new Set(JSON.parse(localStorage.getItem("emplois-burkina.savedJobs") || "[]"));
 const institutionFeedControllers = new WeakMap();
 const WHATSAPP_NUMBER = "";
-const LEADS_KEY = "jobfaso.leads";
-const EVENTS_KEY = "jobfaso.events";
+const LEADS_KEY = "emplois-burkina.leads";
+const EVENTS_KEY = "emplois-burkina.events";
 const JOBS_PER_PAGE = 8;
 
 const jobsList = document.querySelector("#jobsList");
@@ -91,6 +91,7 @@ const sourceFilter = document.querySelector("#sourceFilter");
 const sortFilter = document.querySelector("#sortFilter");
 const savedOnlyFilter = document.querySelector("#savedOnlyFilter");
 const resultsSummary = document.querySelector("#resultsSummary");
+const searchAlertPanel = document.querySelector("#searchAlertPanel");
 const jobsPagination = document.querySelector("#jobsPagination");
 const jobDetail = document.querySelector("#jobDetail");
 const employmentExplorer = document.querySelector("#employmentExplorer");
@@ -116,8 +117,12 @@ const socialQueueTable = document.querySelector("#socialQueueTable");
 const socialAdminMessage = document.querySelector("#socialAdminMessage");
 const dateReviewTable = document.querySelector("#dateReviewTable");
 const automationStatus = document.querySelector("#automationStatus");
+const moduleSummary = document.querySelector("#moduleSummary");
+const moduleRoadmapTable = document.querySelector("#moduleRoadmapTable");
 const analyticsSummary = document.querySelector("#analyticsSummary");
 const analyticsTable = document.querySelector("#analyticsTable");
+const alertSegmentsSummary = document.querySelector("#alertSegmentsSummary");
+const alertSegmentsTable = document.querySelector("#alertSegmentsTable");
 const visibilitySummary = document.querySelector("#visibilitySummary");
 const visibilityTable = document.querySelector("#visibilityTable");
 const employerCarousel = document.querySelector("#employerCarousel");
@@ -132,6 +137,7 @@ const adminJobStatusFilter = document.querySelector("#adminJobStatusFilter");
 const adminJobSourceFilter = document.querySelector("#adminJobSourceFilter");
 const adminJobDateFilter = document.querySelector("#adminJobDateFilter");
 const adminJobsFilterSummary = document.querySelector("#adminJobsFilterSummary");
+const networkStatusBar = document.createElement("div");
 
 const demoProfiles = [
   {
@@ -658,7 +664,7 @@ function getFeedPortalState(feed = {}) {
       status,
       message:
         feed?.statusMessage ||
-        "Le portail externe est temporairement indisponible. JobFaso garde la reference visible mais suspend l'ouverture directe.",
+        "Le portail externe est temporairement indisponible. Emplois Burkina garde la reference visible mais suspend l'ouverture directe.",
     };
   }
 
@@ -1491,7 +1497,7 @@ function getJobPagePath(job) {
 }
 
 function updateSavedStorage() {
-  localStorage.setItem("jobfaso.savedJobs", JSON.stringify([...savedJobs]));
+  localStorage.setItem("emplois-burkina.savedJobs", JSON.stringify([...savedJobs]));
   if (savedCount) savedCount.textContent = savedJobs.size;
 }
 
@@ -1612,6 +1618,41 @@ function setQuickCategory(category) {
   filterButtons.forEach((button) => {
     button.classList.toggle("active", (button.dataset.category || "") === activeCategory);
   });
+}
+
+function initNetworkStatus() {
+  networkStatusBar.className = "network-status";
+  networkStatusBar.setAttribute("role", "status");
+  networkStatusBar.setAttribute("aria-live", "polite");
+  document.body.append(networkStatusBar);
+
+  const update = () => {
+    const offline = !navigator.onLine;
+    document.documentElement.classList.toggle("is-offline", offline);
+    networkStatusBar.textContent = offline
+      ? "Mode hors ligne : les offres deja chargees restent consultables."
+      : "Connexion retablie.";
+    networkStatusBar.classList.toggle("is-visible", offline);
+    if (!offline) {
+      window.setTimeout(() => networkStatusBar.classList.remove("is-visible"), 2600);
+    }
+  };
+
+  window.addEventListener("online", update);
+  window.addEventListener("offline", update);
+  update();
+}
+
+async function registerServiceWorker() {
+  if (!("serviceWorker" in navigator)) return;
+  if (location.protocol === "file:") return;
+
+  try {
+    const registration = await navigator.serviceWorker.register("/sw.js", { scope: "/" });
+    if (registration.waiting) registration.waiting.postMessage({ type: "SKIP_WAITING" });
+  } catch {
+    // PWA enhancement only: the app must keep working when SW registration is blocked.
+  }
 }
 
 function syncQuickCategoryFromType(value = "") {
@@ -1768,13 +1809,13 @@ function initVisualEnhancements() {
   const elements = document.querySelectorAll(selectors.join(", "));
   if (!elements.length) return;
 
-  if (!window.jobFasoRevealObserver) {
-    window.jobFasoRevealObserver = new IntersectionObserver(
+  if (!window.emploisBurkinaRevealObserver) {
+    window.emploisBurkinaRevealObserver = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           if (!entry.isIntersecting) continue;
           entry.target.classList.add("is-visible");
-          window.jobFasoRevealObserver.unobserve(entry.target);
+          window.emploisBurkinaRevealObserver.unobserve(entry.target);
         }
       },
       { rootMargin: "0px 0px -8% 0px", threshold: 0.12 }
@@ -1790,7 +1831,7 @@ function initVisualEnhancements() {
       element.classList.add("is-visible");
       return;
     }
-    window.jobFasoRevealObserver.observe(element);
+    window.emploisBurkinaRevealObserver.observe(element);
   });
 }
 
@@ -2204,6 +2245,7 @@ function getFilteredJobs() {
 
   return filtered
     .sort((a, b) => {
+      if (sortMode === "relevance") return getVisibleMatchScore(b.job) - getVisibleMatchScore(a.job);
       if (normalizedQuery && a.searchScore !== b.searchScore) return b.searchScore - a.searchScore;
       if (sortMode === "title") return a.job.title.localeCompare(b.job.title, "fr");
       if (sortMode === "source") return (a.job.sourceName || "").localeCompare(b.job.sourceName || "", "fr");
@@ -2213,19 +2255,46 @@ function getFilteredJobs() {
 }
 
 function getVisibleMatchScore(job) {
+  return getJobMatchDetails(job).score;
+}
+
+function getJobMatchDetails(job) {
   const query = searchInput?.value.trim() || "";
   const type = typeFilter?.value || activeCategory || "";
   const city = cityFilter?.value || "";
-  let score = query ? Math.min(100, 45 + getJobSearchScore(job, normalize(query)) * 3) : 62;
+  const normalizedType = normalize(type);
+  const queryScore = getJobSearchScore(job, normalize(query));
+  const reasons = [];
+  let score = query ? Math.min(100, 45 + queryScore * 3) : 62;
+
+  if (query && queryScore > 0) {
+    reasons.push(`Mot-cle rapproche : ${query}`);
+  }
   if (type && (matchesSpecialJobFilter(job, type) || normalize(job.type).includes(normalize(type)) || normalize(job.category).includes(normalize(type)))) {
     score += 14;
+    reasons.push(`Domaine compatible : ${type}`);
   }
   if (city && (job.city === city || job.city === "Tout le Burkina" || job.city === "Burkina Faso")) {
     score += 10;
+    reasons.push(`Region couverte : ${city}`);
   }
-  if (job.closingDate && !isExpiredJob(job)) score += 6;
-  if (getSourceRecord(job.sourceName)) score += 4;
-  return Math.max(48, Math.min(99, Math.round(score)));
+  if (job.closingDate && !isExpiredJob(job)) {
+    score += 6;
+    reasons.push("Deadline encore active");
+  }
+  if (getSourceRecord(job.sourceName)) {
+    score += 4;
+    reasons.push("Source suivie par Emplois Burkina");
+  }
+  if (!reasons.length) {
+    if (normalizedType && normalize(job.category).includes(normalizedType)) reasons.push(`Secteur proche : ${job.category}`);
+    else reasons.push("Offre active dans le catalogue");
+  }
+
+  return {
+    score: Math.max(48, Math.min(99, Math.round(score))),
+    reasons: reasons.slice(0, 3),
+  };
 }
 
 function renderJobCard(job, options = {}) {
@@ -2238,7 +2307,7 @@ function renderJobCard(job, options = {}) {
   const duplicateAttrs = options.duplicate ? ` aria-hidden="true"` : "";
   const duplicateInteractiveAttrs = options.duplicate ? ` tabindex="-1"` : "";
   const displayType = normalize(job.type) === "a verifier" ? "" : job.type;
-  const matchScore = getVisibleMatchScore(job);
+  const match = getJobMatchDetails(job);
   const metaPills = [
     displayType ? `<span class="pill">${escapeHtml(displayType)}</span>` : "",
     job.closingDate ? `<span class="pill deadline-pill">Cloture : ${escapeHtml(formatJobDate(job.closingDate))}</span>` : "",
@@ -2258,9 +2327,12 @@ function renderJobCard(job, options = {}) {
           <p class="muted">${escapeHtml(job.company || "Organisation non precisee")} - ${escapeHtml(job.city || "Burkina Faso")}</p>
         </div>
         <div class="match-score" aria-label="Score de pertinence">
-          <strong>${escapeHtml(matchScore)}%</strong>
+          <strong>${escapeHtml(match.score)}%</strong>
           <span>match</span>
         </div>
+      </div>
+      <div class="match-reasons" aria-label="Raisons du matching">
+        ${match.reasons.map((reason) => `<span>${escapeHtml(reason)}</span>`).join("")}
       </div>
       ${renderDeadlineStrip(job)}
       ${renderTimeline(job, true)}
@@ -2277,7 +2349,7 @@ function renderJobCard(job, options = {}) {
             : `<button class="nav-action inline-action" type="button" disabled>Source indisponible</button>`
         }
         <button class="secondary-button" type="button" data-action="details" data-id="${escapeHtml(job.id)}"${duplicateInteractiveAttrs}>Détails</button>
-        <a class="secondary-link" href="${escapeHtml(getJobPagePath(job))}"${duplicateInteractiveAttrs}>Fiche JobFaso</a>
+        <a class="secondary-link" href="${escapeHtml(getJobPagePath(job))}"${duplicateInteractiveAttrs}>Fiche Emplois Burkina</a>
         <button class="secondary-button" type="button" data-action="save" data-id="${escapeHtml(job.id)}"${duplicateInteractiveAttrs}>
           ${isSaved ? "Sauvegarde" : "Favori"}
         </button>
@@ -2301,10 +2373,10 @@ function renderDetail(job) {
   }
 
   const whatsappText = encodeURIComponent(
-    `Bonjour JobFaso, je veux recevoir les alertes pour: ${job.title} (${job.sourceName || "source"})`
+    `Bonjour Emplois Burkina, je veux recevoir les alertes pour: ${job.title} (${job.sourceName || "source"})`
   );
   const sourceDescriptor = getJobSourceDescriptor(job);
-  const matchScore = getVisibleMatchScore(job);
+  const match = getJobMatchDetails(job);
   const openingDateDetail = formatJobDate(job.openingDate, "Non communiquee par la source");
   const sourceLink =
     job.sourceUrl && job.sourceUrl !== "#"
@@ -2325,12 +2397,13 @@ function renderDetail(job) {
       ${renderDeadlineStrip(job)}
       ${renderTimeline(job)}
       <dl class="detail-list">
-        <div><dt>Score de matching</dt><dd>${escapeHtml(matchScore)}% selon la recherche actuelle</dd></div>
+        <div><dt>Score de matching</dt><dd>${escapeHtml(match.score)}% selon la recherche actuelle</dd></div>
+        <div><dt>Pourquoi</dt><dd>${match.reasons.map(escapeHtml).join(" · ")}</dd></div>
         <div><dt>Ville</dt><dd>${escapeHtml(job.city || "Burkina Faso")}</dd></div>
         <div><dt>Date d'ouverture</dt><dd>${escapeHtml(openingDateDetail)}</dd></div>
         <div><dt>Date de cloture</dt><dd>${escapeHtml(formatJobDate(job.closingDate, "Consulter la source"))}</dd></div>
         <div><dt>Temps restant</dt><dd>${job.closingDate ? `<span data-countdown="${escapeHtml(job.closingDate)}">${escapeHtml(formatCountdown(job.closingDate))}</span>` : "Consulter la source"}</dd></div>
-        <div><dt>Source</dt><dd>${escapeHtml(job.sourceName || "JobFaso")}</dd></div>
+        <div><dt>Source</dt><dd>${escapeHtml(job.sourceName || "Emplois Burkina")}</dd></div>
         <div><dt>Verification</dt><dd>${escapeHtml(sourceDescriptor.badge)}</dd></div>
         <div><dt>Statut date</dt><dd>${job.openingDateConfirmed ? "Date d'ouverture confirmee" : "Date d'ouverture non communiquee par la source"}</dd></div>
         <div><dt>Collecte</dt><dd>${escapeHtml(displayDate(job.collectedAt))}</dd></div>
@@ -2341,7 +2414,7 @@ function renderDetail(job) {
       <p class="moderation-note reference-note">Verifiez la source avant de postuler.</p>
       <div class="detail-actions">
         ${sourceLink}
-        <a class="secondary-link" href="${escapeHtml(getJobPagePath(job))}">Fiche JobFaso</a>
+        <a class="secondary-link" href="${escapeHtml(getJobPagePath(job))}">Fiche Emplois Burkina</a>
         <a class="secondary-link" href="${buildWhatsAppUrl(decodeURIComponent(whatsappText))}" target="_blank" rel="noopener" data-track="whatsapp_alert" data-track-label="${escapeHtml(job.title)}">Alerte WhatsApp</a>
         <a class="secondary-link" href="contact.html">Signaler</a>
       </div>
@@ -2471,6 +2544,48 @@ function renderJobsPagination(totalPages) {
   `;
 }
 
+function getSearchAlertCriteria(filteredCount = 0) {
+  const query = searchInput?.value.trim() || "";
+  const city = cityFilter?.value || "";
+  const type = typeFilter?.value || activeCategory || "";
+  const source = sourceFilter?.value || "";
+  const sort = sortFilter?.value || "relevance";
+  const summary = [
+    query ? `mot-cle "${query}"` : "",
+    city ? `region ${city}` : "",
+    type ? `domaine ${type}` : "",
+    source ? `source ${source}` : "",
+  ].filter(Boolean);
+
+  return {
+    query,
+    city,
+    type,
+    source,
+    sort,
+    label: summary.length ? summary.join(", ") : "toutes les offres actives",
+    filteredCount,
+  };
+}
+
+function renderSearchAlertPanel(filteredCount = 0) {
+  if (!searchAlertPanel) return;
+  const criteria = getSearchAlertCriteria(filteredCount);
+  const hasFocusedSearch = Boolean(criteria.query || criteria.city || criteria.type || criteria.source);
+  searchAlertPanel.innerHTML = `
+    <div>
+      <p class="eyebrow">Alerte recherche</p>
+      <strong>${hasFocusedSearch ? "Surveiller cette recherche" : "Recevoir les nouvelles offres"}</strong>
+      <span>${escapeHtml(criteria.filteredCount)} resultat${criteria.filteredCount > 1 ? "s" : ""} maintenant - ${escapeHtml(criteria.label)}.</span>
+    </div>
+    <form class="search-alert-form" data-lead-type="alert">
+      <input name="phone" inputmode="tel" autocomplete="tel" placeholder="WhatsApp +226..." aria-label="Numero WhatsApp pour cette alerte" required />
+      <button class="secondary-button" type="submit">Créer l'alerte</button>
+      <p class="form-note" data-search-alert-message></p>
+    </form>
+  `;
+}
+
 function resetJobsPage() {
   currentJobsPage = 1;
 }
@@ -2504,6 +2619,7 @@ function renderJobs() {
     const queryLabel = searchInput?.value.trim() ? ` Recherche : "${searchInput.value.trim()}".` : "";
     resultsSummary.textContent = `${filtered.length} ${label} sur ${jobs.length}.${pageLabel}${queryLabel} ${openingConfirmedCount} avec date d'ouverture confirmee. ${datedCount} avec date de cloture confirmee. ${trustedCount} issues de liens officiels ou de sources suivies.`;
   }
+  renderSearchAlertPanel(filtered.length);
 
   jobsList.innerHTML = visibleJobs.length
     ? visibleJobs.map(renderJobCard).join("")
@@ -2657,7 +2773,7 @@ function renderAggregateTechFeedCard(entries = [], spotlight = {}) {
     type: "organization",
     collection: "review_required",
     notes:
-      "Selection consolidee JobFaso a partir de sources internationales reelles, diversifiees et suivies pour l'IT, la data, les systemes et la cybersecurite.",
+      "Selection consolidee Emplois Burkina a partir de sources internationales reelles, diversifiees et suivies pour l'IT, la data, les systemes et la cybersecurite.",
     url: spotlight.actionHref || "jobs.html?focus=onu-consultance&q=informatique",
   };
 
@@ -2901,13 +3017,13 @@ function exportLeadsCsv() {
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;
-  link.download = `jobfaso-leads-${new Date().toISOString().slice(0, 10)}.csv`;
+  link.download = `emplois-burkina-leads-${new Date().toISOString().slice(0, 10)}.csv`;
   link.click();
   URL.revokeObjectURL(url);
 }
 
 function adminToken() {
-  return localStorage.getItem("jobfaso.adminToken") || "";
+  return localStorage.getItem("emplois-burkina.adminToken") || "";
 }
 
 async function fetchAdminJson(path) {
@@ -2931,7 +3047,9 @@ async function loadServerAdminData() {
     renderAdmin();
     await loadSocialQueue();
     await loadAutomationStatus();
+    await loadProductModules();
     await loadAnalyticsSummary();
+    await loadAlertSegments();
     await loadVisibilityEngine();
     return true;
   } catch {
@@ -2946,13 +3064,14 @@ async function loadAnalyticsSummary() {
     const summary = await fetchAdminJson("/api/admin/analytics/summary");
     const events = summary.events || {};
     const leads = summary.leads || {};
+    const alertSegments = summary.alertSegments || {};
 
     if (analyticsSummary) {
       analyticsSummary.innerHTML = `
         <article><strong>${escapeHtml(events.last7Days || 0)}</strong><span>evenements 7 jours</span></article>
         <article><strong>${escapeHtml(events.sponsorSignals || 0)}</strong><span>signaux sponsor</span></article>
         <article><strong>${escapeHtml(leads.last7Days || 0)}</strong><span>leads 7 jours</span></article>
-        <article><strong>${escapeHtml(formatFcfa(leads.pipelineValue || 0))}</strong><span>pipeline total</span></article>
+        <article><strong>${escapeHtml(alertSegments.active || 0)}</strong><span>segments alertes</span></article>
       `;
     }
 
@@ -2977,6 +3096,42 @@ async function loadAnalyticsSummary() {
       `;
     }
     if (analyticsTable) analyticsTable.innerHTML = `<tr><td colspan="2">Token requis.</td></tr>`;
+  }
+}
+
+async function loadAlertSegments() {
+  if (!alertSegmentsSummary && !alertSegmentsTable) return;
+
+  try {
+    const { summary = {}, segments = [] } = await fetchAdminJson("/api/admin/alerts/segments");
+    if (alertSegmentsSummary) {
+      alertSegmentsSummary.innerHTML = `
+        <article><strong>${escapeHtml(summary.active || 0)}</strong><span>segments actifs</span></article>
+        <article><strong>${escapeHtml(summary.subscribers || 0)}</strong><span>abonnements alertes</span></article>
+        <article><strong>${escapeHtml(summary.total || 0)}</strong><span>segments total</span></article>
+      `;
+    }
+    if (alertSegmentsTable) {
+      alertSegmentsTable.innerHTML = segments.length
+        ? segments
+            .slice(0, 12)
+            .map(
+              (segment) => `
+                <tr>
+                  <td><strong>${escapeHtml(segment.label)}</strong><br /><small>${escapeHtml(segment.id)}</small></td>
+                  <td>${escapeHtml(segment.subscribers || 0)}</td>
+                  <td>${escapeHtml(displayDate(segment.lastLeadAt))}</td>
+                </tr>
+              `,
+            )
+            .join("")
+        : `<tr><td colspan="3">Aucun segment d'alerte pour le moment.</td></tr>`;
+    }
+  } catch {
+    if (alertSegmentsSummary) {
+      alertSegmentsSummary.innerHTML = `<article><strong>Token</strong><span>requis pour les segments</span></article>`;
+    }
+    if (alertSegmentsTable) alertSegmentsTable.innerHTML = `<tr><td colspan="3">Token requis.</td></tr>`;
   }
 }
 
@@ -3096,6 +3251,52 @@ async function loadAutomationStatus() {
     `;
     if (dateReviewTable) {
       dateReviewTable.innerHTML = `<tr><td colspan="4">Token requis pour lire la file.</td></tr>`;
+    }
+  }
+}
+
+async function loadProductModules() {
+  if (!moduleSummary && !moduleRoadmapTable) return;
+
+  try {
+    const payload = await fetchAdminJson("/api/product/modules");
+    const summary = payload.summary || {};
+    const modules = payload.modules || [];
+
+    if (moduleSummary) {
+      moduleSummary.innerHTML = `
+        <article><strong>${escapeHtml(summary.total ?? "-")}</strong><span>modules produit</span></article>
+        <article><strong>${escapeHtml(summary.criticalOpen ?? "-")}</strong><span>critiques ouverts</span></article>
+        <article><strong>${escapeHtml(summary.inProgress ?? "-")}</strong><span>en developpement</span></article>
+        <article><strong>${escapeHtml(summary.planned ?? "-")}</strong><span>planifies</span></article>
+      `;
+    }
+
+    if (moduleRoadmapTable) {
+      moduleRoadmapTable.innerHTML = modules.length
+        ? modules
+            .map(
+              (module) => `
+                <tr>
+                  <td>
+                    <strong>${escapeHtml(module.name)}</strong><br />
+                    <small>${escapeHtml(module.backend)}</small>
+                  </td>
+                  <td>${escapeHtml(module.status)}</td>
+                  <td>${escapeHtml(module.priority)}</td>
+                  <td>${escapeHtml(module.nextMilestone)}</td>
+                </tr>
+              `,
+            )
+            .join("")
+        : `<tr><td colspan="4">Aucun module configure.</td></tr>`;
+    }
+  } catch (error) {
+    if (moduleSummary) {
+      moduleSummary.innerHTML = `<article><strong>Erreur</strong><span>${escapeHtml(error.message || "lecture impossible")}</span></article>`;
+    }
+    if (moduleRoadmapTable) {
+      moduleRoadmapTable.innerHTML = `<tr><td colspan="4">Impossible de charger les modules.</td></tr>`;
     }
   }
 }
@@ -3541,11 +3742,55 @@ if (alertForm) {
   );
 }
 
+document.addEventListener("submit", async (event) => {
+  const form = event.target.closest(".search-alert-form");
+  if (!form) return;
+  event.preventDefault();
+
+  const message = form.querySelector("[data-search-alert-message]");
+  const submitButton = form.querySelector("button[type='submit']");
+  const criteria = getSearchAlertCriteria(getFilteredJobs().length);
+  const data = {
+    ...Object.fromEntries(new FormData(form).entries()),
+    name: "Alerte recherche Emplois Burkina",
+    interest: criteria.type || criteria.query || "Toutes les offres",
+    city: criteria.city || "Toutes les regions",
+    searchQuery: criteria.query,
+    source: criteria.source,
+    sort: criteria.sort,
+    matchedJobs: String(criteria.filteredCount),
+    criteriaLabel: criteria.label,
+  };
+  const error = validateLead("alert", data);
+  if (error) {
+    setFormState(form, message, error, "error");
+    return;
+  }
+
+  submitButton?.setAttribute("disabled", "disabled");
+  setFormState(form, message, "Creation de l'alerte...", "info");
+  const lead = saveLead("alert", data);
+  try {
+    const serverId = await syncLeadToServer(lead);
+    setFormState(
+      form,
+      message,
+      serverId ? `Alerte creee pour ${criteria.label}. Reference: ${serverId.slice(0, 8)}.` : `Alerte creee pour ${criteria.label}.`,
+      "success",
+    );
+    form.reset();
+  } catch {
+    setFormState(form, message, `Alerte creee pour ${criteria.label}.`, "success");
+  } finally {
+    submitButton?.removeAttribute("disabled");
+  }
+});
+
 if (publishForm) {
   handleDemoForm(
     publishForm,
     "#publishMessage",
-    "Demande recue. L'equipe JobFaso vous recontactera avec les prochaines etapes."
+    "Demande recue. L'equipe Emplois Burkina vous recontactera avec les prochaines etapes."
   );
 }
 
@@ -3553,12 +3798,12 @@ if (sponsorForm) {
   handleDemoForm(
     sponsorForm,
     "#sponsorMessage",
-    "Demande recue. L'equipe JobFaso vous proposera le format le plus adapte."
+    "Demande recue. L'equipe Emplois Burkina vous proposera le format le plus adapte."
   );
 }
 
 if (contactForm) {
-  handleDemoForm(contactForm, "#contactMessage", "Message recu. L'equipe JobFaso vous repondra des que possible.");
+  handleDemoForm(contactForm, "#contactMessage", "Message recu. L'equipe Emplois Burkina vous repondra des que possible.");
 }
 
 document.addEventListener("click", (event) => {
@@ -3606,7 +3851,7 @@ clearDemoDataButton?.addEventListener("click", () => {
 
 document.querySelector("#saveAdminTokenButton")?.addEventListener("click", () => {
   const input = document.querySelector("#adminTokenInput");
-  localStorage.setItem("jobfaso.adminToken", input?.value || "");
+  localStorage.setItem("emplois-burkina.adminToken", input?.value || "");
   loadServerAdminData();
 });
 
@@ -3804,6 +4049,8 @@ loadJobs();
 loadEmployerLogos();
 loadSources();
 loadInternationalFeeds();
+initNetworkStatus();
+registerServiceWorker();
 initVisualEnhancements();
 setInterval(updateCountdowns, 1000);
 if (leadTable || eventCount || adminSummary) {

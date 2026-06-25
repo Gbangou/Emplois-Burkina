@@ -1,6 +1,6 @@
-# Politique de collecte JobFaso
+# Politique de collecte Emplois Burkina
 
-Le scraping doit etre fait proprement. JobFaso ne doit pas voler du contenu ni
+Le scraping doit etre fait proprement. Emplois Burkina ne doit pas voler du contenu ni
 contourner les protections techniques.
 
 ## Regles
@@ -36,7 +36,7 @@ des conditions strictes. Pour ces sources, il faut preferer :
 
 ## Positionnement legal et business
 
-JobFaso doit devenir un partenaire d'acquisition pour les recruteurs, pas un
+Emplois Burkina doit devenir un partenaire d'acquisition pour les recruteurs, pas un
 copieur agressif. Le modele rentable et durable est :
 
 - trafic qualifie ;

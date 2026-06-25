@@ -180,7 +180,7 @@ const [config, sources, rawItems, jobs] = await Promise.all([
 const seoPages = await seoPagesFromSitemap(config);
 
 const lines = [
-  "-- JobFaso seed generated from local JSON data.",
+  "-- Emplois Burkina seed generated from local JSON data.",
   `-- Generated at ${new Date().toISOString()}.`,
   "-- Apply database/schema.sql first.",
   "begin;",

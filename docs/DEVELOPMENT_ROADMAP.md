@@ -1,10 +1,10 @@
-# Feuille de route developpement JobFaso
+# Feuille de route developpement Emplois Burkina
 
 Genere le : 2026-06-23
 
 ## Vision produit
 
-JobFaso doit devenir un moteur emploi fiable pour le Burkina Faso : offres locales,
+Emplois Burkina doit devenir un moteur emploi fiable pour le Burkina Faso : offres locales,
 concours, ONG, missions terrain, stages, teletravail et opportunites
 internationales utiles. La promesse n'est pas seulement d'avoir une belle page :
 la valeur doit venir de sources citees, dates visibles, liens reels, moderation,
@@ -21,7 +21,7 @@ Les meilleurs sites inspirent des blocs differents :
 - ZipRecruiter : matching et distribution intelligente des offres.
 - Glassdoor : contexte employeur, salaire, reputation et decision mieux informee.
 
-Pour le Burkina Faso, JobFaso doit combiner ces idees avec des usages locaux :
+Pour le Burkina Faso, Emplois Burkina doit combiner ces idees avec des usages locaux :
 WhatsApp, Mobile Money, concours publics, ONG, petits metiers, villes claires et
 sources officielles.
 
@@ -53,7 +53,7 @@ Objectif : rendre le catalogue fiable avant d'ajouter plus d'effets visuels.
 
 ### Phase 2 - Scraping serieux et diversifie
 
-Objectif : alimenter JobFaso avec des sources utiles et stables.
+Objectif : alimenter Emplois Burkina avec des sources utiles et stables.
 
 - Separar collecte brute, curation et publication.
 - Prioriser sources Burkina Faso, ONG, concours, institutions, remote tech et

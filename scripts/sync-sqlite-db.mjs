@@ -6,7 +6,7 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 const ROOT = fileURLToPath(new URL("..", import.meta.url));
 const DATA_DIR = join(ROOT, "data");
 const RUNTIME_DIR = join(DATA_DIR, "runtime");
-const SQLITE_FILE = join(RUNTIME_DIR, "jobfaso.sqlite");
+const SQLITE_FILE = join(RUNTIME_DIR, "emplois-burkina.sqlite");
 
 async function readJson(file, fallback) {
   try {

@@ -31,7 +31,7 @@ function slugify(value) {
 }
 
 function absolute(config, path) {
-  const baseUrl = process.env.JOBFASO_BASE_URL || config.baseUrl || "https://jobfaso.com";
+  const baseUrl = process.env.EMPLOIS_BURKINA_BASE_URL || config.baseUrl || "https://emplois-burkina.com";
   return `${baseUrl.replace(/\/$/, "")}/${path.replace(/^\//, "")}`;
 }
 
@@ -61,7 +61,7 @@ function postMessage(job, url) {
   const type = job.type && job.type !== "A verifier" ? `Type : ${job.type}\n` : "";
   const deadline = job.deadline ? `Deadline : ${job.deadline}\n` : "";
 
-  return cleanLines(`Nouvelle opportunite sur JobFaso
+  return cleanLines(`Nouvelle opportunite sur Emplois Burkina
 
 ${job.title}
 Organisation : ${organization}
@@ -70,11 +70,11 @@ ${type}${deadline}
 Voir les details et verifier la source officielle :
 ${url}
 
-#JobFaso #EmploiBurkina #Recrutement #BurkinaFaso`);
+#Emplois Burkina #EmploiBurkina #Recrutement #BurkinaFaso`);
 }
 
 function socialHashtags(job) {
-  const tags = new Set(["#JobFaso", "#EmploiBurkina", "#BurkinaFaso"]);
+  const tags = new Set(["#Emplois Burkina", "#EmploiBurkina", "#BurkinaFaso"]);
   const category = clean(job.category || "");
   const city = clean(job.city || "");
 
@@ -95,7 +95,7 @@ function socialMessages(job, urls) {
   const closing = job.closingDate ? `Cloture: ${job.closingDate}\n` : "";
 
   return {
-    facebook: cleanLines(`Nouvelle offre JobFaso
+    facebook: cleanLines(`Nouvelle offre Emplois Burkina
 
 ${job.title}
 Organisation : ${organization}
@@ -104,14 +104,14 @@ ${closing}Postulez depuis la source officielle :
 ${urls.facebook}
 
 ${hashtags}`),
-    linkedin: cleanLines(`Offre reperee sur JobFaso
+    linkedin: cleanLines(`Offre reperee sur Emplois Burkina
 
 ${job.title}
 Organisation : ${organization}
 Ville : ${city}
 ${closing}Details et source officielle :
 ${urls.linkedin}`),
-    whatsapp: cleanLines(`JobFaso
+    whatsapp: cleanLines(`Emplois Burkina
 ${job.title}
 ${organization} - ${city}
 ${closing}Details : ${urls.whatsapp}`),

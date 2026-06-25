@@ -1,20 +1,20 @@
-# Moteur visibilite et revenus JobFaso
+# Moteur visibilite et revenus Emplois Burkina
 
-Derniere generation : 2026-06-17T10:02:05.304Z
+Derniere generation : 2026-06-25T12:23:39.104Z
 
 ## Score de preparation
 
-Score global : 66/100
+Score global : 84/100
 
 | Controle | Etat | Poids | Correction |
 | --- | --- | ---: | --- |
-| Domaine public configure | OK | 10 | Configurer JOBFASO_BASE_URL et DNS. |
+| Domaine public configure | OK | 10 | Configurer EMPLOIS_BURKINA_BASE_URL et DNS. |
 | Contact public visible | OK | 10 | Ajouter email et page contact. |
 | Pages confiance | OK | 12 | Garder privacy, terms, contacts et tarifs. |
-| Sitemap riche | A faire | 12 | Executer npm run growth. |
+| Sitemap riche | OK | 12 | Executer npm run growth. |
 | Robots.txt propre | OK | 8 | Regenerer robots.txt. |
 | Flux RSS/JSON public | OK | 6 | Generer feed.xml et feed.json. |
-| Volume offres SEO | A faire | 12 | Automatiser plus de sources fiables. |
+| Volume offres SEO | OK | 12 | Automatiser plus de sources fiables. |
 | Diversite des sources | OK | 10 | Ajouter partenaires/RSS/API autorises. |
 | Contenus utiles hors offres | OK | 8 | Publier guides candidats originaux. |
 | AdSense pret a activer | A faire | 8 | Ajouter adsenseClient apres approbation Google. |
@@ -26,8 +26,6 @@ Score global : 66/100
 
 ## Priorites immediates
 
-- Executer npm run growth.
-- Automatiser plus de sources fiables.
 - Ajouter adsenseClient apres approbation Google.
 - Generer ads.txt depuis adsenseClient.
 - Ajouter page Facebook, LinkedIn ou canal WhatsApp dans data/site-config.json.
@@ -35,35 +33,35 @@ Score global : 66/100
 ## Cibles backlinks et partenariats
 
 - Ecoles de formation professionnelle (commercial_partner) : Sponsor guides metiers, pages categories et posts WhatsApp. Demande : Partenariat legal, marque, mesure par clics/leads, sans vente abusive de donnees personnelles.
-- BFemploi (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres.
-- Emploiburkina (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres.
-- HumanitaireHub (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres.
-- UNjobs Burkina Faso (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres.
-- ReliefWeb Burkina Faso (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres.
+- BFemploi (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers Emplois Burkina, flux RSS/API autorise, ou formulaire de soumission d'offres.
+- Emploiburkina (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers Emplois Burkina, flux RSS/API autorise, ou formulaire de soumission d'offres.
+- HumanitaireHub (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers Emplois Burkina, flux RSS/API autorise, ou formulaire de soumission d'offres.
+- UNjobs Burkina Faso (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers Emplois Burkina, flux RSS/API autorise, ou formulaire de soumission d'offres.
+- ReliefWeb Burkina Faso (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers Emplois Burkina, flux RSS/API autorise, ou formulaire de soumission d'offres.
 - Annonce mise en avant (revenue_product) : 25 000 FCFA - publication prioritaire, badge mise en avant, diffusion WhatsApp ciblee, visibilite temporaire page accueil. Demande : Trouver 5 clients potentiels pour le produit Annonce mise en avant.
 - Cabinets RH et recruteurs (commercial_partner) : Annonces premium, shortlist candidats et rapport marche. Demande : Partenariat legal, marque, mesure par clics/leads, sans vente abusive de donnees personnelles.
-- Sponsor categorie ONG (category_sponsor) : Vendre une visibilite utile sur la categorie ONG. Demande : Sponsor mensuel, bannieres natives marquees, lien suivi et rapport de performance.
-- Travail Burkina (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres.
-- RMO Job Center (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres.
-- Impactpool Burkina Faso (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres.
-- Devex Burkina Faso (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres.
-- UN Talent Burkina Faso (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres.
-- UNICEF Careers Burkina Faso (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres.
-- UNDP Jobs Burkina Faso (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres.
-- UNV Opportunities (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres.
-- WHO Careers (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres.
+- Sponsor categorie Bureau (category_sponsor) : Vendre une visibilite utile sur la categorie Bureau. Demande : Sponsor mensuel, bannieres natives marquees, lien suivi et rapport de performance.
+- Travail Burkina (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers Emplois Burkina, flux RSS/API autorise, ou formulaire de soumission d'offres.
+- RMO Job Center (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers Emplois Burkina, flux RSS/API autorise, ou formulaire de soumission d'offres.
+- Impactpool Burkina Faso (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers Emplois Burkina, flux RSS/API autorise, ou formulaire de soumission d'offres.
+- Devex Burkina Faso (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers Emplois Burkina, flux RSS/API autorise, ou formulaire de soumission d'offres.
+- UN Talent Burkina Faso (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers Emplois Burkina, flux RSS/API autorise, ou formulaire de soumission d'offres.
+- UNICEF Careers Burkina Faso (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers Emplois Burkina, flux RSS/API autorise, ou formulaire de soumission d'offres.
+- UNDP Jobs Burkina Faso (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers Emplois Burkina, flux RSS/API autorise, ou formulaire de soumission d'offres.
+- UNV Opportunities (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers Emplois Burkina, flux RSS/API autorise, ou formulaire de soumission d'offres.
+- WHO Careers (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers Emplois Burkina, flux RSS/API autorise, ou formulaire de soumission d'offres.
 - Sponsor categorie (revenue_product) : 100 000 FCFA - visibilite categorie, mention sponsorisee, placement newsletter, rapport simple. Demande : Trouver 5 clients potentiels pour le produit Sponsor categorie.
 - Centres CV et coaching entretien (commercial_partner) : Leads qualifies avec commission par client confirme. Demande : Partenariat legal, marque, mesure par clics/leads, sans vente abusive de donnees personnelles.
-- Sponsor categorie Transport et logistique (category_sponsor) : Vendre une visibilite utile sur la categorie Transport et logistique. Demande : Sponsor mensuel, bannieres natives marquees, lien suivi et rapport de performance.
-- IUCN Careers Burkina Faso (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres.
-- NRC Careers (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres.
-- DRC Careers (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres.
-- Plan International Careers (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres.
-- Save the Children Careers (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres.
-- Action Contre la Faim Careers (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres.
-- Humanity & Inclusion Careers (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres.
-- FHI 360 Careers (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres.
-- World Vision Careers (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres.
+- Sponsor categorie BTP et chantier (category_sponsor) : Vendre une visibilite utile sur la categorie BTP et chantier. Demande : Sponsor mensuel, bannieres natives marquees, lien suivi et rapport de performance.
+- IUCN Careers Burkina Faso (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers Emplois Burkina, flux RSS/API autorise, ou formulaire de soumission d'offres.
+- NRC Careers (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers Emplois Burkina, flux RSS/API autorise, ou formulaire de soumission d'offres.
+- DRC Careers (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers Emplois Burkina, flux RSS/API autorise, ou formulaire de soumission d'offres.
+- Plan International Careers (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers Emplois Burkina, flux RSS/API autorise, ou formulaire de soumission d'offres.
+- Save the Children Careers (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers Emplois Burkina, flux RSS/API autorise, ou formulaire de soumission d'offres.
+- Action Contre la Faim Careers (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers Emplois Burkina, flux RSS/API autorise, ou formulaire de soumission d'offres.
+- Humanity & Inclusion Careers (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers Emplois Burkina, flux RSS/API autorise, ou formulaire de soumission d'offres.
+- FHI 360 Careers (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers Emplois Burkina, flux RSS/API autorise, ou formulaire de soumission d'offres.
+- World Vision Careers (source_partner) : Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire. Demande : Backlink vers Emplois Burkina, flux RSS/API autorise, ou formulaire de soumission d'offres.
 
 ## Scripts de prospection
 
@@ -71,40 +69,40 @@ Score global : 66/100
 
 Bonjour,
 
-Je vous contacte pour JobFaso, une plateforme qui aide les candidats au Burkina Faso a retrouver les offres d'emploi, concours, stages et missions locales depuis des sources fiables.
+Je vous contacte pour Emplois Burkina, une plateforme qui aide les candidats au Burkina Faso a retrouver les offres d'emploi, concours, stages et missions locales depuis des sources fiables.
 
 Nous souhaitons referencer vos annonces avec attribution claire, lien vers votre source officielle et respect de vos conditions de diffusion. L'objectif est de vous apporter des candidats mieux informes, pas de remplacer votre site.
 
-Seriez-vous ouvert a un partenariat simple : flux autorise, page partenaire, ou lien retour vers https://jobfaso.com ?
+Seriez-vous ouvert a un partenariat simple : flux autorise, page partenaire, ou lien retour vers https://emplois-burkina.com ?
 
 Merci,
-Equipe JobFaso
+Equipe Emplois Burkina
 
 ### Publier vos offres et recevoir plus de candidats qualifies
 
 Bonjour,
 
-JobFaso aide les recruteurs a diffuser leurs offres au Burkina Faso avec pages indexables, alertes candidats, suivi des clics et rapports simples.
+Emplois Burkina aide les recruteurs a diffuser leurs offres au Burkina Faso avec pages indexables, alertes candidats, suivi des clics et rapports simples.
 
 Nous pouvons publier une offre, la mettre en avant, ou lancer une campagne de recrutement avec formulaire et export candidats.
 
 Souhaitez-vous recevoir la grille des packs ou tester une premiere publication ?
 
 Cordialement,
-Equipe JobFaso
+Equipe Emplois Burkina
 
-### Visibilite formation aupres des candidats JobFaso
+### Visibilite formation aupres des candidats Emplois Burkina
 
 Bonjour,
 
 Votre formation peut toucher des candidats qui recherchent activement un emploi, une reconversion ou un metier terrain.
 
-JobFaso propose des emplacements sponsorises marques, des guides metiers et un suivi des clics/leads pour mesurer l'interet reel.
+Emplois Burkina propose des emplacements sponsorises marques, des guides metiers et un suivi des clics/leads pour mesurer l'interet reel.
 
 Souhaitez-vous sponsoriser une categorie ou un guide pendant un mois ?
 
 Cordialement,
-Equipe JobFaso
+Equipe Emplois Burkina
 
 ## Regles de croissance propre
 

@@ -1,5 +1,19 @@
 # Architecture cible
 
+## Orientation moderne
+
+Depuis le 24 juin 2026, la cible technique de Emplois Burkina est un monorepo
+Next.js + NestJS :
+
+- `apps/web` : nouvelle web app Next.js, React et TypeScript.
+- `apps/api` : nouvelle API NestJS modulaire.
+- `packages/domain` : types et logique metier partages.
+- racine historique : app HTML/CSS/JS/Node conservee comme legacy pendant la
+  migration.
+
+Le detail de la migration est documente dans
+`docs/MODERNIZATION_NEXT_NEST.md`.
+
 ## Vue d'ensemble
 
 ```text
@@ -14,7 +28,100 @@ Sources web autorisees
   -> Paiement premium
 ```
 
-## Modules
+## Modules produit professionnels
+
+Le fichier `data/product-modules.json` est la source de pilotage des modules.
+Le backend expose cette feuille de route via `/api/product/modules` et le
+back-office l'affiche pour suivre les priorites.
+
+### 1. Catalogue offres
+
+Responsable de publier uniquement les offres actives, avec lien source reel,
+date de cloture exploitable, statut d'expiration et niveau de confiance.
+
+Etat actuel :
+
+- API `/api/jobs` ;
+- filtrage expiration et date de cloture ;
+- audit `scripts/audit-offers.mjs` ;
+- rapport `docs/OFFER_VERIFICATION_AUDIT.md`.
+
+### 2. Collecte et scraping
+
+Responsable de lire les sources, collecter les items bruts, dedoublonner,
+enrichir les dates/villes/categories, puis separer le brut des offres
+publiables.
+
+Etat actuel :
+
+- `scripts/emplois-burkina-scraper.mjs` ;
+- `scripts/international-feeds-scraper.mjs` ;
+- `scripts/curate-raw-items.mjs` ;
+- `data/raw-items.json` et `data/curated-jobs.json`.
+
+### 3. Back-office moderation
+
+Responsable de valider, rejeter, corriger les offres, suivre les dates
+manquantes et afficher les scores qualite.
+
+Etat actuel :
+
+- `admin.html` ;
+- routes `/api/admin/jobs/*` ;
+- file `docs/DATE_REVIEW_QUEUE.md`.
+
+### 4. Recherche et matching
+
+Responsable de la recherche par metier, ville, categorie et source, puis du tri
+par pertinence, urgence et confiance.
+
+Etat actuel :
+
+- score de pertinence cote client ;
+- tri `Pertinence` dans le catalogue ;
+- raisons de matching visibles sur les cartes et dans la fiche detail ;
+- synonymes metiers locaux dans `app.js`.
+
+Prochaine etape : deplacer l'index dans une couche persistante pour ponderer
+les champs, auditer les synonymes et stabiliser le ranking entre sessions.
+
+### 5. Alertes WhatsApp
+
+Responsable des abonnements par ville/metier, alertes gratuites ou sponsorisees,
+journal d'envoi et desinscription claire.
+
+Etat actuel :
+
+- formulaire alerte candidat ;
+- creation d'alerte depuis la recherche courante ;
+- criteres de recherche conserves dans les leads ;
+- segments persistants dans `data/runtime/alert-segments.json` ;
+- suivi admin des segments candidats ;
+- synchronisation serveur via `/api/leads` quand le serveur dynamique est actif.
+
+Prochaine etape : opt-in clair, templates WhatsApp Business et journal d'envoi.
+
+### 6. Espace recruteur
+
+Responsable de la soumission d'annonce, verification recruteur, sponsorisation,
+paiement Mobile Money et suivi des leads.
+
+### 7. Profil candidat
+
+Responsable des favoris, preferences, CV, documents et historique de
+candidatures.
+
+### 8. Assistance IA
+
+Responsable de l'aide CV, lettres, analyse ATS, recommandations formation et
+garde-fous contre les inventions.
+
+### 9. Analytics et qualite
+
+Responsable des KPI offres, sources, leads, revenus, audits liens, audits projet,
+audits automation et audits offres.
+
+## Modules techniques existants
 
 ### Web app
 

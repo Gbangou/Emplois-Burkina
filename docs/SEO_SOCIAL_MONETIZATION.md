@@ -1,8 +1,8 @@
-# SEO, Social et Monetisation - Mise en ligne propre JobFaso
+# SEO, Social et Monetisation - Mise en ligne propre Emplois Burkina
 
 ## Objectif
 
-Faire de JobFaso une plateforme :
+Faire de Emplois Burkina une plateforme :
 
 - bien indexable sur Google, Bing et les moteurs IA ;
 - facile a partager sur Facebook, LinkedIn, WhatsApp et outils d'automation ;
@@ -27,7 +27,7 @@ Faire de JobFaso une plateforme :
 ### SEO / site
 
 ```env
-JOBFASO_BASE_URL=https://jobfaso.com
+EMPLOIS_BURKINA_BASE_URL=https://emplois-burkina.com
 NODE_ENV=production
 ```
 
@@ -54,9 +54,9 @@ WHATSAPP_ACCESS_TOKEN=
 2. Bing Webmaster Tools
 3. Google AdSense
 4. Meta Business Manager
-5. Facebook Page JobFaso
+5. Facebook Page Emplois Burkina
 6. WhatsApp Business
-7. LinkedIn Page JobFaso
+7. LinkedIn Page Emplois Burkina
 
 ## Ce qu'il faut faire juste apres le deploiement
 
@@ -92,8 +92,8 @@ Dans `data/site-config.json` :
 ```json
 {
   "social": {
-    "facebook": "https://www.facebook.com/jobfaso",
-    "linkedin": "https://www.linkedin.com/company/jobfaso",
+    "facebook": "https://www.facebook.com/emplois-burkina",
+    "linkedin": "https://www.linkedin.com/company/emplois-burkina",
     "whatsappChannel": "https://whatsapp.com/channel/..."
   }
 }
@@ -110,7 +110,7 @@ Il faut separer clairement deux choses :
 - `AdSense`, sponsors, packs recruteurs, native ads, leads partenaires :
   ce sont des canaux de revenus.
 
-Donc pour JobFaso, le plan le plus sain est :
+Donc pour Emplois Burkina, le plan le plus sain est :
 
 1. Sponsors et packs recruteurs
 2. Mises en avant marquees

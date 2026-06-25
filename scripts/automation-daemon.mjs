@@ -1,8 +1,8 @@
 import { spawn } from "node:child_process";
 import { ROOT, readAutomationState, writeAutomationState } from "./automation-state.mjs";
 
-const intervalMinutes = Math.max(5, Number(process.env.JOBFASO_AUTOMATION_INTERVAL_MINUTES || 30));
-const runOnStart = process.env.JOBFASO_AUTOMATION_RUN_ON_START !== "false";
+const intervalMinutes = Math.max(5, Number(process.env.EMPLOIS_BURKINA_AUTOMATION_INTERVAL_MINUTES || 30));
+const runOnStart = process.env.EMPLOIS_BURKINA_AUTOMATION_RUN_ON_START !== "false";
 const intervalMs = intervalMinutes * 60 * 1000;
 
 let activeChild = null;

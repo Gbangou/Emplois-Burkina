@@ -1,4 +1,4 @@
-# Plan SEO JobFaso
+# Plan SEO Emplois Burkina
 
 ## Objectif
 

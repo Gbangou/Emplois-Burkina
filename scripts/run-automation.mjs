@@ -8,7 +8,7 @@ import {
 } from "./automation-state.mjs";
 
 const steps = [
-  ["Collecte des sources", "scripts/jobfaso-scraper.mjs"],
+  ["Collecte des sources", "scripts/emplois-burkina-scraper.mjs"],
   ["Collecte institutions internationales", "scripts/international-feeds-scraper.mjs"],
   ["Curation et nettoyage", "scripts/curate-raw-items.mjs"],
   ["Generation SEO", "scripts/generate-seo-pages.mjs"],

@@ -1,8 +1,8 @@
-# Systeme revenus et croissance JobFaso
+# Systeme revenus et croissance Emplois Burkina
 
 ## Positionnement
 
-JobFaso doit rester gratuit pour les chercheurs d'emploi. Les revenus viennent de l'audience qualifiee, de la visibilite recruteur, des sponsors clairement identifies, des formations partenaires et des donnees agregees.
+Emplois Burkina doit rester gratuit pour les chercheurs d'emploi. Les revenus viennent de l'audience qualifiee, de la visibilite recruteur, des sponsors clairement identifies, des formations partenaires et des donnees agregees.
 
 ## Inventaire a vendre
 
@@ -18,37 +18,42 @@ JobFaso doit rester gratuit pour les chercheurs d'emploi. Les revenus viennent d
 
 | Element | Volume |
 | --- | ---: |
-| Bureau | 8 |
-| ONG | 6 |
-| Finance et administration | 2 |
-| Transport et logistique | 2 |
-| BTP et chantier | 1 |
-| Commerce et vente | 1 |
-| Metiers terrain et informels | 1 |
-| Sante | 1 |
+| Bureau | 21 |
+| ONG | 12 |
+| Finance et administration | 5 |
+| Informatique, data et systemes | 4 |
+| Metiers terrain et informels | 4 |
+| Stage | 4 |
+| Transport et logistique | 3 |
+| Commerce et vente | 2 |
 
 ## Opportunites par ville
 
 | Element | Volume |
 | --- | ---: |
-| Burkina Faso | 16 |
-| Ouagadougou | 5 |
+| Burkina Faso | 27 |
+| Ouagadougou | 18 |
+| RDC | 4 |
+| Senegal | 3 |
 | Bagassi | 1 |
+| dans le courant des mois de mai et juin | 1 |
+| DU POSTE | 1 |
+| Ethiopie | 1 |
 
 ## Sources les plus actives
 
 | Element | Volume |
 | --- | ---: |
-| BFemploi | 8 |
-| Emploiburkina | 7 |
-| HumanitaireHub | 4 |
-| Burkina24 Emploi | 1 |
-| LeFaso.net Recrutement | 1 |
-| UNjobs Burkina Faso | 1 |
+| Emploiburkina | 20 |
+| UN Talent Burkina Faso | 16 |
+| HumanitaireHub | 10 |
+| BFemploi | 6 |
+| LeFaso.net Recrutement | 3 |
+| UNjobs Burkina Faso | 3 |
 
 ## Cadence automatique
 
-- Lundi : Publier le digest des 10 nouvelles opportunites avec lien vers JobFaso. Ajouter un encart sponsorise pour formation ou recruteur.
+- Lundi : Publier le digest des 10 nouvelles opportunites avec lien vers Emplois Burkina. Ajouter un encart sponsorise pour formation ou recruteur.
 - Mardi : Mettre en avant un guide candidat et 3 offres liees au theme. Proposer un partenaire CV, formation ou coaching.
 - Mercredi : Contacter 10 recruteurs avec les categories les plus consultees. Vendre annonce prioritaire ou sponsor categorie.
 - Jeudi : Envoyer un digest court par domaine avec consentement des abonnes. Inclure un seul sponsor clairement marque.

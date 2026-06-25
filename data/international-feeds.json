@@ -7,7 +7,7 @@
     "collection": "review_required",
     "notes": "Source internationale utile pour ONU, ONG et developpement. Page verifiee avec offres Burkina.",
     "priority": 1,
-    "updatedAt": "2026-06-17T18:13:30.936Z",
+    "updatedAt": "2026-06-25T12:14:34.522Z",
     "jobs": [
       {
         "id": "e96886479a561667a2deb720681aa11c6dfc08adc538646f89b14c72d64f9606",
@@ -141,7 +141,7 @@
     "collection": "review_required",
     "notes": "Offres ONG, ONU et humanitaires Afrique francophone. Filtrer Burkina et Sahel a la moderation.",
     "priority": 1,
-    "updatedAt": "2026-06-17T18:33:36.240Z",
+    "updatedAt": "2026-06-25T12:14:34.464Z",
     "portalStatus": "available",
     "statusMessage": "",
     "jobs": []
@@ -154,7 +154,7 @@
     "collection": "review_required",
     "notes": "Source humanitaire mondiale. Collecter seulement titres, deadlines et liens officiels.",
     "priority": 1,
-    "updatedAt": "2026-06-17T18:13:33.390Z",
+    "updatedAt": "2026-06-25T12:14:36.878Z",
     "jobs": [],
     "error": "HTTP 406",
     "stale": false
@@ -167,7 +167,7 @@
     "collection": "manual_only",
     "notes": "Important pour cadres et entreprises, mais collecte automatisee a eviter sans API/accord.",
     "priority": 2,
-    "updatedAt": "2026-06-17T18:21:00.389Z",
+    "updatedAt": "2026-06-25T12:23:01.270Z",
     "jobs": [
       {
         "id": "909d048fcdd89ee1ed2d989853f82c60a2214e25ac723db947b837e68a79abef",
@@ -301,129 +301,129 @@
     "collection": "manual_only",
     "notes": "Portail officiel Programme Alimentaire Mondial pour operations, logistique et postes terrain.",
     "priority": 2,
-    "updatedAt": "2026-06-17T18:34:17.830Z",
+    "updatedAt": "2026-06-25T12:17:12.543Z",
     "portalStatus": "available",
     "statusMessage": "",
     "jobs": [
       {
-        "id": "497496a89c7eb8c7559554e8db1922a49e4107363dd4c2fdd231d4970dc5861b",
-        "title": "Monitoring Intern",
-        "url": "https://wd3.myworkdaysite.com/job/Le-Caire-gypte/Monitoring-Intern_JR124124",
-        "location": "Le Caire, Égypte",
-        "contract": "JR124124",
+        "id": "26c592cd5cd585deb10fcf54421410eafb19e93ea91cc5f5aa8aafbea3799dbf",
+        "title": "Communications Associate (Graphic Designer)",
+        "url": "https://wd3.myworkdaysite.com/job/Manille-Philippines/Communications-Associate--Graphic-Designer-_JR124391",
+        "location": "Manille, Philippines",
+        "contract": "JR124391",
         "openingDate": "",
         "closingDate": "",
-        "excerpt": "JR124124"
+        "excerpt": "JR124391"
       },
       {
-        "id": "9797a8144825023ea1471967763b142f8dd07d4044ba6bdfadb6d915ffa00f0f",
-        "title": "Consultant (CST II) - Partnerships Officer, International Financial Institutions (IFIs), Nairobi",
-        "url": "https://wd3.myworkdaysite.com/job/Nairobi-Kenya/Consultant--CST-II----Partnerships-Officer--International-Financial-Institutions--IFIs---Nairobi_JR124061",
-        "location": "Nairobi, Kenya",
-        "contract": "JR124061",
-        "openingDate": "",
-        "closingDate": "",
-        "excerpt": "JR124061"
-      },
-      {
-        "id": "4811d38282e620451bfe80093cdafddfc7fed5e0f6e769a58dfb8d70a7e337cc",
-        "title": "School Meals Accelerator - Business Support Assistant G4",
-        "url": "https://wd3.myworkdaysite.com/job/Rome-Italie/School-Meals-Accelerator---Business-Support-Assistant-G4_JR124101",
-        "location": "Rome, Italie",
-        "contract": "JR124101",
-        "openingDate": "",
-        "closingDate": "",
-        "excerpt": "JR124101"
-      },
-      {
-        "id": "e480c6a9e839845055a59d036f1bcc8effa652c8edb4b3387b7e5f80181965a4",
-        "title": "Consultant Human Resources",
-        "url": "https://wd3.myworkdaysite.com/job/Dili-Timor-Leste/Consultant-Human-Resources_JR124131",
-        "location": "Dili, Timor-Leste",
-        "contract": "JR124131",
-        "openingDate": "",
-        "closingDate": "",
-        "excerpt": "JR124131"
-      },
-      {
-        "id": "f8a1d9067aa7f2d55aad96acaadafa28143ff6cd754a29f6b568e206b3909437",
-        "title": "Security Assistant G5, Gode, Ethiopia",
-        "url": "https://wd3.myworkdaysite.com/job/Gode-thiopie/Security-Assistant-G5--Gode--Ethiopia_JR123835",
-        "location": "Gode, Éthiopie",
-        "contract": "JR123835",
-        "openingDate": "",
-        "closingDate": "",
-        "excerpt": "JR123835"
-      },
-      {
-        "id": "772f134cc27892c2476e92280fa2d853e4c1e347c80070267ea3dd3c157680c9",
-        "title": "Programme Associate (Nutrition), G6, Cox's Bazar",
-        "url": "https://wd3.myworkdaysite.com/job/Coxs-Bazar-Bangladesh/Programme-Associate--Nutrition---G6--Cox-s-Bazar_JR124096",
-        "location": "Cox's Bazar, Bangladesh",
-        "contract": "JR124096",
-        "openingDate": "",
-        "closingDate": "",
-        "excerpt": "JR124096"
-      },
-      {
-        "id": "1deb6d3bd13c0cf1d082eb9a326a0bb550a7b4b34a64d30f8ce23baa8165b0db",
+        "id": "50753abdfa00866bf41ed127e6fbab818dba8e23f7c0cc91a9b58b5ccc6dce64",
         "title": "Programme Associate (EPR)",
-        "url": "https://wd3.myworkdaysite.com/job/Kupang-Indonsie/Programme-Associate--EPR-_JR124107",
-        "location": "Kupang, Indonésie",
-        "contract": "JR124107",
-        "openingDate": "",
-        "closingDate": "",
-        "excerpt": "JR124107"
-      },
-      {
-        "id": "0a831d6f6ea20f929c26e2e4fb38d9e2dd9779155bb29b2bb98edea979ef11e1",
-        "title": "Assistant(e) aux opérations informatiques – SCOPE (SC5)",
-        "url": "https://wd3.myworkdaysite.com/job/Bukavu-Congo/Assistant-e--aux-oprations-informatiques---SCOPE--SC5-_JR124082",
+        "url": "https://wd3.myworkdaysite.com/job/Basco-Philippines-The-RepOf-Th/Programme-Associate--EPR-_JR124360",
         "location": "2 sites",
-        "contract": "JR124082",
+        "contract": "JR124360",
         "openingDate": "",
         "closingDate": "",
-        "excerpt": "JR124082"
+        "excerpt": "JR124360"
       },
       {
-        "id": "f3c87cfff1a5d51b82d23cbd6eec78fb609a283df8785cd8f777a3220ee80366",
-        "title": "Programme Associate (Nutrition) G6, Manakara, Ambovombe",
-        "url": "https://wd3.myworkdaysite.com/job/Manakara-Madagascar/Programme-Associate--Nutrition--G6--Manakara--Ambovombe_JR123836-1",
-        "location": "2 sites",
-        "contract": "JR123836",
+        "id": "de9ada199f9fcaaff0073aaf8eee8c792c3ad2657a1b25af8562e3d7e1053b2d",
+        "title": "Finance Associate G6 | Beirut, Lebanon",
+        "url": "https://wd3.myworkdaysite.com/job/Beyrouth-Liban/Finance-Associate-G6---Beirut--Lebanon_JR124350",
+        "location": "Beyrouth, Liban",
+        "contract": "JR124350",
         "openingDate": "",
         "closingDate": "",
-        "excerpt": "JR123836"
+        "excerpt": "JR124350"
       },
       {
-        "id": "ec6af863dc75f2af94c8f3daf42a0846b6de90edb06aac7ba48fbf11a5e04a73",
-        "title": "Accelerating Food Systems Transformation through a Scalable Success Model in Mauritania",
-        "url": "https://wd3.myworkdaysite.com/job/Nouakchott-Mauritanie/Accelerating-Food-Systems-Transformation-through-a-Scalable-Success--Model-in-Mauritania_JR124072",
-        "location": "Nouakchott, Mauritanie",
-        "contract": "JR124072",
+        "id": "0e9b9d2411875d1176ee4f1568173fdd581d7f03a0ca841c7bfcade369453c2f",
+        "title": "Product Manager - Specialist",
+        "url": "https://wd3.myworkdaysite.com/job/Rome-Italie/Product-Manager---Specialist_JR123941",
+        "location": "Rome, Italie",
+        "contract": "JR123941",
         "openingDate": "",
         "closingDate": "",
-        "excerpt": "JR124072"
+        "excerpt": "JR123941"
       },
       {
-        "id": "c812dbd99db948a32687a3bd86d2afa08eb2d81fa24d4c8f2e4018f64b475f93",
-        "title": "Strategic & Special Assistant",
-        "url": "https://wd3.myworkdaysite.com/job/Aden-Ymen/Strategic---Special-Assistant_JR124075",
-        "location": "Aden, Yémen",
-        "contract": "JR124075",
+        "id": "86c7d2eee7d1c525952aa167831306b6cbb4e39e34e7039859c2314ad05bb3ed",
+        "title": "Asistente de Programas",
+        "url": "https://wd3.myworkdaysite.com/job/Pasto-Colombie/Asistente-de-Programas_JR123365-2",
+        "location": "Pasto, Colombie",
+        "contract": "JR123365",
         "openingDate": "",
         "closingDate": "",
-        "excerpt": "JR124075"
+        "excerpt": "JR123365"
       },
       {
-        "id": "2f5f7a911ed4cc86a3751bc2eeeb684e8dd3fbe899353502d56e41728d7eb95a",
-        "title": "Programme Policy Officer (Senior Technical Advisor)_International Consultant CST III",
-        "url": "https://wd3.myworkdaysite.com/job/Vientiane-Laos-The-Peoples-Dem-Re/Senior-Technical-Advisor-International-Consultant-CST-III_JR124051",
-        "location": "Vientiane, Laos, The People's Dem. Re",
-        "contract": "JR124051",
+        "id": "6b205d2aab38527c4439acff44751e3060728483875682b6a47b70429b4e5034",
+        "title": "Facilities Management Engineer P2",
+        "url": "https://wd3.myworkdaysite.com/job/Rome-Italie/Facilities-Management-Engineer-P2_JR124222-1",
+        "location": "Rome, Italie",
+        "contract": "JR124222",
         "openingDate": "",
         "closingDate": "",
-        "excerpt": "JR124051"
+        "excerpt": "JR124222"
+      },
+      {
+        "id": "c546fde277d911c303479e49db5f970c991306a20dca6e30969adc1bcbe9824d",
+        "title": "Female Driver Roster SC/SSA2",
+        "url": "https://wd3.myworkdaysite.com/job/Lusaka-Zambie/Female-Driver-Roster-SC-SSA2_JR123559",
+        "location": "Lusaka, Zambie",
+        "contract": "JR123559",
+        "openingDate": "",
+        "closingDate": "",
+        "excerpt": "JR123559"
+      },
+      {
+        "id": "334fb48a547cafac136237c56cbb6b628ef9b105f70bedb2c3a01be15f87fc4a",
+        "title": "Operational Information Management & Reporting Officer, NOA",
+        "url": "https://wd3.myworkdaysite.com/job/Kigali-Rwanda/Operational-Information-Management---Reporting-Officer--NOA_JR124300",
+        "location": "Kigali, Rwanda",
+        "contract": "JR124300",
+        "openingDate": "",
+        "closingDate": "",
+        "excerpt": "JR124300"
+      },
+      {
+        "id": "73b492f26d28520cf483fa2521ed76f72697507c199d19759051b586735face0",
+        "title": "Partnerships Officer, NOB",
+        "url": "https://wd3.myworkdaysite.com/job/Kigali-Rwanda/Partnerships-Officer_JR124301-1",
+        "location": "Kigali, Rwanda",
+        "contract": "JR124301",
+        "openingDate": "",
+        "closingDate": "",
+        "excerpt": "JR124301"
+      },
+      {
+        "id": "1c2d8572002e261801293cf8c82029813eb0911d4ee653989265079de0d4a826",
+        "title": "Budget and Programming Associate, G6 FT",
+        "url": "https://wd3.myworkdaysite.com/job/Dar-es-Salaam-Tanzanie/Budget-and-Programming-Associate--G6-FT_JR124250",
+        "location": "Dar-es-Salaam, Tanzanie",
+        "contract": "JR124250",
+        "openingDate": "",
+        "closingDate": "",
+        "excerpt": "JR124250"
+      },
+      {
+        "id": "7f80f97be015abd67dce43fe4daf695adf8f3d99b1b2c7070d58c85cc5997d1c",
+        "title": "Programme Associate (Data Analyst)",
+        "url": "https://wd3.myworkdaysite.com/job/Manille-Philippines/Programme-Associate--Data-Analyst-_JR122398",
+        "location": "Manille, Philippines",
+        "contract": "JR122398",
+        "openingDate": "",
+        "closingDate": "",
+        "excerpt": "JR122398"
+      },
+      {
+        "id": "1344ba9a98e308cd4fdc673d5fa8cd6b21ec9a9d1bef28a198a1a6ec3cc47fb3",
+        "title": "Asociado/a de Monitoreo y Evaluación",
+        "url": "https://wd3.myworkdaysite.com/job/Medellin-Colombie/Asociado-a-de-Monitoreo-y-Evaluacin_JR124345",
+        "location": "Medellin, Colombie",
+        "contract": "JR124345",
+        "openingDate": "",
+        "closingDate": "",
+        "excerpt": "JR124345"
       }
     ]
   },
@@ -435,17 +435,19 @@
     "collection": "review_required",
     "notes": "Offres ONU et volontariat liees au Burkina.",
     "priority": 2,
-    "updatedAt": "2026-06-17T18:33:39.006Z",
+    "updatedAt": "2026-06-25T12:15:02.737Z",
+    "portalStatus": "available",
+    "statusMessage": "",
     "jobs": [
       {
-        "id": "e6a7675007b33a3b30d58745f8c9d7883602739bf2dc20d089474a3411414d3d",
-        "title": "Clinicien - Kaya Regional Office",
-        "url": "https://untalent.org/jobs/clinicien-kaya-regional-office",
+        "id": "71c6a9b4770be0203e6a3d411f054ab177e7873f4e4d76f17684e28e06c4e8b0",
+        "title": "MCH & Nutrition Officer - Kaya",
+        "url": "https://untalent.org/jobs/mch-nutrition-officer-kaya",
         "location": "",
         "contract": "OTHER",
         "openingDate": "",
         "closingDate": "",
-        "excerpt": "--> Clinicien - Kaya Regional Office - FHI 360 Openings Mentoring Search Account Post a job Buy & Sell --> Get Pro Clinicien - Kaya Regional Office Improve the quality of care offered at EpiC service delivery sites. FHI 360 Open positions at FHI 360 Kaya ( Burkina Faso ) Show adv"
+        "excerpt": "--> MCH & Nutrition Officer - Kaya - FHI 360 Openings Mentoring Search Account Post a job Buy & Sell --> Get Pro MCH & Nutrition Officer - Kaya Support the implementation of maternal, neonatal, child health and nutrition activities. FHI 360 Open positions at FHI 360 Kaya ( Burkin"
       },
       {
         "id": "e4033715964b80e67127ba4544396b35d944a188a43f4e8bca3726c2c3bd6e16",
@@ -458,14 +460,14 @@
         "excerpt": "--> Every open position in the UN located in Burkina Faso Openings Mentoring Search Account Post a job Buy & Sell --> Get Pro Every open position in the UN located in Burkina Faso Get the new vacancies Receive the new vacancies for this search right into your inbox, every week. G"
       },
       {
-        "id": "7ca28702d1cbdd82753708f5d3ee12e9f7bc6ffd6268513fbe353a2c1449f83d",
-        "title": "Coordinateur administratif et logistique (F/H)",
-        "url": "https://untalent.org/jobs/coordinateur-administratif-et-logistique-f-h-1",
+        "id": "68960dca81faf52cbe0fe4467fcc139e3c6b36a6d7a0c81b0b7805f71facc768",
+        "title": "Social & Behavior Change Officer, NO-1, TA, 364 days, Ouagadougou, Burkina-Faso - WCAR",
+        "url": "https://untalent.org/jobs/social-behavior-change-officer-no-1-ta-364-days-ouagadougou-burkina-faso-wcar",
         "location": "",
         "contract": "OTHER",
         "openingDate": "",
         "closingDate": "",
-        "excerpt": "--> Coordinateur administratif et logistique (F/H) - Médecins du Monde Openings Mentoring Search Account Post a job Buy & Sell --> Get Pro Coordinateur administratif et logistique (F/H) Join a humanitarian organization to coordinate administrative and logistics efforts in Burkina"
+        "excerpt": "--> UNICEF - Social & Behavior Change Officer, NO-1, TA, 364 days, Ouagadougou, Burkina-Faso - WCAR Openings Mentoring Search Account Post a job Buy & Sell --> Get Pro Social & Behavior Change Officer, NO-1, TA, 364 days, Ouagadougou, Burkina-Faso - WCAR Provide technical and ope"
       },
       {
         "id": "ccff0de9d33cae68dcad4dc083d8f1200bb8647610e54edd364b865a740574c1",
@@ -478,24 +480,14 @@
         "excerpt": "--> Every open position in the UN located in Ouagadougou Openings Mentoring Search Account Post a job Buy & Sell --> Get Pro Every open position in the UN located in Ouagadougou Get the new vacancies Receive the new vacancies for this search right into your inbox, every week. Get"
       },
       {
-        "id": "416c814074c2c5f42b8398c7e931b6853275587e643015794ee65f78378e13aa",
-        "title": "&Eacute;pid&eacute;miologiste, Analyste de Recherche, Malaria | Epidemiologist, Research Analyst, Paludisme",
-        "url": "https://untalent.org/jobs/eacute-pid-eacute-miologiste-analyste-de-recherche-malaria-epidemiologist-research-analyst-paludisme",
+        "id": "dc71157c2c316a2896f22644eff1b9aed9256d45973edd0335a1cfdb164ff34d",
+        "title": "Stagiaire ICT Burkina Faso Ouagadougou",
+        "url": "https://untalent.org/jobs/stagiaire-ict-burkina-faso-ouagadougou",
         "location": "",
         "contract": "OTHER",
         "openingDate": "",
         "closingDate": "",
-        "excerpt": "--> CHAI - &Eacute;pid&eacute;miologiste, Analyste de Recherche, Malaria | Epidemiologist, Research Analyst, Paludisme Openings Mentoring Search Account Post a job Buy & Sell --> Get Pro &Eacute;pid&eacute;miologiste, Analyste de Recherche, Malaria | Epidemiologist, Research Anal"
-      },
-      {
-        "id": "3e5a7fd79fab110aeb17ad660538ffb4acfef47762910f4ce25ee642289903b4",
-        "title": "Associate, Malaria Case Management & Supply Chain Management",
-        "url": "https://untalent.org/jobs/associate-malaria-case-management-supply-chain-management",
-        "location": "",
-        "contract": "OTHER",
-        "openingDate": "",
-        "closingDate": "",
-        "excerpt": "--> CHAI - Associate, Malaria Case Management & Supply Chain Management Openings Mentoring Search Account Post a job Buy & Sell --> Get Pro Associate, Malaria Case Management & Supply Chain Management Contribute to CHAI's malaria program in Burkina Faso focusing on case managemen"
+        "excerpt": "--> NRC - Stagiaire ICT Burkina Faso Ouagadougou Openings Mentoring Search Account Post a job Buy & Sell --> Get Pro Stagiaire ICT Burkina Faso Ouagadougou Assist with ICT support at NRC office in Ouagadougou. NRC - Norwegian Refugee Council Open positions at NRC Ouagadougou ( Bu"
       },
       {
         "id": "1d4e4c1b27fbd86cc9cdafa4629403b09554d0953cc93c18e19584cf4a12998b",
@@ -506,10 +498,18 @@
         "openingDate": "",
         "closingDate": "",
         "excerpt": "--> Every open position in the UN in Logistics & Procurement located in Burkina Faso Openings Mentoring Search Account Post a job Buy & Sell --> Get Pro Every open position in the UN in Logistics & Procurement located in Burkina Faso Get the new vacancies Receive the new vacancie"
+      },
+      {
+        "id": "7ca28702d1cbdd82753708f5d3ee12e9f7bc6ffd6268513fbe353a2c1449f83d",
+        "title": "Coordinateur administratif et logistique (F/H)",
+        "url": "https://untalent.org/jobs/coordinateur-administratif-et-logistique-f-h-1",
+        "location": "",
+        "contract": "OTHER",
+        "openingDate": "",
+        "closingDate": "",
+        "excerpt": "--> Coordinateur administratif et logistique (F/H) - Médecins du Monde Openings Mentoring Search Account Post a job Buy & Sell --> Get Pro Coordinateur administratif et logistique (F/H) Join a humanitarian organization to coordinate administrative and logistics efforts in Burkina"
       }
-    ],
-    "error": "HTTP 403",
-    "stale": true
+    ]
   },
   {
     "sourceId": "unesco-careers",
@@ -519,69 +519,103 @@
     "collection": "manual_only",
     "notes": "Portail officiel UNESCO. A surveiller pour education, culture, communication et consultance.",
     "priority": 2,
-    "updatedAt": "2026-06-17T18:34:00.772Z",
+    "updatedAt": "2026-06-25T12:16:39.003Z",
     "portalStatus": "available",
     "statusMessage": "",
     "jobs": [
       {
-        "id": "39accafe26edf7f3efb013b96f8daef29680f0aef62042cda7844625aab92431",
-        "title": "Programme Assistant",
-        "url": "https://careers.unesco.org/job/Harare-Programme-Assistant/1364008957/",
-        "location": "",
-        "contract": "",
-        "openingDate": "",
-        "closingDate": "2026-06-30",
-        "excerpt": "Programme Assistant Programme Assistant <sp"
-      },
-      {
-        "id": "e741f0d4536e616e5bf76a343c5cc52be1905e6b9030cc67ac3f5f1d1a079772",
-        "title": "Consultant - Inventorying and Safeguarding of Yazidi Intangible Cultural Heritage in Iraq",
-        "url": "https://careers.unesco.org/job/Duhok-Consultant-Inventorying-and-Safeguarding-of-Yazidi-Intangible-Cultural-Heritage-in-Iraq/1364017057/",
+        "id": "c3dc956e8dba9eef2748ff10bc438ae098c1a5aeea95d198b04a121a77f78032",
+        "title": "SENIOR IT ASSISTANT",
+        "url": "https://careers.unesco.org/job/Moscow-SENIOR-IT-ASSISTANT/1355856657/",
         "location": "",
         "contract": "",
         "openingDate": "",
         "closingDate": "2026-06-26",
-        "excerpt": "Consultant - Inventorying and Safeguarding of Yazidi Intangible Cultural Heritage in Iraq Consultant - Inventorying"
+        "excerpt": "SENIOR IT ASSISTANT SENIOR IT ASSISTANT <sp"
       },
       {
-        "id": "399f1a70fbd8efa762281b58acfb4bc46eeaf8a8751793aeeedd300608c0d552",
-        "title": "Senior International Consultant for Skills Strategy Development in Afghanistan",
-        "url": "https://careers.unesco.org/job/Kabul-Senior-International-Consultant-for-Skills-Strategy-Development-in-Afghanistan/1363839257/",
+        "id": "dbee3d6d9c0a7909a21c03a24f73f16ae7c56cbbd52789c2ac50eaa1a77bb23d",
+        "title": "UNESCO WWAP International Senior Gender Expert",
+        "url": "https://careers.unesco.org/job/Perugia-UNESCO-WWAP-International-Senior-Gender-Expert/1364808657/",
         "location": "",
         "contract": "",
         "openingDate": "",
-        "closingDate": "2026-06-28",
-        "excerpt": "Senior International Consultant for Skills Strategy Development in Afghanistan Senior International Consultant for Skills Strategy De"
+        "closingDate": "2026-07-24",
+        "excerpt": "UNESCO WWAP International Senior Gender Expert UNESCO WWAP International Senior Gender Expert"
       },
       {
-        "id": "941443b78103a63a3decc1b135941b6c078bae853fd6dbb63ffce0865dbeaa38",
-        "title": "Associate Communication Officer (Natural Sciences)",
-        "url": "https://careers.unesco.org/job/Paris-Associate-Communication-Officer-%28Natural-Sciences%29/1363800957/",
+        "id": "1120cedf6860af55360927c29be588dcfcb3eff4e44c60af0f694d47a783144a",
+        "title": "Programme Assistant - Social and Human Sciences",
+        "url": "https://careers.unesco.org/job/New-Delhi-Programme-Assistant-Social-and-Human-Sciences/1364810157/",
         "location": "",
         "contract": "",
         "openingDate": "",
-        "closingDate": "2026-07-15",
-        "excerpt": "Associate Communication Officer (Natural Sciences) Associate Communication Officer (Natural Sciences)"
+        "closingDate": "2026-07-26",
+        "excerpt": "Programme Assistant - Social and Human Sciences Programme Assistant - Social and Human Sciences"
       },
       {
-        "id": "c2913cd022c41605d4c6e046a491f31dcec952d459a90d90dcb97595c5fa5075",
-        "title": "ASESOR PARA EL CAMBIO EN PEDAGOGÍA - PROYECTO EDUCACIÓN UNESCO-QUELLAVECO-REIMAGINA",
-        "url": "https://careers.unesco.org/job/Lima-ASESOR-PARA-EL-CAMBIO-EN-PEDAGOG%C3%8DA-PROYECTO-EDUCACI%C3%93N-UNESCO-QUELLAVECO-REIMAGINA/1363643357/",
+        "id": "a08ab6dc05786a44fc08fc089a718fbd9bb227f1f24e4cb2259caa15e17f0263",
+        "title": "Administrative Assistant",
+        "url": "https://careers.unesco.org/job/Trieste-Administrative-Assistant/1364809057/",
         "location": "",
         "contract": "",
         "openingDate": "",
-        "closingDate": "2026-06-22",
-        "excerpt": "ASESOR PARA EL CAMBIO EN PEDAGOGÍA - PROYECTO EDUCACIÓN UNESCO-QUELLAVECO-REIMAGINA ASESOR PARA EL CAMBIO EN"
+        "closingDate": "2026-07-09",
+        "excerpt": "Administrative Assistant Administrative Assistant <span class=\"jobLocation visible-phone\""
       },
       {
-        "id": "18dab842f6cd6c60e9f9aea5ee84f1c11edba824e97ce208a38d640e7c9ea02c",
-        "title": "Associate Project Officer- Research",
-        "url": "https://careers.unesco.org/job/New-Delhi-Associate-Project-Officer-Research/1363584657/",
+        "id": "e759236dc29fca9b6ab50f4a26195d3ad9b4a09acd7fe0ddae71d5ce24ffa8f1",
+        "title": "Project Associate - Social and Human Sciences",
+        "url": "https://careers.unesco.org/job/New-Delhi-Project-Associate-Social-and-Human-Sciences/1364815957/",
         "location": "",
         "contract": "",
         "openingDate": "",
-        "closingDate": "2026-06-30",
-        "excerpt": "Associate Project Officer- Research Associate Project Officer- Research"
+        "closingDate": "2026-07-26",
+        "excerpt": "Project Associate - Social and Human Sciences Project Associate - Social and Human Sciences"
+      },
+      {
+        "id": "4914cafe2c1c4a7e677073b85b1bb27bf530ee336b22f065a31768037b7fb020",
+        "title": "Senior Statistical Assistant (Foresight, Research and Methodology)",
+        "url": "https://careers.unesco.org/job/Montreal-Senior-Statistical-Assistant-%28Foresight%2C-Research-and-Methodology%29-QC/1364715257/",
+        "location": "",
+        "contract": "",
+        "openingDate": "",
+        "closingDate": "2026-07-08",
+        "excerpt": "Senior Statistical Assistant (Foresight, Research and Methodology) Senior Statistical Assistant (Foresight, Research and Methodology)"
+      }
+    ]
+  },
+  {
+    "sourceId": "unicef-careers-burkina",
+    "name": "UNICEF Careers Burkina Faso",
+    "url": "https://jobs.unicef.org/en-us/search/?search-keyword=Burkina%20Faso",
+    "type": "organization",
+    "collection": "manual_only",
+    "notes": "Source officielle UNICEF. Utiliser comme verification des offres UNICEF.",
+    "priority": 2,
+    "updatedAt": "2026-06-25T12:15:17.981Z",
+    "portalStatus": "available",
+    "statusMessage": "",
+    "jobs": [
+      {
+        "id": "07a3e60cfafca3f5344e38b9e067b441d2a0a2dacae3a3189f673d68e65586f2",
+        "title": "Social & Behavior Change Officer, NO-1, TA, (364 days), #137457, Ouagadougou, Burkina-Faso - WCAR",
+        "url": "https://jobs.unicef.org/en-us/job/594001/social-behavior-change-officer-no1-ta-364-days-137457-ouagadougou-burkinafaso-wcar",
+        "location": "",
+        "contract": "",
+        "openingDate": "",
+        "closingDate": "",
+        "excerpt": "Vacancies | UNICEF Careers Skip to main content Global Links Visit UNICEF Global Careers Toggle navigation Unicef default logo Careers Explore UNICEF About UNICEF Where we work Explore careers Working in emergencies Diversity and inclusion Leadership recruitment Support UNICEF Se"
+      },
+      {
+        "id": "bd186cb9162e91778c31210ae3b12de3a7b6a697f60efcabf5bffb00b670ef37",
+        "title": "International Consultant on WASH Conflict and Peace Analysis, Global Practice WASH, CoE Nairobi, Kenya, 12 months (Remote) #593962",
+        "url": "https://jobs.unicef.org/en-us/job/593962/international-consultant-on-wash-conflict-and-peace-analysis-global-practice-wash-coe-nairobi-kenya-12-months-remote-593962",
+        "location": "",
+        "contract": "",
+        "openingDate": "",
+        "closingDate": "",
+        "excerpt": "Vacancies | UNICEF Careers Skip to main content Global Links Visit UNICEF Global Careers Toggle navigation Unicef default logo Careers Explore UNICEF About UNICEF Where we work Explore careers Working in emergencies Diversity and inclusion Leadership recruitment Support UNICEF Se"
       }
     ]
   },
@@ -593,7 +627,7 @@
     "collection": "manual_only",
     "notes": "Portail officiel ONU Femmes. Peut contenir des postes operations, programme, digital et data.",
     "priority": 2,
-    "updatedAt": "2026-06-17T18:34:35.237Z",
+    "updatedAt": "2026-06-25T12:18:24.929Z",
     "portalStatus": "available",
     "statusMessage": "",
     "jobs": [
@@ -604,7 +638,7 @@
         "location": "",
         "contract": "",
         "openingDate": "",
-        "closingDate": "2026-06-17",
+        "closingDate": "2026-06-25",
         "excerpt": "Current Vacancies | UN Women – Headquarters Skip to main content Universal menu Global Regions Africa Americas and the Caribbean Arab States Asia and the Pacific Europe and Central Asia Knowledge Data Training Transparency Select your language English Español Français Main Naviga"
       }
     ]
@@ -617,7 +651,7 @@
     "collection": "manual_only",
     "notes": "Source internationale serieuse pour missions de consultance financees par bailleurs et projets publics.",
     "priority": 2,
-    "updatedAt": "2026-06-17T18:21:17.299Z",
+    "updatedAt": "2026-06-25T12:23:06.980Z",
     "portalStatus": "available",
     "statusMessage": "",
     "jobs": []
@@ -630,7 +664,7 @@
     "collection": "manual_only",
     "notes": "Developpement international. Peut necessiter compte, donc lien et veille manuelle.",
     "priority": 2,
-    "updatedAt": "2026-06-17T18:13:48.781Z",
+    "updatedAt": "2026-06-25T12:14:51.169Z",
     "jobs": [],
     "error": "fetch failed",
     "stale": false
@@ -643,7 +677,7 @@
     "collection": "manual_only",
     "notes": "Portail officiel FAO pour agriculture, resilience, nutrition et consultance.",
     "priority": 2,
-    "updatedAt": "2026-06-17T18:15:39.938Z",
+    "updatedAt": "2026-06-25T12:16:51.812Z",
     "portalStatus": "available",
     "statusMessage": "",
     "jobs": []
@@ -656,7 +690,7 @@
     "collection": "manual_only",
     "notes": "Portail officiel de l'AIEA/IAEA. Peut contenir des postes IT, data, securite, ingenierie et support.",
     "priority": 2,
-    "updatedAt": "2026-06-17T18:17:00.150Z",
+    "updatedAt": "2026-06-25T12:17:45.586Z",
     "portalStatus": "available",
     "statusMessage": "",
     "jobs": []
@@ -669,7 +703,7 @@
     "collection": "manual_only",
     "notes": "Portail officiel du FIDA/IFAD. Source serieuse pour projets, rural, operations, ICT et data.",
     "priority": 2,
-    "updatedAt": "2026-06-17T18:17:30.267Z",
+    "updatedAt": "2026-06-25T12:18:40.406Z",
     "jobs": [],
     "error": "fetch failed",
     "stale": false
@@ -682,7 +716,7 @@
     "collection": "manual_only",
     "notes": "Portail officiel de l'OIT/ILO. Important pour emploi, travail decent, protection sociale et digitalisation du travail.",
     "priority": 2,
-    "updatedAt": "2026-06-17T18:16:47.205Z",
+    "updatedAt": "2026-06-25T12:17:44.015Z",
     "portalStatus": "available",
     "statusMessage": "",
     "jobs": []
@@ -695,7 +729,7 @@
     "collection": "manual_only",
     "notes": "Plateforme internationale. Souvent dynamique, donc surveillance manuelle/API si disponible.",
     "priority": 2,
-    "updatedAt": "2026-06-17T18:13:46.700Z",
+    "updatedAt": "2026-06-25T12:14:38.949Z",
     "jobs": [],
     "error": "HTTP 403",
     "stale": false
@@ -708,7 +742,7 @@
     "collection": "manual_only",
     "notes": "Portail officiel OIM/IOM. Pertinent pour migration, operations, data, ICT et gestion de l'information.",
     "priority": 2,
-    "updatedAt": "2026-06-17T18:17:12.773Z",
+    "updatedAt": "2026-06-25T12:18:20.706Z",
     "portalStatus": "available",
     "statusMessage": "",
     "jobs": []
@@ -721,7 +755,7 @@
     "collection": "manual_only",
     "notes": "Portail officiel de l'UIT/ITU. Source majeure pour ICT, telecom, cyber, ingenierie et transformation numerique.",
     "priority": 2,
-    "updatedAt": "2026-06-17T18:17:05.864Z",
+    "updatedAt": "2026-06-25T12:18:00.925Z",
     "portalStatus": "available",
     "statusMessage": "",
     "jobs": []
@@ -734,7 +768,7 @@
     "collection": "manual_only",
     "notes": "Veille reseau professionnel pour offres partagees en posts. Utiliser API/partenariats ou saisie admin.",
     "priority": 2,
-    "updatedAt": "2026-06-17T18:21:00.388Z",
+    "updatedAt": "2026-06-25T12:23:01.270Z",
     "jobs": [],
     "error": "robots.txt interdit la collecte de cette source",
     "stale": false
@@ -747,7 +781,7 @@
     "collection": "manual_only",
     "notes": "Portail officiel des Nations Unies pour postes internationaux, P, G, consultance et terrain.",
     "priority": 2,
-    "updatedAt": "2026-06-17T18:16:43.888Z",
+    "updatedAt": "2026-06-25T12:17:42.107Z",
     "portalStatus": "available",
     "statusMessage": "",
     "jobs": []
@@ -760,7 +794,7 @@
     "collection": "manual_only",
     "notes": "Source officielle PNUD/UNDP, souvent dynamique.",
     "priority": 2,
-    "updatedAt": "2026-06-17T18:14:07.937Z",
+    "updatedAt": "2026-06-25T12:15:20.567Z",
     "portalStatus": "available",
     "statusMessage": "",
     "jobs": []
@@ -773,10 +807,10 @@
     "collection": "manual_only",
     "notes": "Portail officiel PNUE/UNEP. Pertinent pour environnement, GIS, data, digital et projets.",
     "priority": 2,
-    "updatedAt": "2026-06-17T18:17:28.440Z",
-    "portalStatus": "available",
-    "statusMessage": "",
-    "jobs": []
+    "updatedAt": "2026-06-25T12:18:38.336Z",
+    "jobs": [],
+    "error": "HTTP 403",
+    "stale": false
   },
   {
     "sourceId": "unfpa-jobs",
@@ -786,7 +820,7 @@
     "collection": "manual_only",
     "notes": "Portail officiel UNFPA pour programmes, operations, data et consultance.",
     "priority": 2,
-    "updatedAt": "2026-06-17T18:17:24.554Z",
+    "updatedAt": "2026-06-25T12:18:22.175Z",
     "jobs": [],
     "error": "fetch failed",
     "stale": false
@@ -799,20 +833,7 @@
     "collection": "manual_only",
     "notes": "Portail officiel du HCR/UNHCR. Source serieuse pour terrain, data, information management et protection.",
     "priority": 2,
-    "updatedAt": "2026-06-17T18:17:11.073Z",
-    "jobs": [],
-    "error": "HTTP 403",
-    "stale": false
-  },
-  {
-    "sourceId": "unicef-careers-burkina",
-    "name": "UNICEF Careers Burkina Faso",
-    "url": "https://jobs.unicef.org/en-us/search/?search-keyword=Burkina%20Faso",
-    "type": "organization",
-    "collection": "manual_only",
-    "notes": "Source officielle UNICEF. Utiliser comme verification des offres UNICEF.",
-    "priority": 2,
-    "updatedAt": "2026-06-17T18:14:04.205Z",
+    "updatedAt": "2026-06-25T12:18:06.653Z",
     "portalStatus": "available",
     "statusMessage": "",
     "jobs": []
@@ -825,7 +846,7 @@
     "collection": "manual_only",
     "notes": "Portail officiel de l'ONUDI/UNIDO. Pertinent pour industrie, projets, transformation digitale et data.",
     "priority": 2,
-    "updatedAt": "2026-06-17T18:17:03.858Z",
+    "updatedAt": "2026-06-25T12:17:47.565Z",
     "portalStatus": "available",
     "statusMessage": "",
     "jobs": []
@@ -838,7 +859,7 @@
     "collection": "manual_only",
     "notes": "Portail officiel UNOPS. Frequent pour projets, operations, procurement, infrastructure et IT.",
     "priority": 2,
-    "updatedAt": "2026-06-17T18:17:08.583Z",
+    "updatedAt": "2026-06-25T12:18:03.295Z",
     "jobs": [],
     "error": "fetch failed",
     "stale": false
@@ -851,7 +872,7 @@
     "collection": "manual_only",
     "notes": "Portail officiel des Volontaires des Nations Unies. Utile pour volontariat national et international.",
     "priority": 2,
-    "updatedAt": "2026-06-17T18:15:06.554Z",
+    "updatedAt": "2026-06-25T12:16:27.103Z",
     "portalStatus": "available",
     "statusMessage": "",
     "jobs": []
@@ -864,7 +885,7 @@
     "collection": "manual_only",
     "notes": "Plateforme mondiale de freelance. Bonne porte d'entree pour consultance, design, redaction, support et developpement.",
     "priority": 2,
-    "updatedAt": "2026-06-17T18:21:19.386Z",
+    "updatedAt": "2026-06-25T12:23:19.476Z",
     "jobs": [],
     "error": "HTTP 403",
     "stale": false
@@ -877,7 +898,7 @@
     "collection": "manual_only",
     "notes": "Portail officiel OMS/WHO. Important pour sante publique, consultance et coordination de projets.",
     "priority": 2,
-    "updatedAt": "2026-06-17T18:15:19.760Z",
+    "updatedAt": "2026-06-25T12:16:29.492Z",
     "portalStatus": "available",
     "statusMessage": "",
     "jobs": []
@@ -890,7 +911,7 @@
     "collection": "manual_only",
     "notes": "Portail officiel de l'OMC/WTO. Peut contenir des fonctions data, analyse, securite et systems.",
     "priority": 3,
-    "updatedAt": "2026-06-17T18:17:36.205Z",
+    "updatedAt": "2026-06-25T12:18:46.310Z",
     "portalStatus": "available",
     "statusMessage": "",
     "jobs": [
@@ -1024,7 +1045,7 @@
     "collection": "manual_only",
     "notes": "Portail officiel ACTED. Pertinent pour terrain, GIS, data, systems et operations.",
     "priority": 3,
-    "updatedAt": "2026-06-17T18:19:49.884Z",
+    "updatedAt": "2026-06-25T12:21:04.009Z",
     "jobs": [],
     "error": "fetch failed",
     "stale": false
@@ -1037,7 +1058,7 @@
     "collection": "manual_only",
     "notes": "Source officielle ACF.",
     "priority": 3,
-    "updatedAt": "2026-06-17T18:14:46.657Z",
+    "updatedAt": "2026-06-25T12:16:08.527Z",
     "portalStatus": "available",
     "statusMessage": "",
     "jobs": []
@@ -1050,7 +1071,7 @@
     "collection": "manual_only",
     "notes": "Banque Africaine de Developpement. Utile pour postes experts, projets et consultance regionale.",
     "priority": 3,
-    "updatedAt": "2026-06-17T18:16:25.901Z",
+    "updatedAt": "2026-06-25T12:17:25.651Z",
     "jobs": [],
     "error": "HTTP 403",
     "stale": false
@@ -1063,7 +1084,7 @@
     "collection": "manual_only",
     "notes": "Portail officiel CARE. Pertinent pour programme, operations, digital et support international.",
     "priority": 3,
-    "updatedAt": "2026-06-17T18:19:30.202Z",
+    "updatedAt": "2026-06-25T12:20:39.474Z",
     "jobs": [],
     "error": "fetch failed",
     "stale": false
@@ -1076,7 +1097,7 @@
     "collection": "manual_only",
     "notes": "Source officielle CRS.",
     "priority": 3,
-    "updatedAt": "2026-06-17T18:15:05.140Z",
+    "updatedAt": "2026-06-25T12:16:25.714Z",
     "jobs": [],
     "error": "HTTP 403",
     "stale": false
@@ -1089,7 +1110,7 @@
     "collection": "manual_only",
     "notes": "Portail officiel Concern Worldwide. Source humanitaire serieuse et diversifiee.",
     "priority": 3,
-    "updatedAt": "2026-06-17T18:19:47.828Z",
+    "updatedAt": "2026-06-25T12:21:02.062Z",
     "portalStatus": "available",
     "statusMessage": "",
     "jobs": []
@@ -1102,7 +1123,7 @@
     "collection": "manual_only",
     "notes": "Danish Refugee Council. Source officielle de verification.",
     "priority": 3,
-    "updatedAt": "2026-06-17T18:33:42.613Z",
+    "updatedAt": "2026-06-25T12:15:50.965Z",
     "portalStatus": "available",
     "statusMessage": "",
     "jobs": []
@@ -1115,7 +1136,7 @@
     "collection": "manual_only",
     "notes": "Source officielle FHI 360, complement pour offres sante/projets.",
     "priority": 3,
-    "updatedAt": "2026-06-17T18:15:02.123Z",
+    "updatedAt": "2026-06-25T12:16:12.492Z",
     "portalStatus": "available",
     "statusMessage": "",
     "jobs": []
@@ -1128,7 +1149,7 @@
     "collection": "manual_only",
     "notes": "Plateforme freelance utile pour services numeriques et missions courtes. Profil et reputation a construire proprement.",
     "priority": 3,
-    "updatedAt": "2026-06-17T18:21:33.024Z",
+    "updatedAt": "2026-06-25T12:23:21.618Z",
     "jobs": [],
     "error": "HTTP 403",
     "stale": false
@@ -1141,7 +1162,7 @@
     "collection": "manual_only",
     "notes": "Portail officiel GIZ. Utile pour cooperation, gouvernance, climat et missions d'expertise.",
     "priority": 3,
-    "updatedAt": "2026-06-17T18:16:29.363Z",
+    "updatedAt": "2026-06-25T12:17:29.069Z",
     "portalStatus": "available",
     "statusMessage": "",
     "jobs": []
@@ -1154,7 +1175,7 @@
     "collection": "manual_only",
     "notes": "Source officielle HI / Handicap International.",
     "priority": 3,
-    "updatedAt": "2026-06-17T18:14:47.911Z",
+    "updatedAt": "2026-06-25T12:16:09.821Z",
     "portalStatus": "available",
     "statusMessage": "",
     "jobs": []
@@ -1167,7 +1188,7 @@
     "collection": "manual_only",
     "notes": "Portail officiel OACI/ICAO. Utile pour aviation, systems, data et gestion internationale.",
     "priority": 3,
-    "updatedAt": "2026-06-17T18:18:19.444Z",
+    "updatedAt": "2026-06-25T12:19:29.654Z",
     "jobs": [],
     "error": "fetch failed",
     "stale": false
@@ -1180,9 +1201,9 @@
     "collection": "manual_only",
     "notes": "Portail officiel Federation internationale Croix-Rouge / Croissant-Rouge.",
     "priority": 3,
-    "updatedAt": "2026-06-17T18:18:34.234Z",
+    "updatedAt": "2026-06-25T12:19:43.376Z",
     "jobs": [],
-    "error": "HTTP 404",
+    "error": "HTTP 403",
     "stale": false
   },
   {
@@ -1193,7 +1214,7 @@
     "collection": "manual_only",
     "notes": "Portail officiel OMI/IMO. Source institutionnelle complementaire pour operations, systems et digital.",
     "priority": 3,
-    "updatedAt": "2026-06-17T18:18:31.621Z",
+    "updatedAt": "2026-06-25T12:19:42.173Z",
     "jobs": [],
     "error": "fetch failed",
     "stale": false
@@ -1206,7 +1227,7 @@
     "collection": "manual_only",
     "notes": "Portail officiel International Rescue Committee. Source serieuse pour humanitaire, data et information management.",
     "priority": 3,
-    "updatedAt": "2026-06-17T18:19:33.318Z",
+    "updatedAt": "2026-06-25T12:20:44.623Z",
     "portalStatus": "available",
     "statusMessage": "",
     "jobs": []
@@ -1219,7 +1240,7 @@
     "collection": "manual_only",
     "notes": "Verification manuelle des offres environnement et conservation.",
     "priority": 3,
-    "updatedAt": "2026-06-17T18:14:11.787Z",
+    "updatedAt": "2026-06-25T12:15:35.972Z",
     "portalStatus": "available",
     "statusMessage": "",
     "jobs": []
@@ -1232,7 +1253,7 @@
     "collection": "manual_only",
     "notes": "Portail officiel Mercy Corps. Peut contenir operations, IT, digital et support programme.",
     "priority": 3,
-    "updatedAt": "2026-06-17T18:19:34.834Z",
+    "updatedAt": "2026-06-25T12:20:46.370Z",
     "jobs": [],
     "error": "fetch failed",
     "stale": false
@@ -1245,7 +1266,7 @@
     "collection": "manual_only",
     "notes": "Norwegian Refugee Council. Verifier les postes Burkina cites par UNjobs.",
     "priority": 3,
-    "updatedAt": "2026-06-17T18:14:24.732Z",
+    "updatedAt": "2026-06-25T12:15:37.973Z",
     "portalStatus": "available",
     "statusMessage": "",
     "jobs": []
@@ -1258,7 +1279,7 @@
     "collection": "manual_only",
     "notes": "Portail officiel Oxfam. Source internationale credible pour humanitaire, digital, data et programme.",
     "priority": 3,
-    "updatedAt": "2026-06-17T18:19:17.900Z",
+    "updatedAt": "2026-06-25T12:20:27.195Z",
     "jobs": [],
     "error": "fetch failed",
     "stale": false
@@ -1271,7 +1292,7 @@
     "collection": "manual_only",
     "notes": "Source officielle pour offres Plan International.",
     "priority": 3,
-    "updatedAt": "2026-06-17T18:14:32.474Z",
+    "updatedAt": "2026-06-25T12:15:54.704Z",
     "portalStatus": "available",
     "statusMessage": "",
     "jobs": []
@@ -1284,7 +1305,7 @@
     "collection": "manual_only",
     "notes": "Portail officiel Relief International. Source credible pour programmes, sante, operations et support IT.",
     "priority": 3,
-    "updatedAt": "2026-06-17T18:19:51.747Z",
+    "updatedAt": "2026-06-25T12:21:07.535Z",
     "portalStatus": "available",
     "statusMessage": "",
     "jobs": []
@@ -1297,7 +1318,7 @@
     "collection": "manual_only",
     "notes": "Tableau mondial de travail a distance. Rechercher remote, support, engineering, design ou operations.",
     "priority": 3,
-    "updatedAt": "2026-06-17T18:21:35.196Z",
+    "updatedAt": "2026-06-25T12:23:24.327Z",
     "portalStatus": "available",
     "statusMessage": "",
     "jobs": []
@@ -1310,7 +1331,7 @@
     "collection": "manual_only",
     "notes": "Source officielle Save the Children.",
     "priority": 3,
-    "updatedAt": "2026-06-17T18:14:44.493Z",
+    "updatedAt": "2026-06-25T12:16:07.191Z",
     "portalStatus": "available",
     "statusMessage": "",
     "jobs": []
@@ -1323,7 +1344,7 @@
     "collection": "manual_only",
     "notes": "Portail officiel SNV. Utile pour projets, data, digitalisation et assistance technique.",
     "priority": 3,
-    "updatedAt": "2026-06-17T18:20:09.047Z",
+    "updatedAt": "2026-06-25T12:21:22.374Z",
     "portalStatus": "available",
     "statusMessage": "",
     "jobs": []
@@ -1336,7 +1357,7 @@
     "collection": "manual_only",
     "notes": "Portail officiel TechnoServe. Peut remonter des postes projet, digital, data et operations.",
     "priority": 3,
-    "updatedAt": "2026-06-17T18:20:22.770Z",
+    "updatedAt": "2026-06-25T12:21:24.532Z",
     "jobs": [],
     "error": "fetch failed",
     "stale": false
@@ -1349,7 +1370,7 @@
     "collection": "manual_only",
     "notes": "Site reconnu pour travail a distance. Les mots utiles sont remote, customer support, operations, product et africa.",
     "priority": 3,
-    "updatedAt": "2026-06-17T18:21:36.713Z",
+    "updatedAt": "2026-06-25T12:23:36.394Z",
     "jobs": [],
     "error": "HTTP 403",
     "stale": false
@@ -1362,7 +1383,7 @@
     "collection": "manual_only",
     "notes": "Portail officiel Banque mondiale. A suivre pour projets, operations, data et consultance.",
     "priority": 3,
-    "updatedAt": "2026-06-17T18:16:27.106Z",
+    "updatedAt": "2026-06-25T12:17:26.831Z",
     "portalStatus": "available",
     "statusMessage": "",
     "jobs": []
@@ -1375,7 +1396,7 @@
     "collection": "manual_only",
     "notes": "Source officielle World Vision.",
     "priority": 3,
-    "updatedAt": "2026-06-17T18:15:02.912Z",
+    "updatedAt": "2026-06-25T12:16:24.274Z",
     "portalStatus": "available",
     "statusMessage": "",
     "jobs": []
@@ -1388,7 +1409,7 @@
     "collection": "manual_only",
     "notes": "Portail officiel Cisco. Pertinent pour reseau, securite, cloud et support technique.",
     "priority": 4,
-    "updatedAt": "2026-06-17T18:20:59.861Z",
+    "updatedAt": "2026-06-25T12:22:49.574Z",
     "portalStatus": "available",
     "statusMessage": "",
     "jobs": []
@@ -1401,7 +1422,7 @@
     "collection": "manual_only",
     "notes": "Portail officiel Microsoft. Ajoute une couche entreprise internationale credible pour les profils IT et cloud.",
     "priority": 4,
-    "updatedAt": "2026-06-17T18:20:28.517Z",
+    "updatedAt": "2026-06-25T12:22:14.484Z",
     "portalStatus": "available",
     "statusMessage": "",
     "jobs": []
@@ -1414,9 +1435,22 @@
     "collection": "manual_only",
     "notes": "Portail officiel Oracle. Utile pour systemes, cloud, data et support applicatif international.",
     "priority": 4,
-    "updatedAt": "2026-06-17T18:20:43.839Z",
+    "updatedAt": "2026-06-25T12:22:19.903Z",
     "portalStatus": "available",
     "statusMessage": "",
     "jobs": []
+  },
+  {
+    "sourceId": "expertisenf-bf",
+    "name": "Expertise France Afrique",
+    "url": "https://www.expertisefrance.fr/offres-d-emploi?zone=Afrique+subsaharienne",
+    "type": "ngo",
+    "collection": "manual_only",
+    "notes": "Expertise technique internationale, missions Burkina",
+    "priority": 6,
+    "updatedAt": "2026-06-25T12:23:38.464Z",
+    "jobs": [],
+    "error": "HTTP 404",
+    "stale": false
   }
 ]

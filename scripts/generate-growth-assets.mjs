@@ -49,7 +49,7 @@ async function main() {
     {
       day: "Lundi",
       channel: "Site + Facebook + LinkedIn",
-      action: "Publier le digest des 10 nouvelles opportunites avec lien vers JobFaso.",
+      action: "Publier le digest des 10 nouvelles opportunites avec lien vers Emplois Burkina.",
       revenueHook: "Ajouter un encart sponsorise pour formation ou recruteur.",
     },
     {
@@ -78,11 +78,11 @@ async function main() {
     },
   ];
 
-  const playbook = `# Systeme revenus et croissance JobFaso
+  const playbook = `# Systeme revenus et croissance Emplois Burkina
 
 ## Positionnement
 
-JobFaso doit rester gratuit pour les chercheurs d'emploi. Les revenus viennent de l'audience qualifiee, de la visibilite recruteur, des sponsors clairement identifies, des formations partenaires et des donnees agregees.
+Emplois Burkina doit rester gratuit pour les chercheurs d'emploi. Les revenus viennent de l'audience qualifiee, de la visibilite recruteur, des sponsors clairement identifies, des formations partenaires et des donnees agregees.
 
 ## Inventaire a vendre
 
@@ -123,7 +123,7 @@ ${job.category} - ${job.title}
 Ville : ${job.city}
 Organisation : ${job.company}
 Source : ${job.source}
-Voir les details sur JobFaso et verifier la source officielle avant de postuler.
+Voir les details sur Emplois Burkina et verifier la source officielle avant de postuler.
 `
     )
     .join("\n---\n\n");
@@ -132,7 +132,7 @@ Voir les details sur JobFaso et verifier la source officielle avant de postuler.
   await writeFile(new URL("recent-jobs.json", OUT_DIR), JSON.stringify(recentJobs, null, 2), "utf8");
   await writeFile(new URL("market-snapshot.json", OUT_DIR), JSON.stringify({ categories, cities, sources }, null, 2), "utf8");
   await writeFile(new URL("GROWTH_REVENUE_SYSTEM.md", DOCS_DIR), playbook, "utf8");
-  await writeFile(new URL("MARKETING_POSTS.md", DOCS_DIR), `# Posts marketing JobFaso\n\n${socialPosts}`, "utf8");
+  await writeFile(new URL("MARKETING_POSTS.md", DOCS_DIR), `# Posts marketing Emplois Burkina\n\n${socialPosts}`, "utf8");
 
   console.log("Growth assets generated: data/growth/*, docs/GROWTH_REVENUE_SYSTEM.md, docs/MARKETING_POSTS.md");
 }

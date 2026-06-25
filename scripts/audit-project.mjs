@@ -200,7 +200,7 @@ const audit = {
   checks,
 };
 
-const markdown = `# Audit projet JobFaso
+const markdown = `# Audit projet Emplois Burkina
 
 Genere le : ${audit.generatedAt}
 

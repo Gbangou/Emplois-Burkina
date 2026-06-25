@@ -1,10 +1,10 @@
-# Monetisation JobFaso
+# Monetisation Emplois Burkina
 
 ## Principe central
 
 Les chercheurs d'emploi doivent avoir acces gratuitement aux informations
 essentielles : offres, concours, stages, metiers terrain, deadlines et liens
-sources. Ils cherchent du travail, donc JobFaso doit gagner leur confiance avant
+sources. Ils cherchent du travail, donc Emplois Burkina doit gagner leur confiance avant
 de leur demander de l'argent.
 
 Le revenu doit venir surtout de :
@@ -40,7 +40,7 @@ Regles AdSense importantes :
 - ajouter mentions legales, confidentialite et contact.
 
 AdSense Auto ads peut etre utile : un code est ajoute au site et Google place
-automatiquement les annonces selon la page. Mais JobFaso ne doit pas dependre
+automatiquement les annonces selon la page. Mais Emplois Burkina ne doit pas dependre
 uniquement d'AdSense, car les revenus publicitaires au debut seront souvent
 modestes.
 
@@ -277,7 +277,7 @@ Revenus :
 
 ## 12. Marques blanches
 
-Objectif : vendre la technologie JobFaso a d'autres organisations.
+Objectif : vendre la technologie Emplois Burkina a d'autres organisations.
 
 Clients :
 

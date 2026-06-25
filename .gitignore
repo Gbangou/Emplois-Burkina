@@ -1,4 +1,8 @@
 node_modules/
+.cl[a]ude/
+.next/
+dist/
+*.tsbuildinfo
 .env
 .env.*
 !.env.example

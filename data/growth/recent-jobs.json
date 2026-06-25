@@ -1,19 +1,11 @@
 [
   {
-    "title": "Coordinateur Administratif et Logistique",
+    "title": "Volunteer Specialist",
     "company": "BFemploi",
     "city": "Burkina Faso",
-    "category": "ONG",
-    "source": "BFemploi",
-    "url": "https://www.bfemploi.com/annonce-details-3866.html"
-  },
-  {
-    "title": "CAGEI | Appel à candidatures : Recrutement 6ième promotion pour la formation certifiante en Analyse de données (Data Analyst)",
-    "company": "Burkina24 Emploi",
-    "city": "Burkina Faso",
     "category": "Bureau",
-    "source": "Burkina24 Emploi",
-    "url": "https://burkina24.com/2026/06/16/cagei-appel-a-candidatures-recrutement-6ieme-promotion-pour-la-formation-certifiante-en-analyse-de-donnees-data-analyst-3/"
+    "source": "BFemploi",
+    "url": "https://www.bfemploi.com/annonce-details-3882.html"
   },
   {
     "title": "Technico Commercial en Climatisation Haut de Gamme- Ouagadougou",
@@ -24,12 +16,12 @@
     "url": "https://www.emploiburkina.com/offre-emploi-burkina-faso/technico-commercial-climatisation-haut-gamme-ouagadougou-82601"
   },
   {
-    "title": "Oxfam International J-13 OORDONNATEUR DE PROGRAMME DU SECTEUR PRIVÉ, 📍 Ghana 📋 CDD Management & Coordination",
+    "title": "Responsable MEAL – RCCE, Responsabilisation et Protection",
     "company": "HumanitaireHub",
-    "city": "Burkina Faso",
+    "city": "RDC",
     "category": "ONG",
     "source": "HumanitaireHub",
-    "url": "https://humanitairehub.com/emploi/oordonnateur-de-programme-du-secteur-prive/"
+    "url": "https://humanitairehub.com/emploi/responsable-meal-rcce-responsabilisation-et-protection/"
   },
   {
     "title": "Avis de recrutement d’un(e) Coordonnateur(trice) de Projet",
@@ -40,59 +32,67 @@
     "url": "https://emploi.lefaso.net/Avis-de-recrutement-d-un-e-Coordonnateur-trice-de-Projet.html"
   },
   {
-    "title": "Communications and Marketing Specialist, Pathfinder Portuguese & English Countries",
-    "company": "UNjobs Burkina Faso",
+    "title": "MCH & Nutrition Officer - Kaya",
+    "company": "UN Talent Burkina Faso",
     "city": "Burkina Faso",
-    "category": "Commerce et vente",
-    "source": "UNjobs Burkina Faso",
-    "url": "https://unjobs.org/vacancies/1779895707052"
+    "category": "ONG",
+    "source": "UN Talent Burkina Faso",
+    "url": "https://untalent.org/jobs/mch-nutrition-officer-kaya"
   },
   {
-    "title": "Responsable de Recherche",
-    "company": "BFemploi",
-    "city": "Ouagadougou",
-    "category": "Bureau",
-    "source": "BFemploi",
-    "url": "https://www.bfemploi.com/annonce-details-3871.html"
-  },
-  {
-    "title": "Sécretaire Comptable- Ouagadougou",
-    "company": "Emploiburkina",
+    "title": "VacancyTitle: Finance Assistant, Location: Ouagadougou",
+    "company": "UNjobs Burkina Faso",
     "city": "Ouagadougou",
     "category": "Finance et administration",
-    "source": "Emploiburkina",
-    "url": "https://www.emploiburkina.com/offre-emploi-burkina-faso/secretaire-comptable-ouagadougou-303588"
+    "source": "UNjobs Burkina Faso",
+    "url": "https://unjobs.org/vacancies/1780962167818"
   },
   {
-    "title": "CHARGE DE SECURITE ET LOGISTIQUE – (NATIONAL)",
-    "company": "HumanitaireHub",
-    "city": "Burkina Faso",
-    "category": "Transport et logistique",
-    "source": "HumanitaireHub",
-    "url": "https://humanitairehub.com/emploi/charge-de-securite-et-logistique-national/"
-  },
-  {
-    "title": "Enquêteurs / Chercheurs de terrain",
+    "title": "Coordinateur Administratif et Logistique",
     "company": "BFemploi",
-    "city": "Burkina Faso",
-    "category": "Metiers terrain et informels",
+    "city": "dans le courant des mois de mai et juin",
+    "category": "ONG",
     "source": "BFemploi",
-    "url": "https://www.bfemploi.com/annonce-details-3870.html"
+    "url": "https://www.bfemploi.com/annonce-details-3866.html"
   },
   {
-    "title": "Executive Secretary- Ouagadougou",
+    "title": "Magazine Keeper Junior (Magasinier) H/F- Bagassi",
     "company": "Emploiburkina",
-    "city": "Ouagadougou",
-    "category": "Bureau",
+    "city": "Bagassi",
+    "category": "Transport et logistique",
     "source": "Emploiburkina",
-    "url": "https://www.emploiburkina.com/offre-emploi-burkina-faso/executive-secretary-ouagadougou-303736"
+    "url": "https://www.emploiburkina.com/offre-emploi-burkina-faso/magazine-keeper-junior-magasinier-hf-bagassi-303948"
   },
   {
-    "title": "Pédiatre Référent (HF)",
+    "title": "Responsable MEAL – IPC/WASH",
     "company": "HumanitaireHub",
-    "city": "Burkina Faso",
-    "category": "Sante",
+    "city": "RDC",
+    "category": "Bureau",
     "source": "HumanitaireHub",
-    "url": "https://humanitairehub.com/emploi/pediatre-referent-hf/"
+    "url": "https://humanitairehub.com/emploi/responsable-meal-ipc-wash/"
+  },
+  {
+    "title": "05 postes à pourvoir au sein d’une mutuelle nationale",
+    "company": "LeFaso.net Recrutement",
+    "city": "Burkina Faso",
+    "category": "Bureau",
+    "source": "LeFaso.net Recrutement",
+    "url": "https://emploi.lefaso.net/05-postes-a-pourvoir-au-sein-d-une-mutuelle-nationale.html"
+  },
+  {
+    "title": "Social & Behavior Change Officer, NO-1, TA, 364 days, Ouagadougou, Burkina-Faso - WCAR",
+    "company": "UN Talent Burkina Faso",
+    "city": "Ouagadougou",
+    "category": "ONG",
+    "source": "UN Talent Burkina Faso",
+    "url": "https://untalent.org/jobs/social-behavior-change-officer-no-1-ta-364-days-ouagadougou-burkina-faso-wcar"
+  },
+  {
+    "title": "VacancyTitle: Finance Assistant SMC, Location: Ouagadougou",
+    "company": "UNjobs Burkina Faso",
+    "city": "Ouagadougou",
+    "category": "Finance et administration",
+    "source": "UNjobs Burkina Faso",
+    "url": "https://unjobs.org/vacancies/1780962160024"
   }
 ]

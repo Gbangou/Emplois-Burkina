@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-06-17T10:02:05.304Z",
-  "score": 66,
+  "generatedAt": "2026-06-25T12:23:39.104Z",
+  "score": 84,
   "checks": [
     {
       "id": "domain",
       "label": "Domaine public configure",
       "ok": true,
       "weight": 10,
-      "fix": "Configurer JOBFASO_BASE_URL et DNS."
+      "fix": "Configurer EMPLOIS_BURKINA_BASE_URL et DNS."
     },
     {
       "id": "contact",
@@ -26,7 +26,7 @@
     {
       "id": "sitemap",
       "label": "Sitemap riche",
-      "ok": false,
+      "ok": true,
       "weight": 12,
       "fix": "Executer npm run growth."
     },
@@ -47,7 +47,7 @@
     {
       "id": "content_depth",
       "label": "Volume offres SEO",
-      "ok": false,
+      "ok": true,
       "weight": 12,
       "fix": "Automatiser plus de sources fiables."
     },
@@ -109,20 +109,18 @@
     }
   ],
   "priorities": [
-    "Executer npm run growth.",
-    "Automatiser plus de sources fiables.",
     "Ajouter adsenseClient apres approbation Google.",
     "Generer ads.txt depuis adsenseClient.",
     "Ajouter page Facebook, LinkedIn ou canal WhatsApp dans data/site-config.json."
   ],
   "totals": {
-    "jobs": 9,
-    "sources": 54,
-    "sitemapUrls": 36,
-    "scoreEarnedWeight": 84,
+    "jobs": 58,
+    "sources": 87,
+    "sitemapUrls": 104,
+    "scoreEarnedWeight": 108,
     "scoreTotalWeight": 128,
     "rateProducts": 7,
-    "outreachTargets": 41,
+    "outreachTargets": 46,
     "outreachTemplates": 3
   }
 }

@@ -1,14 +1,14 @@
-# JobFaso - Etat du projet et guide operationnel
+# Emplois Burkina - Etat du projet et guide operationnel
 
 Derniere mise a jour : 12 juin 2026.
 
 Ce document consigne les decisions, composants et commandes importantes du
-projet JobFaso. Il sert de reference pour reprendre le travail sans perdre le
+projet Emplois Burkina. Il sert de reference pour reprendre le travail sans perdre le
 contexte.
 
 ## Objectif produit
 
-JobFaso est une web app emploi pour le Burkina Faso :
+Emplois Burkina est une web app emploi pour le Burkina Faso :
 
 - offres d'emploi, concours, stages, missions terrain et metiers informels ;
 - collecte multi-sources avec moderation ;
@@ -53,7 +53,7 @@ electricien, artisan et missions journalieres.
 
 Serveur principal : `server.mjs`.
 
-Les endpoints publics lisent en priorite `data/runtime/jobfaso.sqlite` quand
+Les endpoints publics lisent en priorite `data/runtime/emplois-burkina.sqlite` quand
 la base existe et que `node:sqlite` est disponible. Si SQLite est absente ou
 indisponible, le serveur retombe automatiquement sur
 `data/runtime/local-db.json`.
@@ -83,8 +83,8 @@ Securite deja presente :
 - CSP ;
 - rate limiting ;
 - verification origine sur POST ;
-- token admin via `JOBFASO_ADMIN_TOKEN` ;
-- analytics anonymisees par hash avec sel `JOBFASO_EVENT_SALT` ;
+- token admin via `EMPLOIS_BURKINA_ADMIN_TOKEN` ;
+- analytics anonymisees par hash avec sel `EMPLOIS_BURKINA_EVENT_SALT` ;
 - runtime ignore par Git ;
 - pas de secrets commites.
 
@@ -97,7 +97,7 @@ Fichiers de donnees :
 - `data/curated-jobs.json` : offres nettoyees et publiees localement.
 - `data/rate-card.json` : offres commerciales.
 - `data/runtime/local-db.json` : cache applicatif local genere hors Git.
-- `data/runtime/jobfaso.sqlite` : vraie base SQLite locale generee hors Git.
+- `data/runtime/emplois-burkina.sqlite` : vraie base SQLite locale generee hors Git.
 
 Commande :
 
@@ -113,7 +113,7 @@ npm run db:sqlite
 
 L'admin peut aussi lancer `/api/admin/db/sqlite/sync` via le bouton
 `Synchroniser SQLite`. Le statut `/api/db/status` expose la taille et la date
-de mise a jour de `data/runtime/jobfaso.sqlite`, ainsi que le stockage primaire
+de mise a jour de `data/runtime/emplois-burkina.sqlite`, ainsi que le stockage primaire
 utilise par l'API (`sqlite` ou `json`).
 
 Moderation SQLite :
@@ -157,7 +157,7 @@ Etat verifie :
 
 Scripts :
 
-- `scripts/jobfaso-scraper.mjs`
+- `scripts/emplois-burkina-scraper.mjs`
 - `scripts/curate-raw-items.mjs`
 - `scripts/run-automation.mjs`
 
@@ -175,9 +175,9 @@ npm run automate:daemon
 
 Variables utiles :
 
-- `JOBFASO_AUTOMATION_INTERVAL_MINUTES=360` : intervalle entre deux runs.
-- `JOBFASO_AUTOMATION_RUN_ON_START=false` : demarrer le daemon sans run immediat.
-- `JOBFASO_AUTOMATION_MAX_AGE_HOURS=30` : seuil healthcheck.
+- `EMPLOIS_BURKINA_AUTOMATION_INTERVAL_MINUTES=360` : intervalle entre deux runs.
+- `EMPLOIS_BURKINA_AUTOMATION_RUN_ON_START=false` : demarrer le daemon sans run immediat.
+- `EMPLOIS_BURKINA_AUTOMATION_MAX_AGE_HOURS=30` : seuil healthcheck.
 
 Healthcheck :
 
@@ -295,7 +295,7 @@ Fichiers generes :
 - `.well-known/security.txt`
 - `site.webmanifest`
 - `indexnow-urls.txt`
-- `assets/jobfaso-og.svg`
+- `assets/emplois-burkina-og.svg`
 
 SEO deja applique :
 
@@ -313,7 +313,7 @@ Apres deploiement :
 
 1. ajouter le domaine a Google Search Console ;
 2. ajouter le domaine a Bing Webmaster Tools ;
-3. soumettre `https://jobfaso.com/sitemap.xml` ;
+3. soumettre `https://emplois-burkina.com/sitemap.xml` ;
 4. configurer IndexNow si disponible :
 
 ```powershell

@@ -1,0 +1,52 @@
+[
+  {
+    "id": "formal_burkina",
+    "name": "Emploi formel Burkina",
+    "priority": "critical",
+    "coverageGoal": "Entreprises locales, cabinets RH, carrieres officielles, banques, telecoms, mines, projets publics.",
+    "sourceExamples": ["BFemploi", "Emploiburkina", "carrieres entreprises", "pages RH locales"],
+    "automationMode": "scrape_review_publish",
+    "channels": ["catalogue", "seo", "whatsapp", "facebook", "linkedin"],
+    "qualityRules": ["source officielle ou job board reconnu", "deadline visible", "dedoublonnage par URL canonique"]
+  },
+  {
+    "id": "informal_local",
+    "name": "Boulots informels et terrain",
+    "priority": "high",
+    "coverageGoal": "Chauffeurs, commerces, services, restauration, chantiers, boutiques, artisans, missions courtes.",
+    "sourceExamples": ["WhatsApp communautaire", "Facebook local", "partenaires terrain", "formulaire annonceur"],
+    "automationMode": "intake_moderate_publish",
+    "channels": ["catalogue", "whatsapp", "facebook"],
+    "qualityRules": ["telephone verifie", "localisation claire", "pas de frais candidat", "validation humaine obligatoire"]
+  },
+  {
+    "id": "international_ngo_un",
+    "name": "ONG, ONU et developpement international",
+    "priority": "critical",
+    "coverageGoal": "ONU, agences humanitaires, cooperation, ONG internationales, projets Sahel et Afrique francophone.",
+    "sourceExamples": ["UNjobs", "ReliefWeb", "UNDP", "UNICEF", "WFP", "IRC", "NRC", "MSF"],
+    "automationMode": "feed_scrape_review_publish",
+    "channels": ["catalogue", "seo", "whatsapp", "linkedin"],
+    "qualityRules": ["lien source officiel", "pays ou remote admissible", "date limite confirmee", "organisation normalisee"]
+  },
+  {
+    "id": "global_tech",
+    "name": "Informatique et remote international",
+    "priority": "critical",
+    "coverageGoal": "Developpeurs, data, cloud, cybersecurite, product, support IT, remote et grandes structures internationales.",
+    "sourceExamples": ["Wellfound", "We Work Remotely", "Remote OK", "GitHub org careers", "Microsoft", "Google", "Amazon", "GitLab"],
+    "automationMode": "api_feed_scrape_review_publish",
+    "channels": ["catalogue", "seo", "whatsapp", "linkedin", "email_digest"],
+    "qualityRules": ["remote Afrique accepte ou relocation claire", "stack technique extraite", "niveau seniorite", "anglais/francais"]
+  },
+  {
+    "id": "public_competitions",
+    "name": "Concours, stages et appels a candidature",
+    "priority": "high",
+    "coverageGoal": "Concours publics, bourses, stages, volontariat, appels a candidatures et formations qualifiantes.",
+    "sourceExamples": ["sites ministeriels", "universites", "projets bailleurs", "pages officielles"],
+    "automationMode": "scrape_review_publish",
+    "channels": ["catalogue", "seo", "whatsapp"],
+    "qualityRules": ["document officiel", "date ouverture/fermeture", "conditions d'eligibilite", "frais explicites"]
+  }
+]

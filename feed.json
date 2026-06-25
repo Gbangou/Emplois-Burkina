@@ -1,27 +1,127 @@
 {
   "version": "https://jsonfeed.org/version/1.1",
-  "title": "JobFaso",
-  "home_page_url": "https://jobfaso.com",
-  "feed_url": "https://jobfaso.com/feed.json",
+  "title": "Emplois Burkina",
+  "home_page_url": "https://emplois-burkina.com",
+  "feed_url": "https://emplois-burkina.com/feed.json",
   "description": "Offres d'emploi, concours, stages, missions locales et alertes WhatsApp au Burkina Faso.",
   "language": "fr-BF",
   "authors": [
     {
-      "name": "JobFaso"
+      "name": "Emplois Burkina"
     }
   ],
   "items": [
     {
-      "id": "https://jobfaso.com/pages/jobs/coordinateur-administratif-et-logistique-a8c21595.html",
-      "url": "https://jobfaso.com/pages/jobs/coordinateur-administratif-et-logistique-a8c21595.html",
-      "title": "Coordinateur Administratif et Logistique",
-      "content_text": "Coordinateur Administratif et Logistique - BFemploi - Burkina Faso. Categorie: ONG. Ouverture: 18 mai 2026. Cloture: 17 août 2026. Consultez la fiche JobFaso puis verifiez la source officielle avant de postuler.",
-      "summary": "Coordinateur Administratif et Logistique - BFemploi.com Connexion Login Candidat: Login Employeur/Recruteur: Inscription Espace Candidats Les annonces Connexion Inscription Demande d'emploi Recherche Examens et concours Espace Employeurs Connexion Inscription Publier une annonce Recherche CV Mot de passe Les demandes Ressources Telechargements Liens utiles Infos - Guides Examens-Concours Newsletter Repertoires Ecoles de formation Entreprises Appels d'offre Contact Nous contacter Nous recommander Aide - FAQ Newsletter ☰ Les annonces Espace Candidats Espace Employeurs Publier une annonce Recherche Newsletter Les demandes Ressources Nous contacter Espace Candidats Les annonces Connexion Inscription Demande d'emploi Recherche Examens et concours Espace Employeurs Connexion Inscription Publier une annonce Recherche CV Mot de passe Les demandes Ressources Telechargements Liens utiles Infos - G",
-      "date_published": "2026-06-16T09:27:57.141Z",
+      "id": "https://emplois-burkina.com/pages/jobs/volunteer-specialist-d323737c.html",
+      "url": "https://emplois-burkina.com/pages/jobs/volunteer-specialist-d323737c.html",
+      "title": "Volunteer Specialist",
+      "content_text": "Volunteer Specialist - BFemploi - Burkina Faso. Categorie: Bureau. Ouverture: 23 juin 2026. Cloture: 31 août 2026. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
+      "summary": "Volunteer Specialist - BFemploi.com Connexion Login Candidat: Login Employeur/Recruteur: Inscription Espace Candidats Les annonces Connexion Inscription Demande d'emploi Recherche Examens et concours Espace Employeurs Connexion Inscription Publier une annonce Recherche CV Mot de passe Les demandes Ressources Telechargements Liens utiles Infos - Guides Examens-Concours Newsletter Repertoires Ecoles de formation Entreprises Appels d'offre Contact Nous contacter Nous recommander Aide - FAQ Newsletter ☰ Les annonces Espace Candidats Espace Employeurs Publier une annonce Recherche Newsletter Les demandes Ressources Nous contacter Espace Candidats Les annonces Connexion Inscription Demande d'emploi Recherche Examens et concours Espace Employeurs Connexion Inscription Publier une annonce Recherche CV Mot de passe Les demandes Ressources Telechargements Liens utiles Infos - Guides Examens-Concou",
+      "date_published": "2026-06-25T12:11:39.269Z",
+      "tags": [
+        "Bureau",
+        "Bureau",
+        "Burkina Faso",
+        "BFemploi",
+        "concours"
+      ]
+    },
+    {
+      "id": "https://emplois-burkina.com/pages/jobs/technico-commercial-en-climatisation-haut-de-gamme-ouagadougou-4a1ec186.html",
+      "url": "https://emplois-burkina.com/pages/jobs/technico-commercial-en-climatisation-haut-de-gamme-ouagadougou-4a1ec186.html",
+      "title": "Technico Commercial en Climatisation Haut de Gamme- Ouagadougou",
+      "content_text": "Technico Commercial en Climatisation Haut de Gamme- Ouagadougou - Emploiburkina - Ouagadougou. Categorie: BTP et chantier. Ouverture: A verifier. Cloture: A verifier. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
+      "summary": "",
+      "date_published": "2026-06-25T12:12:05.140Z",
+      "tags": [
+        "BTP et chantier",
+        "BTP et chantier",
+        "Ouagadougou",
+        "Emploiburkina",
+        "climatisation",
+        "commercial"
+      ]
+    },
+    {
+      "id": "https://emplois-burkina.com/pages/jobs/responsable-meal-rcce-responsabilisation-et-protection-7b678429.html",
+      "url": "https://emplois-burkina.com/pages/jobs/responsable-meal-rcce-responsabilisation-et-protection-7b678429.html",
+      "title": "Responsable MEAL – RCCE, Responsabilisation et Protection",
+      "content_text": "Responsable MEAL – RCCE, Responsabilisation et Protection - HumanitaireHub - RDC. Categorie: ONG. Ouverture: A verifier. Cloture: 12 juillet 2026. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
+      "summary": "Responsable MEAL – RCCE, Responsabilisation et Protection - Humanitaire Hub Emplois Humanitaires Ressources Mon compte Aller au contenu Emplois Humanitaires Ressources Mon compte Ouvrir/fermer le menu Emplois Humanitaires Connexion Responsable MEAL – RCCE, Responsabilisation et Protection ← Retour aux offres International Rescue Committee (IRC) Responsable MEAL – RCCE, Responsabilisation et Protection 📍 RD Congo · 📄 CDD ⏰ Deadline 12 Juil 2026 J-17 📨 Postuler maintenant → 📊 Expérience Confirmé (5-8 ans) 🏢 Type d'org Organisation Internationale MEAL (Suivi, Évaluation, Apprentissage) Protection, Genre & Inclusion Partager : 💼 LinkedIn 𝕏 Twitter 📘 Facebook 💬 WhatsApp ✈️ Telegram 📧 Email 🔗 Copier Description du poste 📋 Informations clés Lieu Bunia, RDC Pays RDC Date de clôture Non précisée Organisation IRC Le Comité international de secours (IRC) intervient lors des crises human",
+      "date_published": "2026-06-25T12:12:41.078Z",
+      "tags": [
+        "ONG",
+        "ONG",
+        "RDC",
+        "HumanitaireHub",
+        "apprenti",
+        "ong",
+        "humanitaire",
+        "International"
+      ]
+    },
+    {
+      "id": "https://emplois-burkina.com/pages/jobs/avis-de-recrutement-d-un-e-coordonnateur-trice-de-projet-f69dcfb6.html",
+      "url": "https://emplois-burkina.com/pages/jobs/avis-de-recrutement-d-un-e-coordonnateur-trice-de-projet-f69dcfb6.html",
+      "title": "Avis de recrutement d’un(e) Coordonnateur(trice) de Projet",
+      "content_text": "Avis de recrutement d’un(e) Coordonnateur(trice) de Projet - LeFaso.net Recrutement - Burkina Faso. Categorie: ONG. Ouverture: A verifier. Cloture: A verifier. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
+      "summary": "",
+      "date_published": "2026-06-25T12:14:05.670Z",
       "tags": [
         "ONG",
         "ONG",
         "Burkina Faso",
+        "LeFaso.net Recrutement",
+        "projet"
+      ]
+    },
+    {
+      "id": "https://emplois-burkina.com/pages/jobs/mch-et-nutrition-officer-kaya-e53429d1.html",
+      "url": "https://emplois-burkina.com/pages/jobs/mch-et-nutrition-officer-kaya-e53429d1.html",
+      "title": "MCH & Nutrition Officer - Kaya",
+      "content_text": "MCH & Nutrition Officer - Kaya - UN Talent Burkina Faso - Burkina Faso. Categorie: ONG. Ouverture: A verifier. Cloture: A verifier. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
+      "summary": "--> MCH & Nutrition Officer - Kaya - FHI 360 Openings Mentoring Search Account Post a job Buy & Sell --> Get Pro MCH & Nutrition Officer - Kaya Support the implementation of maternal, neonatal, child health and nutrition activities. FHI 360 Open positions at FHI 360 Kaya ( Burkina Faso ) Show advice for this position Open application form Overview Support the implementation of maternal, neonatal, child health and nutrition activities. You have: Diplôme de Sage-femme/Maïeuticien d'État ou d'ingénieur en soins infirmiers et obstétricaux. Minimum 5 années d'expérience dans la mise en œuvre d'activités de santé maternelle, néonatale, infantile et/ou nutritionnelle. Expérience en supervision formative/mentorat et renforcement des capacités des prestataires de santé. Capacité à analyser et à interpréter des données, à identifier des erreurs et à préparer des rapports. Excellentes compétences e",
+      "date_published": "2026-06-25T12:13:09.862Z",
+      "tags": [
+        "ONG",
+        "ONG",
+        "Burkina Faso",
+        "UN Talent Burkina Faso",
+        "officer",
+        "infirmier",
+        "sage-femme",
+        "sante",
+        "International"
+      ]
+    },
+    {
+      "id": "https://emplois-burkina.com/pages/jobs/vacancytitle-finance-assistant-location-ouagadougou-ec155659.html",
+      "url": "https://emplois-burkina.com/pages/jobs/vacancytitle-finance-assistant-location-ouagadougou-ec155659.html",
+      "title": "VacancyTitle: Finance Assistant, Location: Ouagadougou",
+      "content_text": "VacancyTitle: Finance Assistant, Location: Ouagadougou - UNjobs Burkina Faso - Ouagadougou. Categorie: Finance et administration. Ouverture: A verifier. Cloture: A verifier. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
+      "summary": "",
+      "date_published": "2026-06-16T09:30:22.979Z",
+      "tags": [
+        "Finance et administration",
+        "Finance et administration",
+        "Ouagadougou",
+        "UNjobs Burkina Faso",
+        "finance",
+        "assistant",
+        "International"
+      ]
+    },
+    {
+      "id": "https://emplois-burkina.com/pages/jobs/coordinateur-administratif-et-logistique-a8c21595.html",
+      "url": "https://emplois-burkina.com/pages/jobs/coordinateur-administratif-et-logistique-a8c21595.html",
+      "title": "Coordinateur Administratif et Logistique",
+      "content_text": "Coordinateur Administratif et Logistique - BFemploi - dans le courant des mois de mai et juin. Categorie: ONG. Ouverture: 18 mai 2026. Cloture: 17 août 2026. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
+      "summary": "Coordinateur Administratif et Logistique - BFemploi.com Connexion Login Candidat: Login Employeur/Recruteur: Inscription Espace Candidats Les annonces Connexion Inscription Demande d'emploi Recherche Examens et concours Espace Employeurs Connexion Inscription Publier une annonce Recherche CV Mot de passe Les demandes Ressources Telechargements Liens utiles Infos - Guides Examens-Concours Newsletter Repertoires Ecoles de formation Entreprises Appels d'offre Contact Nous contacter Nous recommander Aide - FAQ Newsletter ☰ Les annonces Espace Candidats Espace Employeurs Publier une annonce Recherche Newsletter Les demandes Ressources Nous contacter Espace Candidats Les annonces Connexion Inscription Demande d'emploi Recherche Examens et concours Espace Employeurs Connexion Inscription Publier une annonce Recherche CV Mot de passe Les demandes Ressources Telechargements Liens utiles Infos - G",
+      "date_published": "2026-06-25T12:11:39.270Z",
+      "tags": [
+        "ONG",
+        "ONG",
+        "dans le courant des mois de mai et juin",
         "BFemploi",
         "coordinateur",
         "logistique",
@@ -30,28 +130,255 @@
       ]
     },
     {
-      "id": "https://jobfaso.com/pages/jobs/charge-de-securite-et-logistique-national-599fc205.html",
-      "url": "https://jobfaso.com/pages/jobs/charge-de-securite-et-logistique-national-599fc205.html",
-      "title": "CHARGE DE SECURITE ET LOGISTIQUE – (NATIONAL)",
-      "content_text": "CHARGE DE SECURITE ET LOGISTIQUE – (NATIONAL) - HumanitaireHub - Burkina Faso. Categorie: Transport et logistique. Ouverture: A verifier. Cloture: 23 juin 2026. Consultez la fiche JobFaso puis verifiez la source officielle avant de postuler.",
-      "summary": "CHARGE DE SECURITE ET LOGISTIQUE – (NATIONAL) - Humanitaire Hub Emplois Humanitaires Ressources Mon compte Aller au contenu Emplois Humanitaires Ressources Mon compte Ouvrir/fermer le menu Emplois Humanitaires Connexion CHARGE DE SECURITE ET LOGISTIQUE – (NATIONAL) ← Retour aux offres WeWorld CHARGE DE SECURITE ET LOGISTIQUE – (NATIONAL) 📍 Burkina Faso · 📄 CDD ⏰ Deadline 23 Juin 2026 J-7 📧 Postuler par email → 📊 Expérience Confirmé (5-8 ans) 🏢 Type d'org Organisation Internationale Logistique Partager : 💼 LinkedIn 𝕏 Twitter 📘 Facebook 💬 WhatsApp ✈️ Telegram 📧 Email 🔗 Copier Description du poste 📋 Informations clés Lieu Burkina-Faso Pays Burkina-Faso Date de clôture 23 juin 2026 Organisation WeWorld WeWorld est une organisation laïque et indépendante italienne active depuis 1971 dans la coopération internationale et l’aide humanitaire. I- CONDITIONS DE TRAVAIL ET REMUNERATION",
-      "date_published": "2026-06-16T09:29:49.907Z",
+      "id": "https://emplois-burkina.com/pages/jobs/magazine-keeper-junior-magasinier-h-f-bagassi-dd07b607.html",
+      "url": "https://emplois-burkina.com/pages/jobs/magazine-keeper-junior-magasinier-h-f-bagassi-dd07b607.html",
+      "title": "Magazine Keeper Junior (Magasinier) H/F- Bagassi",
+      "content_text": "Magazine Keeper Junior (Magasinier) H/F- Bagassi - Emploiburkina - Bagassi. Categorie: Transport et logistique. Ouverture: A verifier. Cloture: A verifier. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
+      "summary": "",
+      "date_published": "2026-06-25T12:12:05.140Z",
       "tags": [
         "Transport et logistique",
         "Transport et logistique",
-        "Burkina Faso",
-        "HumanitaireHub",
-        "humanitaire",
-        "logistique"
+        "Bagassi",
+        "Emploiburkina",
+        "magasinier"
       ]
     },
     {
-      "id": "https://jobfaso.com/pages/jobs/responsable-de-recherche-5114bd32.html",
-      "url": "https://jobfaso.com/pages/jobs/responsable-de-recherche-5114bd32.html",
+      "id": "https://emplois-burkina.com/pages/jobs/responsable-meal-ipc-wash-c6c03780.html",
+      "url": "https://emplois-burkina.com/pages/jobs/responsable-meal-ipc-wash-c6c03780.html",
+      "title": "Responsable MEAL – IPC/WASH",
+      "content_text": "Responsable MEAL – IPC/WASH - HumanitaireHub - RDC. Categorie: Bureau. Ouverture: A verifier. Cloture: 12 juillet 2026. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
+      "summary": "Responsable MEAL – IPC/WASH - Humanitaire Hub Emplois Humanitaires Ressources Mon compte Aller au contenu Emplois Humanitaires Ressources Mon compte Ouvrir/fermer le menu Emplois Humanitaires Connexion Responsable MEAL – IPC/WASH ← Retour aux offres International Rescue Committee (IRC) Responsable MEAL – IPC/WASH 📍 RDC · 📄 CDD ⏰ Deadline 12 Juil 2026 J-17 📨 Postuler maintenant → 📊 Expérience Confirmé (5-8 ans) 🏢 Type d'org Organisation Internationale MEAL (Suivi, Évaluation, Apprentissage) Partager : 💼 LinkedIn 𝕏 Twitter 📘 Facebook 💬 WhatsApp ✈️ Telegram 📧 Email 🔗 Copier Description du poste 📋 Informations clés Lieu Bunia, RDC Pays RDC Date de clôture Non précisée Organisation IRC Le Comité international de secours (IRC) intervient lors des crises humanitaires les plus graves au monde, contribuant à rétablir la santé, la sécurité, l’éducation, le bien-être économique et l’aut",
+      "date_published": "2026-06-25T12:12:41.078Z",
+      "tags": [
+        "Bureau",
+        "Bureau",
+        "RDC",
+        "HumanitaireHub",
+        "apprenti",
+        "humanitaire",
+        "sante",
+        "International"
+      ]
+    },
+    {
+      "id": "https://emplois-burkina.com/pages/jobs/05-postes-a-pourvoir-au-sein-d-une-mutuelle-nationale-e9239113.html",
+      "url": "https://emplois-burkina.com/pages/jobs/05-postes-a-pourvoir-au-sein-d-une-mutuelle-nationale-e9239113.html",
+      "title": "05 postes à pourvoir au sein d’une mutuelle nationale",
+      "content_text": "05 postes à pourvoir au sein d’une mutuelle nationale - LeFaso.net Recrutement - Burkina Faso. Categorie: Bureau. Ouverture: A verifier. Cloture: A verifier. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
+      "summary": "",
+      "date_published": "2026-06-25T12:14:05.178Z",
+      "tags": [
+        "Bureau",
+        "Bureau",
+        "Burkina Faso",
+        "LeFaso.net Recrutement"
+      ]
+    },
+    {
+      "id": "https://emplois-burkina.com/pages/jobs/social-et-behavior-change-officer-no-1-ta-364-days-ouagadougou-burkina-faso-wcar-7630d6d3.html",
+      "url": "https://emplois-burkina.com/pages/jobs/social-et-behavior-change-officer-no-1-ta-364-days-ouagadougou-burkina-faso-wcar-7630d6d3.html",
+      "title": "Social & Behavior Change Officer, NO-1, TA, 364 days, Ouagadougou, Burkina-Faso - WCAR",
+      "content_text": "Social & Behavior Change Officer, NO-1, TA, 364 days, Ouagadougou, Burkina-Faso - WCAR - UN Talent Burkina Faso - Ouagadougou. Categorie: ONG. Ouverture: A verifier. Cloture: A verifier. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
+      "summary": "--> UNICEF - Social & Behavior Change Officer, NO-1, TA, 364 days, Ouagadougou, Burkina-Faso - WCAR Openings Mentoring Search Account Post a job Buy & Sell --> Get Pro Social & Behavior Change Officer, NO-1, TA, 364 days, Ouagadougou, Burkina-Faso - WCAR Provide technical and operational support to SBC strategies for nutrition. UNICEF - United Nations Children's Fund Open positions at UNICEF Ouagadougou ( Burkina Faso ) Show advice for this position Application deadline in 11 days : Monday 6 Jul 2026 at 23:55 UTC Open application form Overview Provide technical and operational support to SBC strategies for nutrition. You have: A university degree (Bachelor's or higher) in social sciences, including sociology, anthropology, communication for development, psychology or related field. At least one (1) year of professional experience in one or more of the following areas: planning and implem",
+      "date_published": "2026-06-25T12:13:09.863Z",
+      "tags": [
+        "ONG",
+        "ONG",
+        "Ouagadougou",
+        "UN Talent Burkina Faso",
+        "officer",
+        "unicef",
+        "International"
+      ]
+    },
+    {
+      "id": "https://emplois-burkina.com/pages/jobs/vacancytitle-finance-assistant-smc-location-ouagadougou-f09ac040.html",
+      "url": "https://emplois-burkina.com/pages/jobs/vacancytitle-finance-assistant-smc-location-ouagadougou-f09ac040.html",
+      "title": "VacancyTitle: Finance Assistant SMC, Location: Ouagadougou",
+      "content_text": "VacancyTitle: Finance Assistant SMC, Location: Ouagadougou - UNjobs Burkina Faso - Ouagadougou. Categorie: Finance et administration. Ouverture: A verifier. Cloture: A verifier. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
+      "summary": "",
+      "date_published": "2026-06-16T09:30:22.979Z",
+      "tags": [
+        "Finance et administration",
+        "Finance et administration",
+        "Ouagadougou",
+        "UNjobs Burkina Faso",
+        "finance",
+        "assistant",
+        "International"
+      ]
+    },
+    {
+      "id": "https://emplois-burkina.com/pages/jobs/delegado-a-de-salud-agua-y-saneamiento-651e1ed0.html",
+      "url": "https://emplois-burkina.com/pages/jobs/delegado-a-de-salud-agua-y-saneamiento-651e1ed0.html",
+      "title": "Delegado/a de Salud, Agua y Saneamiento",
+      "content_text": "Delegado/a de Salud, Agua y Saneamiento - BFemploi - Burkina Faso. Categorie: Bureau. Ouverture: 24 juin 2026. Cloture: 12 juillet 2026. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
+      "summary": "Delegado/a de Salud, Agua y Saneamiento - BFemploi.com Connexion Login Candidat: Login Employeur/Recruteur: Inscription Espace Candidats Les annonces Connexion Inscription Demande d'emploi Recherche Examens et concours Espace Employeurs Connexion Inscription Publier une annonce Recherche CV Mot de passe Les demandes Ressources Telechargements Liens utiles Infos - Guides Examens-Concours Newsletter Repertoires Ecoles de formation Entreprises Appels d'offre Contact Nous contacter Nous recommander Aide - FAQ Newsletter ☰ Les annonces Espace Candidats Espace Employeurs Publier une annonce Recherche Newsletter Les demandes Ressources Nous contacter Espace Candidats Les annonces Connexion Inscription Demande d'emploi Recherche Examens et concours Espace Employeurs Connexion Inscription Publier une annonce Recherche CV Mot de passe Les demandes Ressources Telechargements Liens utiles Infos - Gu",
+      "date_published": "2026-06-25T12:11:39.269Z",
+      "tags": [
+        "Bureau",
+        "Bureau",
+        "Burkina Faso",
+        "BFemploi",
+        "concours"
+      ]
+    },
+    {
+      "id": "https://emplois-burkina.com/pages/jobs/charge-e-d-operations-et-developpement-ouagadougou-ff4e325a.html",
+      "url": "https://emplois-burkina.com/pages/jobs/charge-e-d-operations-et-developpement-ouagadougou-ff4e325a.html",
+      "title": "Chargé(e) d’Opérations et Développement- Ouagadougou",
+      "content_text": "Chargé(e) d’Opérations et Développement- Ouagadougou - Emploiburkina - Ouagadougou. Categorie: Bureau. Ouverture: A verifier. Cloture: A verifier. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
+      "summary": "",
+      "date_published": "2026-06-25T12:12:05.141Z",
+      "tags": [
+        "Bureau",
+        "Bureau",
+        "Ouagadougou",
+        "Emploiburkina"
+      ]
+    },
+    {
+      "id": "https://emplois-burkina.com/pages/jobs/assistant-aux-achats-c06905e9.html",
+      "url": "https://emplois-burkina.com/pages/jobs/assistant-aux-achats-c06905e9.html",
+      "title": "Assistant aux achats",
+      "content_text": "Assistant aux achats - HumanitaireHub - RDC. Categorie: Finance et administration. Ouverture: A verifier. Cloture: 08 juillet 2026. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
+      "summary": "Assistant aux achats - Humanitaire Hub Emplois Humanitaires Ressources Mon compte Aller au contenu Emplois Humanitaires Ressources Mon compte Ouvrir/fermer le menu Emplois Humanitaires Connexion Assistant aux achats ← Retour aux offres PNUD / UNDP Assistant aux achats 📍 RDC · 📄 CDD ⏰ Deadline 08 Juil 2026 J-13 📨 Postuler maintenant → 📊 Expérience Confirmé (5-8 ans) 🏢 Type d'org Agence des Nations Unies Logistique Partager : 💼 LinkedIn 𝕏 Twitter 📘 Facebook 💬 WhatsApp ✈️ Telegram 📧 Email 🔗 Copier Description du poste 📋 Informations clés Lieu RDC Pays RDC Date de clôture 08 juillet 2026 Organisation PNUD Mission et objectifs Le Programme des Nations unies pour le développement (PNUD) fait partie des programmes et fonds de l’ONU. Son rôle est d’aider les pays en développement en leur fournissant des conseils mais également en plaidant leurs causes pour l’octroi de dons. POSTE : A",
+      "date_published": "2026-06-25T12:12:41.078Z",
+      "tags": [
+        "Finance et administration",
+        "Finance et administration",
+        "RDC",
+        "HumanitaireHub",
+        "humanitaire",
+        "programme",
+        "pnud",
+        "logistique",
+        "assistant"
+      ]
+    },
+    {
+      "id": "https://emplois-burkina.com/pages/jobs/medecins-oncologues-medical-et-chirurgical-3d61cd45.html",
+      "url": "https://emplois-burkina.com/pages/jobs/medecins-oncologues-medical-et-chirurgical-3d61cd45.html",
+      "title": "Médecins Oncologues médical et chirurgical",
+      "content_text": "Médecins Oncologues médical et chirurgical - LeFaso.net Recrutement - Burkina Faso. Categorie: Sante. Ouverture: A verifier. Cloture: A verifier. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
+      "summary": "",
+      "date_published": "2026-06-25T12:14:05.178Z",
+      "tags": [
+        "Sante",
+        "Sante",
+        "Burkina Faso",
+        "LeFaso.net Recrutement",
+        "medecin",
+        "medical"
+      ]
+    },
+    {
+      "id": "https://emplois-burkina.com/pages/jobs/coordinateur-administratif-et-logistique-f-h-97a21600.html",
+      "url": "https://emplois-burkina.com/pages/jobs/coordinateur-administratif-et-logistique-f-h-97a21600.html",
+      "title": "Coordinateur administratif et logistique (F/H)",
+      "content_text": "Coordinateur administratif et logistique (F/H) - UN Talent Burkina Faso - Burkina Faso. Categorie: ONG. Ouverture: A verifier. Cloture: A verifier. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
+      "summary": "--> Coordinateur administratif et logistique (F/H) - Médecins du Monde Openings Mentoring Search Account Post a job Buy & Sell --> Get Pro Coordinateur administratif et logistique (F/H) Join a humanitarian organization to coordinate administrative and logistics efforts in Burkina Faso. Médecins du Monde Open positions at Médecins du Monde Ouagadougou ( Burkina Faso ) Show advice for this position Open application form Overview Join a humanitarian organization to coordinate administrative and logistics efforts in Burkina Faso. You have: Vous avez une formation minimum Bac+4 en gestion, Administratif ou RH Vous disposez d'une expérience solide en solidarité internationale (au moins 4 ans), d'abord comme Administrateur(trice) et Logisticien(ne) base, puis en coordination RH (privilégiée) et/ou Logistique (idéalement) Vous avez une expérience réussie en gestion des ressources, idéalement en",
+      "date_published": "2026-06-25T12:13:09.863Z",
+      "tags": [
+        "ONG",
+        "ONG",
+        "Burkina Faso",
+        "UN Talent Burkina Faso",
+        "coordinateur",
+        "logistique",
+        "administratif",
+        "medecin",
+        "International"
+      ]
+    },
+    {
+      "id": "https://emplois-burkina.com/pages/jobs/communications-and-marketing-specialist-pathfinder-portuguese-et-english-countries-1d382472.html",
+      "url": "https://emplois-burkina.com/pages/jobs/communications-and-marketing-specialist-pathfinder-portuguese-et-english-countries-1d382472.html",
+      "title": "Communications and Marketing Specialist, Pathfinder Portuguese & English Countries",
+      "content_text": "Communications and Marketing Specialist, Pathfinder Portuguese & English Countries - UNjobs Burkina Faso - Burkina Faso. Categorie: Commerce et vente. Ouverture: A verifier. Cloture: A verifier. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
+      "summary": "",
+      "date_published": "2026-06-16T09:30:22.979Z",
+      "tags": [
+        "Commerce et vente",
+        "Commerce et vente",
+        "Burkina Faso",
+        "UNjobs Burkina Faso",
+        "marketing",
+        "International"
+      ]
+    },
+    {
+      "id": "https://emplois-burkina.com/pages/jobs/coordinateur-trice-financier-e-ca4c8f74.html",
+      "url": "https://emplois-burkina.com/pages/jobs/coordinateur-trice-financier-e-ca4c8f74.html",
+      "title": "Coordinateur·trice Financier·e",
+      "content_text": "Coordinateur·trice Financier·e - BFemploi - DU POSTE. Categorie: ONG. Ouverture: 22 juin 2026. Cloture: 30 juin 2026. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
+      "summary": "Coordinateur·trice Financier·e - BFemploi.com Connexion Login Candidat: Login Employeur/Recruteur: Inscription Espace Candidats Les annonces Connexion Inscription Demande d'emploi Recherche Examens et concours Espace Employeurs Connexion Inscription Publier une annonce Recherche CV Mot de passe Les demandes Ressources Telechargements Liens utiles Infos - Guides Examens-Concours Newsletter Repertoires Ecoles de formation Entreprises Appels d'offre Contact Nous contacter Nous recommander Aide - FAQ Newsletter ☰ Les annonces Espace Candidats Espace Employeurs Publier une annonce Recherche Newsletter Les demandes Ressources Nous contacter Espace Candidats Les annonces Connexion Inscription Demande d'emploi Recherche Examens et concours Espace Employeurs Connexion Inscription Publier une annonce Recherche CV Mot de passe Les demandes Ressources Telechargements Liens utiles Infos - Guides Exam",
+      "date_published": "2026-06-25T12:11:39.269Z",
+      "tags": [
+        "ONG",
+        "ONG",
+        "DU POSTE",
+        "BFemploi",
+        "coordinateur",
+        "concours"
+      ]
+    },
+    {
+      "id": "https://emplois-burkina.com/pages/jobs/directeur-general-enseignement-superieur-telecom-ouaga-875ee4aa.html",
+      "url": "https://emplois-burkina.com/pages/jobs/directeur-general-enseignement-superieur-telecom-ouaga-875ee4aa.html",
+      "title": "Directeur Général / Enseignement Supérieur / Telecom- Ouaga",
+      "content_text": "Directeur Général / Enseignement Supérieur / Telecom- Ouaga - Emploiburkina - Ouagadougou. Categorie: Informatique, data et systemes. Ouverture: A verifier. Cloture: A verifier. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
+      "summary": "",
+      "date_published": "2026-06-25T12:12:05.141Z",
+      "tags": [
+        "Informatique, data et systemes",
+        "Informatique, data et systemes",
+        "Ouagadougou",
+        "Emploiburkina",
+        "telecom"
+      ]
+    },
+    {
+      "id": "https://emplois-burkina.com/pages/jobs/assistant-principal-rh-b492e3fd.html",
+      "url": "https://emplois-burkina.com/pages/jobs/assistant-principal-rh-b492e3fd.html",
+      "title": "Assistant principal RH",
+      "content_text": "Assistant principal RH - HumanitaireHub - Senegal. Categorie: Finance et administration. Ouverture: A verifier. Cloture: 08 juillet 2026. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
+      "summary": "Assistant principal RH - Humanitaire Hub Emplois Humanitaires Ressources Mon compte Aller au contenu Emplois Humanitaires Ressources Mon compte Ouvrir/fermer le menu Emplois Humanitaires Connexion Assistant principal RH ← Retour aux offres UNOPS Assistant principal RH 📍 Sénégal · 📄 CDD ⏰ Deadline 08 Juil 2026 J-13 📨 Postuler maintenant → 📊 Expérience Confirmé (5-8 ans) 🏢 Type d'org Agence des Nations Unies Ressources Humaines Partager : 💼 LinkedIn 𝕏 Twitter 📘 Facebook 💬 WhatsApp ✈️ Telegram 📧 Email 🔗 Copier Description du poste 📋 Informations clés Lieu Dakar, Sénégal Pays Sénégal Date de clôture 08 juillet 2026 Organisation UNOPS Intitulé du poste : Assistant principal RH Catégorie d’emploi : Ressources humaines Lieu(x) d’affectation : Dakar Niveau d’ancienneté : Niveau d’entrée Niveau ICS : ICS 05 Type de contrat : ICA – LICA – Support – Régulier Niveau du contrat : LICA 5 M",
+      "date_published": "2026-06-25T12:12:41.078Z",
+      "tags": [
+        "Finance et administration",
+        "Finance et administration",
+        "Senegal",
+        "HumanitaireHub",
+        "humanitaire",
+        "assistant",
+        "International"
+      ]
+    },
+    {
+      "id": "https://emplois-burkina.com/pages/jobs/chai-clinton-health-access-initiative-453c94d7.html",
+      "url": "https://emplois-burkina.com/pages/jobs/chai-clinton-health-access-initiative-453c94d7.html",
+      "title": "CHAI - Clinton Health Access Initiative",
+      "content_text": "CHAI - Clinton Health Access Initiative - UN Talent Burkina Faso - Burkina Faso. Categorie: Bureau. Ouverture: A verifier. Cloture: A verifier. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
+      "summary": "",
+      "date_published": "2026-06-25T12:13:08.530Z",
+      "tags": [
+        "Bureau",
+        "Bureau",
+        "Burkina Faso",
+        "UN Talent Burkina Faso",
+        "International"
+      ]
+    },
+    {
+      "id": "https://emplois-burkina.com/pages/jobs/responsable-de-recherche-5114bd32.html",
+      "url": "https://emplois-burkina.com/pages/jobs/responsable-de-recherche-5114bd32.html",
       "title": "Responsable de Recherche",
-      "content_text": "Responsable de Recherche - BFemploi - Ouagadougou. Categorie: Bureau. Ouverture: 04 juin 2026. Cloture: 30 juin 2026. Consultez la fiche JobFaso puis verifiez la source officielle avant de postuler.",
+      "content_text": "Responsable de Recherche - BFemploi - Ouagadougou. Categorie: Bureau. Ouverture: 04 juin 2026. Cloture: 30 juin 2026. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
       "summary": "Responsable de Recherche - BFemploi.com Connexion Login Candidat: Login Employeur/Recruteur: Inscription Espace Candidats Les annonces Connexion Inscription Demande d'emploi Recherche Examens et concours Espace Employeurs Connexion Inscription Publier une annonce Recherche CV Mot de passe Les demandes Ressources Telechargements Liens utiles Infos - Guides Examens-Concours Newsletter Repertoires Ecoles de formation Entreprises Appels d'offre Contact Nous contacter Nous recommander Aide - FAQ Newsletter ☰ Les annonces Espace Candidats Espace Employeurs Publier une annonce Recherche Newsletter Les demandes Ressources Nous contacter Espace Candidats Les annonces Connexion Inscription Demande d'emploi Recherche Examens et concours Espace Employeurs Connexion Inscription Publier une annonce Recherche CV Mot de passe Les demandes Ressources Telechargements Liens utiles Infos - Guides Examens-Co",
-      "date_published": "2026-06-16T09:27:57.141Z",
+      "date_published": "2026-06-25T12:11:39.270Z",
       "tags": [
         "Bureau",
         "Bureau",
@@ -61,29 +388,60 @@
       ]
     },
     {
-      "id": "https://jobfaso.com/pages/jobs/pediatre-referent-hf-f66f33f4.html",
-      "url": "https://jobfaso.com/pages/jobs/pediatre-referent-hf-f66f33f4.html",
-      "title": "Pédiatre Référent (HF)",
-      "content_text": "Pédiatre Référent (HF) - HumanitaireHub - Burkina Faso. Categorie: Sante. Ouverture: A verifier. Cloture: 22 juin 2026. Consultez la fiche JobFaso puis verifiez la source officielle avant de postuler.",
-      "summary": "Pédiatre Référent (HF) - Humanitaire Hub Emplois Humanitaires Ressources Mon compte Aller au contenu Emplois Humanitaires Ressources Mon compte Ouvrir/fermer le menu Emplois Humanitaires Connexion Pédiatre Référent (HF) ← Retour aux offres International Rescue Committee (IRC) Pédiatre Référent (HF) 📍 Burkina Faso · 📄 CDD ⏰ Deadline 22 Juin 2026 J-6 📨 Postuler maintenant → 📊 Expérience Confirmé (5-8 ans) 🏢 Type d'org Organisation Internationale Management & Coordination Protection, Genre & Inclusion Santé Partager : 💼 LinkedIn 𝕏 Twitter 📘 Facebook 💬 WhatsApp ✈️ Telegram 📧 Email 🔗 Copier Description du poste 📋 Informations clés Lieu Burkina Faso Pays Burkina Faso Date de clôture 22 juin 2026 Organisation IRC Le Comité international de secours (IRC) intervient lors des crises humanitaires les plus graves au monde, contribuant à rétablir la santé, la sécurité, l’éducation, le bie",
-      "date_published": "2026-06-16T09:29:49.907Z",
+      "id": "https://emplois-burkina.com/pages/jobs/blastman-h-f-mogtedo-et-boungou-7b76d300.html",
+      "url": "https://emplois-burkina.com/pages/jobs/blastman-h-f-mogtedo-et-boungou-7b76d300.html",
+      "title": "Blastman H/F - Mogtedo et Boungou",
+      "content_text": "Blastman H/F - Mogtedo et Boungou - Emploiburkina - Burkina Faso. Categorie: Bureau. Ouverture: A verifier. Cloture: A verifier. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
+      "summary": "",
+      "date_published": "2026-06-25T12:12:12.503Z",
       "tags": [
-        "Sante",
-        "Sante",
+        "Bureau",
+        "Bureau",
         "Burkina Faso",
-        "HumanitaireHub",
-        "humanitaire",
-        "pediatre",
-        "sante"
+        "Emploiburkina"
       ]
     },
     {
-      "id": "https://jobfaso.com/pages/jobs/enqueteurs-chercheurs-de-terrain-ac8e8a25.html",
-      "url": "https://jobfaso.com/pages/jobs/enqueteurs-chercheurs-de-terrain-ac8e8a25.html",
+      "id": "https://emplois-burkina.com/pages/jobs/assistant-administratif-525798f4.html",
+      "url": "https://emplois-burkina.com/pages/jobs/assistant-administratif-525798f4.html",
+      "title": "Assistant Administratif",
+      "content_text": "Assistant Administratif - HumanitaireHub - RDC. Categorie: Finance et administration. Ouverture: A verifier. Cloture: 08 juillet 2026. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
+      "summary": "Assistant Administratif - Humanitaire Hub Emplois Humanitaires Ressources Mon compte Aller au contenu Emplois Humanitaires Ressources Mon compte Ouvrir/fermer le menu Emplois Humanitaires Connexion Assistant Administratif ← Retour aux offres PNUD / UNDP Assistant Administratif 📍 RDC · 📄 CDD ⏰ Deadline 08 Juil 2026 J-13 📨 Postuler maintenant → 📊 Expérience Intermédiaire (2-5 ans) 🏢 Type d'org Agence des Nations Unies Management & Coordination Partager : 💼 LinkedIn 𝕏 Twitter 📘 Facebook 💬 WhatsApp ✈️ Telegram 📧 Email 🔗 Copier Description du poste 📋 Informations clés Lieu RDC Pays RDC Date de clôture 08 juillet 2026 Organisation PNUD Le Programme des Nations unies pour le développement fait partie des programmes et fonds de l’ONU. Son rôle est d’aider les pays en développement en leur fournissant des conseils mais également en plaidant leurs causes pour l’octroi de dons. Descript",
+      "date_published": "2026-06-25T12:12:41.078Z",
+      "tags": [
+        "Finance et administration",
+        "Finance et administration",
+        "RDC",
+        "HumanitaireHub",
+        "humanitaire",
+        "programme",
+        "pnud",
+        "administratif",
+        "assistant"
+      ]
+    },
+    {
+      "id": "https://emplois-burkina.com/pages/jobs/et-eacute-pidemiologiste-analyste-de-recherche-malaria-epidemiologist-research-analyst-pal-3dbe4702.html",
+      "url": "https://emplois-burkina.com/pages/jobs/et-eacute-pidemiologiste-analyste-de-recherche-malaria-epidemiologist-research-analyst-pal-3dbe4702.html",
+      "title": "&Eacute;pidemiologiste, Analyste de Recherche, Malaria | Epidemiologist, Research Analyst, Paludisme",
+      "content_text": "&Eacute;pidemiologiste, Analyste de Recherche, Malaria | Epidemiologist, Research Analyst, Paludisme - UN Talent Burkina Faso - Burkina Faso. Categorie: Bureau. Ouverture: A verifier. Cloture: A verifier. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
+      "summary": "",
+      "date_published": "2026-06-25T12:13:09.863Z",
+      "tags": [
+        "Bureau",
+        "Bureau",
+        "Burkina Faso",
+        "UN Talent Burkina Faso",
+        "International"
+      ]
+    },
+    {
+      "id": "https://emplois-burkina.com/pages/jobs/enqueteurs-chercheurs-de-terrain-ac8e8a25.html",
+      "url": "https://emplois-burkina.com/pages/jobs/enqueteurs-chercheurs-de-terrain-ac8e8a25.html",
       "title": "Enquêteurs / Chercheurs de terrain",
-      "content_text": "Enquêteurs / Chercheurs de terrain - BFemploi - Burkina Faso. Categorie: Metiers terrain et informels. Ouverture: 03 juin 2026. Cloture: 26 juin 2026. Consultez la fiche JobFaso puis verifiez la source officielle avant de postuler.",
+      "content_text": "Enquêteurs / Chercheurs de terrain - BFemploi - Burkina Faso. Categorie: Metiers terrain et informels. Ouverture: 03 juin 2026. Cloture: 26 juin 2026. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
       "summary": "Enquêteurs / Chercheurs de terrain - BFemploi.com Connexion Login Candidat: Login Employeur/Recruteur: Inscription Espace Candidats Les annonces Connexion Inscription Demande d'emploi Recherche Examens et concours Espace Employeurs Connexion Inscription Publier une annonce Recherche CV Mot de passe Les demandes Ressources Telechargements Liens utiles Infos - Guides Examens-Concours Newsletter Repertoires Ecoles de formation Entreprises Appels d'offre Contact Nous contacter Nous recommander Aide - FAQ Newsletter ☰ Les annonces Espace Candidats Espace Employeurs Publier une annonce Recherche Newsletter Les demandes Ressources Nous contacter Espace Candidats Les annonces Connexion Inscription Demande d'emploi Recherche Examens et concours Espace Employeurs Connexion Inscription Publier une annonce Recherche CV Mot de passe Les demandes Ressources Telechargements Liens utiles Infos - Guides",
-      "date_published": "2026-06-16T09:27:57.141Z",
+      "date_published": "2026-06-25T12:11:39.270Z",
       "tags": [
         "Metiers terrain et informels",
         "Metiers terrain et informels",
@@ -94,66 +452,366 @@
       ]
     },
     {
-      "id": "https://jobfaso.com/pages/jobs/responsable-relations-bailleurs-h-f-tout-pays-085b3a6f.html",
-      "url": "https://jobfaso.com/pages/jobs/responsable-relations-bailleurs-h-f-tout-pays-085b3a6f.html",
-      "title": "Responsable Relations Bailleurs H/F Tout Pays",
-      "content_text": "Responsable Relations Bailleurs H/F Tout Pays - BFemploi - Burkina Faso. Categorie: ONG. Ouverture: 09 juin 2026. Cloture: 22 juin 2026. Consultez la fiche JobFaso puis verifiez la source officielle avant de postuler.",
-      "summary": "Responsable Relations Bailleurs H/F Tout Pays - BFemploi.com Connexion Login Candidat: Login Employeur/Recruteur: Inscription Espace Candidats Les annonces Connexion Inscription Demande d'emploi Recherche Examens et concours Espace Employeurs Connexion Inscription Publier une annonce Recherche CV Mot de passe Les demandes Ressources Telechargements Liens utiles Infos - Guides Examens-Concours Newsletter Repertoires Ecoles de formation Entreprises Appels d'offre Contact Nous contacter Nous recommander Aide - FAQ Newsletter ☰ Les annonces Espace Candidats Espace Employeurs Publier une annonce Recherche Newsletter Les demandes Ressources Nous contacter Espace Candidats Les annonces Connexion Inscription Demande d'emploi Recherche Examens et concours Espace Employeurs Connexion Inscription Publier une annonce Recherche CV Mot de passe Les demandes Ressources Telechargements Liens utiles Info",
-      "date_published": "2026-06-16T09:27:57.141Z",
+      "id": "https://emplois-burkina.com/pages/jobs/stagiaire-secretaire-comptable-stage-de-pre-emploi-ouagadougou-00953728.html",
+      "url": "https://emplois-burkina.com/pages/jobs/stagiaire-secretaire-comptable-stage-de-pre-emploi-ouagadougou-00953728.html",
+      "title": "Stagiaire Secretaire Comptable (Stage de pré-emploi) - Ouagadougou",
+      "content_text": "Stagiaire Secretaire Comptable (Stage de pré-emploi) - Ouagadougou - Emploiburkina - Ouagadougou. Categorie: Stage. Ouverture: A verifier. Cloture: A verifier. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
+      "summary": "",
+      "date_published": "2026-06-25T12:12:13.518Z",
       "tags": [
-        "ONG",
-        "ONG",
-        "Burkina Faso",
-        "BFemploi",
-        "bailleur",
-        "concours"
+        "Stage",
+        "Stage",
+        "Ouagadougou",
+        "Emploiburkina",
+        "stage",
+        "stagiaire",
+        "comptable",
+        "secretaire"
       ]
     },
     {
-      "id": "https://jobfaso.com/pages/jobs/appel-a-propositions-pour-la-mise-en-uvre-d-une-enquete-de-couverture-post-campagne-de-sup-e05b148d.html",
-      "url": "https://jobfaso.com/pages/jobs/appel-a-propositions-pour-la-mise-en-uvre-d-une-enquete-de-couverture-post-campagne-de-sup-e05b148d.html",
-      "title": "Appel à propositions pour la mise en œuvre d’une enquête de couverture post-campagne de supplémentation en vitamine a",
-      "content_text": "Appel à propositions pour la mise en œuvre d’une enquête de couverture post-campagne de supplémentation en vitamine a - BFemploi - Burkina Faso. Categorie: Bureau. Ouverture: 12 juin 2026. Cloture: 21 juin 2026. Consultez la fiche JobFaso puis verifiez la source officielle avant de postuler.",
-      "summary": "Appel à propositions pour la mise en œuvre d’une enquête de couverture post-campagne de supplémentation en vitamine a - BFemploi.com Connexion Login Candidat: Login Employeur/Recruteur: Inscription Espace Candidats Les annonces Connexion Inscription Demande d'emploi Recherche Examens et concours Espace Employeurs Connexion Inscription Publier une annonce Recherche CV Mot de passe Les demandes Ressources Telechargements Liens utiles Infos - Guides Examens-Concours Newsletter Repertoires Ecoles de formation Entreprises Appels d'offre Contact Nous contacter Nous recommander Aide - FAQ Newsletter ☰ Les annonces Espace Candidats Espace Employeurs Publier une annonce Recherche Newsletter Les demandes Ressources Nous contacter Espace Candidats Les annonces Connexion Inscription Demande d'emploi Recherche Examens et concours Espace Employeurs Connexion Inscription Publier une annonce Recherche C",
-      "date_published": "2026-06-16T09:27:57.140Z",
+      "id": "https://emplois-burkina.com/pages/jobs/danish-refugee-council-drc-j-13-02-chefs-d-et-rsquo-equipe-de-protection-ethiopie-cdd-prot-434580f6.html",
+      "url": "https://emplois-burkina.com/pages/jobs/danish-refugee-council-drc-j-13-02-chefs-d-et-rsquo-equipe-de-protection-ethiopie-cdd-prot-434580f6.html",
+      "title": "Danish Refugee Council (DRC) J-13 02 Chefs d&rsquo;équipe de protection 📍 Éthiopie 📋 CDD Protection, Genre & Inclusion",
+      "content_text": "Danish Refugee Council (DRC) J-13 02 Chefs d&rsquo;équipe de protection 📍 Éthiopie 📋 CDD Protection, Genre & Inclusion - HumanitaireHub - Ethiopie. Categorie: ONG. Ouverture: A verifier. Cloture: 08 juillet 2026. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
+      "summary": "",
+      "date_published": "2026-06-25T12:12:41.080Z",
+      "tags": [
+        "ONG",
+        "ONG",
+        "Ethiopie",
+        "HumanitaireHub",
+        "drc",
+        "International"
+      ]
+    },
+    {
+      "id": "https://emplois-burkina.com/pages/jobs/associate-malaria-case-management-et-supply-chain-management-071f2c97.html",
+      "url": "https://emplois-burkina.com/pages/jobs/associate-malaria-case-management-et-supply-chain-management-071f2c97.html",
+      "title": "Associate, Malaria Case Management & Supply Chain Management",
+      "content_text": "Associate, Malaria Case Management & Supply Chain Management - UN Talent Burkina Faso - Burkina Faso. Categorie: Bureau. Ouverture: A verifier. Cloture: A verifier. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
+      "summary": "",
+      "date_published": "2026-06-25T12:13:09.864Z",
       "tags": [
         "Bureau",
         "Bureau",
         "Burkina Faso",
-        "BFemploi",
-        "concours"
+        "UN Talent Burkina Faso",
+        "International"
       ]
     },
     {
-      "id": "https://jobfaso.com/pages/jobs/cash-academy-program-coordinator-b511815e.html",
-      "url": "https://jobfaso.com/pages/jobs/cash-academy-program-coordinator-b511815e.html",
-      "title": "Cash Academy Program Coordinator",
-      "content_text": "Cash Academy Program Coordinator - BFemploi - Burkina Faso. Categorie: Bureau. Ouverture: 11 juin 2026. Cloture: 16 juin 2026. Consultez la fiche JobFaso puis verifiez la source officielle avant de postuler.",
-      "summary": "Cash Academy Program Coordinator - BFemploi.com Connexion Login Candidat: Login Employeur/Recruteur: Inscription Espace Candidats Les annonces Connexion Inscription Demande d'emploi Recherche Examens et concours Espace Employeurs Connexion Inscription Publier une annonce Recherche CV Mot de passe Les demandes Ressources Telechargements Liens utiles Infos - Guides Examens-Concours Newsletter Repertoires Ecoles de formation Entreprises Appels d'offre Contact Nous contacter Nous recommander Aide - FAQ Newsletter ☰ Les annonces Espace Candidats Espace Employeurs Publier une annonce Recherche Newsletter Les demandes Ressources Nous contacter Espace Candidats Les annonces Connexion Inscription Demande d'emploi Recherche Examens et concours Espace Employeurs Connexion Inscription Publier une annonce Recherche CV Mot de passe Les demandes Ressources Telechargements Liens utiles Infos - Guides Ex",
-      "date_published": "2026-06-16T09:27:57.141Z",
+      "id": "https://emplois-burkina.com/pages/jobs/stagiaire-communication-marketing-ouagadougou-66022624.html",
+      "url": "https://emplois-burkina.com/pages/jobs/stagiaire-communication-marketing-ouagadougou-66022624.html",
+      "title": "Stagiaire Communication Marketing - Ouagadougou",
+      "content_text": "Stagiaire Communication Marketing - Ouagadougou - Emploiburkina - Ouagadougou. Categorie: Stage. Ouverture: A verifier. Cloture: A verifier. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
+      "summary": "",
+      "date_published": "2026-06-25T12:12:10.497Z",
+      "tags": [
+        "Stage",
+        "Stage",
+        "Ouagadougou",
+        "Emploiburkina",
+        "stagiaire",
+        "marketing"
+      ]
+    },
+    {
+      "id": "https://emplois-burkina.com/pages/jobs/responsable-du-suivi-et-de-l-et-rsquo-evaluation-2e3bd7ca.html",
+      "url": "https://emplois-burkina.com/pages/jobs/responsable-du-suivi-et-de-l-et-rsquo-evaluation-2e3bd7ca.html",
+      "title": "Responsable du suivi et de l&rsquo;évaluation",
+      "content_text": "Responsable du suivi et de l&rsquo;évaluation - HumanitaireHub - Senegal. Categorie: Bureau. Ouverture: A verifier. Cloture: 06 juillet 2026. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
+      "summary": "Responsable du suivi et de l'évaluation - Humanitaire Hub Emplois Humanitaires Ressources Mon compte Aller au contenu Emplois Humanitaires Ressources Mon compte Ouvrir/fermer le menu Emplois Humanitaires Connexion Responsable du suivi et de l&rsquo;évaluation ← Retour aux offres Family Health International (FHI360) Responsable du suivi et de l&rsquo;évaluation 📍 Sénégal · 📄 CDD ⏰ Deadline 06 Juil 2026 J-11 📨 Postuler maintenant → 📊 Expérience Intermédiaire (2-5 ans) 🏢 Type d'org Organisation Internationale MEAL (Suivi, Évaluation, Apprentissage) Partager : 💼 LinkedIn 𝕏 Twitter 📘 Facebook 💬 WhatsApp ✈️ Telegram 📧 Email 🔗 Copier Description du poste Responsable du suivi et de l&rsquo;évaluation lieux : Sénégal (n&rsquo;importe lequel) type de temps : À temps plein publié le : Offre publiée il y a 2 jours temps restant pour postuler : Date de fin : 6 juillet 2026 numéro de demand",
+      "date_published": "2026-06-25T12:12:41.079Z",
+      "tags": [
+        "Bureau",
+        "Bureau",
+        "Senegal",
+        "HumanitaireHub",
+        "apprenti",
+        "humanitaire",
+        "International"
+      ]
+    },
+    {
+      "id": "https://emplois-burkina.com/pages/jobs/clinicien-kaya-regional-office-fc7357dc.html",
+      "url": "https://emplois-burkina.com/pages/jobs/clinicien-kaya-regional-office-fc7357dc.html",
+      "title": "Clinicien - Kaya Regional Office",
+      "content_text": "Clinicien - Kaya Regional Office - UN Talent Burkina Faso - Burkina Faso. Categorie: Bureau. Ouverture: A verifier. Cloture: A verifier. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
+      "summary": "",
+      "date_published": "2026-06-25T12:13:09.865Z",
       "tags": [
         "Bureau",
         "Bureau",
         "Burkina Faso",
-        "BFemploi",
-        "concours"
+        "UN Talent Burkina Faso",
+        "International"
       ]
     },
     {
-      "id": "https://jobfaso.com/pages/jobs/programme-officer-school-meals-dd10c613.html",
-      "url": "https://jobfaso.com/pages/jobs/programme-officer-school-meals-dd10c613.html",
-      "title": "Programme Officer - School Meals",
-      "content_text": "Programme Officer - School Meals - BFemploi - Burkina Faso. Categorie: ONG. Ouverture: 08 juin 2026. Cloture: 16 juin 2026. Consultez la fiche JobFaso puis verifiez la source officielle avant de postuler.",
-      "summary": "Programme Officer - School Meals - BFemploi.com Connexion Login Candidat: Login Employeur/Recruteur: Inscription Espace Candidats Les annonces Connexion Inscription Demande d'emploi Recherche Examens et concours Espace Employeurs Connexion Inscription Publier une annonce Recherche CV Mot de passe Les demandes Ressources Telechargements Liens utiles Infos - Guides Examens-Concours Newsletter Repertoires Ecoles de formation Entreprises Appels d'offre Contact Nous contacter Nous recommander Aide - FAQ Newsletter ☰ Les annonces Espace Candidats Espace Employeurs Publier une annonce Recherche Newsletter Les demandes Ressources Nous contacter Espace Candidats Les annonces Connexion Inscription Demande d'emploi Recherche Examens et concours Espace Employeurs Connexion Inscription Publier une annonce Recherche CV Mot de passe Les demandes Ressources Telechargements Liens utiles Infos - Guides Ex",
-      "date_published": "2026-06-16T09:27:57.141Z",
+      "id": "https://emplois-burkina.com/pages/jobs/stagiaire-en-infographie-et-montage-video-ouagadougou-b0427968.html",
+      "url": "https://emplois-burkina.com/pages/jobs/stagiaire-en-infographie-et-montage-video-ouagadougou-b0427968.html",
+      "title": "Stagiaire en Infographie et Montage Vidéo - Ouagadougou",
+      "content_text": "Stagiaire en Infographie et Montage Vidéo - Ouagadougou - Emploiburkina - Ouagadougou. Categorie: Stage. Ouverture: A verifier. Cloture: A verifier. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
+      "summary": "",
+      "date_published": "2026-06-25T12:12:10.497Z",
+      "tags": [
+        "Stage",
+        "Stage",
+        "Ouagadougou",
+        "Emploiburkina",
+        "stagiaire"
+      ]
+    },
+    {
+      "id": "https://emplois-burkina.com/pages/jobs/fhi-360-recrute-04-postes-b6253de6.html",
+      "url": "https://emplois-burkina.com/pages/jobs/fhi-360-recrute-04-postes-b6253de6.html",
+      "title": "FHI 360 recrute 04 postes",
+      "content_text": "FHI 360 recrute 04 postes - HumanitaireHub - Burkina Faso. Categorie: Bureau. Ouverture: 02 juillet 2026. Cloture: 02 juillet 2026. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
+      "summary": "FHI 360 recrute 04 postes - Humanitaire Hub Emplois Humanitaires Ressources Mon compte Aller au contenu Emplois Humanitaires Ressources Mon compte Ouvrir/fermer le menu Emplois Humanitaires Connexion FHI 360 recrute 04 postes ← Retour aux offres Family Health International (FHI360) FHI 360 recrute 04 postes 📍 Burkina Faso · 📄 CDD ⏰ Deadline 02 Juil 2026 J-7 📨 Postuler maintenant → 📊 Expérience Intermédiaire (2-5 ans) 🏢 Type d'org Organisation Internationale Santé Santé Mentale & Soutien Psychosocial Partager : 💼 LinkedIn 𝕏 Twitter 📘 Facebook 💬 WhatsApp ✈️ Telegram 📧 Email 🔗 Copier Description du poste Informations sur l’emploi Titre du Poste : 04 Lieu du Travail : Burkina Faso Date de Soumission : 02/07/2026 Description de l’emploi Poste 1 : Agent de santé maternelle et infantile et de nutrition _ Tenkodogo lieux : Tenkodogo, Burkina Faso type de temps : À temps plein temps re",
+      "date_published": "2026-06-25T12:12:41.079Z",
+      "tags": [
+        "Bureau",
+        "Bureau",
+        "Burkina Faso",
+        "HumanitaireHub",
+        "humanitaire",
+        "sante",
+        "International"
+      ]
+    },
+    {
+      "id": "https://emplois-burkina.com/pages/jobs/clinician-koudougou-regional-office-1ffcefc7.html",
+      "url": "https://emplois-burkina.com/pages/jobs/clinician-koudougou-regional-office-1ffcefc7.html",
+      "title": "Clinician - Koudougou Regional Office",
+      "content_text": "Clinician - Koudougou Regional Office - UN Talent Burkina Faso - Koudougou. Categorie: Bureau. Ouverture: A verifier. Cloture: A verifier. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
+      "summary": "",
+      "date_published": "2026-06-25T12:13:09.865Z",
+      "tags": [
+        "Bureau",
+        "Bureau",
+        "Koudougou",
+        "UN Talent Burkina Faso",
+        "International"
+      ]
+    },
+    {
+      "id": "https://emplois-burkina.com/pages/jobs/stagiaire-ingenieur-technico-commercial-electricite-ouagadougou-7530670d.html",
+      "url": "https://emplois-burkina.com/pages/jobs/stagiaire-ingenieur-technico-commercial-electricite-ouagadougou-7530670d.html",
+      "title": "Stagiaire Ingénieur Technico-Commercial Électricité - Ouagadougou",
+      "content_text": "Stagiaire Ingénieur Technico-Commercial Électricité - Ouagadougou - Emploiburkina - Ouagadougou. Categorie: Stage. Ouverture: A verifier. Cloture: A verifier. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
+      "summary": "",
+      "date_published": "2026-06-25T12:12:10.497Z",
+      "tags": [
+        "Stage",
+        "Stage",
+        "Ouagadougou",
+        "Emploiburkina",
+        "stagiaire",
+        "electricite",
+        "commercial"
+      ]
+    },
+    {
+      "id": "https://emplois-burkina.com/pages/jobs/charge-e-de-projet-principal-e-nutrition-c0378ef3.html",
+      "url": "https://emplois-burkina.com/pages/jobs/charge-e-de-projet-principal-e-nutrition-c0378ef3.html",
+      "title": "Chargé(e) de projet principal(e) – Nutrition",
+      "content_text": "Chargé(e) de projet principal(e) – Nutrition - HumanitaireHub - Niger. Categorie: ONG. Ouverture: 24 juin 2026. Cloture: 01 juillet 2026. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
+      "summary": "Chargé(e) de projet principal(e) - Nutrition - Humanitaire Hub Emplois Humanitaires Ressources Mon compte Aller au contenu Emplois Humanitaires Ressources Mon compte Ouvrir/fermer le menu Emplois Humanitaires Connexion Chargé(e) de projet principal(e) – Nutrition ← Retour aux offres Catholic Relief Services (CRS) Chargé(e) de projet principal(e) – Nutrition 📍 Nigeria · 📄 CDD ⏰ Deadline 01 Juil 2026 J-6 📨 Postuler maintenant → 📊 Expérience Confirmé (5-8 ans) 🏢 Type d'org Organisation Internationale Nutrition Partager : 💼 LinkedIn 𝕏 Twitter 📘 Facebook 💬 WhatsApp ✈️ Telegram 📧 Email 🔗 Copier Description du poste 📋 Informations clés Lieu Nigeria Pays Nigeria Date de clôture 01 juillet 2026 Organisation CRS Catholic Relief Services est l’agence humanitaire internationale officielle de la communauté catholique aux États-Unis. Elle œuvre pour sauver, protéger et transformer des vies",
+      "date_published": "2026-06-25T12:12:41.078Z",
+      "tags": [
+        "ONG",
+        "ONG",
+        "Niger",
+        "HumanitaireHub",
+        "humanitaire",
+        "projet",
+        "International"
+      ]
+    },
+    {
+      "id": "https://emplois-burkina.com/pages/jobs/charge-des-ressources-humaines-f8e877d3.html",
+      "url": "https://emplois-burkina.com/pages/jobs/charge-des-ressources-humaines-f8e877d3.html",
+      "title": "Chargé des Ressources Humaines",
+      "content_text": "Chargé des Ressources Humaines - UN Talent Burkina Faso - Burkina Faso. Categorie: Bureau. Ouverture: A verifier. Cloture: A verifier. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
+      "summary": "",
+      "date_published": "2026-06-25T12:13:09.866Z",
+      "tags": [
+        "Bureau",
+        "Bureau",
+        "Burkina Faso",
+        "UN Talent Burkina Faso",
+        "International"
+      ]
+    },
+    {
+      "id": "https://emplois-burkina.com/pages/jobs/chauffeur-particulier-ouagadougou-d6caa8f6.html",
+      "url": "https://emplois-burkina.com/pages/jobs/chauffeur-particulier-ouagadougou-d6caa8f6.html",
+      "title": "Chauffeur Particulier - Ouagadougou",
+      "content_text": "Chauffeur Particulier - Ouagadougou - Emploiburkina - Ouagadougou. Categorie: Metiers terrain et informels. Ouverture: A verifier. Cloture: A verifier. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
+      "summary": "",
+      "date_published": "2026-06-25T12:12:11.476Z",
+      "tags": [
+        "Metiers terrain et informels",
+        "Metiers terrain et informels",
+        "Ouagadougou",
+        "Emploiburkina",
+        "chauffeur"
+      ]
+    },
+    {
+      "id": "https://emplois-burkina.com/pages/jobs/mag-recrute-02-postes-0d0fccf5.html",
+      "url": "https://emplois-burkina.com/pages/jobs/mag-recrute-02-postes-0d0fccf5.html",
+      "title": "MAG recrute 02 postes",
+      "content_text": "MAG recrute 02 postes - HumanitaireHub - Senegal. Categorie: Bureau. Ouverture: A verifier. Cloture: 30 juin 2026. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
+      "summary": "MAG recrute 02 postes - Humanitaire Hub Emplois Humanitaires Ressources Mon compte Aller au contenu Emplois Humanitaires Ressources Mon compte Ouvrir/fermer le menu Emplois Humanitaires Connexion MAG recrute 02 postes ← Retour aux offres MAG (Mines Advisory Group) MAG recrute 02 postes 📍 Sénégal · 📄 CDD ⏰ Deadline 12 Juil 2026 J-17 📧 Postuler par email → 📊 Expérience Confirmé (5-8 ans) 🏢 Type d'org Organisation Internationale Plusieurs Secteurs Partager : 💼 LinkedIn 𝕏 Twitter 📘 Facebook 💬 WhatsApp ✈️ Telegram 📧 Email 🔗 Copier Description du poste 📋 Informations clés Lieu Sénégal Pays Sénégal Date de clôture Non précisée Organisation MAG MAG (Mines Advisory Group) est une organisation humanitaire internationale basée à Manchester, au Royaume-Uni, et opérant dans 32 pays. Nous enlevons les mines terrestres et les munitions non explosées pour libérer des terres et les rendre sûr",
+      "date_published": "2026-06-25T12:12:41.078Z",
+      "tags": [
+        "Bureau",
+        "Bureau",
+        "Senegal",
+        "HumanitaireHub",
+        "humanitaire",
+        "International"
+      ]
+    },
+    {
+      "id": "https://emplois-burkina.com/pages/jobs/drc-danish-refugee-council-3b400021.html",
+      "url": "https://emplois-burkina.com/pages/jobs/drc-danish-refugee-council-3b400021.html",
+      "title": "DRC - Danish Refugee Council",
+      "content_text": "DRC - Danish Refugee Council - UN Talent Burkina Faso - Burkina Faso. Categorie: ONG. Ouverture: A verifier. Cloture: A verifier. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
+      "summary": "",
+      "date_published": "2026-06-25T12:13:08.535Z",
       "tags": [
         "ONG",
         "ONG",
         "Burkina Faso",
-        "BFemploi",
-        "programme",
+        "UN Talent Burkina Faso",
+        "drc",
+        "International"
+      ]
+    },
+    {
+      "id": "https://emplois-burkina.com/pages/jobs/responsable-qhse-h-f-ouagadougou-b1a9e70e.html",
+      "url": "https://emplois-burkina.com/pages/jobs/responsable-qhse-h-f-ouagadougou-b1a9e70e.html",
+      "title": "Responsable QHSE H/F - Ouagadougou",
+      "content_text": "Responsable QHSE H/F - Ouagadougou - Emploiburkina - Ouagadougou. Categorie: Bureau. Ouverture: A verifier. Cloture: A verifier. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
+      "summary": "",
+      "date_published": "2026-06-25T12:12:12.503Z",
+      "tags": [
+        "Bureau",
+        "Bureau",
+        "Ouagadougou",
+        "Emploiburkina"
+      ]
+    },
+    {
+      "id": "https://emplois-burkina.com/pages/jobs/specialiste-de-la-chaine-d-approvisionnement-supply-chain-specialist-feb47682.html",
+      "url": "https://emplois-burkina.com/pages/jobs/specialiste-de-la-chaine-d-approvisionnement-supply-chain-specialist-feb47682.html",
+      "title": "Spécialiste de la Chaine d’Approvisionnement (Supply Chain Specialist)",
+      "content_text": "Spécialiste de la Chaine d’Approvisionnement (Supply Chain Specialist) - UN Talent Burkina Faso - Burkina Faso. Categorie: Transport et logistique. Ouverture: A verifier. Cloture: A verifier. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
+      "summary": "",
+      "date_published": "2026-06-25T12:13:09.866Z",
+      "tags": [
+        "Transport et logistique",
+        "Transport et logistique",
+        "Burkina Faso",
+        "UN Talent Burkina Faso",
+        "approvisionnement",
+        "International"
+      ]
+    },
+    {
+      "id": "https://emplois-burkina.com/pages/jobs/professeur-particulier-toutes-les-villes-77022179.html",
+      "url": "https://emplois-burkina.com/pages/jobs/professeur-particulier-toutes-les-villes-77022179.html",
+      "title": "Professeur Particulier - Toutes Les Villes",
+      "content_text": "Professeur Particulier - Toutes Les Villes - Emploiburkina - Burkina Faso. Categorie: Bureau. Ouverture: A verifier. Cloture: A verifier. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
+      "summary": "",
+      "date_published": "2026-06-25T12:12:08.013Z",
+      "tags": [
+        "Bureau",
+        "Bureau",
+        "Burkina Faso",
+        "Emploiburkina"
+      ]
+    },
+    {
+      "id": "https://emplois-burkina.com/pages/jobs/charge-e-principal-e-des-achats-1ecbc9e8.html",
+      "url": "https://emplois-burkina.com/pages/jobs/charge-e-principal-e-des-achats-1ecbc9e8.html",
+      "title": "CHARGÉ(E) PRINCIPAL(E) DES ACHATS",
+      "content_text": "CHARGÉ(E) PRINCIPAL(E) DES ACHATS - UN Talent Burkina Faso - Burkina Faso. Categorie: Bureau. Ouverture: A verifier. Cloture: A verifier. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
+      "summary": "",
+      "date_published": "2026-06-25T12:13:09.867Z",
+      "tags": [
+        "Bureau",
+        "Bureau",
+        "Burkina Faso",
+        "UN Talent Burkina Faso",
+        "International"
+      ]
+    },
+    {
+      "id": "https://emplois-burkina.com/pages/jobs/commercial-terrain-ouagadougou-62999b03.html",
+      "url": "https://emplois-burkina.com/pages/jobs/commercial-terrain-ouagadougou-62999b03.html",
+      "title": "Commercial Terrain - Ouagadougou",
+      "content_text": "Commercial Terrain - Ouagadougou - Emploiburkina - Ouagadougou. Categorie: Metiers terrain et informels. Ouverture: A verifier. Cloture: A verifier. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
+      "summary": "",
+      "date_published": "2026-06-25T12:12:09.335Z",
+      "tags": [
+        "Metiers terrain et informels",
+        "Metiers terrain et informels",
+        "Ouagadougou",
+        "Emploiburkina",
+        "terrain",
+        "commercial"
+      ]
+    },
+    {
+      "id": "https://emplois-burkina.com/pages/jobs/charg-e-e-de-la-chaine-d-approvisionnement-supply-chain-officer-e6001fc8.html",
+      "url": "https://emplois-burkina.com/pages/jobs/charg-e-e-de-la-chaine-d-approvisionnement-supply-chain-officer-e6001fc8.html",
+      "title": "Charg(é)e de la Chaine d’Approvisionnement (Supply Chain Officer)",
+      "content_text": "Charg(é)e de la Chaine d’Approvisionnement (Supply Chain Officer) - UN Talent Burkina Faso - Burkina Faso. Categorie: ONG. Ouverture: A verifier. Cloture: A verifier. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
+      "summary": "",
+      "date_published": "2026-06-25T12:13:09.868Z",
+      "tags": [
+        "ONG",
+        "ONG",
+        "Burkina Faso",
+        "UN Talent Burkina Faso",
         "officer",
-        "concours"
+        "approvisionnement",
+        "International"
+      ]
+    },
+    {
+      "id": "https://emplois-burkina.com/pages/jobs/coursier-conducteur-de-vehicules-automobiles-poids-leger-ouagadougou-6209f3fb.html",
+      "url": "https://emplois-burkina.com/pages/jobs/coursier-conducteur-de-vehicules-automobiles-poids-leger-ouagadougou-6209f3fb.html",
+      "title": "Coursier Conducteur de Véhicules Automobiles Poids Léger - Ouagadougou",
+      "content_text": "Coursier Conducteur de Véhicules Automobiles Poids Léger - Ouagadougou - Emploiburkina - Ouagadougou. Categorie: Transport et logistique. Ouverture: A verifier. Cloture: A verifier. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
+      "summary": "",
+      "date_published": "2026-06-25T12:12:12.503Z",
+      "tags": [
+        "Transport et logistique",
+        "Transport et logistique",
+        "Ouagadougou",
+        "Emploiburkina",
+        "conducteur"
+      ]
+    },
+    {
+      "id": "https://emplois-burkina.com/pages/jobs/specialiste-en-sante-maternelle-et-infantile-et-en-vaccination-mch-et-immunization-special-5dd00f80.html",
+      "url": "https://emplois-burkina.com/pages/jobs/specialiste-en-sante-maternelle-et-infantile-et-en-vaccination-mch-et-immunization-special-5dd00f80.html",
+      "title": "Spécialiste en Santé Maternelle et Infantile et en Vaccination (MCH & Immunization Specialist)",
+      "content_text": "Spécialiste en Santé Maternelle et Infantile et en Vaccination (MCH & Immunization Specialist) - UN Talent Burkina Faso - Burkina Faso. Categorie: Sante. Ouverture: A verifier. Cloture: A verifier. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.",
+      "summary": "",
+      "date_published": "2026-06-25T12:13:09.868Z",
+      "tags": [
+        "Sante",
+        "Sante",
+        "Burkina Faso",
+        "UN Talent Burkina Faso",
+        "sante",
+        "International"
       ]
     }
   ]

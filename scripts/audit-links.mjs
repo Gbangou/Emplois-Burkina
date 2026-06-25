@@ -2,16 +2,16 @@ import { readdir, readFile, writeFile, mkdir } from "node:fs/promises";
 import { dirname, extname, join, resolve } from "node:path";
 
 const ROOT = resolve(new URL("..", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1"));
-const BASE_URL = process.env.JOBFASO_BASE_URL || "http://127.0.0.1:8088";
+const BASE_URL = process.env.EMPLOIS_BURKINA_BASE_URL || "http://127.0.0.1:8088";
 const REPORT_FILE = join(ROOT, "docs", "LINK_AUDIT.md");
-const USER_AGENT = "JobFasoLinkAudit/0.1 (+https://jobfaso.com)";
+const USER_AGENT = "Emplois BurkinaLinkAudit/0.1 (+https://emplois-burkina.com)";
 const CHECK_EXTERNAL = process.argv.includes("--external");
 const SITE_SCOPE = process.argv.includes("--site");
 const CONCURRENCY = Math.max(1, Number(process.env.LINK_AUDIT_CONCURRENCY || 12));
 const REQUEST_TIMEOUT_MS = Math.max(1000, Number(process.env.LINK_AUDIT_TIMEOUT_MS || 5000));
 const allowedExtensions = new Set([".html", ".css", ".js", ".mjs", ".json", ".xml", ".webmanifest", ".txt"]);
 const ignoredDirectories = new Set([".git", "node_modules", ".agents", ".codex"]);
-const productionHosts = new Set(["jobfaso.com", "www.jobfaso.com"]);
+const productionHosts = new Set(["emplois-burkina.com", "www.emplois-burkina.com"]);
 const ignoredSchemes = /^(mailto:|tel:|whatsapp:|javascript:|data:|#)/i;
 
 async function listFiles(dir) {
@@ -191,7 +191,7 @@ const checks = await mapLimit(uniqueLinks(links), CONCURRENCY, async (link) => {
 const broken = checks.filter((item) => !item.ok);
 const internalBroken = broken.filter((item) => item.type === "internal");
 const externalBroken = broken.filter((item) => item.type === "external");
-const markdown = `# Audit des liens JobFaso
+const markdown = `# Audit des liens Emplois Burkina
 
 Genere le : ${new Date().toISOString()}
 

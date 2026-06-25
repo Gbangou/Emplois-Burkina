@@ -65,7 +65,7 @@ async function publishWebhook(item) {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      source: "jobfaso",
+      source: "emplois-burkina",
       type: "job_post",
       item,
       platformPayloads: {

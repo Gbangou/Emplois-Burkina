@@ -1,29 +1,56 @@
 [
   {
-    "name": "HumanitaireHub",
-    "logoUrl": "https://humanitairehub.com/favicon.ico",
-    "sector": "ONG",
-    "profileUrl": "https://humanitairehub.com/emploi/responsable-de-la-logistique-et-des-infrastructures-kbnp/",
-    "sourceName": "HumanitaireHub",
-    "jobs": 18,
-    "updatedAt": "2026-06-17T17:59:31.077Z"
-  },
-  {
-    "name": "BFemploi",
-    "logoUrl": "https://www.bfemploi.com/fouskoki/bfemploi/img/logo.png",
-    "sector": "ONG",
-    "profileUrl": "https://www.bfemploi.com/annonce-details-3866.html",
-    "sourceName": "BFemploi",
-    "jobs": 6,
-    "updatedAt": "2026-06-17T17:57:57.682Z"
+    "name": "Emploiburkina",
+    "logoUrl": "https://www.emploiburkina.com/sites/emploiburkina.com/themes/africawork3/logo-header-emploiburkina.svg",
+    "sector": "BTP et chantier",
+    "profileUrl": "https://www.emploiburkina.com/offre-emploi-burkina-faso/technico-commercial-climatisation-haut-gamme-ouagadougou-82601",
+    "sourceName": "Emploiburkina",
+    "jobs": 20,
+    "updatedAt": "2026-06-25T12:12:13.518Z"
   },
   {
     "name": "UN Talent Burkina Faso",
     "logoUrl": "https://untalent.org/assets/img/logo.svg",
-    "sector": "Bureau",
-    "profileUrl": "https://untalent.org/jobs/clinicien-kaya-regional-office",
+    "sector": "ONG",
+    "profileUrl": "https://untalent.org/jobs/mch-nutrition-officer-kaya",
     "sourceName": "UN Talent Burkina Faso",
-    "jobs": 4,
-    "updatedAt": "2026-06-17T17:59:58.874Z"
+    "jobs": 16,
+    "updatedAt": "2026-06-25T12:13:09.870Z"
+  },
+  {
+    "name": "HumanitaireHub",
+    "logoUrl": "https://humanitairehub.com/wp-content/uploads/2026/04/logo-navbar-1.svg",
+    "sector": "ONG",
+    "profileUrl": "https://humanitairehub.com/emploi/responsable-meal-rcce-responsabilisation-et-protection/",
+    "sourceName": "HumanitaireHub",
+    "jobs": 10,
+    "updatedAt": "2026-06-25T12:12:41.080Z"
+  },
+  {
+    "name": "BFemploi",
+    "logoUrl": "https://www.bfemploi.com/fouskoki/bfemploi/img/logo.png",
+    "sector": "Bureau",
+    "profileUrl": "https://www.bfemploi.com/annonce-details-3882.html",
+    "sourceName": "BFemploi",
+    "jobs": 6,
+    "updatedAt": "2026-06-25T12:11:39.270Z"
+  },
+  {
+    "name": "LeFaso.net Recrutement",
+    "logoUrl": "https://emploi.lefaso.net/favicon.ico",
+    "sector": "ONG",
+    "profileUrl": "https://emploi.lefaso.net/Avis-de-recrutement-d-un-e-Coordonnateur-trice-de-Projet.html",
+    "sourceName": "LeFaso.net Recrutement",
+    "jobs": 3,
+    "updatedAt": "2026-06-25T12:14:05.670Z"
+  },
+  {
+    "name": "UNjobs Burkina Faso",
+    "logoUrl": "https://unjobs.org/favicon.ico",
+    "sector": "Finance et administration",
+    "profileUrl": "https://unjobs.org/vacancies/1780962167818",
+    "sourceName": "UNjobs Burkina Faso",
+    "jobs": 3,
+    "updatedAt": "2026-06-16T09:30:22.979Z"
   }
 ]

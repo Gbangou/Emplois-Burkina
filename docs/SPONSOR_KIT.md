@@ -1,8 +1,8 @@
-# Kit sponsor JobFaso
+# Kit sponsor Emplois Burkina
 
 ## Positionnement
 
-JobFaso est un media emploi et opportunites au Burkina Faso. Le site aide les
+Emplois Burkina est un media emploi et opportunites au Burkina Faso. Le site aide les
 candidats a consulter gratuitement les offres, concours, stages et missions,
 puis permet aux annonceurs de toucher une audience active.
 
@@ -74,7 +74,7 @@ Regle :
 
 ## Promesse commerciale
 
-JobFaso ne vend pas seulement de l'affichage. JobFaso vend l'acces a des
+Emplois Burkina ne vend pas seulement de l'affichage. Emplois Burkina vend l'acces a des
 personnes qui cherchent activement un emploi, une formation, un concours ou une
 mission.
 

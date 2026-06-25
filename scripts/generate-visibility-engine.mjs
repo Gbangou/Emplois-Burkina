@@ -43,7 +43,7 @@ function buildPartnerTargets(sources, jobs, rateCard) {
     url: source.url,
     priority: source.priority || 5,
     angle: "Proposer un partenariat de diffusion propre avec lien vers la source officielle et attribution claire.",
-    ask: "Backlink vers JobFaso, flux RSS/API autorise, ou formulaire de soumission d'offres.",
+    ask: "Backlink vers Emplois Burkina, flux RSS/API autorise, ou formulaire de soumission d'offres.",
   }));
 
   const categories = unique(jobs.map((job) => job.category)).slice(0, 12);
@@ -84,28 +84,28 @@ function buildPartnerTargets(sources, jobs, rateCard) {
 }
 
 function buildOutreachTemplates(config) {
-  const siteUrl = config.baseUrl || "https://jobfaso.com";
+  const siteUrl = config.baseUrl || "https://emplois-burkina.com";
   return [
     {
       id: "source_partner",
       subject: "Partenariat diffusion offres d'emploi au Burkina Faso",
-      body: `Bonjour,\n\nJe vous contacte pour JobFaso, une plateforme qui aide les candidats au Burkina Faso a retrouver les offres d'emploi, concours, stages et missions locales depuis des sources fiables.\n\nNous souhaitons referencer vos annonces avec attribution claire, lien vers votre source officielle et respect de vos conditions de diffusion. L'objectif est de vous apporter des candidats mieux informes, pas de remplacer votre site.\n\nSeriez-vous ouvert a un partenariat simple : flux autorise, page partenaire, ou lien retour vers ${siteUrl} ?\n\nMerci,\nEquipe JobFaso`,
+      body: `Bonjour,\n\nJe vous contacte pour Emplois Burkina, une plateforme qui aide les candidats au Burkina Faso a retrouver les offres d'emploi, concours, stages et missions locales depuis des sources fiables.\n\nNous souhaitons referencer vos annonces avec attribution claire, lien vers votre source officielle et respect de vos conditions de diffusion. L'objectif est de vous apporter des candidats mieux informes, pas de remplacer votre site.\n\nSeriez-vous ouvert a un partenariat simple : flux autorise, page partenaire, ou lien retour vers ${siteUrl} ?\n\nMerci,\nEquipe Emplois Burkina`,
     },
     {
       id: "recruiter_offer",
       subject: "Publier vos offres et recevoir plus de candidats qualifies",
-      body: `Bonjour,\n\nJobFaso aide les recruteurs a diffuser leurs offres au Burkina Faso avec pages indexables, alertes candidats, suivi des clics et rapports simples.\n\nNous pouvons publier une offre, la mettre en avant, ou lancer une campagne de recrutement avec formulaire et export candidats.\n\nSouhaitez-vous recevoir la grille des packs ou tester une premiere publication ?\n\nCordialement,\nEquipe JobFaso`,
+      body: `Bonjour,\n\nEmplois Burkina aide les recruteurs a diffuser leurs offres au Burkina Faso avec pages indexables, alertes candidats, suivi des clics et rapports simples.\n\nNous pouvons publier une offre, la mettre en avant, ou lancer une campagne de recrutement avec formulaire et export candidats.\n\nSouhaitez-vous recevoir la grille des packs ou tester une premiere publication ?\n\nCordialement,\nEquipe Emplois Burkina`,
     },
     {
       id: "training_sponsor",
-      subject: "Visibilite formation aupres des candidats JobFaso",
-      body: `Bonjour,\n\nVotre formation peut toucher des candidats qui recherchent activement un emploi, une reconversion ou un metier terrain.\n\nJobFaso propose des emplacements sponsorises marques, des guides metiers et un suivi des clics/leads pour mesurer l'interet reel.\n\nSouhaitez-vous sponsoriser une categorie ou un guide pendant un mois ?\n\nCordialement,\nEquipe JobFaso`,
+      subject: "Visibilite formation aupres des candidats Emplois Burkina",
+      body: `Bonjour,\n\nVotre formation peut toucher des candidats qui recherchent activement un emploi, une reconversion ou un metier terrain.\n\nEmplois Burkina propose des emplacements sponsorises marques, des guides metiers et un suivi des clics/leads pour mesurer l'interet reel.\n\nSouhaitez-vous sponsoriser une categorie ou un guide pendant un mois ?\n\nCordialement,\nEquipe Emplois Burkina`,
     },
   ];
 }
 
 function buildMarkdownReport(report, targets, templates) {
-  return `# Moteur visibilite et revenus JobFaso
+  return `# Moteur visibilite et revenus Emplois Burkina
 
 Derniere generation : ${report.generatedAt}
 
@@ -164,7 +164,7 @@ async function main() {
   const guidePages = countExisting(["conseils.html", "docs/MONETISATION.md", "docs/COMPLIANCE.md"]);
   const checks = [];
 
-  scoreCheck(checks, "domain", "Domaine public configure", Boolean(config.baseUrl), 10, "Configurer JOBFASO_BASE_URL et DNS.");
+  scoreCheck(checks, "domain", "Domaine public configure", Boolean(config.baseUrl), 10, "Configurer EMPLOIS_BURKINA_BASE_URL et DNS.");
   scoreCheck(checks, "contact", "Contact public visible", Boolean(config.contactEmail), 10, "Ajouter email et page contact.");
   scoreCheck(checks, "trust_pages", "Pages confiance", staticTrustPages >= 4, 12, "Garder privacy, terms, contacts et tarifs.");
   scoreCheck(checks, "sitemap", "Sitemap riche", sitemapUrls >= 40, 12, "Executer npm run growth.");

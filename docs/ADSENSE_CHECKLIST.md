@@ -1,4 +1,4 @@
-# Checklist AdSense JobFaso
+# Checklist AdSense Emplois Burkina
 
 ## Avant de demander AdSense
 

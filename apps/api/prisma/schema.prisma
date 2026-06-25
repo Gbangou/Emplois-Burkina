@@ -1,0 +1,96 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Job {
+  id              String   @id @default(cuid())
+  externalId      String?  @unique
+  title           String
+  company         String?
+  city            String?
+  category        String?
+  type            String?
+  salary          String?
+  deadline        String?
+  openingDate     String?
+  closingDate     String?
+  sourceName      String?
+  sourceUrl       String?
+  confidenceScore Int      @default(70)
+  riskScore       Int      @default(0)
+  tags            String[]
+  status          JobStatus @default(NEEDS_REVIEW)
+  excerpt         String?
+  collectedAt     DateTime?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@map("jobs")
+}
+
+model Lead {
+  id        String   @id @default(cuid())
+  type      String
+  phone     String?
+  email     String?
+  query     String?
+  city      String?
+  category  String?
+  name      String?
+  company   String?
+  message   String?
+  createdAt DateTime @default(now())
+
+  @@map("leads")
+}
+
+model Source {
+  id         String @id @default(cuid())
+  externalId String? @unique
+  name       String
+  url        String
+  type       String
+  collection String
+  priority   Int    @default(5)
+  notes      String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@map("sources")
+}
+
+model Employer {
+  id          String   @id @default(cuid())
+  name        String
+  email       String   @unique
+  phone       String?
+  company     String
+  website     String?
+  verified    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  @@map("employers")
+}
+
+model Alert {
+  id        String   @id @default(cuid())
+  phone     String?
+  email     String?
+  query     String?
+  city      String?
+  category  String?
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  @@map("alerts")
+}
+
+enum JobStatus {
+  VALIDATED
+  NEEDS_REVIEW
+  REJECTED
+}

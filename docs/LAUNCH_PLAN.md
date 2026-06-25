@@ -1,6 +1,6 @@
-# Plan de lancement JobFaso
+# Plan de lancement Emplois Burkina
 
-Objectif : mettre JobFaso en ligne rapidement, avec assez de contenu et une
+Objectif : mettre Emplois Burkina en ligne rapidement, avec assez de contenu et une
 offre commerciale vendable avant de construire une grosse plateforme.
 
 ## Etat actuel apres nettoyage

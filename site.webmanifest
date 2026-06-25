@@ -1,6 +1,6 @@
 {
-  "name": "JobFaso - Emploi Burkina Faso",
-  "short_name": "JobFaso",
+  "name": "Emplois Burkina - Emploi Burkina Faso",
+  "short_name": "Emplois Burkina",
   "description": "Offres d'emploi, concours, stages, missions locales et alertes WhatsApp au Burkina Faso.",
   "start_url": "/",
   "scope": "/",

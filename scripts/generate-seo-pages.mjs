@@ -153,7 +153,7 @@ const evergreenGuides = [
       "Ne payez jamais des frais avant entretien ou contrat verifiable.",
       "Verifiez le site officiel de l'entreprise ou de l'organisation.",
       "Mefiez-vous des salaires trop eleves sans mission claire.",
-      "Signalez les offres suspectes a JobFaso pour proteger les autres candidats.",
+      "Signalez les offres suspectes a Emplois Burkina pour proteger les autres candidats.",
     ],
   },
   {
@@ -321,7 +321,7 @@ function absolute(config, path) {
 }
 
 function seoImage(config) {
-  return `${config.baseUrl.replace(/\/$/, "")}/assets/jobfaso-og.svg`;
+  return `${config.baseUrl.replace(/\/$/, "")}/assets/emplois-burkina-og.svg`;
 }
 
 function feedDescription(job) {
@@ -329,14 +329,14 @@ function feedDescription(job) {
   const opening = formatJobDate(job.openingDate, "A verifier");
   const closing = formatJobDate(job.closingDate, job.deadline || "A verifier");
   const category = job.category || "Opportunite";
-  return `${job.title} - ${source} - ${job.city || "Burkina Faso"}. Categorie: ${category}. Ouverture: ${opening}. Cloture: ${closing}. Consultez la fiche JobFaso puis verifiez la source officielle avant de postuler.`;
+  return `${job.title} - ${source} - ${job.city || "Burkina Faso"}. Categorie: ${category}. Ouverture: ${opening}. Cloture: ${closing}. Consultez la fiche Emplois Burkina puis verifiez la source officielle avant de postuler.`;
 }
 
 function baseOrganizationSchema(config) {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: config.siteName || "JobFaso",
+    name: config.siteName || "Emplois Burkina",
     url: config.baseUrl,
     email: config.contactEmail,
     areaServed: config.country || "Burkina Faso",
@@ -363,21 +363,21 @@ function layout(config, page) {
     <meta name="description" content="${escapeHtml(page.description)}" />
     <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" />
     <meta name="theme-color" content="#0f6b3d" />
-    <meta name="author" content="${escapeHtml(config.siteName || "JobFaso")}" />
+    <meta name="author" content="${escapeHtml(config.siteName || "Emplois Burkina")}" />
     <link rel="canonical" href="${escapeHtml(canonical)}" />
     <link rel="alternate" hreflang="fr-BF" href="${escapeHtml(canonical)}" />
     <link rel="alternate" hreflang="x-default" href="${escapeHtml(canonical)}" />
-    <link rel="alternate" type="application/rss+xml" title="${escapeHtml(config.siteName || "JobFaso")} RSS" href="${escapeHtml(absolute(config, "feed.xml"))}" />
-    <link rel="alternate" type="application/feed+json" title="${escapeHtml(config.siteName || "JobFaso")} JSON Feed" href="${escapeHtml(absolute(config, "feed.json"))}" />
+    <link rel="alternate" type="application/rss+xml" title="${escapeHtml(config.siteName || "Emplois Burkina")} RSS" href="${escapeHtml(absolute(config, "feed.xml"))}" />
+    <link rel="alternate" type="application/feed+json" title="${escapeHtml(config.siteName || "Emplois Burkina")} JSON Feed" href="${escapeHtml(absolute(config, "feed.json"))}" />
     <link rel="manifest" href="../../site.webmanifest" />
     <meta property="og:title" content="${escapeHtml(page.title)}" />
     <meta property="og:description" content="${escapeHtml(page.description)}" />
     <meta property="og:url" content="${escapeHtml(canonical)}" />
     <meta property="og:type" content="${escapeHtml(page.ogType || "website")}" />
     <meta property="og:locale" content="fr_BF" />
-    <meta property="og:site_name" content="${escapeHtml(config.siteName || "JobFaso")}" />
+    <meta property="og:site_name" content="${escapeHtml(config.siteName || "Emplois Burkina")}" />
     <meta property="og:image" content="${escapeHtml(seoImage(config))}" />
-    <meta property="og:image:alt" content="${escapeHtml(config.siteName || "JobFaso")} - Offres d'emploi et recrutement au Burkina Faso" />
+    <meta property="og:image:alt" content="${escapeHtml(config.siteName || "Emplois Burkina")} - Offres d'emploi et recrutement au Burkina Faso" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${escapeHtml(page.title)}" />
     <meta name="twitter:description" content="${escapeHtml(page.description)}" />
@@ -388,9 +388,9 @@ function layout(config, page) {
   </head>
   <body>
     <header class="topbar">
-      <a class="brand" href="../../index.html" aria-label="Accueil JobFaso">
-        <span class="brand-mark">JF</span>
-        <span><strong>JobFaso</strong><small>Emploi Burkina</small></span>
+      <a class="brand" href="../../index.html" aria-label="Accueil Emplois Burkina">
+        <span class="brand-mark">EB</span>
+        <span><strong>Emplois Burkina</strong><small>Emploi Burkina</small></span>
       </a>
       <button class="menu-button" type="button" aria-expanded="false" aria-controls="mainNav">Menu</button>
       <nav class="nav" id="mainNav" aria-label="Navigation principale">
@@ -403,7 +403,7 @@ function layout(config, page) {
     </header>
     ${page.body}
     <footer class="footer">
-      <strong>JobFaso</strong>
+      <strong>Emplois Burkina</strong>
       <span><a href="../../privacy.html">Confidentialite</a> - <a href="../../terms.html">Mentions legales</a></span>
     </footer>
     <script src="../../app.js"></script>
@@ -482,7 +482,7 @@ function keywordStructuredData(config, keyword, path, jobs) {
       "@context": "https://schema.org",
       "@type": "CollectionPage",
       name: `Emploi ${keyword} au Burkina Faso`,
-      description: `Offres, missions et opportunites ${keyword} au Burkina Faso sur JobFaso.`,
+      description: `Offres, missions et opportunites ${keyword} au Burkina Faso sur Emplois Burkina.`,
       url: absolute(config, path),
     },
     {
@@ -505,7 +505,7 @@ function keywordPageBody(keyword, jobs) {
     <section class="page-hero compact listing-hero">
       <p class="eyebrow">Recherche metier</p>
       <h1>Emploi ${escapeHtml(keyword)} au Burkina Faso</h1>
-      <p class="lead">Retrouvez les offres ${escapeHtml(keyword)}, les opportunites proches et les sources verifiees sur JobFaso. ${escapeHtml(aliasesText)}</p>
+      <p class="lead">Retrouvez les offres ${escapeHtml(keyword)}, les opportunites proches et les sources verifiees sur Emplois Burkina. ${escapeHtml(aliasesText)}</p>
     </section>
     <section class="section content-with-rail">
       <div class="content-main">
@@ -582,11 +582,11 @@ function jobStructuredData(config, job, path) {
     "@type": "JobPosting",
     title: stripHtml(job.title),
     description: stripHtml(
-      `${job.title}. Opportunite detectee par JobFaso. Verifiez les details et postulez depuis la source officielle.`
+      `${job.title}. Opportunite detectee par Emplois Burkina. Verifiez les details et postulez depuis la source officielle.`
     ),
     identifier: {
       "@type": "PropertyValue",
-      name: job.sourceName || "JobFaso",
+      name: job.sourceName || "Emplois Burkina",
       value: job.id,
     },
     datePosted: job.openingDate || datePosted,
@@ -657,8 +657,8 @@ async function main() {
     const similarJobs = relatedJobs(job, jobs);
     urls.push(path);
     await writePage(config, path, {
-      title: `${job.title} - ${job.city || "Burkina Faso"} | JobFaso`,
-      description: `${job.title} chez ${job.company || job.sourceName || "une organisation"} au ${job.city || "Burkina Faso"}. Consultez la source officielle et recevez les alertes JobFaso.`,
+      title: `${job.title} - ${job.city || "Burkina Faso"} | Emplois Burkina`,
+      description: `${job.title} chez ${job.company || job.sourceName || "une organisation"} au ${job.city || "Burkina Faso"}. Consultez la source officielle et recevez les alertes Emplois Burkina.`,
       structuredData: jobStructuredData(config, job, path),
       ogType: "article",
       body: `<main>
@@ -673,7 +673,7 @@ async function main() {
         </section>
         <section class="section content-with-rail">
           <article class="content-main article-body">
-            <p class="moderation-note">Cette fiche resume une opportunite reperee par JobFaso. Verifiez toujours la source officielle avant de postuler.</p>
+            <p class="moderation-note">Cette fiche resume une opportunite reperee par Emplois Burkina. Verifiez toujours la source officielle avant de postuler.</p>
             ${timeline(job)}
             <dl class="detail-list">
               <div><dt>Organisation</dt><dd>${escapeHtml(job.company || job.sourceName || "A verifier")}</dd></div>
@@ -723,12 +723,12 @@ async function main() {
     const categoryJobs = jobs.filter((job) => (job.category || "Autre") === category);
     const guide = categoryGuides[category] || {
       title: `Offres ${category} au Burkina Faso`,
-      intro: `Retrouvez les opportunites ${category} suivies par JobFaso.`,
+      intro: `Retrouvez les opportunites ${category} suivies par Emplois Burkina.`,
     };
     const path = `pages/categories/${slugify(category)}.html`;
     urls.push(path);
     await writePage(config, path, {
-      title: `${guide.title} | JobFaso`,
+      title: `${guide.title} | Emplois Burkina`,
       description: `${guide.intro} Alertes WhatsApp, sources verifiees et opportunites recentes.`,
       structuredData: {
         "@context": "https://schema.org",
@@ -758,8 +758,8 @@ async function main() {
     const path = `pages/villes/${slugify(city)}.html`;
     urls.push(path);
     await writePage(config, path, {
-      title: `Emploi ${city} | JobFaso`,
-      description: `Offres d'emploi, concours, stages et missions a ${city}. Recevez les alertes JobFaso sur WhatsApp.`,
+      title: `Emploi ${city} | Emplois Burkina`,
+      description: `Offres d'emploi, concours, stages et missions a ${city}. Recevez les alertes Emplois Burkina sur WhatsApp.`,
       structuredData: {
         "@context": "https://schema.org",
         "@type": "CollectionPage",
@@ -796,7 +796,7 @@ async function main() {
     const path = `pages/recherche/${slugify(keyword)}.html`;
     urls.push(path);
     await writePage(config, path, {
-      title: `Emploi ${keyword} au Burkina Faso | JobFaso`,
+      title: `Emploi ${keyword} au Burkina Faso | Emplois Burkina`,
       description: `Offres ${keyword}, recherches proches et opportunites verifiees au Burkina Faso. ${aliases.length ? `Mots lies : ${aliases.join(", ")}.` : ""}`,
       structuredData: keywordStructuredData(config, keyword, path, keywordJobs),
       body: keywordPageBody(keyword, keywordJobs),
@@ -807,14 +807,14 @@ async function main() {
     const path = `pages/guides/${guide.slug}.html`;
     urls.push(path);
     await writePage(config, path, {
-      title: `${guide.title} | JobFaso`,
+      title: `${guide.title} | Emplois Burkina`,
       description: guide.description,
       structuredData: {
         "@context": "https://schema.org",
         "@type": "Article",
         headline: guide.title,
         description: guide.description,
-        author: { "@type": "Organization", name: "JobFaso" },
+        author: { "@type": "Organization", name: "Emplois Burkina" },
       },
       body: `<main>
         <section class="page-hero compact guide-hero">
@@ -859,15 +859,15 @@ ${urls
   );
   await writeFile(
     LLM_FILE,
-    `# ${config.siteName || "JobFaso"}\n\n${config.description}\n\n## Core pages\n- ${absolute(config, "index.html")}\n- ${absolute(config, "jobs.html")}\n- ${absolute(config, "conseils.html")}\n- ${absolute(config, "grille-tarifaire.html")}\n- ${absolute(config, "contacts.html")}\n\n## Fresh job feeds\n- ${absolute(config, "sitemap.xml")}\n- ${absolute(config, "data/curated-jobs.json")}\n- ${absolute(config, "feed.xml")}\n- ${absolute(config, "feed.json")}\n\nJobFaso aggregates public job opportunities, concours, internships and local missions in Burkina Faso. Candidates should always verify official sources before applying.\n`,
+    `# ${config.siteName || "Emplois Burkina"}\n\n${config.description}\n\n## Core pages\n- ${absolute(config, "index.html")}\n- ${absolute(config, "jobs.html")}\n- ${absolute(config, "conseils.html")}\n- ${absolute(config, "grille-tarifaire.html")}\n- ${absolute(config, "contacts.html")}\n\n## Fresh job feeds\n- ${absolute(config, "sitemap.xml")}\n- ${absolute(config, "data/curated-jobs.json")}\n- ${absolute(config, "feed.xml")}\n- ${absolute(config, "feed.json")}\n\nEmplois Burkina aggregates public job opportunities, concours, internships and local missions in Burkina Faso. Candidates should always verify official sources before applying.\n`,
     "utf8"
   );
   await writeFile(
     MANIFEST_FILE,
     `${JSON.stringify(
       {
-        name: `${config.siteName || "JobFaso"} - Emploi Burkina Faso`,
-        short_name: config.siteName || "JobFaso",
+        name: `${config.siteName || "Emplois Burkina"} - Emploi Burkina Faso`,
+        short_name: config.siteName || "Emplois Burkina",
         description: config.description,
         start_url: "/",
         scope: "/",
@@ -910,7 +910,7 @@ ${urls
     `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
   <channel>
-    <title>${escapeHtml(config.siteName || "JobFaso")}</title>
+    <title>${escapeHtml(config.siteName || "Emplois Burkina")}</title>
     <link>${escapeHtml(config.baseUrl)}</link>
     <description>${escapeHtml(config.description || "Offres d'emploi et recrutement au Burkina Faso.")}</description>
     <language>fr-BF</language>
@@ -927,12 +927,12 @@ ${rssItems}
     `${JSON.stringify(
       {
         version: "https://jsonfeed.org/version/1.1",
-        title: config.siteName || "JobFaso",
+        title: config.siteName || "Emplois Burkina",
         home_page_url: config.baseUrl,
         feed_url: absolute(config, "feed.json"),
         description: config.description || "Offres d'emploi, concours, stages et missions au Burkina Faso.",
         language: "fr-BF",
-        authors: [{ name: config.siteName || "JobFaso" }],
+        authors: [{ name: config.siteName || "Emplois Burkina" }],
         items: jobs.slice(0, 50).map((job) => ({
           id: absolute(config, generatedJobPath(job)),
           url: absolute(config, generatedJobPath(job)),
@@ -951,7 +951,7 @@ ${rssItems}
 
   await writeFile(
     SECURITY_FILE,
-    `Contact: mailto:${config.contactEmail || "contact@jobfaso.com"}
+    `Contact: mailto:${config.contactEmail || "contact@emplois-burkina.com"}
 Expires: ${new Date(Date.now() + 180 * 24 * 60 * 60 * 1000).toISOString()}
 Preferred-Languages: fr, en
 Canonical: ${absolute(config, ".well-known/security.txt")}

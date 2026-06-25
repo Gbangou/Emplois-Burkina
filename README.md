@@ -1,6 +1,6 @@
-# JobFaso
+# Emplois Burkina
 
-Web app locale de JobFaso : portail emploi, concours, metiers terrain,
+Web app locale de Emplois Burkina : portail emploi, concours, metiers terrain,
 automation de collecte, moderation SQLite, SEO, analytics et monetisation
 recruteurs/sponsors.
 
@@ -14,7 +14,7 @@ Mode dynamique recommande :
 npm start
 ```
 
-Puis ouvrir `http://127.0.0.1:8088`. Configure `JOBFASO_ADMIN_TOKEN`
+Puis ouvrir `http://127.0.0.1:8088`. Configure `EMPLOIS_BURKINA_ADMIN_TOKEN`
 en production pour activer l'admin serveur.
 
 Synchroniser la base locale runtime :
@@ -43,18 +43,18 @@ curl http://127.0.0.1:8088/api/platform
 - Formulaire pour publier une offre ou un profil professionnel.
 - Proposition premium simple pour commencer a vendre.
 - Documentation produit, architecture, monetisation et politique de collecte.
-- Script de collecte extensible : `scripts/jobfaso-scraper.mjs`.
+- Script de collecte extensible : `scripts/emplois-burkina-scraper.mjs`.
 - Schema PostgreSQL de depart : `database/schema.sql`.
-- Base SQLite locale : `data/runtime/jobfaso.sqlite` generee hors Git.
+- Base SQLite locale : `data/runtime/emplois-burkina.sqlite` generee hors Git.
 - Pages publiques pretes pour confiance et monetisation :
   `annonceurs.html`, `privacy.html`, `terms.html`, `contact.html`.
 - Mini back-office local pour le pre-lancement : `admin.html`.
 - API dynamique : `/api/jobs`, `/api/platform`, `/api/db/status`.
-- Base locale runtime : `data/runtime/local-db.json` et `data/runtime/jobfaso.sqlite` generees hors Git.
+- Base locale runtime : `data/runtime/local-db.json` et `data/runtime/emplois-burkina.sqlite` generees hors Git.
 
 ## Vision concrete
 
-JobFaso commence comme un site web mobile-first, pas comme une application
+Emplois Burkina commence comme un site web mobile-first, pas comme une application
 mobile native. WhatsApp sert de canal d'acquisition et de vente. L'application
 mobile vient plus tard, quand le produit a deja une audience et du revenu.
 
@@ -75,7 +75,7 @@ Sources web autorisees
 Le collecteur utilise uniquement Node.js natif.
 
 ```bash
-node scripts/jobfaso-scraper.mjs
+node scripts/emplois-burkina-scraper.mjs
 ```
 
 Il lit `data/sources.json` et ecrit les resultats dans `data/raw-items.json`.
@@ -133,17 +133,17 @@ npm run dates:queue
 Variables utiles :
 
 ```bash
-JOBFASO_AUTOMATION_INTERVAL_MINUTES=360
-JOBFASO_AUTOMATION_RUN_ON_START=false
-JOBFASO_AUTOMATION_MAX_AGE_HOURS=30
+EMPLOIS_BURKINA_AUTOMATION_INTERVAL_MINUTES=360
+EMPLOIS_BURKINA_AUTOMATION_RUN_ON_START=false
+EMPLOIS_BURKINA_AUTOMATION_MAX_AGE_HOURS=30
 ```
 
 Variables utiles pour la collecte :
 
 ```bash
-JOBFASO_CRAWLER_AGENT="JobFasoBot/0.1 (+contact: contact@jobfaso.com)"
-JOBFASO_DETAIL_LIMIT=18
-JOBFASO_REQUEST_DELAY_MS=350
+EMPLOIS_BURKINA_CRAWLER_AGENT="Emplois BurkinaBot/0.1 (+contact: contact@emplois-burkina.com)"
+EMPLOIS_BURKINA_DETAIL_LIMIT=18
+EMPLOIS_BURKINA_REQUEST_DELAY_MS=350
 ```
 
 Les sources qui bloquent la collecte ou imposent des limites sont conservees
@@ -181,7 +181,7 @@ Fichiers publics importants :
 - `indexnow-urls.txt` pour la soumission rapide des URLs.
 
 Apres deploiement, ajoute le domaine dans Google Search Console et Bing
-Webmaster Tools, puis soumets `https://jobfaso.com/sitemap.xml`.
+Webmaster Tools, puis soumets `https://emplois-burkina.com/sitemap.xml`.
 
 Pour IndexNow :
 
@@ -231,6 +231,6 @@ Le script cree `indexnow-key.txt` localement et soumet les URLs de
 - Limite de taille des payloads.
 - Rate limiting par IP.
 - Verification d'origine sur les POST.
-- Admin API protegee par `JOBFASO_ADMIN_TOKEN`.
+- Admin API protegee par `EMPLOIS_BURKINA_ADMIN_TOKEN`.
 - Donnees runtime ignorees par Git : `data/runtime/`.
 - Aucun secret ne doit etre commite.

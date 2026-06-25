@@ -6,14 +6,14 @@ const SOURCES_FILE = new URL("data/sources.json", ROOT);
 const OUTPUT_FILE = new URL("data/international-feeds.json", ROOT);
 const REPORT_FILE = new URL("data/runtime/international-feeds-report.json", ROOT);
 const ROBOTS_CACHE = new Map();
-const USER_AGENT = process.env.JOBFASO_CRAWLER_AGENT || "JobFasoBot/0.1 (+contact: contact@jobfaso.com)";
-const MAX_JOBS_PER_SOURCE = Math.max(3, Number(process.env.JOBFASO_INTERNATIONAL_JOB_LIMIT || 12));
-const DETAIL_FETCH_LIMIT = Math.max(1, Number(process.env.JOBFASO_INTERNATIONAL_DETAIL_LIMIT || MAX_JOBS_PER_SOURCE));
-const REQUEST_DELAY_MS = Math.max(120, Number(process.env.JOBFASO_INTERNATIONAL_DELAY_MS || 260));
-const FETCH_TIMEOUT_MS = Math.max(10000, Number(process.env.JOBFASO_INTERNATIONAL_TIMEOUT_MS || 18000));
-const FETCH_RETRIES = Math.max(1, Number(process.env.JOBFASO_INTERNATIONAL_RETRIES || 2));
+const USER_AGENT = process.env.EMPLOIS_BURKINA_CRAWLER_AGENT || "Emplois BurkinaBot/0.1 (+contact: contact@emplois-burkina.com)";
+const MAX_JOBS_PER_SOURCE = Math.max(3, Number(process.env.EMPLOIS_BURKINA_INTERNATIONAL_JOB_LIMIT || 12));
+const DETAIL_FETCH_LIMIT = Math.max(1, Number(process.env.EMPLOIS_BURKINA_INTERNATIONAL_DETAIL_LIMIT || MAX_JOBS_PER_SOURCE));
+const REQUEST_DELAY_MS = Math.max(120, Number(process.env.EMPLOIS_BURKINA_INTERNATIONAL_DELAY_MS || 260));
+const FETCH_TIMEOUT_MS = Math.max(10000, Number(process.env.EMPLOIS_BURKINA_INTERNATIONAL_TIMEOUT_MS || 18000));
+const FETCH_RETRIES = Math.max(1, Number(process.env.EMPLOIS_BURKINA_INTERNATIONAL_RETRIES || 2));
 const SOURCE_FILTER = new Set(
-  String(process.env.JOBFASO_SOURCE_IDS || "")
+  String(process.env.EMPLOIS_BURKINA_SOURCE_IDS || "")
     .split(",")
     .map((value) => normalize(value))
     .filter(Boolean),

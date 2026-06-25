@@ -1,8 +1,8 @@
-# Automatisation reseaux sociaux JobFaso
+# Automatisation reseaux sociaux Emplois Burkina
 
 ## Objectif
 
-Publier regulierement les offres JobFaso vers une page Facebook ou un outil
+Publier regulierement les offres Emplois Burkina vers une page Facebook ou un outil
 d'automatisation, sans faire payer les chercheurs d'emploi et sans exposer les
 secrets dans le code.
 
@@ -16,7 +16,7 @@ secrets dans le code.
 ## Variables d'environnement
 
 ```env
-JOBFASO_BASE_URL=https://jobfaso.com
+EMPLOIS_BURKINA_BASE_URL=https://emplois-burkina.com
 FACEBOOK_PAGE_ID=
 FACEBOOK_PAGE_ACCESS_TOKEN=
 SOCIAL_WEBHOOK_URL=
@@ -78,7 +78,7 @@ page Facebook. En pratique :
   Business Platform ;
 - pour un canal ou une communaute, utiliser un outil tiers/automation autorise
   ou une action humaine assistee ;
-- pour le partage simple, JobFaso prepare deja les textes et URLs tracees.
+- pour le partage simple, Emplois Burkina prepare deja les textes et URLs tracees.
 
 Source officielle utile :
 
@@ -101,5 +101,5 @@ Commencer par 1 a 3 publications par jour, avec :
 
 - Les fichiers `data/social/*.json` ne sont pas servis publiquement par `server.mjs`.
 - La publication en direct demande `SOCIAL_PUBLISH_LIVE=true` ou `--live`.
-- L'admin serveur doit rester protege par `JOBFASO_ADMIN_TOKEN`.
+- L'admin serveur doit rester protege par `EMPLOIS_BURKINA_ADMIN_TOKEN`.
 - Garder une frequence raisonnable : 1 a 3 posts par jour au lancement.

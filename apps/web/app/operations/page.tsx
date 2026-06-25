@@ -1,0 +1,75 @@
+import { ArrowLeft, Bot, Gauge, ShieldCheck } from "lucide-react";
+import { AutomationCommandCenter } from "@/components/automation-command-center";
+import { ModerationBoard } from "@/components/moderation-board";
+import { ScrapingCommandCenter } from "@/components/scraping-command-center";
+import { getAutomationOverview, getModerationQueue, getScrapingOverview } from "@/lib/data";
+
+export default async function OperationsPage() {
+  const [automation, scraping, moderationQueue] = await Promise.all([
+    getAutomationOverview(),
+    getScrapingOverview(),
+    getModerationQueue(16)
+  ]);
+
+  return (
+    <main>
+      <header className="topbar">
+        <a className="brand" href="/">
+          <span>EB</span>
+          <strong>Emplois Burkina</strong>
+        </a>
+        <nav>
+          <a href="/">
+            <ArrowLeft size={15} />
+            Accueil
+          </a>
+          <a href="/jobs">Offres</a>
+          <a href="/annonceurs">Recruteurs</a>
+        </nav>
+      </header>
+
+      <section className="ops-hero">
+        <div>
+          <p className="eyebrow">Architecture data</p>
+          <h1>Scraping robuste, moderation claire, sources sous controle.</h1>
+          <p>
+            Cette console transforme la collecte en systeme pilotable: volume brut, file de revue,
+            confiance, deadlines et actions prioritaires par source.
+          </p>
+        </div>
+        <aside>
+          <span>
+            <Bot size={18} />
+            Pipeline actuel
+          </span>
+          <strong>{scraping.healthAverage}%</strong>
+          <small>Sante moyenne sur {scraping.sources} sources referencees</small>
+        </aside>
+      </section>
+
+      <section className="section ops-principles">
+        <article>
+          <Gauge />
+          <strong>Mesurer avant d'automatiser</strong>
+          <span>Chaque source a un score base sur volume, confiance, deadlines et mode de collecte.</span>
+        </article>
+        <article>
+          <ShieldCheck />
+          <strong>Moderation par defaut</strong>
+          <span>Les offres douteuses restent en revue avant distribution publique ou WhatsApp.</span>
+        </article>
+        <article>
+          <Bot />
+          <strong>Scraping responsable</strong>
+          <span>Priorite aux sources autorisees, partenaires, delais raisonnables et attribution claire.</span>
+        </article>
+      </section>
+
+      <AutomationCommandCenter overview={automation} />
+
+      <ScrapingCommandCenter overview={scraping} />
+
+      <ModerationBoard initialJobs={moderationQueue} />
+    </main>
+  );
+}

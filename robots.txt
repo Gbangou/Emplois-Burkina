@@ -5,5 +5,5 @@ Disallow: /api/
 Disallow: /data/runtime/
 Disallow: /data/social/
 
-Sitemap: https://jobfaso.com/sitemap.xml
-Host: jobfaso.com
+Sitemap: https://emplois-burkina.com/sitemap.xml
+Host: emplois-burkina.com

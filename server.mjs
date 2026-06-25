@@ -10,18 +10,21 @@ const ROOT = fileURLToPath(new URL(".", import.meta.url));
 const ROOT_DIR = resolve(ROOT);
 const DATA_DIR = join(ROOT, "data", "runtime");
 const LEADS_FILE = join(DATA_DIR, "leads.json");
+const ALERT_SEGMENTS_FILE = join(DATA_DIR, "alert-segments.json");
 const EVENTS_FILE = join(DATA_DIR, "events.json");
 const LOCAL_DB_FILE = join(DATA_DIR, "local-db.json");
-const SQLITE_DB_FILE = join(DATA_DIR, "jobfaso.sqlite");
+const SQLITE_DB_FILE = join(DATA_DIR, "emplois-burkina.sqlite");
 const AUTOMATION_STATE_FILE = join(DATA_DIR, "automation-state.json");
 const AUTOMATION_REPORT_FILE = join(DATA_DIR, "automation-report.json");
 const AUTOMATION_QUALITY_FILE = join(DATA_DIR, "automation-quality.json");
 const OFFER_QUALITY_REPORT_FILE = join(DATA_DIR, "offer-quality-report.json");
 const DATE_REVIEW_QUEUE_FILE = join(DATA_DIR, "date-review-queue.json");
 const DATE_OVERRIDES_FILE = join(DATA_DIR, "date-overrides.json");
+const PRODUCT_MODULES_FILE = join(ROOT, "data", "product-modules.json");
+const PRODUCT_BENCHMARK_FILE = join(ROOT, "data", "product-benchmark.json");
 const PORT = Number(process.env.PORT || 8088);
 const NODE_ENV = process.env.NODE_ENV || "development";
-const ADMIN_TOKEN = process.env.JOBFASO_ADMIN_TOKEN || process.env.ADMIN_TOKEN || "";
+const ADMIN_TOKEN = process.env.EMPLOIS_BURKINA_ADMIN_TOKEN || process.env.ADMIN_TOKEN || "";
 const BODY_LIMIT = 64 * 1024;
 
 const publicPaths = new Set([
@@ -43,6 +46,7 @@ const publicPaths = new Set([
   "/feed.xml",
   "/feed.json",
   "/site.webmanifest",
+  "/sw.js",
   "/indexnow-urls.txt",
   "/indexnow-key.txt",
   "/.well-known/security.txt",
@@ -191,7 +195,7 @@ function isPublicStaticPath(pathname) {
   if (publicDataPaths.has(pathname)) return true;
   if (pathname.startsWith("/pages/") && pathname.endsWith(".html")) return true;
   if (pathname.startsWith("/assets/")) return true;
-  if (pathname === "/app.js" || pathname === "/styles.css") return true;
+  if (pathname === "/app.js" || pathname === "/styles.css" || pathname === "/sw.js") return true;
   return false;
 }
 
@@ -342,14 +346,26 @@ function summarizeJobs(jobs) {
   };
 }
 
+function summarizeModules(modules = []) {
+  return {
+    total: modules.length,
+    byStatus: Object.entries(countBy(modules, (module) => module.status)).sort((a, b) => b[1] - a[1]),
+    byPriority: Object.entries(countBy(modules, (module) => module.priority)).sort((a, b) => b[1] - a[1]),
+    criticalOpen: modules.filter((module) => module.priority === "critical" && module.status !== "ready").length,
+    inProgress: modules.filter((module) => module.status === "in_progress").length,
+    planned: modules.filter((module) => module.status === "planned").length,
+  };
+}
+
 async function buildLocalDb() {
-  const [config, jobs, sources, rateCards, rawItems, leads, events] = await Promise.all([
+  const [config, jobs, sources, rateCards, rawItems, leads, alertSegments, events] = await Promise.all([
     readJson(join(ROOT, "data", "site-config.json"), {}),
     readJson(join(ROOT, "data", "curated-jobs.json"), []),
     readJson(join(ROOT, "data", "sources.json"), []),
     readJson(join(ROOT, "data", "rate-card.json"), []),
     readJson(join(ROOT, "data", "raw-items.json"), []),
     readJson(LEADS_FILE, []),
+    readJson(ALERT_SEGMENTS_FILE, []),
     readJson(EVENTS_FILE, []),
   ]);
   const stats = summarizeJobs(jobs);
@@ -362,6 +378,7 @@ async function buildLocalDb() {
     rateCards,
     rawItemsCount: rawItems.length,
     leads,
+    alertSegments,
     events,
     stats,
     monetization: {
@@ -458,14 +475,14 @@ async function sqliteStatus() {
     const info = await stat(SQLITE_DB_FILE);
     return {
       enabled: true,
-      path: "data/runtime/jobfaso.sqlite",
+      path: "data/runtime/emplois-burkina.sqlite",
       bytes: info.size,
       updatedAt: info.mtime.toISOString(),
     };
   } catch {
     return {
       enabled: false,
-      path: "data/runtime/jobfaso.sqlite",
+      path: "data/runtime/emplois-burkina.sqlite",
       bytes: 0,
       updatedAt: "",
     };
@@ -631,6 +648,71 @@ function validateLead(payload) {
   };
 }
 
+function normalizeSegmentValue(value) {
+  return cleanText(value, 160).toLowerCase();
+}
+
+function alertSegmentFromLead(lead) {
+  if (lead.kind !== "alert") return null;
+  const data = lead.data || {};
+  const criteria = {
+    query: normalizeSegmentValue(data.searchQuery || data.interest),
+    city: normalizeSegmentValue(data.city),
+    type: normalizeSegmentValue(data.interest),
+    source: normalizeSegmentValue(data.source),
+  };
+  const keyParts = [criteria.query || "*", criteria.city || "*", criteria.type || "*", criteria.source || "*"];
+  const id = createHash("sha256").update(keyParts.join("|")).digest("hex").slice(0, 16);
+  const label = cleanText(data.criteriaLabel || [data.searchQuery, data.city, data.interest, data.source].filter(Boolean).join(", "), 240) || "toutes les offres actives";
+
+  return {
+    id,
+    label,
+    criteria,
+    status: "active",
+  };
+}
+
+async function upsertAlertSegment(lead) {
+  const segmentSeed = alertSegmentFromLead(lead);
+  if (!segmentSeed) return null;
+
+  const segments = await readJson(ALERT_SEGMENTS_FILE, []);
+  const existingIndex = segments.findIndex((segment) => segment.id === segmentSeed.id);
+  const existing = existingIndex >= 0 ? segments[existingIndex] : {};
+  const latestLeadIds = [lead.id, ...(existing.latestLeadIds || []).filter((id) => id !== lead.id)].slice(0, 25);
+  const next = {
+    ...existing,
+    ...segmentSeed,
+    subscribers: Number(existing.subscribers || 0) + 1,
+    latestLeadIds,
+    lastLeadAt: lead.createdAt,
+    updatedAt: new Date().toISOString(),
+    createdAt: existing.createdAt || lead.createdAt,
+  };
+
+  if (existingIndex >= 0) segments[existingIndex] = next;
+  else segments.unshift(next);
+
+  await writeJson(
+    ALERT_SEGMENTS_FILE,
+    segments
+      .sort((a, b) => new Date(b.updatedAt || 0) - new Date(a.updatedAt || 0))
+      .slice(0, 1000),
+  );
+  return next;
+}
+
+function summarizeAlertSegments(segments = []) {
+  const active = segments.filter((segment) => segment.status !== "paused");
+  return {
+    total: segments.length,
+    active: active.length,
+    subscribers: segments.reduce((sum, segment) => sum + (Number(segment.subscribers) || 0), 0),
+    top: [...segments].sort((a, b) => (b.subscribers || 0) - (a.subscribers || 0)).slice(0, 8),
+  };
+}
+
 function sanitizeEventPayload(payload = {}) {
   const metadata = payload.metadata && typeof payload.metadata === "object" ? payload.metadata : {};
   const cleanMetadata = {};
@@ -649,7 +731,7 @@ function sanitizeEventPayload(payload = {}) {
 }
 
 function anonymizedHash(value = "") {
-  return createHash("sha256").update(`${process.env.JOBFASO_EVENT_SALT || "jobfaso"}:${value}`).digest("hex").slice(0, 20);
+  return createHash("sha256").update(`${process.env.EMPLOIS_BURKINA_EVENT_SALT || "emplois-burkina"}:${value}`).digest("hex").slice(0, 20);
 }
 
 function summarizeEvents(events = []) {
@@ -736,7 +818,7 @@ async function handleApi(req, res, url) {
   }
 
   if (url.pathname === "/api/platform" && req.method === "GET") {
-    const db = await readLocalDb();
+    const [db, benchmark] = await Promise.all([readLocalDb(), readJson(PRODUCT_BENCHMARK_FILE, [])]);
     const publicJobs = db.jobs.filter((job) => isPublicActiveJob(job));
     const stats = summarizeJobs(publicJobs);
     const featuredJobs = publicJobs
@@ -751,9 +833,30 @@ async function handleApi(req, res, url) {
       sources: stats.sourceCounts,
       categories: stats.categories,
       cities: stats.cities,
+      benchmark,
       rateCards: db.rateCards,
       monetization: db.monetization,
       generatedAt: db.generatedAt,
+    });
+    return;
+  }
+
+  if (url.pathname === "/api/product/benchmark" && req.method === "GET") {
+    const benchmark = await readJson(PRODUCT_BENCHMARK_FILE, []);
+    sendJson(res, 200, {
+      generatedAt: new Date().toISOString(),
+      total: benchmark.length,
+      benchmark,
+    });
+    return;
+  }
+
+  if (url.pathname === "/api/product/modules" && req.method === "GET") {
+    const modules = await readJson(PRODUCT_MODULES_FILE, []);
+    sendJson(res, 200, {
+      generatedAt: new Date().toISOString(),
+      summary: summarizeModules(modules),
+      modules,
     });
     return;
   }
@@ -869,7 +972,12 @@ async function handleApi(req, res, url) {
       const leads = await readJson(LEADS_FILE, []);
       leads.unshift(validation.lead);
       await writeJson(LEADS_FILE, leads.slice(0, 5000));
-      await appendEvent("lead_created", { kind: validation.lead.kind, valueFcfa: validation.lead.valueFcfa });
+      const alertSegment = await upsertAlertSegment(validation.lead);
+      await appendEvent("lead_created", {
+        kind: validation.lead.kind,
+        valueFcfa: validation.lead.valueFcfa,
+        alertSegmentId: alertSegment?.id || "",
+      });
       await syncLocalDb("lead_created");
       await syncSqliteDirect().catch(() => null);
       sendJson(res, 201, { ok: true, id: validation.lead.id });
@@ -917,6 +1025,13 @@ async function handleApi(req, res, url) {
     return;
   }
 
+  if (url.pathname === "/api/admin/alerts/segments" && req.method === "GET") {
+    if (!requireAdmin(req, res)) return;
+    const segments = await readJson(ALERT_SEGMENTS_FILE, []);
+    sendJson(res, 200, { summary: summarizeAlertSegments(segments), segments });
+    return;
+  }
+
   if (url.pathname === "/api/admin/events" && req.method === "GET") {
     if (!requireAdmin(req, res)) return;
     const events = await readJson(EVENTS_FILE, []);
@@ -928,6 +1043,7 @@ async function handleApi(req, res, url) {
     if (!requireAdmin(req, res)) return;
     const events = await readJson(EVENTS_FILE, []);
     const leads = await readJson(LEADS_FILE, []);
+    const alertSegments = await readJson(ALERT_SEGMENTS_FILE, []);
     const pipelineValue = leads.reduce((sum, lead) => sum + (Number(lead.valueFcfa) || 0), 0);
     sendJson(res, 200, {
       events: summarizeEvents(events),
@@ -938,6 +1054,7 @@ async function handleApi(req, res, url) {
         pipelineValue,
         byKind: Object.entries(countBy(leads, (lead) => lead.kind)).sort((a, b) => b[1] - a[1]),
       },
+      alertSegments: summarizeAlertSegments(alertSegments),
     });
     return;
   }
@@ -1242,11 +1359,19 @@ async function serveStatic(req, res, url) {
     if (!info.isFile()) throw new Error("Not a file");
 
     const ext = extname(filePath).toLowerCase();
-    const cacheable = !publicPaths.has(url.pathname) && [".css", ".js", ".png", ".jpg", ".jpeg", ".webp", ".svg"].includes(ext);
+    const cacheable =
+      !publicPaths.has(url.pathname) &&
+      [".css", ".js", ".png", ".jpg", ".jpeg", ".webp", ".svg"].includes(ext);
+    const cacheControl =
+      url.pathname === "/sw.js"
+        ? "no-cache"
+        : cacheable
+          ? "public, max-age=86400"
+          : "no-cache";
     res.writeHead(200, {
       ...securityHeaders(),
       "Content-Type": contentTypes[ext] || "application/octet-stream",
-      "Cache-Control": cacheable ? "public, max-age=86400" : "no-cache",
+      "Cache-Control": cacheControl,
     });
     createReadStream(filePath).pipe(res);
   } catch {
@@ -1281,8 +1406,8 @@ const server = createServer(async (req, res) => {
 });
 
 server.listen(PORT, () => {
-  console.log(`JobFaso dynamic server running on http://127.0.0.1:${PORT}`);
+  console.log(`Emplois Burkina dynamic server running on http://127.0.0.1:${PORT}`);
   if (!ADMIN_TOKEN) {
-    console.warn("JOBFASO_ADMIN_TOKEN non configure: les endpoints admin sont desactives.");
+    console.warn("EMPLOIS_BURKINA_ADMIN_TOKEN non configure: les endpoints admin sont desactives.");
   }
 });

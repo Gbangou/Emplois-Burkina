@@ -4,7 +4,7 @@
 
 1. Garder le site statique comme prototype commercial.
 2. Alimenter `data/sources.json` avec les sources prioritaires.
-3. Lancer `node scripts/jobfaso-scraper.mjs` une fois par jour.
+3. Lancer `node scripts/emplois-burkina-scraper.mjs` une fois par jour.
 4. Lancer `node scripts/curate-raw-items.mjs`.
 5. Examiner `data/curated-jobs.json`.
 6. Copier uniquement les offres propres dans le site ou une base.

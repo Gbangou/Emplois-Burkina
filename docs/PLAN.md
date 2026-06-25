@@ -1,8 +1,8 @@
-# Plan concret JobFaso
+# Plan concret Emplois Burkina
 
 ## Decision produit
 
-JobFaso doit commencer comme un site web mobile-first, connecte a WhatsApp.
+Emplois Burkina doit commencer comme un site web mobile-first, connecte a WhatsApp.
 L'application mobile native arrive plus tard, quand l'audience et les revenus
 justifient le cout.
 
@@ -42,7 +42,7 @@ Le systeme complet est donc :
 ### Etape 1 - MVP commercial
 
 - Lancer le site web.
-- Creer un canal WhatsApp "JobFaso Alertes".
+- Creer un canal WhatsApp "Emplois Burkina Alertes".
 - Collecter les inscriptions.
 - Publier les offres manuellement ou semi-automatiquement.
 - Vendre aux recruteurs, sponsors et partenaires formation.
@@ -100,5 +100,5 @@ Objectif : revenus B2B et marketplace.
 ## Regle importante
 
 Ne jamais publier automatiquement une offre inconnue sans moderation. Le vrai
-avantage concurrentiel de JobFaso sera la confiance : offres propres, sources
+avantage concurrentiel de Emplois Burkina sera la confiance : offres propres, sources
 citees, arnaques filtrees, deadlines claires.

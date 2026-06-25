@@ -1,370 +1,394 @@
-# Audit de verification des offres JobFaso
+# Audit de verification des offres Emplois Burkina
 
-Genere le : 2026-06-23T15:01:12.936Z
+Genere le : 2026-06-25T12:23:39.625Z
 
-Score moyen : 66/100
+Score moyen : 42/100
 Statut : needs_work
 
 ## Synthese
 
-- Offres analysees : 28
-- Offres publiables ou publiables avec alerte : 20
-- Offres a verifier avant publication : 4
-- Offres cachees ou expirees : 4
-- Offres expirees : 4
-- Offres avec date de cloture : 24 (86%)
-- Offres sans date de cloture : 4
-- Sources representees : 3
+- Offres analysees : 58
+- Offres publiables ou publiables avec alerte : 16
+- Offres a verifier avant publication : 42
+- Offres cachees ou expirees : 0
+- Offres expirees : 0
+- Offres avec date de cloture : 16 (28%)
+- Offres sans date de cloture : 42
+- Sources representees : 6
 
 ## Points critiques
 
 - closing_date_coverage_below_90_percent
+- too_many_review_required_offers
 
 ## Principaux problemes
 
-- missing_closing_date : 4
-- expired : 4
+- missing_closing_date : 42
 
 ## Alertes a surveiller
 
+- needs_review : 58
+- low_confidence_score : 39
 - city_looks_like_scraped_noise : 1
-- needs_review : 28
 
 ## File de revue prioritaire
 
-### 1. GBioS J-1 GBioS recrute 6 postes 📍 Bénin 📋 CDD Environnement & Climat MEAL (Suivi, Évaluation, Apprentissage)
+### 1. Technico Commercial en Climatisation Haut de Gamme- Ouagadougou
 
-- Score : 37/100
-- Etat public : hidden
-- Source : HumanitaireHub
-- Ville : Benin
-- Cloture : 2026-06-18
-- Problemes : expired
-- Alertes : needs_review
+- Score : 27/100
+- Etat public : review_required
+- Source : Emploiburkina
+- Ville : Ouagadougou
+- Cloture : A verifier
+- Problemes : missing_closing_date
+- Alertes : low_confidence_score, needs_review
 - Action : Verifier la source, corriger les dates ou retirer de la publication.
-- Lien : https://humanitairehub.com/emploi/gbios-recrute-6-postes/
+- Lien : https://www.emploiburkina.com/offre-emploi-burkina-faso/technico-commercial-climatisation-haut-gamme-ouagadougou-82601
 
-### 2. Clinicien - Kaya Regional Office
+### 2. Magazine Keeper Junior (Magasinier) H/F- Bagassi
 
-- Score : 37/100
+- Score : 27/100
+- Etat public : review_required
+- Source : Emploiburkina
+- Ville : Bagassi
+- Cloture : A verifier
+- Problemes : missing_closing_date
+- Alertes : low_confidence_score, needs_review
+- Action : Verifier la source, corriger les dates ou retirer de la publication.
+- Lien : https://www.emploiburkina.com/offre-emploi-burkina-faso/magazine-keeper-junior-magasinier-hf-bagassi-303948
+
+### 3. Chargé(e) d’Opérations et Développement- Ouagadougou
+
+- Score : 27/100
+- Etat public : review_required
+- Source : Emploiburkina
+- Ville : Ouagadougou
+- Cloture : A verifier
+- Problemes : missing_closing_date
+- Alertes : low_confidence_score, needs_review
+- Action : Verifier la source, corriger les dates ou retirer de la publication.
+- Lien : https://www.emploiburkina.com/offre-emploi-burkina-faso/chargee-operations-developpement-ouagadougou-304191
+
+### 4. Directeur Général / Enseignement Supérieur / Telecom- Ouaga
+
+- Score : 27/100
+- Etat public : review_required
+- Source : Emploiburkina
+- Ville : Ouagadougou
+- Cloture : A verifier
+- Problemes : missing_closing_date
+- Alertes : low_confidence_score, needs_review
+- Action : Verifier la source, corriger les dates ou retirer de la publication.
+- Lien : https://www.emploiburkina.com/offre-emploi-burkina-faso/directeur-general-enseignement-superieur-telecom-ouaga-304284
+
+### 5. Blastman H/F - Mogtedo et Boungou
+
+- Score : 27/100
+- Etat public : review_required
+- Source : Emploiburkina
+- Ville : Burkina Faso
+- Cloture : A verifier
+- Problemes : missing_closing_date
+- Alertes : low_confidence_score, needs_review
+- Action : Verifier la source, corriger les dates ou retirer de la publication.
+- Lien : https://www.emploiburkina.com/offre-emploi-burkina-faso/blastman-hf-mogtedo-boungou-303949
+
+### 6. Stagiaire Secretaire Comptable (Stage de pré-emploi) - Ouagadougou
+
+- Score : 27/100
+- Etat public : review_required
+- Source : Emploiburkina
+- Ville : Ouagadougou
+- Cloture : A verifier
+- Problemes : missing_closing_date
+- Alertes : low_confidence_score, needs_review
+- Action : Verifier la source, corriger les dates ou retirer de la publication.
+- Lien : https://www.emploiburkina.com/offre-emploi-burkina-faso/stagiaire-secretaire-comptable-stage-pre-emploi-ouagadougou-304468
+
+### 7. Stagiaire Communication Marketing - Ouagadougou
+
+- Score : 27/100
+- Etat public : review_required
+- Source : Emploiburkina
+- Ville : Ouagadougou
+- Cloture : A verifier
+- Problemes : missing_closing_date
+- Alertes : low_confidence_score, needs_review
+- Action : Verifier la source, corriger les dates ou retirer de la publication.
+- Lien : https://www.emploiburkina.com/offre-emploi-burkina-faso/stagiaire-communication-marketing-ouagadougou-304706
+
+### 8. Stagiaire en Infographie et Montage Vidéo - Ouagadougou
+
+- Score : 27/100
+- Etat public : review_required
+- Source : Emploiburkina
+- Ville : Ouagadougou
+- Cloture : A verifier
+- Problemes : missing_closing_date
+- Alertes : low_confidence_score, needs_review
+- Action : Verifier la source, corriger les dates ou retirer de la publication.
+- Lien : https://www.emploiburkina.com/offre-emploi-burkina-faso/stagiaire-infographie-montage-video-ouagadougou-304711
+
+### 9. Stagiaire Ingénieur Technico-Commercial Électricité - Ouagadougou
+
+- Score : 27/100
+- Etat public : review_required
+- Source : Emploiburkina
+- Ville : Ouagadougou
+- Cloture : A verifier
+- Problemes : missing_closing_date
+- Alertes : low_confidence_score, needs_review
+- Action : Verifier la source, corriger les dates ou retirer de la publication.
+- Lien : https://www.emploiburkina.com/offre-emploi-burkina-faso/stagiaire-ingenieur-technico-commercial-electricite-ouagadougou-304722
+
+### 10. Chauffeur Particulier - Ouagadougou
+
+- Score : 27/100
+- Etat public : review_required
+- Source : Emploiburkina
+- Ville : Ouagadougou
+- Cloture : A verifier
+- Problemes : missing_closing_date
+- Alertes : low_confidence_score, needs_review
+- Action : Verifier la source, corriger les dates ou retirer de la publication.
+- Lien : https://www.emploiburkina.com/offre-emploi-burkina-faso/chauffeur-particulier-ouagadougou-305080
+
+### 11. Responsable QHSE H/F - Ouagadougou
+
+- Score : 27/100
+- Etat public : review_required
+- Source : Emploiburkina
+- Ville : Ouagadougou
+- Cloture : A verifier
+- Problemes : missing_closing_date
+- Alertes : low_confidence_score, needs_review
+- Action : Verifier la source, corriger les dates ou retirer de la publication.
+- Lien : https://www.emploiburkina.com/offre-emploi-burkina-faso/responsable-qhse-hf-ouagadougou-305571
+
+### 12. Professeur Particulier - Toutes Les Villes
+
+- Score : 27/100
+- Etat public : review_required
+- Source : Emploiburkina
+- Ville : Burkina Faso
+- Cloture : A verifier
+- Problemes : missing_closing_date
+- Alertes : low_confidence_score, needs_review
+- Action : Verifier la source, corriger les dates ou retirer de la publication.
+- Lien : https://www.emploiburkina.com/offre-emploi-burkina-faso/professeur-particulier-toutes-villes-306891
+
+### 13. Commercial Terrain - Ouagadougou
+
+- Score : 27/100
+- Etat public : review_required
+- Source : Emploiburkina
+- Ville : Ouagadougou
+- Cloture : A verifier
+- Problemes : missing_closing_date
+- Alertes : low_confidence_score, needs_review
+- Action : Verifier la source, corriger les dates ou retirer de la publication.
+- Lien : https://www.emploiburkina.com/offre-emploi-burkina-faso/commercial-terrain-ouagadougou-307250
+
+### 14. Coursier Conducteur de Véhicules Automobiles Poids Léger - Ouagadougou
+
+- Score : 27/100
+- Etat public : review_required
+- Source : Emploiburkina
+- Ville : Ouagadougou
+- Cloture : A verifier
+- Problemes : missing_closing_date
+- Alertes : low_confidence_score, needs_review
+- Action : Verifier la source, corriger les dates ou retirer de la publication.
+- Lien : https://www.emploiburkina.com/offre-emploi-burkina-faso/coursier-conducteur-vehicules-automobiles-poids-leger-ouagadougou-307275
+
+### 15. Développeur (euse) Backend - Ouagadougou
+
+- Score : 27/100
+- Etat public : review_required
+- Source : Emploiburkina
+- Ville : Ouagadougou
+- Cloture : A verifier
+- Problemes : missing_closing_date
+- Alertes : low_confidence_score, needs_review
+- Action : Verifier la source, corriger les dates ou retirer de la publication.
+- Lien : https://www.emploiburkina.com/offre-emploi-burkina-faso/developpeur-euse-backend-ouagadougou-308426
+
+### 16. Technico-Commercial(e) - Ouagadougou
+
+- Score : 27/100
+- Etat public : review_required
+- Source : Emploiburkina
+- Ville : Ouagadougou
+- Cloture : A verifier
+- Problemes : missing_closing_date
+- Alertes : low_confidence_score, needs_review
+- Action : Verifier la source, corriger les dates ou retirer de la publication.
+- Lien : https://www.emploiburkina.com/offre-emploi-burkina-faso/technico-commerciale-ouagadougou-309753
+
+### 17. Expert(e) en Développement et Maintenance de Systèmes Applicatifs - International
+
+- Score : 27/100
+- Etat public : review_required
+- Source : Emploiburkina
+- Ville : Burkina Faso
+- Cloture : A verifier
+- Problemes : missing_closing_date
+- Alertes : low_confidence_score, needs_review
+- Action : Verifier la source, corriger les dates ou retirer de la publication.
+- Lien : https://www.emploiburkina.com/offre-emploi-burkina-faso/experte-developpement-maintenance-systemes-applicatifs-international
+
+### 18. Expert(e) en Développement d’Applications Mobiles et Solutions Digital - International
+
+- Score : 27/100
+- Etat public : review_required
+- Source : Emploiburkina
+- Ville : Burkina Faso
+- Cloture : A verifier
+- Problemes : missing_closing_date
+- Alertes : low_confidence_score, needs_review
+- Action : Verifier la source, corriger les dates ou retirer de la publication.
+- Lien : https://www.emploiburkina.com/offre-emploi-burkina-faso/experte-developpement-applications-mobiles-solutions-digital-international
+
+### 19. Test and Validation Engineer (M/F)
+
+- Score : 27/100
+- Etat public : review_required
+- Source : Emploiburkina
+- Ville : Burkina Faso
+- Cloture : A verifier
+- Problemes : missing_closing_date
+- Alertes : low_confidence_score, needs_review
+- Action : Verifier la source, corriger les dates ou retirer de la publication.
+- Lien : https://www.emploiburkina.com/offre-emploi-burkina-faso/test-validation-engineer-mf-210730
+
+### 20. Chargé(e) d’Affaires - Sécurité Privée et Gardiennage - Ouagadougou
+
+- Score : 27/100
+- Etat public : review_required
+- Source : Emploiburkina
+- Ville : Ouagadougou
+- Cloture : A verifier
+- Problemes : missing_closing_date
+- Alertes : low_confidence_score, needs_review
+- Action : Verifier la source, corriger les dates ou retirer de la publication.
+- Lien : https://www.emploiburkina.com/offre-emploi-burkina-faso/chargee-affaires-securite-privee-gardiennage-ouagadougou-307844
+
+### 21. Avis de recrutement d’un(e) Coordonnateur(trice) de Projet
+
+- Score : 27/100
+- Etat public : review_required
+- Source : LeFaso.net Recrutement
+- Ville : Burkina Faso
+- Cloture : A verifier
+- Problemes : missing_closing_date
+- Alertes : low_confidence_score, needs_review
+- Action : Verifier la source, corriger les dates ou retirer de la publication.
+- Lien : https://emploi.lefaso.net/Avis-de-recrutement-d-un-e-Coordonnateur-trice-de-Projet.html
+
+### 22. 05 postes à pourvoir au sein d’une mutuelle nationale
+
+- Score : 27/100
+- Etat public : review_required
+- Source : LeFaso.net Recrutement
+- Ville : Burkina Faso
+- Cloture : A verifier
+- Problemes : missing_closing_date
+- Alertes : low_confidence_score, needs_review
+- Action : Verifier la source, corriger les dates ou retirer de la publication.
+- Lien : https://emploi.lefaso.net/05-postes-a-pourvoir-au-sein-d-une-mutuelle-nationale.html
+
+### 23. Médecins Oncologues médical et chirurgical
+
+- Score : 27/100
+- Etat public : review_required
+- Source : LeFaso.net Recrutement
+- Ville : Burkina Faso
+- Cloture : A verifier
+- Problemes : missing_closing_date
+- Alertes : low_confidence_score, needs_review
+- Action : Verifier la source, corriger les dates ou retirer de la publication.
+- Lien : https://emploi.lefaso.net/02-Medecins-Oncologues-medical-et-chirurgical.html
+
+### 24. CHAI - Clinton Health Access Initiative
+
+- Score : 29/100
 - Etat public : review_required
 - Source : UN Talent Burkina Faso
 - Ville : Burkina Faso
 - Cloture : A verifier
 - Problemes : missing_closing_date
-- Alertes : needs_review
+- Alertes : low_confidence_score, needs_review
 - Action : Verifier la source, corriger les dates ou retirer de la publication.
-- Lien : https://untalent.org/jobs/clinicien-kaya-regional-office
+- Lien : https://untalent.org/jobs-at-chai/in-anything/contract-all/burkina-faso
 
-### 3. Coordinateur administratif et logistique (F/H)
+### 25. &Eacute;pidemiologiste, Analyste de Recherche, Malaria | Epidemiologist, Research Analyst, Paludisme
 
-- Score : 37/100
+- Score : 29/100
 - Etat public : review_required
 - Source : UN Talent Burkina Faso
 - Ville : Burkina Faso
 - Cloture : A verifier
 - Problemes : missing_closing_date
-- Alertes : needs_review
-- Action : Verifier la source, corriger les dates ou retirer de la publication.
-- Lien : https://untalent.org/jobs/coordinateur-administratif-et-logistique-f-h-1
-
-### 4. &Eacute;pidemiologiste, Analyste de Recherche, Malaria | Epidemiologist, Research Analyst, Paludisme
-
-- Score : 37/100
-- Etat public : review_required
-- Source : UN Talent Burkina Faso
-- Ville : Burkina Faso
-- Cloture : A verifier
-- Problemes : missing_closing_date
-- Alertes : needs_review
+- Alertes : low_confidence_score, needs_review
 - Action : Verifier la source, corriger les dates ou retirer de la publication.
 - Lien : https://untalent.org/jobs/eacute-pid-eacute-miologiste-analyste-de-recherche-malaria-epidemiologist-research-analyst-paludisme
 
-### 5. Associate, Malaria Case Management & Supply Chain Management
+### 26. Associate, Malaria Case Management & Supply Chain Management
 
-- Score : 37/100
+- Score : 29/100
 - Etat public : review_required
 - Source : UN Talent Burkina Faso
 - Ville : Burkina Faso
 - Cloture : A verifier
 - Problemes : missing_closing_date
-- Alertes : needs_review
+- Alertes : low_confidence_score, needs_review
 - Action : Verifier la source, corriger les dates ou retirer de la publication.
 - Lien : https://untalent.org/jobs/associate-malaria-case-management-supply-chain-management
 
-### 6. Responsable Relations Bailleurs H/F Tout Pays
+### 27. Clinicien - Kaya Regional Office
 
-- Score : 44/100
-- Etat public : hidden
-- Source : BFemploi
-- Ville : de mission Les frais d
-- Cloture : 2026-06-22
-- Problemes : expired
-- Alertes : needs_review
+- Score : 29/100
+- Etat public : review_required
+- Source : UN Talent Burkina Faso
+- Ville : Burkina Faso
+- Cloture : A verifier
+- Problemes : missing_closing_date
+- Alertes : low_confidence_score, needs_review
 - Action : Verifier la source, corriger les dates ou retirer de la publication.
-- Lien : https://www.bfemploi.com/annonce-details-3874.html
+- Lien : https://untalent.org/jobs/clinicien-kaya-regional-office
 
-### 7. Consultant individuel pour l’analyse des données sur l’évaluation de la durabilité post-projet resifa
+### 28. Clinician - Koudougou Regional Office
 
-- Score : 44/100
-- Etat public : hidden
-- Source : BFemploi
-- Ville : Burkina Faso
-- Cloture : 2026-06-21
-- Problemes : expired
-- Alertes : needs_review
+- Score : 29/100
+- Etat public : review_required
+- Source : UN Talent Burkina Faso
+- Ville : Koudougou
+- Cloture : A verifier
+- Problemes : missing_closing_date
+- Alertes : low_confidence_score, needs_review
 - Action : Verifier la source, corriger les dates ou retirer de la publication.
-- Lien : https://www.bfemploi.com/annonce-details-3879.html
+- Lien : https://untalent.org/jobs/clinician-koudougou-regional-office
 
-### 8. Appel à propositions pour la mise en œuvre d’une enquête de couverture post-campagne de supplémentation en vitamine a
+### 29. Chargé des Ressources Humaines
 
-- Score : 44/100
-- Etat public : hidden
-- Source : BFemploi
+- Score : 29/100
+- Etat public : review_required
+- Source : UN Talent Burkina Faso
 - Ville : Burkina Faso
-- Cloture : 2026-06-21
-- Problemes : expired
-- Alertes : needs_review
+- Cloture : A verifier
+- Problemes : missing_closing_date
+- Alertes : low_confidence_score, needs_review
 - Action : Verifier la source, corriger les dates ou retirer de la publication.
-- Lien : https://www.bfemploi.com/annonce-details-3876.html
+- Lien : https://untalent.org/jobs/charge-des-ressources-humaines-1
 
-### 9. Coordinateur Administratif et Logistique
+### 30. DRC - Danish Refugee Council
 
-- Score : 75/100
-- Etat public : publish_with_warning
-- Source : BFemploi
-- Ville : dans le courant des mois de mai et juin
-- Cloture : 2026-08-17
-- Problemes : Aucun
-- Alertes : city_looks_like_scraped_noise, needs_review
-- Action : Publier avec prudence et completer les champs faibles.
-- Lien : https://www.bfemploi.com/annonce-details-3866.html
-
-### 10. La Wildlife Conservation Society (WCS) J-44 Responsable de la logistique et des infrastructures, KBNP 📍 RD Congo 📋 CDD Logistique
-
-- Score : 75/100
-- Etat public : publish_with_warning
-- Source : HumanitaireHub
-- Ville : RDC
-- Cloture : 2026-07-31
-- Problemes : Aucun
-- Alertes : needs_review
-- Action : Publier avec prudence et completer les champs faibles.
-- Lien : https://humanitairehub.com/emploi/responsable-de-la-logistique-et-des-infrastructures-kbnp/
-
-### 11. INTERSOS J-21 Coordinateur Terrain 📍 Tchad 📋 CDD Management & Coordination
-
-- Score : 75/100
-- Etat public : publish_with_warning
-- Source : HumanitaireHub
-- Ville : Tchad
-- Cloture : 2026-07-08
-- Problemes : Aucun
-- Alertes : needs_review
-- Action : Publier avec prudence et completer les champs faibles.
-- Lien : https://humanitairehub.com/emploi/coordinateur-terrain/
-
-### 12. UNICEF J-14 UNICEF recrute 02 postes 📍 Bénin 📋 CDD Plusieurs Secteurs
-
-- Score : 75/100
-- Etat public : publish_with_warning
-- Source : HumanitaireHub
-- Ville : Benin
-- Cloture : 2026-07-01
-- Problemes : Aucun
-- Alertes : needs_review
-- Action : Publier avec prudence et completer les champs faibles.
-- Lien : https://humanitairehub.com/emploi/unicef-recrute-02-postes-4/
-
-### 13. PNUD / UNDP J-14 Manager de Projet – PNUD 📍 Tchad 📋 CDD Management & Coordination Plusieurs Secteurs
-
-- Score : 75/100
-- Etat public : publish_with_warning
-- Source : HumanitaireHub
-- Ville : Tchad
-- Cloture : 2026-07-01
-- Problemes : Aucun
-- Alertes : needs_review
-- Action : Publier avec prudence et completer les champs faibles.
-- Lien : https://humanitairehub.com/emploi/manager-de-projet-pnud/
-
-### 14. UNICEF J-13 UNICEF recute 02 postes 📍 Nigéria / Cameroun 📋 CDD WASH (Eau, Hygiène, Assainissement)
-
-- Score : 75/100
-- Etat public : publish_with_warning
-- Source : HumanitaireHub
-- Ville : Niger
-- Cloture : 2026-06-30
-- Problemes : Aucun
-- Alertes : needs_review
-- Action : Publier avec prudence et completer les champs faibles.
-- Lien : https://humanitairehub.com/emploi/unicef-recute-02-postes/
-
-### 15. Danish Refugee Council (DRC) J-13 Coordinateur.trice Suivi, Évaluation, Redevabilité et Apprentissage (MEAL) 📍 Tchad 📋 CDD MEAL (Suivi, Évaluation, Apprentiss
-
-- Score : 75/100
-- Etat public : publish_with_warning
-- Source : HumanitaireHub
-- Ville : Tchad
-- Cloture : 2026-06-30
-- Problemes : Aucun
-- Alertes : needs_review
-- Action : Publier avec prudence et completer les champs faibles.
-- Lien : https://humanitairehub.com/emploi/coordinateur-trice-suivi-evaluation-redevabilite-et-apprentissage-meal/
-
-### 16. UNICEF J-13 UNICEF recrute 01 Chef WASH 📍 Rwanda 📋 CDD WASH (Eau, Hygiène, Assainissement)
-
-- Score : 75/100
-- Etat public : publish_with_warning
-- Source : HumanitaireHub
-- Ville : Rwanda
-- Cloture : 2026-06-30
-- Problemes : Aucun
-- Alertes : needs_review
-- Action : Publier avec prudence et completer les champs faibles.
-- Lien : https://humanitairehub.com/emploi/unicef-recrute-01-chef-wash/
-
-### 17. CARE International J-9 CARE International recrute 06 postes au Mali 📍 Mali 📋 CDD Plusieurs Secteurs
-
-- Score : 75/100
-- Etat public : publish_with_warning
-- Source : HumanitaireHub
-- Ville : Mali
-- Cloture : 2026-06-26
-- Problemes : Aucun
-- Alertes : needs_review
-- Action : Publier avec prudence et completer les champs faibles.
-- Lien : https://humanitairehub.com/emploi/care-international-recrute-06-postes-au-mali/
-
-### 18. Terre des Hommes J-8 Un.e Responsable Programmes Santé-Guinée 📍 Guinée 📋 CDD Santé
-
-- Score : 75/100
-- Etat public : publish_with_warning
-- Source : HumanitaireHub
+- Score : 29/100
+- Etat public : review_required
+- Source : UN Talent Burkina Faso
 - Ville : Burkina Faso
-- Cloture : 2026-06-25
-- Problemes : Aucun
-- Alertes : needs_review
-- Action : Publier avec prudence et completer les champs faibles.
-- Lien : https://humanitairehub.com/emploi/un-e-responsable-programmes-sante-guinee/
-
-### 19. International Rescue Committee (IRC) J-7 Lead thématique psychologie 📍 RD Congo 📋 CDD Protection, Genre & Inclusion
-
-- Score : 75/100
-- Etat public : publish_with_warning
-- Source : HumanitaireHub
-- Ville : RDC
-- Cloture : 2026-06-24
-- Problemes : Aucun
-- Alertes : needs_review
-- Action : Publier avec prudence et completer les champs faibles.
-- Lien : https://humanitairehub.com/emploi/lead-thematique-psychologie/
-
-### 20. Norwegian Refugee Council (NRC) J-7 Assistant Technique Wash 📍 RD Congo 📋 CDD WASH (Eau, Hygiène, Assainissement)
-
-- Score : 75/100
-- Etat public : publish_with_warning
-- Source : HumanitaireHub
-- Ville : RDC
-- Cloture : 2026-06-24
-- Problemes : Aucun
-- Alertes : needs_review
-- Action : Publier avec prudence et completer les champs faibles.
-- Lien : https://humanitairehub.com/emploi/assistant-technique-wash/
-
-### 21. Coordinateur·rice de programme (Niamey, Niger) – Poste national
-
-- Score : 77/100
-- Etat public : publish_with_warning
-- Source : HumanitaireHub
-- Ville : Niger
-- Cloture : 2026-06-30
-- Problemes : Aucun
-- Alertes : needs_review
-- Action : Publier avec prudence et completer les champs faibles.
-- Lien : https://humanitairehub.com/emploi/coordinateur%c2%b7rice-de-programme-niamey-niger-poste-national/
-
-### 22. Chargé.e d&rsquo;évaluation
-
-- Score : 77/100
-- Etat public : publish_with_warning
-- Source : HumanitaireHub
-- Ville : RDC
-- Cloture : 2026-06-30
-- Problemes : Aucun
-- Alertes : needs_review
-- Action : Publier avec prudence et completer les champs faibles.
-- Lien : https://humanitairehub.com/emploi/charge-e-devaluation/
-
-### 23. Coordonnatrice de projet
-
-- Score : 77/100
-- Etat public : publish_with_warning
-- Source : HumanitaireHub
-- Ville : RDC
-- Cloture : 2026-06-30
-- Problemes : Aucun
-- Alertes : needs_review
-- Action : Publier avec prudence et completer les champs faibles.
-- Lien : https://humanitairehub.com/emploi/coordonnatrice-de-projet/
-
-### 24. Coordonnateur logistique RDC
-
-- Score : 77/100
-- Etat public : publish_with_warning
-- Source : HumanitaireHub
-- Ville : RDC
-- Cloture : 2026-06-30
-- Problemes : Aucun
-- Alertes : needs_review
-- Action : Publier avec prudence et completer les champs faibles.
-- Lien : https://humanitairehub.com/emploi/coordonnateur-logistique-rdc/
-
-### 25. Associé à la protection communautaire
-
-- Score : 77/100
-- Etat public : publish_with_warning
-- Source : HumanitaireHub
-- Ville : Tchad
-- Cloture : 2026-06-30
-- Problemes : Aucun
-- Alertes : needs_review
-- Action : Publier avec prudence et completer les champs faibles.
-- Lien : https://humanitairehub.com/emploi/associe-a-la-protection-communautaire-2/
-
-### 26. Responsable de Recherche
-
-- Score : 82/100
-- Etat public : publish_with_warning
-- Source : BFemploi
-- Ville : Ouagadougou
-- Cloture : 2026-06-30
-- Problemes : Aucun
-- Alertes : needs_review
-- Action : Publier avec prudence et completer les champs faibles.
-- Lien : https://www.bfemploi.com/annonce-details-3871.html
-
-### 27. Enquêteurs / Chercheurs de terrain
-
-- Score : 82/100
-- Etat public : publish_with_warning
-- Source : BFemploi
-- Ville : Burkina Faso
-- Cloture : 2026-06-26
-- Problemes : Aucun
-- Alertes : needs_review
-- Action : Publier avec prudence et completer les champs faibles.
-- Lien : https://www.bfemploi.com/annonce-details-3870.html
-
-### 28. Associé(e) aux moyens de subsistance et à l&rsquo;inclusion économique
-
-- Score : 83/100
-- Etat public : publish_with_warning
-- Source : HumanitaireHub
-- Ville : Rwanda
-- Cloture : 2026-06-23
-- Problemes : Aucun
-- Alertes : needs_review
-- Action : Publier avec prudence et completer les champs faibles.
-- Lien : https://humanitairehub.com/emploi/associee-aux-moyens-de-subsistance-et-a-linclusion-economique/
-
+- Cloture : A verifier
+- Problemes : missing_closing_date
+- Alertes : low_confidence_score, needs_review
+- Action : Verifier la source, corriger les dates ou retirer de la publication.
+- Lien : https://untalent.org/jobs-at-drc/in-anything/contract-all/burkina-faso

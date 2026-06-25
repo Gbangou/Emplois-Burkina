@@ -3,16 +3,16 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Admin local - JobFaso</title>
-    <meta name="description" content="Tableau local de moderation et leads JobFaso." />
+    <title>Admin local - Emplois Burkina</title>
+    <meta name="description" content="Tableau local de moderation et leads Emplois Burkina." />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <header class="topbar">
-      <a class="brand" href="index.html" aria-label="Accueil JobFaso">
-        <span class="brand-mark">JF</span>
+      <a class="brand" href="index.html" aria-label="Accueil Emplois Burkina">
+        <span class="brand-mark">EB</span>
         <span>
-          <strong>JobFaso</strong>
+          <strong>Emplois Burkina</strong>
           <small>Admin local</small>
         </span>
       </a>
@@ -39,7 +39,7 @@
         <div class="admin-panel">
           <label>
             Token admin serveur
-            <input id="adminTokenInput" type="password" placeholder="JOBFASO_ADMIN_TOKEN" autocomplete="off" />
+            <input id="adminTokenInput" type="password" placeholder="EMPLOIS_BURKINA_ADMIN_TOKEN" autocomplete="off" />
           </label>
           <div class="admin-actions">
             <button id="saveAdminTokenButton" type="button">Enregistrer le token</button>
@@ -49,7 +49,7 @@
             <button id="runAutomationButton" class="secondary-button" type="button">Lancer automation</button>
           </div>
           <p class="form-note">
-            En production, configure `JOBFASO_ADMIN_TOKEN` cote serveur. Ne partage jamais ce token.
+            En production, configure `EMPLOIS_BURKINA_ADMIN_TOKEN` cote serveur. Ne partage jamais ce token.
           </p>
         </div>
         <div class="admin-summary" id="adminSummary">
@@ -91,6 +91,35 @@
               </thead>
               <tbody id="analyticsTable">
                 <tr><td colspan="2">Charge le serveur pour voir les signaux.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="admin-panel">
+          <div class="section-heading">
+            <p class="eyebrow">Alertes</p>
+            <h2>Segments candidats</h2>
+            <p>
+              Les recherches sauvegardees deviennent des segments exploitables
+              pour les alertes WhatsApp, les digests et les offres sponsorisees.
+            </p>
+          </div>
+          <div class="admin-summary" id="alertSegmentsSummary">
+            <article><strong>0</strong><span>segments actifs</span></article>
+            <article><strong>0</strong><span>abonnements alertes</span></article>
+            <article><strong>0</strong><span>segments total</span></article>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Segment</th>
+                  <th>Abonnes</th>
+                  <th>Derniere demande</th>
+                </tr>
+              </thead>
+              <tbody id="alertSegmentsTable">
+                <tr><td colspan="3">Charge le serveur pour voir les segments.</td></tr>
               </tbody>
             </table>
           </div>
@@ -145,6 +174,35 @@
               </thead>
               <tbody id="dateReviewTable">
                 <tr><td colspan="4">Charge le serveur pour voir la file.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="admin-panel">
+          <div class="section-heading">
+            <p class="eyebrow">Produit</p>
+            <h2>Modules professionnels</h2>
+            <p>
+              Suivi des briques indispensables pour transformer Emplois Burkina en vraie
+              web app : donnees, recherche, moderation, alertes, recruteurs,
+              profils, IA et revenus.
+            </p>
+          </div>
+          <div class="admin-summary" id="moduleSummary">
+            <article><strong>...</strong><span>chargement modules</span></article>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Module</th>
+                  <th>Statut</th>
+                  <th>Priorite</th>
+                  <th>Prochaine etape</th>
+                </tr>
+              </thead>
+              <tbody id="moduleRoadmapTable">
+                <tr><td colspan="4">Charge le serveur pour voir les modules.</td></tr>
               </tbody>
             </table>
           </div>
@@ -258,7 +316,7 @@
     </main>
 
     <footer class="footer">
-      <strong>JobFaso</strong>
+      <strong>Emplois Burkina</strong>
       <span>
         <span id="leadCount">0</span> leads -
         <span id="eventCount">0</span> evenements

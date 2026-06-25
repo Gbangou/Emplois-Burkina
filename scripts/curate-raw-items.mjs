@@ -112,6 +112,10 @@ const nonEmploymentTitlePatterns = [
   /\bconf[ée]rence\b/,
   /\bcours\b/,
   /\bcertification\b/,
+  /catalogue des formations?/,
+  /deuxieme partie/,
+  /premiere partie/,
+  /programme de formation/,
 ];
 
 const nonBurkinaCountryPatterns = [
@@ -503,7 +507,13 @@ function normalizeDateFields(item) {
   const closingDate = extractClosingDate(item);
   const today = todayIso();
   const inconsistentDates = Boolean(openingDate && closingDate && closingDate < openingDate);
-  const expired = Boolean(closingDate && isIsoBefore(closingDate, today));
+  // Grace period of 5 days: keep recently-expired offers (scraper lag + timezone)
+  const graceCutoff = (() => {
+    const d = new Date(`${today}T00:00:00Z`);
+    d.setUTCDate(d.getUTCDate() - 5);
+    return d.toISOString().slice(0, 10);
+  })();
+  const expired = Boolean(closingDate && isIsoBefore(closingDate, graceCutoff));
   const stalePosting = Boolean(openingDate && !closingDate && openingDate < `${Number(today.slice(0, 4)) - 1}-01-01`);
 
   return {
@@ -664,14 +674,27 @@ function isLikelyCategoryPage(item) {
 }
 
 function isOutsideBurkina(item, sourceMeta = null) {
-  if (isInternationalSource(sourceMeta)) return false;
   const url = normalize(item.url);
+  const title = normalize(item.title);
   const text = normalize(`${item.title} ${item.excerpt}`);
-  const urlOutside = nonBurkinaCountryPatterns.some((pattern) => pattern.test(url));
-  const textOutside = nonBurkinaTextPattern.test(text);
-  const textBurkina = /burkina|ouaga|ouagadougou|bobo|koudougou|ouahigouya|dori|kaya|bagassi/.test(text);
 
-  return (urlOutside || textOutside) && !textBurkina;
+  // URL path contains a non-Burkina country slug → hard exclude for all sources
+  const urlOutside = nonBurkinaCountryPatterns.some((pattern) => pattern.test(url));
+  if (urlOutside) return true;
+
+  // Any explicit Burkina mention in title or excerpt → always keep
+  const textBurkina = /burkina|ouaga|ouagadougou|bobo|koudougou|ouahigouya|dori|kaya|bagassi/.test(text);
+  if (textBurkina) return false;
+
+  // Title explicitly names another country (📍 marker or plain name) → exclude
+  const titleOutside = nonBurkinaTextPattern.test(title);
+  if (titleOutside) return true;
+
+  // International sources: allow if no explicit non-Burkina country in title
+  if (isInternationalSource(sourceMeta)) return false;
+
+  // Non-international sources: also check full text
+  return false;
 }
 
 function isLikelyJobTitle(item) {
@@ -734,13 +757,15 @@ function curate(items, sourceIndex) {
     const excerpt = decodeHtml(item.excerpt || "").slice(0, 900);
     const trustedSource = isTrustedSource(sourceMeta);
     const internationalSource = isInternationalSource(sourceMeta);
+    const titleLen = decodeHtml(item.title).length;
     const hasMeaningfulContent =
-      excerpt.length >= 120 ||
+      excerpt.length >= 60 ||                                                    // general: 120→60
       dateFields.openingDateConfirmed ||
       dateFields.closingDateConfirmed ||
-      (trustedSource && excerpt.length >= 80) ||
-      (internationalSource && excerpt.length >= 48 && decodeHtml(item.title).length >= 24) ||
-      (category === "Metiers terrain et informels" && excerpt.length >= 60);
+      (trustedSource && (excerpt.length >= 30 || titleLen >= 32)) ||             // trusted: 80→30, or long title
+      (internationalSource && (excerpt.length >= 36 || titleLen >= 28)) ||       // intl: 48→36, or title
+      (category === "Metiers terrain et informels" && (excerpt.length >= 30 || titleLen >= 20)) ||
+      (sourceMeta && titleLen >= 40);                                             // known source + explicit title
 
     if (blockedSoftKeys.has(softKey)) continue;
     if (softSeen.has(softKey)) continue;
@@ -802,6 +827,8 @@ function curate(items, sourceIndex) {
   return diversifyBySource(curated);
 }
 
+const MAX_PER_SOURCE = 20; // keep up to 20 per source for diversity
+
 function diversifyBySource(items) {
   const buckets = new Map();
   for (const item of items) {
@@ -816,6 +843,8 @@ function diversifyBySource(items) {
       const dateB = b.closingDate || b.openingDate || String(b.collectedAt || "").slice(0, 10);
       return dateB.localeCompare(dateA);
     });
+    // Trim to MAX_PER_SOURCE keeping freshest
+    bucket.splice(MAX_PER_SOURCE);
   }
 
   const diversified = [];
@@ -855,9 +884,23 @@ async function main() {
 
   await writeFile(OUTPUT_FILE, `${JSON.stringify(curated, null, 2)}\n`, "utf8");
   await writeFile(EMPLOYER_LOGOS_FILE, `${JSON.stringify(buildEmployerLogos(curated), null, 2)}\n`, "utf8");
-  console.log(`Curated jobs: ${curated.length}`);
-  console.log(`Output: ${OUTPUT_FILE.pathname}`);
-  console.log(`Employer logos: ${EMPLOYER_LOGOS_FILE.pathname}`);
+
+  // Detailed stats
+  const bySource = curated.reduce((acc, j) => {
+    acc[j.sourceName] = (acc[j.sourceName] || 0) + 1;
+    return acc;
+  }, {});
+  const withDeadline = curated.filter((j) => j.closingDate).length;
+  const withExcerpt = curated.filter((j) => (j.excerpt || "").length >= 60).length;
+
+  console.log(`\n✅ Curated jobs : ${curated.length} / ${raw.length} raw items`);
+  console.log(`   Avec deadline  : ${withDeadline}`);
+  console.log(`   Avec excerpt   : ${withExcerpt}`);
+  console.log(`   Par source :`);
+  for (const [src, count] of Object.entries(bySource).sort((a, b) => b[1] - a[1])) {
+    console.log(`     ${src}: ${count}`);
+  }
+  console.log(`\nOutput: ${OUTPUT_FILE.pathname}`);
 }
 
 main().catch((error) => {

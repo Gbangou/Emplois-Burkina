@@ -1,6 +1,6 @@
 import { readAutomationState } from "./automation-state.mjs";
 
-const maxAgeHours = Math.max(1, Number(process.env.JOBFASO_AUTOMATION_MAX_AGE_HOURS || 30));
+const maxAgeHours = Math.max(1, Number(process.env.EMPLOIS_BURKINA_AUTOMATION_MAX_AGE_HOURS || 30));
 const state = await readAutomationState();
 const lastSuccessMs = state.lastSuccessAt ? new Date(state.lastSuccessAt).getTime() : 0;
 const ageHours = lastSuccessMs ? (Date.now() - lastSuccessMs) / 3_600_000 : Infinity;

@@ -1,18 +1,18 @@
-# JobFaso
+# Emplois Burkina
 
 Offres d'emploi, concours, stages, missions locales et alertes WhatsApp au Burkina Faso.
 
 ## Core pages
-- https://jobfaso.com/index.html
-- https://jobfaso.com/jobs.html
-- https://jobfaso.com/conseils.html
-- https://jobfaso.com/grille-tarifaire.html
-- https://jobfaso.com/contacts.html
+- https://emplois-burkina.com/index.html
+- https://emplois-burkina.com/jobs.html
+- https://emplois-burkina.com/conseils.html
+- https://emplois-burkina.com/grille-tarifaire.html
+- https://emplois-burkina.com/contacts.html
 
 ## Fresh job feeds
-- https://jobfaso.com/sitemap.xml
-- https://jobfaso.com/data/curated-jobs.json
-- https://jobfaso.com/feed.xml
-- https://jobfaso.com/feed.json
+- https://emplois-burkina.com/sitemap.xml
+- https://emplois-burkina.com/data/curated-jobs.json
+- https://emplois-burkina.com/feed.xml
+- https://emplois-burkina.com/feed.json
 
-JobFaso aggregates public job opportunities, concours, internships and local missions in Burkina Faso. Candidates should always verify official sources before applying.
+Emplois Burkina aggregates public job opportunities, concours, internships and local missions in Burkina Faso. Candidates should always verify official sources before applying.
