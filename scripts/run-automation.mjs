@@ -18,6 +18,7 @@ const steps = [
   ["Autopilote trafic et AdSense", "scripts/generate-ad-monetization-autopilot.mjs"],
   ["Projection contenu pur", "scripts/generate-pure-content-revenue-model.mjs"],
   ["Autopilote revenu", "scripts/generate-revenue-autopilot.mjs"],
+  ["Roadmap business automatique", "scripts/generate-business-growth-roadmap.mjs"],
   ["Export PostgreSQL", "scripts/export-postgres-seed.mjs"],
   ["Synchronisation DB locale", "scripts/sync-local-db.mjs"],
   ["Synchronisation SQLite", "scripts/sync-sqlite-db.mjs"],

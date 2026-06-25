@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-06-25T16:23:47.218Z",
+  "generatedAt": "2026-06-25T16:33:25.040Z",
   "readinessScore": 90,
   "revenueTargetFcfa": 1000000,
-  "estimatedMonthlyRevenueFcfa": 483768,
-  "revenueGapFcfa": 516232,
+  "estimatedMonthlyRevenueFcfa": 486504,
+  "revenueGapFcfa": 513496,
   "activeJobs": 58,
   "trustedJobs": 15,
   "topCategories": [
@@ -83,9 +83,9 @@
       "offer": "Pages guides/offres/villes monetisees par trafic, annonces automatiques et liens utiles marques",
       "targetCustomers": "Google AdSense, reseaux publicitaires, partenaires formation/outils utiles",
       "targetUnits": 1,
-      "priceFcfa": 85568,
+      "priceFcfa": 88304,
       "closeRate": 1,
-      "trigger": "104 pages utiles indexables.",
+      "trigger": "112 pages utiles indexables.",
       "nextAction": "Configurer AdSense, ads.txt, Search Console, Bing Webmaster Tools et analytics revenu."
     },
     {

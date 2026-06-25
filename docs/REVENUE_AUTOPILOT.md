@@ -1,6 +1,6 @@
 # Autopilote revenu Emplois Burkina
 
-Derniere generation : 2026-06-25T16:23:47.218Z
+Derniere generation : 2026-06-25T16:33:25.040Z
 
 ## Reponse courte
 
@@ -24,14 +24,14 @@ partenaires, logs d'envoi et historiques de moderation.
 - Offres actives : 58
 - Offres fiables : 15
 - Objectif mensuel : 1 000 000 FCFA
-- Revenu mensuel initial estime : 483 768 FCFA
-- Ecart a combler : 516 232 FCFA
+- Revenu mensuel initial estime : 486 504 FCFA
+- Ecart a combler : 513 496 FCFA
 
 ## Canaux a activer
 
 | Canal | Offre | Clients | Objectif | Prix | Conversion | Action suivante |
 | --- | --- | --- | ---: | ---: | ---: | --- |
-| AdSense, display et affiliation utile | Pages guides/offres/villes monetisees par trafic, annonces automatiques et liens utiles marques | Google AdSense, reseaux publicitaires, partenaires formation/outils utiles | 1 | 85 568 FCFA | 100% | Configurer AdSense, ads.txt, Search Console, Bing Webmaster Tools et analytics revenu. |
+| AdSense, display et affiliation utile | Pages guides/offres/villes monetisees par trafic, annonces automatiques et liens utiles marques | Google AdSense, reseaux publicitaires, partenaires formation/outils utiles | 1 | 88 304 FCFA | 100% | Configurer AdSense, ads.txt, Search Console, Bing Webmaster Tools et analytics revenu. |
 | Annonces recruteurs premium | Publication + mise en avant + diffusion WhatsApp/Facebook + rapport simple | Entreprises, ONG, cabinets RH, PME locales | 12 | 25 000 FCFA | 35% | Prospecter 30 recruteurs lies a Bureau et Burkina Faso. |
 | Sponsoring categorie | Sponsor mensuel de la categorie Bureau | Centres de formation, fintech, telecoms, ecoles professionnelles | 4 | 100 000 FCFA | 25% | Envoyer 20 propositions sponsor avec preuve trafic/offres et placement clair. |
 | Digest WhatsApp sponsorise | Sponsor discret du digest hebdomadaire d'offres | Formations, banques, telecoms, assurance, mobile money | 4 | 50 000 FCFA | 30% | Preparer un kit sponsor WhatsApp avec limites de frequence et mention sponsorisee. |

@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-06-25T16:23:36.852Z",
+  "generatedAt": "2026-06-25T16:33:24.932Z",
   "estimates": {
-    "usefulPages": 104,
-    "monthlyPageviews": 18720,
+    "usefulPages": 112,
+    "monthlyPageviews": 20160,
     "rpmFcfa": 650,
-    "adsenseMonthlyFcfa": 12168,
-    "affiliateMonthlyFcfa": 23400,
+    "adsenseMonthlyFcfa": 13104,
+    "affiliateMonthlyFcfa": 25200,
     "directDisplayMonthlyFcfa": 50000,
-    "totalTrafficRevenueFcfa": 85568
+    "totalTrafficRevenueFcfa": 88304
   },
   "distribution": [
     {
@@ -19,7 +19,7 @@
     {
       "channel": "Bing, Yahoo, DuckDuckGo, Yandex",
       "automation": "IndexNow + sitemap + robots propre.",
-      "nextAction": "Soumettre 104 URLs via indexnow-urls.txt apres chaque generation.",
+      "nextAction": "Soumettre 112 URLs via indexnow-urls.txt apres chaque generation.",
       "revenueImpact": "Trafic additionnel peu couteux, utile pour diversifier."
     },
     {

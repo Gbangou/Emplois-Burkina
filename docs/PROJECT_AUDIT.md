@@ -1,6 +1,6 @@
 # Audit projet Emplois Burkina
 
-Genere le : 2026-06-25T16:24:02.099Z
+Genere le : 2026-06-25T16:33:34.381Z
 
 Score : 100/100
 Statut : passed
@@ -67,7 +67,7 @@ Statut : passed
 | critical | sqlite_runtime | OK | SQLite sert de lecture API et conserve les overrides de moderation | Verifier server.mjs et scripts/sync-sqlite-db.mjs. |
 | critical | security_baseline | OK | Headers, rate limit, origine et token admin | Ne pas retirer les garde-fous serveur. |
 | warning | admin_surfaces | OK | Admin expose analytics, visibilite, moderation et SQLite | Completer app.js/admin.html si un panneau manque. |
-| warning | seo_assets | OK | 104 URLs sitemap | Enrichir le corpus avec plus d'offres et de pages SEO utiles. |
+| warning | seo_assets | OK | 112 URLs sitemap | Enrichir le corpus avec plus d'offres et de pages SEO utiles. |
 | warning | master_prompt_current_state | OK | Le master prompt doit refleter l'etat actuel | Mettre a jour docs/MASTER_PROMPT.md. |
 | warning | operations_current_state | OK | Le guide operationnel couvre SQLite, visibilite et moderation | Mettre a jour docs/PROJECT_STATUS_AND_OPERATIONS.md. |
 | warning | readme_no_stale_next_steps | OK | README ne doit pas presenter des acquis comme a faire | Actualiser les prochaines etapes. |

@@ -400,6 +400,8 @@ manuelle, la production doit utiliser :
   AdSense, display direct, affiliation utile et les contenus evergreen.
 - `npm run revenue:content-only` pour separer les revenus purement issus du
   contenu des revenus sponsors, recruteurs ou services.
+- `npm run business:roadmap` pour classer les prochains leviers par potentiel
+  financier, effort humain, risque AdSense/SEO et automatisation.
 
 SQLite/JSON sont acceptables en local et pre-lancement, mais insuffisants pour
 un produit durable : ils ne remplacent pas une base production sauvegardee,
@@ -415,6 +417,8 @@ La croissance doit d'abord venir du contenu et de la distribution automatique :
 - posts sociaux avec UTM vers les pages guides et offres ;
 - AdSense apres validation, puis emplacements display directs sur pages longues ;
 - affiliation utile et marquee vers formations, outils CV ou services pertinents.
+- guides evergreen supplementaires : remote depuis l'Afrique, ONG/ONU,
+  salaires, concours, anglais professionnel, formations et LinkedIn.
 
 Ne jamais pousser les candidats a cliquer sur les publicites, ne jamais cacher
 une annonce en bouton de candidature, et garder l'acces aux offres gratuit.

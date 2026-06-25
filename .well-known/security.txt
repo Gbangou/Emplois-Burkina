@@ -1,5 +1,5 @@
 Contact: mailto:contact@emplois-burkina.com
-Expires: 2026-12-22T12:23:38.852Z
+Expires: 2026-12-22T16:33:24.743Z
 Preferred-Languages: fr, en
 Canonical: https://emplois-burkina.com/.well-known/security.txt
 Policy: https://emplois-burkina.com/privacy.html

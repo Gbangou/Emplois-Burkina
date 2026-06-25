@@ -198,6 +198,16 @@ Le modele contenu pur genere aussi `data/growth/pure-content-revenue-model.json`
 et `docs/PURE_CONTENT_REVENUE_MODEL.md` pour estimer les revenus sans vente
 manuelle, sans sponsors et sans facturer les candidats.
 
+Roadmap business automatique :
+
+```bash
+npm run business:roadmap
+```
+
+Ce rapport genere `data/growth/business-growth-roadmap.json` et
+`docs/BUSINESS_GROWTH_ROADMAP.md` pour prioriser les plays business selon le
+potentiel de revenu, l'effort humain, le risque SEO/AdSense et l'automatisation.
+
 Fichiers publics importants :
 
 - `sitemap.xml` pour Google, Bing, Yandex et autres moteurs.
@@ -245,6 +255,7 @@ Le script cree `indexnow-key.txt` localement et soumet les URLs de
 - `docs/REVENUE_AUTOPILOT.md`
 - `docs/TRAFFIC_ADSENSE_AUTOPILOT.md`
 - `docs/PURE_CONTENT_REVENUE_MODEL.md`
+- `docs/BUSINESS_GROWTH_ROADMAP.md`
 
 ## Pre-lancement commercial
 

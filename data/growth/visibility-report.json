@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-25T12:23:39.104Z",
+  "generatedAt": "2026-06-25T16:33:24.895Z",
   "score": 84,
   "checks": [
     {
@@ -116,7 +116,7 @@
   "totals": {
     "jobs": 58,
     "sources": 87,
-    "sitemapUrls": 104,
+    "sitemapUrls": 112,
     "scoreEarnedWeight": 108,
     "scoreTotalWeight": 128,
     "rateProducts": 7,

@@ -1,0 +1,66 @@
+{
+  "generatedAt": "2026-06-25T16:33:25.084Z",
+  "plays": [
+    {
+      "id": "programmatic_later",
+      "play": "Programmatique apres traction",
+      "upsideFcfa": 600000,
+      "automation": "AdSense d'abord, puis reseaux plus premium quand le trafic est stable.",
+      "humanEffort": "moyen",
+      "risk": "moyen, depend du volume et de la qualite trafic",
+      "nextAction": "Ne pas optimiser trop tot : revenu AdSense actuel estime 13 104 FCFA."
+    },
+    {
+      "id": "remote_international",
+      "play": "Lancer une verticale international/remote",
+      "upsideFcfa": 400000,
+      "automation": "Sources internationales classees, resumes courts, filtres, liens officiels et pages conseils.",
+      "humanEffort": "moyen au depart",
+      "risk": "moyen si les pages ressemblent a une copie de sources",
+      "nextAction": "Activer progressivement 47 sources remote et 53 sources ONG/ONU avec review_required."
+    },
+    {
+      "id": "data_products",
+      "play": "Produits de donnees agreges automatiques",
+      "upsideFcfa": 300000,
+      "automation": "Rapports mensuels publics/telechargeables sur tendances, secteurs, villes et competences.",
+      "humanEffort": "faible si generation automatique",
+      "risk": "faible si aucune donnee personnelle n'est vendue",
+      "nextAction": "Transformer 15 offres fiables en tendances anonymisees et pages rapports."
+    },
+    {
+      "id": "content_scale",
+      "play": "Multiplier les guides evergreen monetisables",
+      "upsideFcfa": 250000,
+      "automation": "Generation de guides longs, FAQ, pages metiers, pages villes et pages remote.",
+      "humanEffort": "faible",
+      "risk": "faible si contenu utile et original",
+      "nextAction": "Passer de 112 pages indexables a 300 pages utiles avant de chercher plus agressif."
+    },
+    {
+      "id": "affiliate_tools",
+      "play": "Affiliation utile non intrusive",
+      "upsideFcfa": 150000,
+      "automation": "Liens marques vers formations, outils CV, cours d'anglais, cloud CV et preparation concours.",
+      "humanEffort": "faible apres configuration",
+      "risk": "moyen si les liens sont trop agressifs ou non marques",
+      "nextAction": "Prevoir des emplacements affiliation dans les guides, separes des boutons de candidature."
+    },
+    {
+      "id": "adsense_threshold",
+      "play": "Atteindre le seuil AdSense mensuel",
+      "upsideFcfa": 65000,
+      "automation": "SEO, IndexNow, sitemap, posts sociaux UTM et pages longues.",
+      "humanEffort": "faible",
+      "risk": "faible si trafic organique reel",
+      "nextAction": "Faire monter les pages vues de 20 160 a 100 000/mois."
+    }
+  ],
+  "metrics": {
+    "usefulPages": 112,
+    "currentContentOnlyMinFcfa": 8064,
+    "currentContentOnlyMaxFcfa": 13104,
+    "sources": 87,
+    "jobs": 58
+  }
+}

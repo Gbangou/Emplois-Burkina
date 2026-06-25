@@ -1,6 +1,6 @@
 # Modele revenu contenu pur
 
-Derniere generation : 2026-06-25T16:23:42.049Z
+Derniere generation : 2026-06-25T16:33:24.992Z
 
 ## Reponse serieuse
 
@@ -10,8 +10,8 @@ est approuve par AdSense, indexe, utile, rapide, conforme et s'il obtient du
 trafic humain reel. Sans approbation AdSense ou sans trafic, le revenu contenu
 pur est de 0 FCFA.
 
-La projection minimale prudente actuelle est basse : entre 7 488 FCFA
-et 12 168 FCFA par mois au demarrage apres
+La projection minimale prudente actuelle est basse : entre 8 064 FCFA
+et 13 104 FCFA par mois au demarrage apres
 approbation, puis davantage seulement si le trafic monte. Le seuil de paiement
 AdSense est modelise ici a environ 60 000 FCFA
 (100 USD x 600 FCFA). Si le mois ne depasse pas
@@ -21,9 +21,9 @@ ce seuil, le solde s'accumule jusqu'au paiement.
 
 | Scenario | Pages vues/mois | RPM | Revenu/mois | Paiement mensuel ? | Delai estime avant paiement |
 | --- | ---: | ---: | ---: | --- | --- |
-| Sans approbation AdSense | 18 720 | 0 FCFA | 0 FCFA | Non | Aucun paiement |
-| Demarrage prudent | 18 720 | 400 FCFA | 7 488 FCFA | Non | 9 mois |
-| Base actuelle du modele | 18 720 | 650 FCFA | 12 168 FCFA | Non | 5 mois |
+| Sans approbation AdSense | 20 160 | 0 FCFA | 0 FCFA | Non | Aucun paiement |
+| Demarrage prudent | 20 160 | 400 FCFA | 8 064 FCFA | Non | 8 mois |
+| Base actuelle du modele | 20 160 | 650 FCFA | 13 104 FCFA | Non | 5 mois |
 | Site local qui prend | 100 000 | 650 FCFA | 65 000 FCFA | Oui | 1 mois |
 | Afrique francophone | 500 000 | 800 FCFA | 400 000 FCFA | Oui | 1 mois |
 | International emploi/remote | 1 000 000 | 1 200 FCFA | 1 200 000 FCFA | Oui | 1 mois |

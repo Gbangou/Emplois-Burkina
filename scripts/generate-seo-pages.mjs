@@ -228,6 +228,102 @@ const evergreenGuides = [
       "Les villes comme Ouagadougou et Bobo-Dioulasso concentrent beaucoup d'offres, mais les missions terrain restent importantes.",
     ],
   },
+  {
+    slug: "trouver-un-emploi-remote-depuis-l-afrique",
+    title: "Trouver un emploi remote depuis l'Afrique",
+    description:
+      "Methodes pour chercher des postes a distance, verifier les plateformes et preparer un profil credible.",
+    sections: [
+      "Ciblez les postes remote qui acceptent explicitement l'Afrique, l'Europe, le Moyen-Orient ou le worldwide.",
+      "Preparez un CV court en anglais avec resultats, outils maitrises et fuseau horaire disponible.",
+      "Verifiez les plateformes, le contrat, le mode de paiement et les signaux de fraude avant de postuler.",
+      "Suivez chaque candidature dans un tableau simple avec date, lien, reponse et relance.",
+    ],
+  },
+  {
+    slug: "postuler-aux-emplois-internationaux-ong-onu",
+    title: "Postuler aux emplois internationaux ONG et ONU",
+    description:
+      "Guide pour comprendre les offres internationales, les termes de reference et les dossiers attendus.",
+    sections: [
+      "Lisez les termes de reference pour identifier les livrables, la duree, le lieu et le niveau demande.",
+      "Adaptez le CV au langage de l'offre : coordination, reporting, suivi-evaluation, finance, logistique ou data.",
+      "Preparez une version anglaise et une version francaise de vos documents quand l'offre est internationale.",
+      "Gardez les liens officiels et evitez les offres qui demandent des frais avant contrat.",
+    ],
+  },
+  {
+    slug: "salaires-et-metiers-qui-recrutent",
+    title: "Salaires et metiers qui recrutent",
+    description:
+      "Comprendre les tendances de salaires, secteurs porteurs et competences utiles avant de candidater.",
+    sections: [
+      "Comparez les offres par secteur pour repérer les metiers qui reviennent souvent.",
+      "Regardez les competences demandees avant de choisir une formation ou une reconversion.",
+      "Ne jugez pas seulement le salaire : contrat, localisation, risques, evolutions et avantages comptent aussi.",
+      "Utilisez les tendances Emplois Burkina pour suivre les secteurs actifs chaque semaine.",
+    ],
+  },
+  {
+    slug: "calendrier-concours-burkina-faso",
+    title: "Calendrier des concours au Burkina Faso",
+    description:
+      "Suivre les periodes de concours, les communiques officiels et les documents a preparer.",
+    sections: [
+      "Consultez les sources officielles avant de partager une date ou un resultat de concours.",
+      "Preparez les documents administratifs en avance pour eviter les depots de derniere minute.",
+      "Classez les concours par ministere, niveau, ville, date limite et pieces demandees.",
+      "Gardez une alerte pour les communiques, rectificatifs, convocations et resultats.",
+    ],
+  },
+  {
+    slug: "anglais-professionnel-pour-candidater",
+    title: "Anglais professionnel pour candidater",
+    description:
+      "Mots, phrases et reflexes utiles pour postuler a des offres internationales ou remote.",
+    sections: [
+      "Preparez une presentation courte en anglais : profil, experience, outils et disponibilite.",
+      "Traduisez les titres de poste sans exagerer votre niveau ou vos responsabilites.",
+      "Apprenez le vocabulaire des offres : responsibilities, requirements, deadline, remote, contract.",
+      "Relisez chaque email avant envoi et gardez une signature professionnelle.",
+    ],
+  },
+  {
+    slug: "sites-fiables-pour-chercher-un-emploi",
+    title: "Sites fiables pour chercher un emploi",
+    description:
+      "Comment reconnaitre les sources serieuses, verifier les liens et eviter les annonces douteuses.",
+    sections: [
+      "Priorisez les sites officiels des organisations, les portails connus et les communiques publics.",
+      "Mefiez-vous des liens raccourcis, formulaires inconnus et demandes de paiement avant entretien.",
+      "Comparez le titre, la date et l'organisation sur plusieurs sources si l'offre semble importante.",
+      "Utilisez Emplois Burkina comme point de depart, puis confirmez toujours sur la source officielle.",
+    ],
+  },
+  {
+    slug: "formations-courtes-pour-trouver-du-travail",
+    title: "Formations courtes pour trouver du travail",
+    description:
+      "Pistes de formations pratiques pour renforcer un profil sans perdre beaucoup de temps.",
+    sections: [
+      "Choisissez une formation liee aux offres qui reviennent souvent dans votre ville ou secteur.",
+      "Cherchez des competences visibles : Excel, comptabilite, conduite, maintenance, anglais, data, vente.",
+      "Demandez une attestation claire et gardez des preuves de projets ou exercices realises.",
+      "Evitez les formations cheres qui promettent un emploi garanti sans preuve concrete.",
+    ],
+  },
+  {
+    slug: "creer-un-profil-linkedin-professionnel",
+    title: "Creer un profil LinkedIn professionnel",
+    description:
+      "Structurer un profil LinkedIn utile pour les recruteurs, ONG et opportunites internationales.",
+    sections: [
+      "Utilisez un titre precis avec metier, secteur et ville ou disponibilite remote.",
+      "Ajoutez une section A propos courte qui explique votre valeur professionnelle.",
+      "Listez les experiences avec resultats, outils et missions concretes.",
+      "Interagissez avec des offres et organisations serieuses sans spammer les recruteurs.",
+    ],
+  },
 ];
 
 function escapeHtml(value = "") {
@@ -350,8 +446,8 @@ function withGraph(page, extra = []) {
 
 function layout(config, page) {
   const canonical = absolute(config, page.path);
-  const adsense = config.adsenseClient
-    ? `<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${escapeHtml(config.adsenseClient)}" crossorigin="anonymous"></script>`
+  const adsenseLine = config.adsenseClient
+    ? `    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${escapeHtml(config.adsenseClient)}" crossorigin="anonymous"></script>`
     : "";
 
   return `<!doctype html>
@@ -382,7 +478,7 @@ function layout(config, page) {
     <meta name="twitter:title" content="${escapeHtml(page.title)}" />
     <meta name="twitter:description" content="${escapeHtml(page.description)}" />
     <meta name="twitter:image" content="${escapeHtml(seoImage(config))}" />
-    ${adsense}
+${adsenseLine}
     <link rel="stylesheet" href="../../styles.css" />
     <script type="application/ld+json">${withGraph(page, [baseOrganizationSchema(config)])}</script>
   </head>
