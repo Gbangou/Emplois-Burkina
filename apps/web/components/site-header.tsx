@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 const NAV = [
   { label: "Offres", href: "/jobs" },
   { label: "International", href: "/international" },
+  { label: "Services", href: "/services" },
   { label: "Alertes", href: "/jobs#alertes" },
   { label: "Recruteurs", href: "/annonceurs" },
   { label: "Contact", href: "/contact" }

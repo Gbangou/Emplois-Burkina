@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Loader2, Send } from "lucide-react";
 import { useToast } from "./toaster";
 
-type LeadKind = "alert" | "publish" | "sponsor" | "contact";
+type LeadKind = "alert" | "publish" | "sponsor" | "candidate_service" | "contact";
 
 type LeadCaptureFormProps = {
   kind: LeadKind;
