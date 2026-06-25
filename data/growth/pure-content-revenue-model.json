@@ -1,0 +1,105 @@
+{
+  "generatedAt": "2026-06-25T16:23:42.049Z",
+  "adsenseThresholdUsd": 100,
+  "usdToFcfa": 600,
+  "adsenseThresholdFcfa": 60000,
+  "minimumRangeFcfa": {
+    "min": 7488,
+    "max": 12168
+  },
+  "scenarios": [
+    {
+      "id": "not_approved",
+      "label": "Sans approbation AdSense",
+      "monthlyPageviews": 18720,
+      "rpmFcfa": 0,
+      "probability": "Possible tant que le site n'est pas valide par Google",
+      "interpretation": "Revenu AdSense nul meme si le site a du trafic.",
+      "monthlyRevenueFcfa": 0,
+      "payoutEveryMonths": null,
+      "reachesMonthlyThreshold": false
+    },
+    {
+      "id": "current_low",
+      "label": "Demarrage prudent",
+      "monthlyPageviews": 18720,
+      "rpmFcfa": 400,
+      "probability": "Conservateur",
+      "interpretation": "Trafic encore faible, RPM bas, paiement seulement apres accumulation.",
+      "monthlyRevenueFcfa": 7488,
+      "payoutEveryMonths": 9,
+      "reachesMonthlyThreshold": false
+    },
+    {
+      "id": "current_base",
+      "label": "Base actuelle du modele",
+      "monthlyPageviews": 18720,
+      "rpmFcfa": 650,
+      "probability": "Realiste apres indexation initiale",
+      "interpretation": "Le contenu commence a tourner, mais le paiement mensuel n'est pas encore garanti.",
+      "monthlyRevenueFcfa": 12168,
+      "payoutEveryMonths": 5,
+      "reachesMonthlyThreshold": false
+    },
+    {
+      "id": "local_scale",
+      "label": "Site local qui prend",
+      "monthlyPageviews": 100000,
+      "rpmFcfa": 650,
+      "probability": "Possible avec SEO, reseaux sociaux et contenu original regulier",
+      "interpretation": "Premier niveau ou un paiement mensuel devient plausible.",
+      "monthlyRevenueFcfa": 65000,
+      "payoutEveryMonths": 1,
+      "reachesMonthlyThreshold": true
+    },
+    {
+      "id": "regional_scale",
+      "label": "Afrique francophone",
+      "monthlyPageviews": 500000,
+      "rpmFcfa": 800,
+      "probability": "Ambitieux, demande marque plus large et contenu vraiment utile",
+      "interpretation": "Revenu interessant, mais il faut eviter les pages dupliquees et pauvres.",
+      "monthlyRevenueFcfa": 400000,
+      "payoutEveryMonths": 1,
+      "reachesMonthlyThreshold": true
+    },
+    {
+      "id": "international_scale",
+      "label": "International emploi/remote",
+      "monthlyPageviews": 1000000,
+      "rpmFcfa": 1200,
+      "probability": "Tres ambitieux, concurrence forte",
+      "interpretation": "Possible seulement avec une vraie experience produit et contenu differencie.",
+      "monthlyRevenueFcfa": 1200000,
+      "payoutEveryMonths": 1,
+      "reachesMonthlyThreshold": true
+    }
+  ],
+  "internationalStrategy": [
+    {
+      "decision": "Ne pas renommer brutalement Emplois Burkina maintenant",
+      "reason": "Le nom est fort pour le SEO local et la confiance au Burkina Faso.",
+      "action": "Garder Emplois Burkina comme verticale locale et ajouter une section international/remote."
+    },
+    {
+      "decision": "Creer une marque mere plus large seulement quand la section internationale prouve son trafic",
+      "reason": "Changer trop tot peut diluer le positionnement et casser la clarte du site.",
+      "action": "Prevoir une architecture type Emplois Burkina + Jobs Afrique + Remote Afrique."
+    },
+    {
+      "decision": "Scraper moins, enrichir plus",
+      "reason": "Google peut penaliser le scraping massif sans valeur ajoutee.",
+      "action": "Publier resumes courts, liens officiels, filtres, scoring, guides, tendances et pages originales."
+    },
+    {
+      "decision": "Privilegier RSS, API, pages officielles et sources qui autorisent la reprise",
+      "reason": "La stabilite du revenu depend de la conformite et de la confiance.",
+      "action": "Classer chaque source en official_link, rss_api, review_required ou manual_only."
+    }
+  ],
+  "paymentTruth": {
+    "adsenseDirectMobileMoney": false,
+    "realisticPath": "AdSense -> bank account -> Orange Money/Mobile Money transfer if supported by the bank",
+    "directMobileMoneyRequires": "local ad network, affiliate partner or payment provider that explicitly supports Mobile Money"
+  }
+}

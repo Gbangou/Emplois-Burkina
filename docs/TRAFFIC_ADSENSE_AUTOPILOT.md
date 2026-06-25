@@ -1,6 +1,6 @@
 # Autopilote trafic, referencement et AdSense
 
-Derniere generation : 2026-06-25T13:51:42.541Z
+Derniere generation : 2026-06-25T16:23:36.852Z
 
 ## Objectif
 
@@ -133,7 +133,7 @@ faire payer les chercheurs d'emploi.
 
 ### Emploi et opportunites a Burkina Faso
 
-- Intention : 27 offres actuelles soutiennent une page locale indexable.
+- Intention : 27 offres actuelles soutient une page locale indexable.
 - Monetisation : AdSense local + partenaires utiles locaux, sans facturer les candidats.
 - Pages a creer :
   - Offres d'emploi a Burkina Faso
@@ -142,7 +142,7 @@ faire payer les chercheurs d'emploi.
 
 ### Emploi et opportunites a Ouagadougou
 
-- Intention : 18 offres actuelles soutiennent une page locale indexable.
+- Intention : 18 offres actuelles soutient une page locale indexable.
 - Monetisation : AdSense local + partenaires utiles locaux, sans facturer les candidats.
 - Pages a creer :
   - Offres d'emploi a Ouagadougou
@@ -151,7 +151,7 @@ faire payer les chercheurs d'emploi.
 
 ### Emploi et opportunites a RDC
 
-- Intention : 4 offres actuelles soutiennent une page locale indexable.
+- Intention : 4 offres actuelles soutient une page locale indexable.
 - Monetisation : AdSense local + partenaires utiles locaux, sans facturer les candidats.
 - Pages a creer :
   - Offres d'emploi a RDC
@@ -160,7 +160,7 @@ faire payer les chercheurs d'emploi.
 
 ### Emploi et opportunites a Senegal
 
-- Intention : 3 offres actuelles soutiennent une page locale indexable.
+- Intention : 3 offres actuelles soutient une page locale indexable.
 - Monetisation : AdSense local + partenaires utiles locaux, sans facturer les candidats.
 - Pages a creer :
   - Offres d'emploi a Senegal
@@ -169,7 +169,7 @@ faire payer les chercheurs d'emploi.
 
 ### Emploi et opportunites a Bagassi
 
-- Intention : 1 offre actuelle soutiennent une page locale indexable.
+- Intention : 1 offre actuelle soutient une page locale indexable.
 - Monetisation : AdSense local + partenaires utiles locaux, sans facturer les candidats.
 - Pages a creer :
   - Offres d'emploi a Bagassi
@@ -178,7 +178,7 @@ faire payer les chercheurs d'emploi.
 
 ### Emploi et opportunites a Ethiopie
 
-- Intention : 1 offre actuelle soutiennent une page locale indexable.
+- Intention : 1 offre actuelle soutient une page locale indexable.
 - Monetisation : AdSense local + partenaires utiles locaux, sans facturer les candidats.
 - Pages a creer :
   - Offres d'emploi a Ethiopie
@@ -187,12 +187,23 @@ faire payer les chercheurs d'emploi.
 
 ## Regles AdSense et confiance
 
+- Le revenu contenu pur n'est jamais garanti : il depend de l'approbation AdSense, du trafic humain reel et du RPM.
+- Le paiement AdSense doit etre pense comme paiement bancaire, puis transfert bancaire vers Mobile Money si disponible.
 - Ne jamais encourager les clics sur les annonces.
 - Ne jamais placer une annonce comme si c'etait un bouton de candidature.
 - Garder les offres lisibles et utiles avant la publicite.
 - Preferer guides longs, pages villes, pages categories et dossiers pratiques.
 - Marquer sponsors, affiliation et contenu partenaire.
 - Eviter les pages pauvres creees uniquement pour afficher des annonces.
+- Eviter le scraping massif sans valeur ajoutee : resumes courts, liens officiels, filtres et analyses doivent apporter un vrai benefice.
+
+## Expansion internationale
+
+- Garder Emplois Burkina comme verticale locale tant que le trafic local n'est pas solide.
+- Ajouter une section International/Remote avant tout changement de nom.
+- Utiliser des sources officielles, RSS, API ou pages autorisees quand c'est possible.
+- Mettre en noindex les pages trop pauvres, trop dupliquees ou non verifiees.
+- Publier des guides originaux : travailler a distance depuis l'Afrique, ONG internationales, CV international, anglais professionnel.
 
 ## Stack moderne recommandee
 

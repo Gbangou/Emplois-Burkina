@@ -398,6 +398,8 @@ manuelle, la production doit utiliser :
   commerciales prioritaires apres chaque collecte.
 - `npm run ads:autopilot` dans le pipeline pour piloter le trafic naturel,
   AdSense, display direct, affiliation utile et les contenus evergreen.
+- `npm run revenue:content-only` pour separer les revenus purement issus du
+  contenu des revenus sponsors, recruteurs ou services.
 
 SQLite/JSON sont acceptables en local et pre-lancement, mais insuffisants pour
 un produit durable : ils ne remplacent pas une base production sauvegardee,
@@ -416,3 +418,9 @@ La croissance doit d'abord venir du contenu et de la distribution automatique :
 
 Ne jamais pousser les candidats a cliquer sur les publicites, ne jamais cacher
 une annonce en bouton de candidature, et garder l'acces aux offres gratuit.
+
+Le modele publicitaire pur doit rester prudent : il peut rapporter sans vente
+manuelle, mais seulement apres approbation AdSense, trafic humain reel,
+contenu original et seuil de paiement atteint. Le paiement AdSense doit etre
+prevu vers un compte bancaire compatible ; Orange Money/Mobile Money vient
+ensuite via la banque ou via des partenaires publicitaires locaux distincts.

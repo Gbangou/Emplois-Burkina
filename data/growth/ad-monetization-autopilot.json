@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-25T13:51:42.541Z",
+  "generatedAt": "2026-06-25T16:23:36.852Z",
   "estimates": {
     "usefulPages": 104,
     "monthlyPageviews": 18720,
@@ -166,7 +166,7 @@
     {
       "id": "ville-burkina-faso",
       "theme": "Emploi et opportunites a Burkina Faso",
-      "searchIntent": "27 offres actuelles soutiennent une page locale indexable.",
+      "searchIntent": "27 offres actuelles soutient une page locale indexable.",
       "contentToCreate": [
         "Offres d'emploi a Burkina Faso",
         "Entreprises et ONG qui recrutent a Burkina Faso",
@@ -177,7 +177,7 @@
     {
       "id": "ville-ouagadougou",
       "theme": "Emploi et opportunites a Ouagadougou",
-      "searchIntent": "18 offres actuelles soutiennent une page locale indexable.",
+      "searchIntent": "18 offres actuelles soutient une page locale indexable.",
       "contentToCreate": [
         "Offres d'emploi a Ouagadougou",
         "Entreprises et ONG qui recrutent a Ouagadougou",
@@ -188,7 +188,7 @@
     {
       "id": "ville-rdc",
       "theme": "Emploi et opportunites a RDC",
-      "searchIntent": "4 offres actuelles soutiennent une page locale indexable.",
+      "searchIntent": "4 offres actuelles soutient une page locale indexable.",
       "contentToCreate": [
         "Offres d'emploi a RDC",
         "Entreprises et ONG qui recrutent a RDC",
@@ -199,7 +199,7 @@
     {
       "id": "ville-senegal",
       "theme": "Emploi et opportunites a Senegal",
-      "searchIntent": "3 offres actuelles soutiennent une page locale indexable.",
+      "searchIntent": "3 offres actuelles soutient une page locale indexable.",
       "contentToCreate": [
         "Offres d'emploi a Senegal",
         "Entreprises et ONG qui recrutent a Senegal",
@@ -210,7 +210,7 @@
     {
       "id": "ville-bagassi",
       "theme": "Emploi et opportunites a Bagassi",
-      "searchIntent": "1 offre actuelle soutiennent une page locale indexable.",
+      "searchIntent": "1 offre actuelle soutient une page locale indexable.",
       "contentToCreate": [
         "Offres d'emploi a Bagassi",
         "Entreprises et ONG qui recrutent a Bagassi",
@@ -221,7 +221,7 @@
     {
       "id": "ville-ethiopie",
       "theme": "Emploi et opportunites a Ethiopie",
-      "searchIntent": "1 offre actuelle soutiennent une page locale indexable.",
+      "searchIntent": "1 offre actuelle soutient une page locale indexable.",
       "contentToCreate": [
         "Offres d'emploi a Ethiopie",
         "Entreprises et ONG qui recrutent a Ethiopie",

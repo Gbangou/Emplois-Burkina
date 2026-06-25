@@ -102,7 +102,7 @@ function buildEvergreenClusters(jobs) {
   const cityClusters = topCities.map(([city, count]) => ({
     id: `ville-${city.toLowerCase().replace(/[^a-z0-9]+/gi, "-")}`,
     theme: `Emploi et opportunites a ${city}`,
-      searchIntent: `${count} offre${count > 1 ? "s" : ""} actuelle${count > 1 ? "s" : ""} soutiennent une page locale indexable.`,
+    searchIntent: `${count} offre${count > 1 ? "s" : ""} actuelle${count > 1 ? "s" : ""} soutient une page locale indexable.`,
     contentToCreate: [
       `Offres d'emploi a ${city}`,
       `Entreprises et ONG qui recrutent a ${city}`,
@@ -215,12 +215,23 @@ ${cluster.contentToCreate.map((item) => `  - ${item}`).join("\n")}`
 
 ## Regles AdSense et confiance
 
+- Le revenu contenu pur n'est jamais garanti : il depend de l'approbation AdSense, du trafic humain reel et du RPM.
+- Le paiement AdSense doit etre pense comme paiement bancaire, puis transfert bancaire vers Mobile Money si disponible.
 - Ne jamais encourager les clics sur les annonces.
 - Ne jamais placer une annonce comme si c'etait un bouton de candidature.
 - Garder les offres lisibles et utiles avant la publicite.
 - Preferer guides longs, pages villes, pages categories et dossiers pratiques.
 - Marquer sponsors, affiliation et contenu partenaire.
 - Eviter les pages pauvres creees uniquement pour afficher des annonces.
+- Eviter le scraping massif sans valeur ajoutee : resumes courts, liens officiels, filtres et analyses doivent apporter un vrai benefice.
+
+## Expansion internationale
+
+- Garder Emplois Burkina comme verticale locale tant que le trafic local n'est pas solide.
+- Ajouter une section International/Remote avant tout changement de nom.
+- Utiliser des sources officielles, RSS, API ou pages autorisees quand c'est possible.
+- Mettre en noindex les pages trop pauvres, trop dupliquees ou non verifiees.
+- Publier des guides originaux : travailler a distance depuis l'Afrique, ONG internationales, CV international, anglais professionnel.
 
 ## Stack moderne recommandee
 

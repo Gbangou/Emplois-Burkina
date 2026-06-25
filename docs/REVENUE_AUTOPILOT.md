@@ -1,6 +1,6 @@
 # Autopilote revenu Emplois Burkina
 
-Derniere generation : 2026-06-25T13:51:47.974Z
+Derniere generation : 2026-06-25T16:23:47.218Z
 
 ## Reponse courte
 

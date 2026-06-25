@@ -186,12 +186,17 @@ Autopilote trafic, referencement et AdSense :
 
 ```bash
 npm run ads:autopilot
+npm run revenue:content-only
 ```
 
 Ce rapport genere `data/growth/ad-monetization-autopilot.json` et
 `docs/TRAFFIC_ADSENSE_AUTOPILOT.md` pour prioriser le trafic naturel, les
 clusters de contenu evergreen, les moteurs de recherche, les reseaux sociaux,
 AdSense, display direct et affiliation utile.
+
+Le modele contenu pur genere aussi `data/growth/pure-content-revenue-model.json`
+et `docs/PURE_CONTENT_REVENUE_MODEL.md` pour estimer les revenus sans vente
+manuelle, sans sponsors et sans facturer les candidats.
 
 Fichiers publics importants :
 
@@ -239,6 +244,7 @@ Le script cree `indexnow-key.txt` localement et soumet les URLs de
 - `docs/EXTRAORDINARY_PRODUCT_BLUEPRINT.md`
 - `docs/REVENUE_AUTOPILOT.md`
 - `docs/TRAFFIC_ADSENSE_AUTOPILOT.md`
+- `docs/PURE_CONTENT_REVENUE_MODEL.md`
 
 ## Pre-lancement commercial
 
