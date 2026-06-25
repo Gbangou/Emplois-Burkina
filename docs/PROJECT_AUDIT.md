@@ -1,6 +1,6 @@
 # Audit projet Emplois Burkina
 
-Genere le : 2026-06-25T13:29:40.445Z
+Genere le : 2026-06-25T13:36:25.075Z
 
 Score : 100/100
 Statut : passed

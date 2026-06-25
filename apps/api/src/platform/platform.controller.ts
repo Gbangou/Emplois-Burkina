@@ -25,6 +25,11 @@ export class PlatformController {
     return this.platform.publicationBatches();
   }
 
+  @Get("intelligence")
+  intelligence() {
+    return this.platform.intelligence();
+  }
+
   @Post("automation/batches")
   createPublicationBatch() {
     return this.platform.createPublicationBatch();

@@ -3,6 +3,7 @@ import { join } from "node:path";
 import type {
   BenchmarkItem,
   JobOpportunity,
+  MarketIntelligence,
   PublicationBatch,
   ProductModule,
   RawScrapedItem,
@@ -11,6 +12,7 @@ import type {
 } from "@emplois-burkina/domain";
 import {
   buildAutomationOverview,
+  buildMarketIntelligence,
   buildPlatformSummary,
   buildScrapingOverview,
   isPublishedJob,
@@ -61,6 +63,11 @@ export async function getAutomationOverview() {
   ]);
 
   return buildAutomationOverview(jobs, segments);
+}
+
+export async function getMarketIntelligence(): Promise<MarketIntelligence> {
+  const jobs = await getJobs();
+  return buildMarketIntelligence(jobs);
 }
 
 export async function getPublicationBatches() {

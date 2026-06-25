@@ -145,10 +145,10 @@ avantages composes :
 
 ## Suite immediate
 
-1. Ajouter un module `Opportunity OS` visible dans l'app moderne.
-2. Ajouter les types domaine pour matching et signaux marche.
-3. Ajouter endpoint Nest `/platform/intelligence`.
-4. Afficher les signaux dans `/operations`.
+1. Module `Opportunity OS` visible dans l'app moderne : fait.
+2. Types domaine pour matching et signaux marche : fait.
+3. Endpoint Nest `/platform/intelligence` : fait.
+4. Signaux marche affiches dans `/operations` : fait.
 5. Ajouter auth admin/recruteur et persistance Prisma.
 6. Brancher alertes WhatsApp avec journal d'envoi.
 7. Preparer workflow paiement sponsorisation.

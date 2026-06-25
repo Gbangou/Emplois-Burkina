@@ -1,12 +1,14 @@
 import { ArrowLeft, Bot, Gauge, ShieldCheck } from "lucide-react";
 import { AutomationCommandCenter } from "@/components/automation-command-center";
+import { MarketIntelligencePanel } from "@/components/market-intelligence-panel";
 import { ModerationBoard } from "@/components/moderation-board";
 import { ScrapingCommandCenter } from "@/components/scraping-command-center";
-import { getAutomationOverview, getModerationQueue, getScrapingOverview } from "@/lib/data";
+import { getAutomationOverview, getMarketIntelligence, getModerationQueue, getScrapingOverview } from "@/lib/data";
 
 export default async function OperationsPage() {
-  const [automation, scraping, moderationQueue] = await Promise.all([
+  const [automation, intelligence, scraping, moderationQueue] = await Promise.all([
     getAutomationOverview(),
+    getMarketIntelligence(),
     getScrapingOverview(),
     getModerationQueue(16)
   ]);
@@ -66,6 +68,8 @@ export default async function OperationsPage() {
       </section>
 
       <AutomationCommandCenter overview={automation} />
+
+      <MarketIntelligencePanel intelligence={intelligence} />
 
       <ScrapingCommandCenter overview={scraping} />
 

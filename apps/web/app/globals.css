@@ -145,7 +145,7 @@ a, button { @apply transition-all duration-200; }
 .lead-form__note--error { @apply text-red-600; }
 
 /* Ops pages */
-.ops-console, .automation-console, .benchmark-section, .moderation-board, .batch-console { @apply bg-white border border-border rounded-xl p-5 lg:p-10; }
+.ops-console, .automation-console, .market-intelligence, .benchmark-section, .moderation-board, .batch-console { @apply bg-white border border-border rounded-xl p-5 lg:p-10; }
 .ops-hero, .automation-hero { @apply grid gap-5 px-4 lg:px-16 py-8; grid-template-columns: minmax(0,1fr) minmax(260px,360px); }
 @media(max-width:900px){ .ops-hero, .automation-hero { grid-template-columns:1fr; } }
 .ops-hero > div, .ops-hero aside, .automation-hero > div, .automation-hero aside { @apply bg-white border border-border rounded-xl p-6 lg:p-10 grid gap-4; }
@@ -163,7 +163,7 @@ a, button { @apply transition-all duration-200; }
 .ops-panel__head { @apply border-b border-border pb-3 mb-3 grid gap-1; }
 .ops-panel__head strong { @apply text-base font-black text-foreground; }
 .ops-panel__head small, .ops-principles span, .automation-principles span { @apply text-muted-foreground text-sm font-semibold leading-relaxed; }
-.source-list, .watch-list, .segment-list, .publication-list, .moderation-list, .batch-list { @apply grid gap-2.5; }
+.source-list, .watch-list, .segment-list, .publication-list, .moderation-list, .batch-list, .signal-list, .risk-list { @apply grid gap-2.5; }
 .segment-list { grid-template-columns:repeat(2,1fr); }
 .batch-list { grid-template-columns:repeat(3,1fr); }
 @media(max-width:700px){ .segment-list,.batch-list { grid-template-columns:1fr; } }
@@ -184,6 +184,25 @@ a, button { @apply transition-all duration-200; }
 .publication-action--auto_publish { @apply bg-emerald-50 text-emerald-800; }
 .publication-action--schedule_digest { @apply bg-blue-50 text-blue-800; }
 .publication-action--needs_moderation { @apply bg-red-50 text-red-700; }
+.market-score-grid { @apply grid gap-3 mb-4; grid-template-columns:repeat(3,minmax(0,1fr)); }
+@media(max-width:700px){ .market-score-grid { grid-template-columns:1fr; } }
+.market-score-grid article { @apply bg-secondary/50 border border-border rounded-xl p-4 grid gap-2.5 min-h-28 transition-transform hover:-translate-y-1; }
+.market-score-grid span { @apply text-xs font-black uppercase tracking-wide text-muted-foreground flex items-center gap-1.5; }
+.market-score-grid strong { @apply text-3xl lg:text-4xl font-black text-foreground leading-none self-end; }
+.market-grid { @apply grid gap-4; grid-template-columns:repeat(2,minmax(0,1fr)); }
+@media(max-width:900px){ .market-grid { grid-template-columns:1fr; } }
+.market-panel { @apply bg-white border border-border rounded-xl p-4; }
+.signal-list article { @apply flex items-center justify-between gap-3 bg-secondary/50 border border-border rounded-xl px-4 py-3 transition-all hover:bg-white hover:-translate-y-0.5; }
+.signal-list article > div { @apply grid gap-0.5 min-w-0; }
+.signal-list strong, .risk-list strong { @apply text-sm font-black text-foreground; }
+.signal-list small, .risk-list small { @apply text-xs font-semibold text-muted-foreground leading-relaxed; }
+.signal-list span { @apply inline-flex items-center justify-center rounded-full bg-emerald-50 border border-emerald-200 px-2.5 py-1 text-xs font-black text-emerald-800; }
+.risk-list article { @apply flex items-start gap-3 border rounded-xl px-4 py-3; }
+.market-risk--high { @apply bg-red-50 border-red-200 text-red-700; }
+.market-risk--medium { @apply bg-amber-50 border-amber-200 text-amber-800; }
+.market-risk--low { @apply bg-emerald-50 border-emerald-200 text-emerald-800; }
+.recommended-actions { @apply mt-4 flex flex-wrap gap-2; }
+.recommended-actions span { @apply inline-flex rounded-full bg-blue-50 border border-blue-200 px-3 py-2 text-xs font-black text-blue-800; }
 .batch-list article { @apply bg-white border border-border rounded-xl p-4 grid gap-2; }
 .batch-launch-button { @apply inline-flex items-center gap-2 rounded-full px-5 h-11 font-black text-sm text-white border-0 cursor-pointer transition-all hover:-translate-y-0.5; background:linear-gradient(180deg,var(--brand-violet),#463ab8); }
 .batch-launch-button:disabled { @apply opacity-70 cursor-wait; }

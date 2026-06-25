@@ -8,7 +8,7 @@ import type {
   SourceDefinition,
   SourceExpansionSegment
 } from "@emplois-burkina/domain";
-import { buildAutomationOverview, buildPlatformSummary, buildScrapingOverview } from "@emplois-burkina/domain";
+import { buildAutomationOverview, buildMarketIntelligence, buildPlatformSummary, buildScrapingOverview } from "@emplois-burkina/domain";
 import { JobsService } from "../jobs/jobs.service";
 import { JsonStore } from "../storage/json-store.service";
 
@@ -32,6 +32,7 @@ export class PlatformService {
     return {
       automation: buildAutomationOverview(jobs, sourceSegments),
       benchmark,
+      intelligence: buildMarketIntelligence(jobs),
       scraping: buildScrapingOverview(sources, jobs, rawItems),
       summary: buildPlatformSummary(jobs),
       modules,
@@ -66,6 +67,11 @@ export class PlatformService {
 
   async publicationBatches() {
     return this.store.read<PublicationBatch[]>("data/runtime/publication-batches.json", []);
+  }
+
+  async intelligence() {
+    const jobs = await this.jobs.allPublished();
+    return buildMarketIntelligence(jobs);
   }
 
   async createPublicationBatch() {

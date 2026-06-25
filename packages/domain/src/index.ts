@@ -150,6 +150,34 @@ export type PlatformSummary = {
   cities: string[];
 };
 
+export type IntelligenceSignal = {
+  label: string;
+  value: number;
+  share: number;
+  score: number;
+};
+
+export type IntelligenceRisk = {
+  label: string;
+  count: number;
+  severity: "low" | "medium" | "high";
+  action: string;
+};
+
+export type MarketIntelligence = {
+  generatedAt: string;
+  marketHeatScore: number;
+  monetizationScore: number;
+  candidateValueScore: number;
+  topCategories: IntelligenceSignal[];
+  topCities: IntelligenceSignal[];
+  hotSources: IntelligenceSignal[];
+  urgentJobs: number;
+  trustedJobs: number;
+  riskQueue: IntelligenceRisk[];
+  recommendedActions: string[];
+};
+
 export function normalizeSearch(value = "") {
   return value
     .toLowerCase()
@@ -323,5 +351,138 @@ export function buildAutomationOverview(
     channels: Array.from(new Set(segments.flatMap((segment) => segment.channels))).sort(),
     segments,
     queue,
+  };
+}
+
+function increment(map: Map<string, number>, key?: string) {
+  const normalized = key?.trim();
+  if (!normalized) return;
+  map.set(normalized, (map.get(normalized) || 0) + 1);
+}
+
+function topSignals(map: Map<string, number>, total: number, limit = 5): IntelligenceSignal[] {
+  return Array.from(map.entries())
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .slice(0, limit)
+    .map(([label, value]) => {
+      const share = total ? Math.round((value / total) * 100) : 0;
+      return {
+        label,
+        value,
+        share,
+        score: Math.min(100, Math.round(share * 0.7 + value * 7)),
+      };
+    });
+}
+
+function daysUntil(value?: string) {
+  if (!value) return null;
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return null;
+  return Math.ceil((date.getTime() - Date.now()) / 86400000);
+}
+
+function clampScore(value: number) {
+  return Math.max(0, Math.min(100, Math.round(value)));
+}
+
+export function buildMarketIntelligence(jobs: JobOpportunity[]): MarketIntelligence {
+  const published = jobs.filter(isPublishedJob);
+  const total = published.length;
+  const categories = new Map<string, number>();
+  const cities = new Map<string, number>();
+  const sources = new Map<string, number>();
+  let trustedJobs = 0;
+  let urgentJobs = 0;
+  let jobsWithDeadline = 0;
+  let missingDeadline = 0;
+  let highRisk = 0;
+  let needsReview = 0;
+
+  for (const job of published) {
+    increment(categories, job.category || "A classer");
+    increment(cities, job.city || "Burkina Faso");
+    increment(sources, job.sourceName || "Source a verifier");
+
+    if ((job.confidenceScore || 0) >= 80 && (job.riskScore || 0) <= 20) trustedJobs += 1;
+    if (job.status === "needs_review") needsReview += 1;
+    if ((job.riskScore || 0) >= 45) highRisk += 1;
+
+    const days = daysUntil(job.closingDate || job.deadline);
+    if (days === null) {
+      missingDeadline += 1;
+    } else {
+      jobsWithDeadline += 1;
+      if (days >= 0 && days <= 7) urgentJobs += 1;
+    }
+  }
+
+  const trustedShare = total ? trustedJobs / total : 0;
+  const deadlineShare = total ? jobsWithDeadline / total : 0;
+  const reviewPenalty = total ? needsReview / total : 0;
+  const sourceDiversity = Math.min(1, sources.size / 12);
+  const cityDiversity = Math.min(1, cities.size / 8);
+
+  const marketHeatScore = clampScore(total * 2.2 + urgentJobs * 4 + sourceDiversity * 28 + cityDiversity * 18);
+  const candidateValueScore = clampScore(trustedShare * 42 + deadlineShare * 34 + sourceDiversity * 18 - reviewPenalty * 22 + 18);
+  const monetizationScore = clampScore(total * 1.4 + trustedShare * 24 + categories.size * 3 + urgentJobs * 3 + sourceDiversity * 18);
+
+  const riskQueue: IntelligenceRisk[] = [];
+  if (missingDeadline > 0) {
+    riskQueue.push({
+      label: "Offres sans deadline",
+      count: missingDeadline,
+      severity: missingDeadline > total * 0.35 ? "high" : "medium",
+      action: "Prioriser la revue des dates avant alertes WhatsApp et sponsorisation.",
+    });
+  }
+  if (needsReview > 0) {
+    riskQueue.push({
+      label: "Offres en moderation",
+      count: needsReview,
+      severity: needsReview > total * 0.25 ? "high" : "medium",
+      action: "Valider ou rejeter les offres avant diffusion multi-canal.",
+    });
+  }
+  if (highRisk > 0) {
+    riskQueue.push({
+      label: "Risque antifraude",
+      count: highRisk,
+      severity: "high",
+      action: "Verifier source, contact, salaire et lien officiel.",
+    });
+  }
+  if (!riskQueue.length) {
+    riskQueue.push({
+      label: "Qualite controlee",
+      count: trustedJobs,
+      severity: "low",
+      action: "Augmenter la diffusion et tester des packs recruteurs sponsorises.",
+    });
+  }
+
+  const topCategories = topSignals(categories, total);
+  const topCities = topSignals(cities, total);
+  const hotSources = topSignals(sources, total);
+  const leadingCategory = topCategories[0]?.label || "les offres verifiees";
+  const leadingCity = topCities[0]?.label || "Ouagadougou";
+
+  return {
+    generatedAt: new Date().toISOString(),
+    marketHeatScore,
+    monetizationScore,
+    candidateValueScore,
+    topCategories,
+    topCities,
+    hotSources,
+    urgentJobs,
+    trustedJobs,
+    riskQueue,
+    recommendedActions: [
+      `Creer une campagne WhatsApp ciblee sur ${leadingCategory} a ${leadingCity}.`,
+      "Transformer les sources les plus chaudes en partenariats de diffusion propres.",
+      "Publier un digest marche hebdomadaire pour recruteurs et centres de formation.",
+      "Tester une offre sponsorisee sur les categories a forte demande.",
+    ],
   };
 }
