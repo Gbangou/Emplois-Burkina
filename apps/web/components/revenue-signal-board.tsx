@@ -1,4 +1,4 @@
-import { ArrowUpRight, MousePointerClick, Target, TrendingUp, Users } from "lucide-react";
+import { ArrowUpRight, Lightbulb, MousePointerClick, Target, TrendingUp, Users } from "lucide-react";
 import type { RevenueSignals } from "@/lib/revenue-signals";
 
 type RevenueSignalBoardProps = {
@@ -65,6 +65,26 @@ export function RevenueSignalBoard({ signals }: RevenueSignalBoardProps) {
           <ArrowUpRight size={14} className="text-primary" />
           Action: renforcer les guides et pages qui envoient le plus de clics vers services, alertes et futures affiliations.
         </p>
+      </div>
+
+      <div className="mt-4 rounded-xl border border-border bg-white p-4 shadow-sm">
+        <div className="flex items-center gap-2">
+          <Lightbulb size={17} className="text-primary" />
+          <h3 className="text-sm font-black text-foreground">Priorites automatiques</h3>
+        </div>
+        <div className="mt-3 grid gap-3 md:grid-cols-2">
+          {signals.nextActions.map((action) => (
+            <article key={action.title} className="rounded-lg border border-border bg-muted/30 p-3">
+              <div className="flex items-center justify-between gap-3">
+                <h4 className="text-xs font-black text-foreground">{action.title}</h4>
+                <span className="rounded-full border border-border bg-white px-2 py-0.5 text-[10px] font-black uppercase tracking-wide text-muted-foreground">
+                  {action.priority}
+                </span>
+              </div>
+              <p className="mt-2 text-xs font-semibold leading-relaxed text-muted-foreground">{action.reason}</p>
+            </article>
+          ))}
+        </div>
       </div>
     </section>
   );
