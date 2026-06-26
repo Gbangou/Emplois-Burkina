@@ -18,6 +18,16 @@ export type RevenueSignals = {
   conversionClicks: number;
   leadSubmits: number;
   clickThroughRate: number;
+  funnel: {
+    jobViews: number;
+    toolViews: number;
+    serviceViews: number;
+    pricingViews: number;
+    serviceClicks: number;
+    alertClicks: number;
+    orderSignals: number;
+    serviceClickRate: number;
+  };
   topPaths: { path: string; count: number }[];
   topTargets: { target: string; count: number }[];
   topSources: { source: string; count: number }[];
@@ -45,6 +55,7 @@ export async function getRevenueSignals(): Promise<RevenueSignals> {
   const pageViews = events.filter((event) => event.type === "page_view");
   const conversionClicks = events.filter((event) => event.type === "conversion_click");
   const leadSubmits = events.filter((event) => event.type === "lead_submit");
+  const funnel = buildFunnel(pageViews, conversionClicks, leadSubmits);
 
   const topPaths = Array.from(
     pageViews.reduce((acc, event) => acc.set(event.path, (acc.get(event.path) || 0) + 1), new Map<string, number>()).entries()
@@ -88,10 +99,37 @@ export async function getRevenueSignals(): Promise<RevenueSignals> {
     conversionClicks: conversionClicks.length,
     leadSubmits: leadSubmits.length,
     clickThroughRate: pageViews.length ? Math.round((conversionClicks.length / pageViews.length) * 1000) / 10 : 0,
+    funnel,
     topPaths,
     topTargets,
     topSources,
     nextActions
+  };
+}
+
+function startsWithAny(value: string | undefined, prefixes: string[]) {
+  return Boolean(value && prefixes.some((prefix) => value.startsWith(prefix)));
+}
+
+function buildFunnel(pageViews: AnalyticsEvent[], conversionClicks: AnalyticsEvent[], leadSubmits: AnalyticsEvent[]): RevenueSignals["funnel"] {
+  const jobViews = pageViews.filter((event) => startsWithAny(event.path, ["/jobs"])).length;
+  const toolViews = pageViews.filter((event) => startsWithAny(event.path, ["/outils"])).length;
+  const serviceViews = pageViews.filter((event) => startsWithAny(event.path, ["/services"])).length;
+  const pricingViews = pageViews.filter((event) => startsWithAny(event.path, ["/grille-tarifaire"])).length;
+  const serviceClicks = conversionClicks.filter((event) => startsWithAny(event.target, ["/services", "/grille-tarifaire"])).length;
+  const alertClicks = conversionClicks.filter((event) => startsWithAny(event.target, ["/alertes"])).length;
+  const orderSignals = conversionClicks.filter((event) => event.source?.startsWith("service_order")).length;
+  const serviceSurfaceViews = jobViews + toolViews + serviceViews + pricingViews;
+
+  return {
+    jobViews,
+    toolViews,
+    serviceViews,
+    pricingViews,
+    serviceClicks,
+    alertClicks,
+    orderSignals: orderSignals + leadSubmits.filter((event) => event.source?.includes("service")).length,
+    serviceClickRate: serviceSurfaceViews ? Math.round((serviceClicks / serviceSurfaceViews) * 1000) / 10 : 0
   };
 }
 
