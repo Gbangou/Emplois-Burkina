@@ -14,18 +14,28 @@ type Props = {
   showShareOnly?: boolean;
 };
 
+const FAV_KEY = "eb_favorites";
+
+function readFavorites() {
+  try {
+    return JSON.parse(localStorage.getItem(FAV_KEY) || "[]") as string[];
+  } catch {
+    return [];
+  }
+}
+
 export function JobDetailActions({ jobId, jobTitle, jobCity, jobCategory, showAlertOnly, showShareOnly }: Props) {
   const [saved, setSaved] = useState(() => {
     if (typeof window === "undefined") return false;
-    return (JSON.parse(localStorage.getItem("jf_favorites") || "[]") as string[]).includes(jobId);
+    return readFavorites().includes(jobId);
   });
   const [alertOpen, setAlertOpen] = useState(false);
   const { toast } = useToast();
 
   function toggleSave() {
-    const favs = JSON.parse(localStorage.getItem("jf_favorites") || "[]") as string[];
+    const favs = readFavorites();
     const next = saved ? favs.filter((id) => id !== jobId) : [...favs, jobId];
-    localStorage.setItem("jf_favorites", JSON.stringify(next));
+    localStorage.setItem(FAV_KEY, JSON.stringify(next));
     setSaved(!saved);
     toast(saved ? "Retiré des favoris" : "Sauvegardé dans vos favoris !", saved ? "info" : "success");
   }

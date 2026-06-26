@@ -30,7 +30,7 @@ const SORT_OPTIONS = [
   { value: "deadline", label: "Deadline proche" }
 ];
 
-const FAV_KEY = "jf_favorites";
+const FAV_KEY = "eb_favorites";
 
 function readFavs(): string[] {
   try { return JSON.parse(localStorage.getItem(FAV_KEY) || "[]"); } catch { return []; }

@@ -22,6 +22,7 @@ import { SiteHeader } from "@/components/site-header";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { JobConversionCard } from "@/components/job-conversion-card";
 import { JobDetailActions } from "./job-detail-actions";
 
 type PageProps = {
@@ -303,6 +304,8 @@ export default async function JobDetailPage({ params }: PageProps) {
                 />
               </CardContent>
             </Card>
+
+            <JobConversionCard job={job} />
 
             {/* Info card */}
             <Card>
