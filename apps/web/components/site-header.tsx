@@ -10,6 +10,7 @@ const NAV = [
   { label: "International", href: "/international" },
   { label: "Guides", href: "/guides" },
   { label: "Marches", href: "/marches" },
+  { label: "Revenus", href: "/revenus" },
   { label: "Services", href: "/services" },
   { label: "Alertes", href: "/jobs#alertes" },
   { label: "Recruteurs", href: "/annonceurs" },
