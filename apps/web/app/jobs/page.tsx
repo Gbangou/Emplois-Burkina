@@ -5,17 +5,28 @@ import { Badge } from "@/components/ui/badge";
 import { JobsExplorer } from "@/components/jobs-explorer";
 import { getJobs, scoreJob } from "@/lib/data";
 
-export const metadata: Metadata = {
-  title: "Offres d'emploi au Burkina Faso | Emplois Burkina",
-  description: "Parcourez toutes les offres d'emploi, concours et stages au Burkina Faso. Filtrez par ville, secteur et type. Offres vérifiées avec score de confiance."
-};
-
 type JobsPageProps = {
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
 };
 
 function one(value: string | string[] | undefined) {
   return Array.isArray(value) ? value[0] || "" : value || "";
+}
+
+export async function generateMetadata({ searchParams }: JobsPageProps): Promise<Metadata> {
+  const params = (await searchParams) || {};
+  const hasFilters = Boolean(one(params.q) || one(params.city) || one(params.category) || one(params.sort));
+
+  return {
+    title: "Offres d'emploi au Burkina Faso",
+    description: "Parcourez toutes les offres d'emploi, concours et stages au Burkina Faso. Filtrez par ville, secteur et type. Offres vérifiées avec score de confiance.",
+    alternates: {
+      canonical: "/jobs"
+    },
+    robots: hasFilters
+      ? { index: false, follow: true, googleBot: { index: false, follow: true } }
+      : { index: true, follow: true }
+  };
 }
 
 export default async function JobsPage({ searchParams }: JobsPageProps) {

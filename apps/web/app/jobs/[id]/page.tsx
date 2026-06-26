@@ -17,6 +17,7 @@ import {
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getJobs } from "@/lib/data";
+import { buildBreadcrumbJsonLd, buildJobPostingJsonLd, getJobDeadline, isIndexableJob, jobCanonicalUrl, SITE_URL } from "@/lib/seo";
 import { SiteHeader } from "@/components/site-header";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -39,13 +40,19 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title,
     description,
+    alternates: {
+      canonical: jobCanonicalUrl(job)
+    },
+    robots: isIndexableJob(job)
+      ? { index: true, follow: true }
+      : { index: false, follow: true, googleBot: { index: false, follow: true } },
     openGraph: {
       title,
       description,
       type: "article",
       locale: "fr_BF",
       siteName: "Emplois Burkina",
-      url: `https://emplois-burkina.com/jobs/${id}`
+      url: jobCanonicalUrl(job)
     },
     twitter: { card: "summary", title, description }
   };
@@ -87,34 +94,13 @@ export default async function JobDetailPage({ params }: PageProps) {
   const job = jobs.find((j) => j.id === id);
   if (!job) notFound();
 
-  const deadline = job.closingDate || job.deadline;
-
-  // JSON-LD structured data for Google Jobs
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "JobPosting",
-    title: job.title,
-    description: job.excerpt || `${job.title} — ${job.company || "Organisation"} — ${job.city || "Burkina Faso"}`,
-    identifier: { "@type": "PropertyValue", name: "Emplois Burkina", value: job.id },
-    datePosted: job.collectedAt ? new Date(job.collectedAt).toISOString().split("T")[0] : undefined,
-    validThrough: job.closingDate || undefined,
-    employmentType: job.type === "CDI" ? "FULL_TIME" : job.type === "Stage" ? "INTERN" : "CONTRACTOR",
-    hiringOrganization: {
-      "@type": "Organization",
-      name: job.company || "Organisation",
-      sameAs: job.sourceUrl || undefined
-    },
-    jobLocation: {
-      "@type": "Place",
-      address: {
-        "@type": "PostalAddress",
-        addressLocality: job.city || "Burkina Faso",
-        addressCountry: "BF"
-      }
-    },
-    url: `https://emplois-burkina.com/jobs/${job.id}`,
-    ...(job.sourceUrl ? { applicationContact: { "@type": "ContactPoint", url: job.sourceUrl } } : {})
-  };
+  const deadline = getJobDeadline(job);
+  const jsonLd = buildJobPostingJsonLd(job);
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+    { name: "Accueil", url: SITE_URL },
+    { name: "Offres", url: `${SITE_URL}/jobs` },
+    { name: job.title, url: jobCanonicalUrl(job) }
+  ]);
   const isUrgent = deadline && new Date(deadline) < new Date(Date.now() + 7 * 86400000);
   const score = job.confidenceScore ?? 70;
 
@@ -128,6 +114,10 @@ export default async function JobDetailPage({ params }: PageProps) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
       <SiteHeader />
 

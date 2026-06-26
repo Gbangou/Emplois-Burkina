@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { getJobs } from "@/lib/data";
 import { GUIDES } from "@/lib/guides";
 import { MARKET_PAGES } from "@/lib/market-pages";
+import { isIndexableJob } from "@/lib/seo";
 
 const BASE = "https://emplois-burkina.com";
 
@@ -23,12 +24,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE}/privacy`, lastModified: now, changeFrequency: "monthly", priority: 0.3 }
   ];
 
-  const jobRoutes: MetadataRoute.Sitemap = jobs.map((job) => ({
-    url: `${BASE}/jobs/${job.id}`,
-    lastModified: job.collectedAt ? new Date(job.collectedAt) : now,
-    changeFrequency: "weekly" as const,
-    priority: job.confidenceScore && job.confidenceScore >= 80 ? 0.8 : 0.65
-  }));
+  const jobRoutes: MetadataRoute.Sitemap = jobs
+    .filter((job) => isIndexableJob(job, now))
+    .map((job) => ({
+      url: `${BASE}/jobs/${job.id}`,
+      lastModified: job.collectedAt ? new Date(job.collectedAt) : now,
+      changeFrequency: "weekly" as const,
+      priority: job.confidenceScore && job.confidenceScore >= 80 ? 0.8 : 0.65
+    }));
 
   const guideRoutes: MetadataRoute.Sitemap = GUIDES.map((guide) => ({
     url: `${BASE}/guides/${guide.slug}`,
