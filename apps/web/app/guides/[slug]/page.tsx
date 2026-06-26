@@ -4,7 +4,9 @@ import { notFound } from "next/navigation";
 
 import { SiteHeader } from "@/components/site-header";
 import { AdSenseSlot } from "@/components/adsense-slot";
+import { RecommendationPanel } from "@/components/recommendation-panel";
 import { getGuide, GUIDES } from "@/lib/guides";
+import { getGuideRecommendations } from "@/lib/recommendations";
 
 type GuidePageProps = {
   params: Promise<{ slug: string }>;
@@ -38,6 +40,7 @@ export default async function GuideDetailPage({ params }: GuidePageProps) {
   }
 
   const adsenseClient = process.env.NEXT_PUBLIC_ADSENSE_CLIENT || process.env.ADSENSE_CLIENT;
+  const recommendations = getGuideRecommendations(guide);
   const url = `https://emplois-burkina.com/guides/${guide.slug}`;
   const jsonLd = {
     "@context": "https://schema.org",
@@ -144,6 +147,8 @@ export default async function GuideDetailPage({ params }: GuidePageProps) {
               </div>
             </div>
           </section>
+
+          <RecommendationPanel items={recommendations} />
         </article>
 
         <aside className="grid gap-4 self-start lg:sticky lg:top-24">
