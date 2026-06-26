@@ -3,6 +3,7 @@ import { AutomationCommandCenter } from "@/components/automation-command-center"
 import { MarketIntelligencePanel } from "@/components/market-intelligence-panel";
 import { ModerationBoard } from "@/components/moderation-board";
 import { ScrapingCommandCenter } from "@/components/scraping-command-center";
+import { ScrapingBusinessBoard } from "@/components/scraping-business-board";
 import { SearchComplianceBoard } from "@/components/search-compliance-board";
 import { SourceGovernanceBoard } from "@/components/source-governance-board";
 import { RevenueSignalBoard } from "@/components/revenue-signal-board";
@@ -10,19 +11,21 @@ import { ServiceOrderBoard } from "@/components/service-order-board";
 import { getAutomationOverview, getMarketIntelligence, getModerationQueue, getScrapingOverview } from "@/lib/data";
 import { getPaymentReadiness } from "@/lib/payment";
 import { getRevenueSignals } from "@/lib/revenue-signals";
+import { getScrapingBusinessPlan } from "@/lib/scraping-business";
 import { getSearchComplianceReport } from "@/lib/search-compliance";
 import { getServiceOrderSummary } from "@/lib/service-orders";
 import { getSourceGovernance } from "@/lib/source-governance";
 
 export default async function OperationsPage() {
-  const [automation, intelligence, scraping, moderationQueue, sourceGovernance, revenueSignals, serviceOrders] = await Promise.all([
+  const [automation, intelligence, scraping, moderationQueue, sourceGovernance, revenueSignals, serviceOrders, scrapingBusiness] = await Promise.all([
     getAutomationOverview(),
     getMarketIntelligence(),
     getScrapingOverview(),
     getModerationQueue(16),
     getSourceGovernance(),
     getRevenueSignals(),
-    getServiceOrderSummary()
+    getServiceOrderSummary(),
+    getScrapingBusinessPlan()
   ]);
   const searchCompliance = getSearchComplianceReport();
   const paymentReadiness = getPaymentReadiness();
@@ -86,6 +89,8 @@ export default async function OperationsPage() {
       <MarketIntelligencePanel intelligence={intelligence} />
 
       <ScrapingCommandCenter overview={scraping} />
+
+      <ScrapingBusinessBoard plan={scrapingBusiness} />
 
       <SourceGovernanceBoard governance={sourceGovernance} />
 

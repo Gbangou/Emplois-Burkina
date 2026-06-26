@@ -1,6 +1,6 @@
 "use client";
 
-import { Bell, Briefcase, Home, Search, UserCircle } from "lucide-react";
+import { Bell, Briefcase, Home, Search, WalletCards } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AlertModal } from "./alert-modal";
@@ -15,7 +15,7 @@ const TABS: Tab[] = [
   { label: "Offres", href: "/jobs", icon: Briefcase },
   { label: "Alertes", href: "/alertes", icon: Bell },
   { label: "Chercher", href: null, icon: Search, action: "search" },
-  { label: "Profil", href: "/profil", icon: UserCircle }
+  { label: "Services", href: "/services", icon: WalletCards }
 ];
 
 export function MobileBottomDock() {
