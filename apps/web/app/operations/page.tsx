@@ -3,15 +3,21 @@ import { AutomationCommandCenter } from "@/components/automation-command-center"
 import { MarketIntelligencePanel } from "@/components/market-intelligence-panel";
 import { ModerationBoard } from "@/components/moderation-board";
 import { ScrapingCommandCenter } from "@/components/scraping-command-center";
+import { SearchComplianceBoard } from "@/components/search-compliance-board";
+import { SourceGovernanceBoard } from "@/components/source-governance-board";
 import { getAutomationOverview, getMarketIntelligence, getModerationQueue, getScrapingOverview } from "@/lib/data";
+import { getSearchComplianceReport } from "@/lib/search-compliance";
+import { getSourceGovernance } from "@/lib/source-governance";
 
 export default async function OperationsPage() {
-  const [automation, intelligence, scraping, moderationQueue] = await Promise.all([
+  const [automation, intelligence, scraping, moderationQueue, sourceGovernance] = await Promise.all([
     getAutomationOverview(),
     getMarketIntelligence(),
     getScrapingOverview(),
-    getModerationQueue(16)
+    getModerationQueue(16),
+    getSourceGovernance()
   ]);
+  const searchCompliance = getSearchComplianceReport();
 
   return (
     <main>
@@ -72,6 +78,10 @@ export default async function OperationsPage() {
       <MarketIntelligencePanel intelligence={intelligence} />
 
       <ScrapingCommandCenter overview={scraping} />
+
+      <SourceGovernanceBoard governance={sourceGovernance} />
+
+      <SearchComplianceBoard report={searchCompliance} />
 
       <ModerationBoard initialJobs={moderationQueue} />
     </main>

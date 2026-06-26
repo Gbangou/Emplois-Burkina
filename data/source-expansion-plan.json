@@ -48,5 +48,35 @@
     "automationMode": "scrape_review_publish",
     "channels": ["catalogue", "seo", "whatsapp"],
     "qualityRules": ["document officiel", "date ouverture/fermeture", "conditions d'eligibilite", "frais explicites"]
+  },
+  {
+    "id": "corporate_direct",
+    "name": "Carrieres entreprises directes",
+    "priority": "high",
+    "coverageGoal": "Banques, telecoms, mines, assurances, energie, transport, cabinets, grandes PME et pages RH officielles.",
+    "sourceExamples": ["pages carrieres entreprises", "LinkedIn officiel", "sites cabinets RH", "communiques recruteurs"],
+    "automationMode": "scrape_review_publish",
+    "channels": ["catalogue", "seo", "linkedin", "whatsapp"],
+    "qualityRules": ["page officielle", "contact entreprise verifiable", "pas de frais candidat", "deadline ou statut publication"]
+  },
+  {
+    "id": "local_media_communes",
+    "name": "Medias locaux, communes et communiques",
+    "priority": "high",
+    "coverageGoal": "Communiques locaux, recrutements communaux, projets de proximite, chantiers, formations et avis publics.",
+    "sourceExamples": ["AIB", "Sidwaya", "mairies", "radios locales", "communiques institutionnels"],
+    "automationMode": "intake_moderate_publish",
+    "channels": ["catalogue", "seo", "whatsapp", "facebook"],
+    "qualityRules": ["source publique citee", "localisation claire", "validation humaine", "resume court vers source officielle"]
+  },
+  {
+    "id": "training_scholarships",
+    "name": "Formations, bourses et insertion",
+    "priority": "medium",
+    "coverageGoal": "Bourses, formations courtes, apprentissage, alternance, programmes jeunes et opportunites d'insertion.",
+    "sourceExamples": ["universites", "centres de formation", "projets bailleurs", "programmes jeunes", "incubateurs"],
+    "automationMode": "scrape_review_publish",
+    "channels": ["catalogue", "seo", "whatsapp", "email_digest"],
+    "qualityRules": ["eligibilite claire", "couts explicites", "date limite", "organisateur verifie"]
   }
 ]

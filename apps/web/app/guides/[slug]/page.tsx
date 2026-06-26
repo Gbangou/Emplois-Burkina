@@ -36,8 +36,36 @@ export default async function GuideDetailPage({ params }: GuidePageProps) {
     notFound();
   }
 
+  const url = `https://emplois-burkina.com/guides/${guide.slug}`;
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        headline: guide.title,
+        description: guide.description,
+        url,
+        inLanguage: "fr-BF",
+        publisher: { "@id": "https://emplois-burkina.com/#organization" },
+        mainEntityOfPage: url
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Accueil", item: "https://emplois-burkina.com" },
+          { "@type": "ListItem", position: 2, name: "Guides", item: "https://emplois-burkina.com/guides" },
+          { "@type": "ListItem", position: 3, name: guide.title, item: url }
+        ]
+      }
+    ]
+  };
+
   return (
     <div className="min-h-screen bg-background">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <SiteHeader />
 
       <section className="border-b border-border bg-white">

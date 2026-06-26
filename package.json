@@ -27,6 +27,7 @@
     "business:roadmap": "node scripts/generate-business-growth-roadmap.mjs",
     "dates:queue": "node scripts/generate-date-review-queue.mjs",
     "audit:offers": "node scripts/audit-offers.mjs",
+    "scraper:governance": "node scripts/generate-source-governance-report.mjs",
     "db:export": "node scripts/export-postgres-seed.mjs",
     "db:sync": "node scripts/sync-local-db.mjs",
     "db:sqlite": "node scripts/sync-sqlite-db.mjs",

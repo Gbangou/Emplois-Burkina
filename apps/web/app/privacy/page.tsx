@@ -59,7 +59,7 @@ Pour exercer ces droits, contactez-nous à contact@emplois-burkina.com.`
   },
   {
     title: "6. Cookies et traceurs",
-    content: `Emplois Burkina utilise uniquement des cookies fonctionnels essentiels au fonctionnement du site (authentification, préférences de langue). Aucun cookie publicitaire ou de tracking tiers n'est utilisé.
+    content: `Emplois Burkina utilise actuellement des cookies fonctionnels essentiels au fonctionnement du site (authentification, préférences de langue). Les publicités ou cookies publicitaires tiers ne doivent être activés qu'avec une information claire, une politique à jour et le respect des règles applicables.
 
 Les favoris et alertes locales sont stockés dans votre navigateur (localStorage) et restent sur votre appareil.`
   },

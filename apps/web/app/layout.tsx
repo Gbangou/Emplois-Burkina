@@ -32,6 +32,33 @@ export const viewport: Viewport = {
   maximumScale: 5
 };
 
+const siteJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://emplois-burkina.com/#organization",
+      name: "Emplois Burkina",
+      url: "https://emplois-burkina.com",
+      logo: "https://emplois-burkina.com/icon-512.png",
+      sameAs: []
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://emplois-burkina.com/#website",
+      url: "https://emplois-burkina.com",
+      name: "Emplois Burkina",
+      publisher: { "@id": "https://emplois-burkina.com/#organization" },
+      inLanguage: "fr-BF",
+      potentialAction: {
+        "@type": "SearchAction",
+        target: "https://emplois-burkina.com/jobs?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+  ]
+};
+
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <AuthProvider>
@@ -48,6 +75,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             dangerouslySetInnerHTML={{
               __html: `if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js').catch(()=>{})}`
             }}
+          />
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(siteJsonLd) }}
           />
         </body>
       </html>
