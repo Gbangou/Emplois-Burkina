@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { SiteHeader } from "@/components/site-header";
+import { AdSenseSlot } from "@/components/adsense-slot";
 import { getGuide, GUIDES } from "@/lib/guides";
 
 type GuidePageProps = {
@@ -36,6 +37,7 @@ export default async function GuideDetailPage({ params }: GuidePageProps) {
     notFound();
   }
 
+  const adsenseClient = process.env.NEXT_PUBLIC_ADSENSE_CLIENT || process.env.ADSENSE_CLIENT;
   const url = `https://emplois-burkina.com/guides/${guide.slug}`;
   const jsonLd = {
     "@context": "https://schema.org",
@@ -109,17 +111,26 @@ export default async function GuideDetailPage({ params }: GuidePageProps) {
       <main className="container grid gap-8 py-10 lg:grid-cols-[1fr_0.34fr]">
         <article className="grid gap-5">
           {guide.sections.map((section, index) => (
-            <section key={section.title} className="rounded-xl border border-border bg-white p-6 shadow-sm">
-              <div className="flex items-start gap-4">
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary text-sm font-black text-primary-foreground">
-                  {index + 1}
-                </span>
-                <div>
-                  <h2 className="text-xl font-black text-foreground">{section.title}</h2>
-                  <p className="mt-3 text-sm font-semibold leading-7 text-muted-foreground">{section.body}</p>
+            <div key={section.title} className="grid gap-5">
+              <section className="rounded-xl border border-border bg-white p-6 shadow-sm">
+                <div className="flex items-start gap-4">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary text-sm font-black text-primary-foreground">
+                    {index + 1}
+                  </span>
+                  <div>
+                    <h2 className="text-xl font-black text-foreground">{section.title}</h2>
+                    <p className="mt-3 text-sm font-semibold leading-7 text-muted-foreground">{section.body}</p>
+                  </div>
                 </div>
-              </div>
-            </section>
+              </section>
+              {index === 1 && (
+                <AdSenseSlot
+                  clientId={adsenseClient}
+                  slot={process.env.NEXT_PUBLIC_ADSENSE_SLOT_GUIDE_INLINE}
+                  format="horizontal"
+                />
+              )}
+            </div>
           ))}
 
           <section className="rounded-xl border border-border bg-white p-6 shadow-sm">
@@ -136,6 +147,11 @@ export default async function GuideDetailPage({ params }: GuidePageProps) {
         </article>
 
         <aside className="grid gap-4 self-start lg:sticky lg:top-24">
+          <AdSenseSlot
+            clientId={adsenseClient}
+            slot={process.env.NEXT_PUBLIC_ADSENSE_SLOT_GUIDE_SIDEBAR}
+            format="rectangle"
+          />
           <div className="rounded-xl border border-border bg-white p-5 shadow-sm">
             <SearchCheck size={18} className="text-primary" />
             <h2 className="mt-4 text-base font-black text-foreground">Intention recherche</h2>

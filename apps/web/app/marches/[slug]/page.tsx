@@ -5,6 +5,7 @@ import type { JobOpportunity } from "@emplois-burkina/domain";
 
 import { JobCard } from "@/components/job-card";
 import { SiteHeader } from "@/components/site-header";
+import { AdSenseSlot } from "@/components/adsense-slot";
 import { getJobs } from "@/lib/data";
 import { getMarketPage, MARKET_PAGES, type MarketPage } from "@/lib/market-pages";
 
@@ -77,6 +78,7 @@ export default async function MarketDetailPage({ params }: MarketDetailProps) {
   const trusted = relatedJobs.filter((job) => (job.confidenceScore || 0) >= 80).length;
   const withDeadline = relatedJobs.filter((job) => Boolean(job.closingDate || job.deadline)).length;
   const allJobsHref = jobsHref(page);
+  const adsenseClient = process.env.NEXT_PUBLIC_ADSENSE_CLIENT || process.env.ADSENSE_CLIENT;
 
   return (
     <div className="min-h-screen bg-background">
@@ -167,9 +169,20 @@ export default async function MarketDetailPage({ params }: MarketDetailProps) {
               </article>
             ))}
           </section>
+
+          <AdSenseSlot
+            clientId={adsenseClient}
+            slot={process.env.NEXT_PUBLIC_ADSENSE_SLOT_MARKET_INLINE}
+            format="horizontal"
+          />
         </div>
 
         <aside className="grid gap-4 self-start lg:sticky lg:top-24">
+          <AdSenseSlot
+            clientId={adsenseClient}
+            slot={process.env.NEXT_PUBLIC_ADSENSE_SLOT_MARKET_SIDEBAR}
+            format="rectangle"
+          />
           <div className="rounded-xl border border-border bg-white p-5 shadow-sm">
             <Bell size={18} className="text-primary" />
             <h2 className="mt-4 text-base font-black text-foreground">Alertes gratuites</h2>

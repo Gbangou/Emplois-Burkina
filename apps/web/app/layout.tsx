@@ -6,6 +6,7 @@ import { ScrollToTop } from "@/components/scroll-to-top";
 import { Toaster } from "@/components/toaster";
 import { AuthProvider } from "@/components/auth-provider";
 import { RevenueAnalytics } from "@/components/revenue-analytics";
+import { AdSenseScript } from "@/components/adsense-script";
 
 export const metadata: Metadata = {
   title: { default: "Emplois Burkina — Emploi & Recrutement au Burkina Faso", template: "%s | Emplois Burkina" },
@@ -80,6 +81,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(siteJsonLd) }}
           />
+          <AdSenseScript />
         </body>
       </html>
     </AuthProvider>
