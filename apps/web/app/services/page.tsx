@@ -1,4 +1,4 @@
-import { ArrowRight, BadgeCheck, BriefcaseBusiness, FileText, GraduationCap, Languages, MessageSquareText, ShieldCheck } from "lucide-react";
+import { ArrowRight, BadgeCheck, BriefcaseBusiness, FileText, GraduationCap, Languages, MessageSquareText, ShieldCheck, WalletCards, Zap } from "lucide-react";
 import type { Metadata } from "next";
 import { SiteHeader } from "@/components/site-header";
 import { LeadCaptureForm } from "@/components/lead-capture-form";
@@ -11,28 +11,40 @@ export const metadata: Metadata = {
 
 const SERVICES = [
   {
+    id: "cv-ats",
     name: "CV ATS Express",
     price: "2 000 FCFA",
     icon: FileText,
-    copy: "CV clair, lisible, adapte au poste vise et pret a envoyer."
+    copy: "CV clair, lisible, adapte au poste vise et pret a envoyer.",
+    delivery: "Livraison numerique",
+    revenue: "Produit d'entree a fort volume"
   },
   {
+    id: "lettre",
     name: "Lettre ciblee",
     price: "1 500 FCFA",
     icon: MessageSquareText,
-    copy: "Lettre courte, specifique et coherente avec l'offre choisie."
+    copy: "Lettre courte, specifique et coherente avec l'offre choisie.",
+    delivery: "Version modifiable",
+    revenue: "Upsell naturel apres une offre consultee"
   },
   {
+    id: "ong-international",
     name: "Pack ONG / International",
     price: "5 000 FCFA",
     icon: Languages,
-    copy: "CV, lettre et checklist pour ONG, ONU, remote ou consulting."
+    copy: "CV, lettre et checklist pour ONG, ONU, remote ou consulting.",
+    delivery: "Pack premium",
+    revenue: "Meilleure marge sur profils ambitieux"
   },
   {
+    id: "entretien",
     name: "Preparation entretien",
     price: "3 000 FCFA",
     icon: BriefcaseBusiness,
-    copy: "Questions probables, pitch personnel et reponses courtes."
+    copy: "Questions probables, pitch personnel et reponses courtes.",
+    delivery: "Guide personnalise",
+    revenue: "Conversion apres preselection"
   }
 ];
 
@@ -42,7 +54,21 @@ const PRINCIPLES = [
   { icon: GraduationCap, label: "Affiliation utile", copy: "Les formations recommandees doivent etre pertinentes, verifiables et clairement marquees." }
 ];
 
-export default function ServicesPage() {
+const DEFAULT_SERVICE = SERVICES[0]!;
+
+type ServicesPageProps = {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+};
+
+function one(value: string | string[] | undefined) {
+  return Array.isArray(value) ? value[0] || "" : value || "";
+}
+
+export default async function ServicesPage({ searchParams }: ServicesPageProps) {
+  const params = (await searchParams) || {};
+  const selectedId = one(params.service);
+  const selected = SERVICES.find((service) => service.id === selectedId) || DEFAULT_SERVICE;
+
   return (
     <div className="min-h-screen bg-background">
       <SiteHeader />
@@ -80,17 +106,27 @@ export default function ServicesPage() {
       <section className="container py-8">
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {SERVICES.map((service) => (
-            <div key={service.name} className="rounded-xl border border-border bg-white p-5 shadow-sm">
+            <a
+              key={service.name}
+              href={`/services?service=${encodeURIComponent(service.id)}#demande`}
+              className={`group rounded-xl border bg-white p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md ${
+                selected.id === service.id ? "border-primary ring-2 ring-primary/10" : "border-border hover:border-primary"
+              }`}
+            >
               <service.icon size={18} className="text-primary" />
               <h2 className="mt-4 text-base font-black text-foreground">{service.name}</h2>
               <p className="mt-1 text-xl font-black text-primary">{service.price}</p>
               <p className="mt-2 text-sm font-semibold leading-relaxed text-muted-foreground">{service.copy}</p>
-            </div>
+              <div className="mt-4 flex items-center justify-between border-t border-border pt-3 text-xs font-black text-muted-foreground">
+                <span>{service.delivery}</span>
+                <ArrowRight size={13} className="transition-transform group-hover:translate-x-0.5 group-hover:text-primary" />
+              </div>
+            </a>
           ))}
         </div>
       </section>
 
-      <section className="border-y border-border bg-muted/30 py-10">
+      <section className="border-y border-border bg-muted/30 py-10" id="demande">
         <div className="container grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
           <div>
             <p className="text-xs font-black uppercase tracking-widest text-primary">Demande rapide</p>
@@ -98,14 +134,36 @@ export default function ServicesPage() {
             <p className="mt-3 text-sm font-semibold leading-relaxed text-muted-foreground">
               Chaque demande alimente le pipeline. La prochaine etape sera le paiement Mobile Money, puis la livraison numerique automatisee.
             </p>
-            <a href="/jobs" className="mt-5 inline-flex h-10 items-center gap-2 rounded-xl border border-border bg-white px-4 text-sm font-black text-foreground hover:border-primary hover:text-primary">
-              Voir les offres <ArrowRight size={14} />
-            </a>
+            <div className="mt-5 grid gap-3">
+              <div className="flex gap-3 rounded-xl border border-border bg-white p-4">
+                <WalletCards size={17} className="mt-0.5 shrink-0 text-primary" />
+                <div>
+                  <p className="text-sm font-black text-foreground">Paiement Mobile Money ready</p>
+                  <p className="mt-0.5 text-xs font-semibold leading-relaxed text-muted-foreground">
+                    La page capture deja le service choisi ; le prochain branchement est le paiement puis la livraison.
+                  </p>
+                </div>
+              </div>
+              <div className="flex gap-3 rounded-xl border border-border bg-white p-4">
+                <Zap size={17} className="mt-0.5 shrink-0 text-primary" />
+                <div>
+                  <p className="text-sm font-black text-foreground">{selected.revenue}</p>
+                  <p className="mt-0.5 text-xs font-semibold leading-relaxed text-muted-foreground">
+                    Service selectionne : {selected.name} · {selected.price}.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
           <div className="rounded-xl border border-border bg-white p-5">
             <LeadCaptureForm
               kind="candidate_service"
               submitLabel="Demander le service"
+              nameLabel="Nom du candidat"
+              namePlaceholder="Votre nom"
+              emailLabel="Email"
+              phoneLabel="WhatsApp"
+              defaultInterest={selected.name}
               interestPlaceholder="Service souhaite : CV, lettre, ONG, entretien..."
               messagePlaceholder="Collez le poste vise, votre secteur, ou le lien de l'offre."
             />

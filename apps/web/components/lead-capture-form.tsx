@@ -9,6 +9,11 @@ type LeadKind = "alert" | "publish" | "sponsor" | "candidate_service" | "contact
 type LeadCaptureFormProps = {
   kind: LeadKind;
   submitLabel: string;
+  nameLabel?: string;
+  namePlaceholder?: string;
+  emailLabel?: string;
+  phoneLabel?: string;
+  defaultInterest?: string;
   interestPlaceholder?: string;
   messagePlaceholder?: string;
 };
@@ -18,6 +23,11 @@ type FormState = "idle" | "loading" | "success";
 export function LeadCaptureForm({
   kind,
   submitLabel,
+  nameLabel = "Nom ou organisation",
+  namePlaceholder = "Ex: Cabinet Faso Conseil",
+  emailLabel = "Email professionnel",
+  phoneLabel = "WhatsApp",
+  defaultInterest = "",
   interestPlaceholder = "Besoin principal",
   messagePlaceholder = "Details utiles"
 }: LeadCaptureFormProps) {
@@ -63,17 +73,16 @@ export function LeadCaptureForm({
       >
         <div className="grid gap-3 place-items-center">
           <span className="flex items-center justify-center w-14 h-14 rounded-full" style={{ background: "rgba(18,132,73,0.12)" }}>
-            <Send size={24} style={{ color: "var(--green)" }} />
+            <Send size={24} className="text-primary" />
           </span>
-          <p className="font-black text-base" style={{ color: "var(--ink-strong)" }}>Demande reçue !</p>
-          <p className="text-sm font-semibold leading-relaxed" style={{ color: "var(--muted)" }}>
+          <p className="font-black text-base text-foreground">Demande reçue !</p>
+          <p className="text-sm font-semibold leading-relaxed text-muted-foreground">
             L'équipe Emplois Burkina traitera votre demande dans les 24h.
           </p>
           <button
             type="button"
             onClick={() => setState("idle")}
-            className="text-sm font-black px-4 py-2 rounded-lg transition-colors"
-            style={{ color: "var(--blue)", background: "#eef7fb", border: "1px solid #d6eaf2" }}
+            className="rounded-lg border border-border bg-white px-4 py-2 text-sm font-black text-foreground transition-colors hover:border-primary hover:text-primary"
           >
             Nouvelle demande
           </button>
@@ -85,20 +94,20 @@ export function LeadCaptureForm({
   return (
     <form action={submit} className="lead-form">
       <label>
-        <span>Nom ou organisation</span>
-        <input name="name" placeholder="Ex: Cabinet Faso Conseil" required />
+        <span>{nameLabel}</span>
+        <input name="name" placeholder={namePlaceholder} required />
       </label>
       <label>
-        <span>Email professionnel</span>
+        <span>{emailLabel}</span>
         <input name="email" placeholder="contact@exemple.com" type="email" />
       </label>
       <label>
-        <span>WhatsApp</span>
+        <span>{phoneLabel}</span>
         <input name="phone" placeholder="+226 70 00 00 00" type="tel" />
       </label>
       <label>
         <span>{interestPlaceholder}</span>
-        <input name="interest" placeholder="Annonce premium, shortlist, sponsor..." required />
+        <input name="interest" placeholder="CV, lettre, ONG, entretien..." defaultValue={defaultInterest} required />
       </label>
       <label className="lead-form__wide">
         <span>{messagePlaceholder}</span>
