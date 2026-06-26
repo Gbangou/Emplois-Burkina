@@ -6,19 +6,22 @@ import { ScrapingCommandCenter } from "@/components/scraping-command-center";
 import { SearchComplianceBoard } from "@/components/search-compliance-board";
 import { SourceGovernanceBoard } from "@/components/source-governance-board";
 import { RevenueSignalBoard } from "@/components/revenue-signal-board";
+import { ServiceOrderBoard } from "@/components/service-order-board";
 import { getAutomationOverview, getMarketIntelligence, getModerationQueue, getScrapingOverview } from "@/lib/data";
 import { getRevenueSignals } from "@/lib/revenue-signals";
 import { getSearchComplianceReport } from "@/lib/search-compliance";
+import { getServiceOrderSummary } from "@/lib/service-orders";
 import { getSourceGovernance } from "@/lib/source-governance";
 
 export default async function OperationsPage() {
-  const [automation, intelligence, scraping, moderationQueue, sourceGovernance, revenueSignals] = await Promise.all([
+  const [automation, intelligence, scraping, moderationQueue, sourceGovernance, revenueSignals, serviceOrders] = await Promise.all([
     getAutomationOverview(),
     getMarketIntelligence(),
     getScrapingOverview(),
     getModerationQueue(16),
     getSourceGovernance(),
-    getRevenueSignals()
+    getRevenueSignals(),
+    getServiceOrderSummary()
   ]);
   const searchCompliance = getSearchComplianceReport();
 
@@ -85,6 +88,8 @@ export default async function OperationsPage() {
       <SourceGovernanceBoard governance={sourceGovernance} />
 
       <RevenueSignalBoard signals={revenueSignals} />
+
+      <ServiceOrderBoard summary={serviceOrders} />
 
       <SearchComplianceBoard report={searchCompliance} />
 
