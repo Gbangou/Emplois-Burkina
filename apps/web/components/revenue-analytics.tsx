@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 
-const TRACKED_PREFIXES = ["/services", "/jobs", "/guides", "/marches", "/revenus"];
+const TRACKED_PREFIXES = ["/services", "/jobs", "/guides", "/marches", "/revenus", "/alertes"];
 
 function sendEvent(payload: { type: "page_view" | "conversion_click" | "lead_submit"; path: string; target?: string; source?: string }) {
   const body = JSON.stringify(payload);
@@ -43,14 +43,16 @@ export function RevenueAnalytics() {
       const target = event.target instanceof Element ? event.target.closest("a") : null;
       const href = target?.getAttribute("href");
 
-      if (!href || !shouldTrack(href)) return;
+      if (!target || !href || !shouldTrack(href)) return;
 
       const url = new URL(href, window.location.origin);
+      const source = target.getAttribute("data-analytics-source") || "link";
+      const label = target.getAttribute("data-analytics-label");
       sendEvent({
         type: "conversion_click",
         path: window.location.pathname,
         target: `${url.pathname}${url.search}${url.hash}`,
-        source: "link"
+        source: label ? `${source}:${label}` : source
       });
     }
 

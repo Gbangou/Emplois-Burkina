@@ -36,6 +36,8 @@ export function RecommendationPanel({ items }: RecommendationPanelProps) {
             <a
               key={item.id}
               href={item.href}
+              data-analytics-source="guide_recommendation"
+              data-analytics-label={item.id}
               className="group rounded-xl border border-border bg-muted/20 p-4 transition-all hover:-translate-y-0.5 hover:border-primary hover:bg-white hover:shadow-sm"
             >
               <div className="flex items-start justify-between gap-3">
