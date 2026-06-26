@@ -14,6 +14,7 @@ const SECTIONS = [
 • Données de contact (numéro WhatsApp, email) lorsque vous créez une alerte ou soumettez un formulaire
 • Critères de recherche pour personnaliser les alertes (ville, secteur, mots-clés)
 • Données techniques de navigation (logs serveur standards, sans tracking publicitaire)
+• Signaux produit anonymes (pages vues, clics internes, formulaires envoyés) sans identifiant publicitaire
 
 Nous ne collectons pas de données sensibles (santé, opinions politiques, religion).`
   },
@@ -24,6 +25,7 @@ Nous ne collectons pas de données sensibles (santé, opinions politiques, relig
 • Envoyer les alertes emploi correspondant à vos critères via WhatsApp ou email
 • Permettre aux recruteurs de vous contacter si vous avez postulé
 • Améliorer la pertinence des résultats de recherche
+• Mesurer les pages qui créent le plus de valeur afin d'améliorer le service
 • Détecter et prévenir les usages abusifs de la plateforme`
   },
   {

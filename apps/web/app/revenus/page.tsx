@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 
 import { SiteHeader } from "@/components/site-header";
 import { NEXT_REVENUE_WORK, REVENUE_ASSUMPTIONS, REVENUE_SCENARIOS } from "@/lib/revenue-projections";
+import { getRevenueSignals } from "@/lib/revenue-signals";
 
 export const metadata: Metadata = {
   title: "Projections de revenus | Emplois Burkina",
@@ -17,7 +18,9 @@ const CHANNELS = [
   { icon: ShieldCheck, label: "Rapports", copy: "Donnees marche anonymisees pour institutions et medias." }
 ];
 
-export default function RevenueProjectionsPage() {
+export default async function RevenueProjectionsPage() {
+  const signals = await getRevenueSignals();
+
   return (
     <div className="min-h-screen bg-background">
       <SiteHeader />
@@ -57,6 +60,43 @@ export default function RevenueProjectionsPage() {
               <p className="mt-2 text-sm font-semibold leading-relaxed text-muted-foreground">{channel.copy}</p>
             </article>
           ))}
+        </div>
+      </section>
+
+      <section className="container pb-8">
+        <div className="rounded-xl border border-border bg-white p-5 shadow-sm">
+          <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+            <div>
+              <p className="text-xs font-black uppercase tracking-widest text-primary">Signaux mesures</p>
+              <h2 className="mt-2 text-2xl font-black text-foreground">Tableau de bord revenu en amorcage</h2>
+              <p className="mt-2 max-w-2xl text-sm font-semibold leading-relaxed text-muted-foreground">
+                Suivi first-party sans cookies ni donnees personnelles: vues, clics vers pages monetisables et demandes envoyees.
+              </p>
+            </div>
+            <div className="grid grid-cols-3 gap-2 text-center">
+              <div className="rounded-xl border border-border bg-muted/20 px-4 py-3">
+                <p className="text-lg font-black text-foreground">{signals.pageViews}</p>
+                <p className="text-[11px] font-black uppercase text-muted-foreground">Vues</p>
+              </div>
+              <div className="rounded-xl border border-border bg-muted/20 px-4 py-3">
+                <p className="text-lg font-black text-foreground">{signals.conversionClicks}</p>
+                <p className="text-[11px] font-black uppercase text-muted-foreground">Clics</p>
+              </div>
+              <div className="rounded-xl border border-border bg-muted/20 px-4 py-3">
+                <p className="text-lg font-black text-foreground">{signals.leadSubmits}</p>
+                <p className="text-[11px] font-black uppercase text-muted-foreground">Leads</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-5 grid gap-3 md:grid-cols-5">
+            {(signals.topPaths.length ? signals.topPaths : [{ path: "Aucune donnee collectee", count: 0 }]).map((item) => (
+              <div key={item.path} className="rounded-xl border border-border bg-muted/20 p-4">
+                <p className="truncate text-xs font-black text-foreground">{item.path}</p>
+                <p className="mt-1 text-[11px] font-bold uppercase text-muted-foreground">{item.count} vues</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

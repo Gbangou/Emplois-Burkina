@@ -53,6 +53,11 @@ export function LeadCaptureForm({
         body: JSON.stringify(payload)
       });
       if (!res.ok) throw new Error();
+      fetch("/api/analytics/events", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type: "lead_submit", path: window.location.pathname, source: kind })
+      }).catch(() => {});
       toast("Demande envoyée avec succès !", "success");
     } catch {
       try {

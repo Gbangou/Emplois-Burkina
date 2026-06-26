@@ -5,6 +5,7 @@ import { MobileBottomDock } from "@/components/mobile-bottom-dock";
 import { ScrollToTop } from "@/components/scroll-to-top";
 import { Toaster } from "@/components/toaster";
 import { AuthProvider } from "@/components/auth-provider";
+import { RevenueAnalytics } from "@/components/revenue-analytics";
 
 export const metadata: Metadata = {
   title: { default: "Emplois Burkina — Emploi & Recrutement au Burkina Faso", template: "%s | Emplois Burkina" },
@@ -41,6 +42,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <CommandPalette />
             <MobileBottomDock />
             <ScrollToTop />
+            <RevenueAnalytics />
           </Toaster>
           <script
             dangerouslySetInnerHTML={{
