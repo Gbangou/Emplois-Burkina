@@ -2,6 +2,7 @@ import { ArrowRight, BadgeCheck, BriefcaseBusiness, FileText, GraduationCap, Lan
 import type { Metadata } from "next";
 import { SiteHeader } from "@/components/site-header";
 import { LeadCaptureForm } from "@/components/lead-capture-form";
+import { ServiceOrderCard } from "@/components/service-order-card";
 import { REVENUE_CHANNELS, REVENUE_OPERATING_RULES, SERVICE_PRODUCTS, type RevenueChannel, type ServiceProduct } from "@/lib/revenue";
 
 export const metadata: Metadata = {
@@ -157,6 +158,31 @@ export default async function ServicesPage({ searchParams }: ServicesPageProps) 
             ))}
           </div>
         </div>
+      </section>
+
+      <section className="container grid gap-8 py-10 lg:grid-cols-[0.92fr_1.08fr]">
+        <div className="self-start rounded-xl border border-border bg-white p-6 shadow-sm">
+          <p className="text-xs font-black uppercase tracking-widest text-primary">Monetisation directe</p>
+          <h2 className="mt-2 text-2xl font-black text-foreground">Transformer les services en commandes payables.</h2>
+          <p className="mt-3 text-sm font-semibold leading-relaxed text-muted-foreground">
+            Le service reste optionnel. Cette etape cree une commande structuree avec montant, reference, statut et paiement Mobile Money a connecter.
+          </p>
+          <div className="mt-5 grid gap-3">
+            <div className="rounded-xl border border-border bg-muted/30 p-4">
+              <p className="text-sm font-black text-foreground">Prochaine integration</p>
+              <p className="mt-1 text-xs font-semibold leading-relaxed text-muted-foreground">
+                Brancher un prestataire de paiement disponible pour le Burkina Faso, puis automatiser confirmation et livraison.
+              </p>
+            </div>
+            <div className="rounded-xl border border-border bg-muted/30 p-4">
+              <p className="text-sm font-black text-foreground">Pourquoi c'est rentable</p>
+              <p className="mt-1 text-xs font-semibold leading-relaxed text-muted-foreground">
+                Un petit volume de commandes services peut rapporter plus qu'AdSense au debut, tout en gardant les offres gratuites.
+              </p>
+            </div>
+          </div>
+        </div>
+        <ServiceOrderCard service={selected} />
       </section>
 
       <section className="border-y border-border bg-muted/30 py-10" id="demande">
