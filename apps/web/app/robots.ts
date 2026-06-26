@@ -14,6 +14,7 @@ export default function robots(): MetadataRoute.Robots {
           "/marches",
           "/marches/",
           "/international",
+          "/alertes",
           "/services",
           "/revenus",
           "/security",

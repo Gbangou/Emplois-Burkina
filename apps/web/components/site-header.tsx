@@ -12,7 +12,7 @@ const NAV = [
   { label: "Marches", href: "/marches" },
   { label: "Revenus", href: "/revenus" },
   { label: "Services", href: "/services" },
-  { label: "Alertes", href: "/jobs#alertes" },
+  { label: "Alertes", href: "/alertes" },
   { label: "Recruteurs", href: "/annonceurs" },
   { label: "Contact", href: "/contact" }
 ];

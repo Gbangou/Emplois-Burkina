@@ -13,7 +13,7 @@ type Tab =
 const TABS: Tab[] = [
   { label: "Accueil", href: "/", icon: Home },
   { label: "Offres", href: "/jobs", icon: Briefcase },
-  { label: "Alertes", href: null, icon: Bell, action: "alert" },
+  { label: "Alertes", href: "/alertes", icon: Bell },
   { label: "Chercher", href: null, icon: Search, action: "search" },
   { label: "Profil", href: "/profil", icon: UserCircle }
 ];
@@ -72,12 +72,12 @@ export function MobileBottomDock() {
 
             if (isAlert) {
               return (
-                <button
+                <a
                   key={tab.label}
-                  type="button"
-                  onClick={() => handleAction(tab.action!)}
+                  href={tab.href || "/alertes"}
                   className="flex-1 flex flex-col items-center justify-center gap-1 relative"
                   aria-label={tab.label}
+                  aria-current={isActive ? "page" : undefined}
                 >
                   {/* Elevated alert button */}
                   <span
@@ -90,7 +90,7 @@ export function MobileBottomDock() {
                     <Bell size={20} className="text-white" strokeWidth={2.2} />
                   </span>
                   <span className="text-[9px] font-black tracking-wide text-muted-foreground mt-0.5">{tab.label}</span>
-                </button>
+                </a>
               );
             }
 
