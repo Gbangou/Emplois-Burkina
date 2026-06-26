@@ -52,9 +52,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       type: "article",
       locale: "fr_BF",
       siteName: "Emplois Burkina",
-      url: jobCanonicalUrl(job)
+      url: jobCanonicalUrl(job),
+      images: [{ url: `/jobs/${id}/opengraph-image`, width: 1200, height: 630, alt: title }]
     },
-    twitter: { card: "summary", title, description }
+    twitter: { card: "summary_large_image", title, description, images: [`/jobs/${id}/opengraph-image`] }
   };
 }
 

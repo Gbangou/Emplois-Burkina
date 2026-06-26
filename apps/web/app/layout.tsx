@@ -29,7 +29,14 @@ export const metadata: Metadata = {
     description: "Plateforme emploi moderne pour le Burkina Faso. Offres vérifiées, alertes WhatsApp, espace recruteur.",
     locale: "fr_BF",
     siteName: "Emplois Burkina",
-    type: "website"
+    type: "website",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Emplois Burkina" }]
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Emplois Burkina — Emploi au Burkina Faso",
+    description: "Offres verifiees, concours, ONG, remote et guides candidats au Burkina Faso.",
+    images: ["/opengraph-image"]
   },
   appleWebApp: { capable: true, statusBarStyle: "black-translucent", title: "Emplois Burkina" },
   robots: { index: true, follow: true }
