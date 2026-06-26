@@ -14,6 +14,13 @@ export const metadata: Metadata = {
   applicationName: "Emplois Burkina",
   metadataBase: new URL("https://emplois-burkina.com"),
   manifest: "/manifest.webmanifest",
+  alternates: {
+    canonical: "/",
+    types: {
+      "application/rss+xml": "/feed.xml",
+      "application/feed+json": "/feed.json"
+    }
+  },
   keywords: ["emploi burkina faso", "recrutement ouagadougou", "offres d'emploi", "concours burkina", "emplois-burkina"],
   openGraph: {
     title: "Emplois Burkina — Emploi au Burkina Faso",
