@@ -120,6 +120,17 @@ export default async function ServicesPage({ searchParams }: ServicesPageProps) 
               La strategie combine contenu SEO, annonces sobres, recommandations utiles, services optionnels et donnees agregees.
             </p>
           </div>
+          <div className="mt-5">
+            <a
+              href="/grille-tarifaire"
+              data-analytics-source="services_cta"
+              data-analytics-label="pricing"
+              className="inline-flex h-11 items-center justify-center gap-2 rounded-xl border border-border bg-white px-5 text-sm font-black text-foreground transition-transform hover:-translate-y-0.5 hover:border-primary"
+            >
+              Voir la grille tarifaire
+              <ArrowRight size={15} />
+            </a>
+          </div>
 
           <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
             {REVENUE_CHANNELS.map((channel) => {
