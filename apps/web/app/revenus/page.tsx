@@ -2,6 +2,8 @@ import { ArrowRight, BarChart3, CircleDollarSign, Gauge, ShieldCheck, TrendingUp
 import type { Metadata } from "next";
 
 import { SiteHeader } from "@/components/site-header";
+import { PassiveRevenueModelBoard } from "@/components/passive-revenue-model-board";
+import { PASSIVE_REVENUE_MODELS, PASSIVE_REVENUE_PRIORITIES } from "@/lib/passive-revenue-models";
 import { NEXT_REVENUE_WORK, REVENUE_ASSUMPTIONS, REVENUE_SCENARIOS } from "@/lib/revenue-projections";
 import { getRevenueSignals } from "@/lib/revenue-signals";
 
@@ -99,6 +101,8 @@ export default async function RevenueProjectionsPage() {
           </div>
         </div>
       </section>
+
+      <PassiveRevenueModelBoard models={PASSIVE_REVENUE_MODELS} priorities={PASSIVE_REVENUE_PRIORITIES} />
 
       <section className="border-y border-border bg-muted/30 py-10">
         <div className="container">
