@@ -22,7 +22,9 @@ export default function robots(): MetadataRoute.Robots {
           "/privacy",
           "/feed.xml",
           "/feed.json",
-          "/ads.txt"
+          "/ads.txt",
+          "/opensearch.xml",
+          "/llms.txt"
         ],
         disallow: ["/api/", "/operations", "/operations/", "/automation", "/automation/", "/admin/", "/profil", "/recruteur/", "/_next/"]
       }

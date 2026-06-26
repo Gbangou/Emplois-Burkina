@@ -18,7 +18,9 @@ export const metadata: Metadata = {
     canonical: "/",
     types: {
       "application/rss+xml": "/feed.xml",
-      "application/feed+json": "/feed.json"
+      "application/feed+json": "/feed.json",
+      "application/opensearchdescription+xml": "/opensearch.xml",
+      "text/plain": "/llms.txt"
     }
   },
   keywords: ["emploi burkina faso", "recrutement ouagadougou", "offres d'emploi", "concours burkina", "emplois-burkina"],
