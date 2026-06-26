@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { buildPaymentInstructions } from "@/lib/payment";
 import { appendServiceOrder, buildServiceOrder, cleanOrderField, findServiceProduct, readServiceOrders } from "@/lib/service-orders";
 
 const ADMIN_SECRET = process.env.EMPLOIS_BURKINA_ADMIN_TOKEN;
@@ -21,7 +22,8 @@ export async function POST(req: NextRequest) {
 
     const order = buildServiceOrder(service, body);
     await appendServiceOrder(order);
-    return NextResponse.json({ ok: true, order }, { headers: { "Cache-Control": "no-store" } });
+    const payment = buildPaymentInstructions({ orderId: order.id, amountFcfa: order.amountFcfa });
+    return NextResponse.json({ ok: true, order, payment }, { headers: { "Cache-Control": "no-store" } });
   } catch {
     return NextResponse.json({ ok: false }, { status: 500, headers: { "Cache-Control": "no-store" } });
   }

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CheckCircle, Loader2, WalletCards } from "lucide-react";
+import { CheckCircle, Copy, Loader2, ShieldCheck, WalletCards } from "lucide-react";
 import type { ServiceProduct } from "@/lib/revenue";
 
 type ServiceOrderCardProps = {
@@ -10,9 +10,24 @@ type ServiceOrderCardProps = {
 
 type OrderState = "idle" | "loading" | "success";
 
+type PaymentInstructions = {
+  provider: string;
+  accountLabel: string;
+  accountNumber?: string;
+  reference: string;
+  amountFcfa: number;
+  status: "ready" | "needs_configuration";
+  steps: string[];
+};
+
+function formatFcfa(value: number) {
+  return new Intl.NumberFormat("fr-FR").format(value);
+}
+
 export function ServiceOrderCard({ service }: ServiceOrderCardProps) {
   const [state, setState] = useState<OrderState>("idle");
   const [orderId, setOrderId] = useState("");
+  const [payment, setPayment] = useState<PaymentInstructions | null>(null);
 
   async function submit(formData: FormData) {
     setState("loading");
@@ -28,9 +43,10 @@ export function ServiceOrderCard({ service }: ServiceOrderCardProps) {
           notes: String(formData.get("notes") || "")
         })
       });
-      const data = await res.json() as { ok?: boolean; order?: { id?: string } };
+      const data = await res.json() as { ok?: boolean; order?: { id?: string }; payment?: PaymentInstructions };
       if (!res.ok || !data.ok) throw new Error("order_failed");
       setOrderId(data.order?.id || "");
+      setPayment(data.payment || null);
       setState("success");
       fetch("/api/analytics/events", {
         method: "POST",
@@ -50,14 +66,63 @@ export function ServiceOrderCard({ service }: ServiceOrderCardProps) {
   if (state === "success") {
     return (
       <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-5">
-        <CheckCircle size={22} className="text-emerald-700" />
+        <div className="flex items-start justify-between gap-3">
+          <CheckCircle size={22} className="text-emerald-700" />
+          {payment?.status === "ready" ? (
+            <span className="rounded-full bg-emerald-100 px-3 py-1 text-[11px] font-black uppercase tracking-wide text-emerald-800">
+              Paiement pret
+            </span>
+          ) : (
+            <span className="rounded-full bg-amber-100 px-3 py-1 text-[11px] font-black uppercase tracking-wide text-amber-800">
+              Config a terminer
+            </span>
+          )}
+        </div>
         <h3 className="mt-4 text-lg font-black text-emerald-950">Commande creee</h3>
         <p className="mt-2 text-sm font-semibold leading-relaxed text-emerald-900/75">
-          Reference {orderId || "enregistree"}. Le paiement Mobile Money sera finalise selon le canal configure.
+          Reference {payment?.reference || orderId || "enregistree"}. Votre demande est tracee pour le service {service.name}.
         </p>
-        <p className="mt-3 text-xs font-bold leading-relaxed text-emerald-900/70">
-          Cette etape prepare l'automatisation paiement + livraison, sans bloquer l'acces gratuit aux offres.
-        </p>
+
+        {payment && (
+          <div className="mt-4 rounded-xl border border-emerald-200 bg-white/70 p-4">
+            <div className="grid gap-3 sm:grid-cols-2">
+              <div>
+                <p className="text-[11px] font-black uppercase tracking-wide text-emerald-900/60">Montant</p>
+                <p className="mt-1 text-lg font-black text-emerald-950">{formatFcfa(payment.amountFcfa)} FCFA</p>
+              </div>
+              <div>
+                <p className="text-[11px] font-black uppercase tracking-wide text-emerald-900/60">Canal</p>
+                <p className="mt-1 text-sm font-black text-emerald-950">{payment.provider}</p>
+              </div>
+              <div>
+                <p className="text-[11px] font-black uppercase tracking-wide text-emerald-900/60">Compte</p>
+                <p className="mt-1 text-sm font-black text-emerald-950">{payment.accountLabel}</p>
+              </div>
+              <div>
+                <p className="text-[11px] font-black uppercase tracking-wide text-emerald-900/60">Numero</p>
+                <p className="mt-1 text-sm font-black text-emerald-950">{payment.accountNumber || "A configurer"}</p>
+              </div>
+            </div>
+            <div className="mt-4 grid gap-2">
+              {payment.steps.map((step) => (
+                <p key={step} className="flex gap-2 text-xs font-bold leading-relaxed text-emerald-900/75">
+                  <ShieldCheck size={13} className="mt-0.5 shrink-0 text-emerald-700" />
+                  {step}
+                </p>
+              ))}
+            </div>
+            {payment.accountNumber && (
+              <button
+                type="button"
+                onClick={() => navigator.clipboard?.writeText(`${payment.accountNumber} - ${payment.reference}`).catch(() => {})}
+                className="mt-4 inline-flex h-10 w-full items-center justify-center gap-2 rounded-xl bg-emerald-700 px-4 text-sm font-black text-white transition-transform hover:-translate-y-0.5"
+              >
+                <Copy size={15} />
+                Copier numero + reference
+              </button>
+            )}
+          </div>
+        )}
       </div>
     );
   }
@@ -73,7 +138,7 @@ export function ServiceOrderCard({ service }: ServiceOrderCardProps) {
         <WalletCards size={22} className="text-primary" />
       </div>
       <p className="mt-3 text-sm font-semibold leading-relaxed text-muted-foreground">
-        Creez une commande traçable. Le paiement Mobile Money sera connecte au fournisseur de paiement choisi.
+        Creez une commande traçable. Les instructions Mobile Money s'affichent apres validation si le compte de paiement est configure.
       </p>
 
       <div className="mt-5 grid gap-3 sm:grid-cols-2">

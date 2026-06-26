@@ -8,6 +8,7 @@ import { SourceGovernanceBoard } from "@/components/source-governance-board";
 import { RevenueSignalBoard } from "@/components/revenue-signal-board";
 import { ServiceOrderBoard } from "@/components/service-order-board";
 import { getAutomationOverview, getMarketIntelligence, getModerationQueue, getScrapingOverview } from "@/lib/data";
+import { getPaymentReadiness } from "@/lib/payment";
 import { getRevenueSignals } from "@/lib/revenue-signals";
 import { getSearchComplianceReport } from "@/lib/search-compliance";
 import { getServiceOrderSummary } from "@/lib/service-orders";
@@ -24,6 +25,7 @@ export default async function OperationsPage() {
     getServiceOrderSummary()
   ]);
   const searchCompliance = getSearchComplianceReport();
+  const paymentReadiness = getPaymentReadiness();
 
   return (
     <main>
@@ -89,7 +91,7 @@ export default async function OperationsPage() {
 
       <RevenueSignalBoard signals={revenueSignals} />
 
-      <ServiceOrderBoard summary={serviceOrders} />
+      <ServiceOrderBoard summary={serviceOrders} payment={paymentReadiness} />
 
       <SearchComplianceBoard report={searchCompliance} />
 

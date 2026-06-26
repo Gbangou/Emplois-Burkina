@@ -1,8 +1,10 @@
-import { Banknote, Clock3, CreditCard, ShoppingBag, Smartphone } from "lucide-react";
+import { Banknote, Clock3, CreditCard, Settings2, ShoppingBag, Smartphone } from "lucide-react";
+import type { PaymentReadiness } from "@/lib/payment";
 import type { ServiceOrderSummary, ServiceOrderStatus } from "@/lib/service-orders";
 
 type ServiceOrderBoardProps = {
   summary: ServiceOrderSummary;
+  payment: PaymentReadiness;
 };
 
 const STATUS_LABEL: Record<ServiceOrderStatus, string> = {
@@ -33,7 +35,7 @@ function Metric({ label, value, icon: Icon }: { label: string; value: string | n
   );
 }
 
-export function ServiceOrderBoard({ summary }: ServiceOrderBoardProps) {
+export function ServiceOrderBoard({ summary, payment }: ServiceOrderBoardProps) {
   return (
     <section className="section">
       <div className="section-head">
@@ -101,6 +103,26 @@ export function ServiceOrderBoard({ summary }: ServiceOrderBoardProps) {
             )}
           </div>
         </div>
+      </div>
+
+      <div className="mt-4 rounded-xl border border-border bg-white p-4 shadow-sm">
+        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+          <div className="flex gap-3">
+            <Settings2 size={18} className="mt-0.5 shrink-0 text-primary" />
+            <div>
+              <h3 className="text-sm font-black text-foreground">Configuration paiement</h3>
+              <p className="mt-1 text-xs font-semibold leading-relaxed text-muted-foreground">
+                {payment.provider} - {payment.accountLabel}. Numero marchand {payment.hasAccountNumber ? "configure" : "non configure"}.
+              </p>
+            </div>
+          </div>
+          <span className={`shrink-0 rounded-full px-3 py-1 text-[11px] font-black uppercase tracking-wide ${
+            payment.status === "ready" ? "bg-emerald-50 text-emerald-800" : "bg-amber-50 text-amber-800"
+          }`}>
+            {payment.status === "ready" ? "Pret" : "Action requise"}
+          </span>
+        </div>
+        <p className="mt-3 text-xs font-bold leading-relaxed text-muted-foreground">{payment.nextAction}</p>
       </div>
 
       <div className="mt-4 rounded-xl border border-border bg-muted/30 p-4">
