@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { getJobs } from "@/lib/data";
+import { GUIDES } from "@/lib/guides";
 
 const BASE = "https://emplois-burkina.com";
 
@@ -11,6 +12,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: BASE, lastModified: now, changeFrequency: "daily", priority: 1.0 },
     { url: `${BASE}/jobs`, lastModified: now, changeFrequency: "hourly", priority: 0.95 },
     { url: `${BASE}/international`, lastModified: now, changeFrequency: "daily", priority: 0.9 },
+    { url: `${BASE}/guides`, lastModified: now, changeFrequency: "weekly", priority: 0.88 },
     { url: `${BASE}/services`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${BASE}/annonceurs`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
     { url: `${BASE}/contact`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
@@ -24,5 +26,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: job.confidenceScore && job.confidenceScore >= 80 ? 0.8 : 0.65
   }));
 
-  return [...staticRoutes, ...jobRoutes];
+  const guideRoutes: MetadataRoute.Sitemap = GUIDES.map((guide) => ({
+    url: `${BASE}/guides/${guide.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.82
+  }));
+
+  return [...staticRoutes, ...guideRoutes, ...jobRoutes];
 }
