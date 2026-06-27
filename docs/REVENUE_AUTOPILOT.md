@@ -81,6 +81,24 @@ est configuree. Si aucun partenaire n'est encore branche, l'utilisateur reste da
 un parcours interne utile. Cela permet de signer un partenaire plus tard sans
 modifier le code, tout en conservant l'historique des clics.
 
+Programmes reels verifies a activer :
+
+| Programme | URL officielle | Usage prioritaire |
+| --- | --- | --- |
+| Coursera Affiliate Program | https://www.coursera.org/about/affiliates | Anglais, certificats, Excel, data, business |
+| Udemy Affiliate Program | https://www.udemy.com/affiliate/ | Bureautique, anglais, productivite, tech abordable |
+| edX Affiliate Program | https://www.edx.org/affiliate-program | Certificats verifies, Excel, IT, business |
+| Skillshare Affiliates | https://www.skillshare.com/en/affiliates | Design, portfolio, creativite, freelance |
+| Grammarly Affiliate Program | https://www.grammarly.com/affiliates | CV anglais, lettres, emails professionnels |
+| Fiverr Affiliate Program | https://www.fiverr.com/partnerships/affiliates | Freelance, remote, portfolio, services digitaux |
+
+Variables a renseigner apres approbation :
+
+- `EMPLOIS_BURKINA_AFFILIATE_CV_ATS_URL`
+- `EMPLOIS_BURKINA_AFFILIATE_ENGLISH_URL`
+- `EMPLOIS_BURKINA_AFFILIATE_REMOTE_URL`
+- `EMPLOIS_BURKINA_AFFILIATE_OFFICE_URL`
+
 ## Priorite maintenant
 
 1. Mettre PostgreSQL manage en production.

@@ -3,7 +3,9 @@ import type { Metadata } from "next";
 import { SiteHeader } from "@/components/site-header";
 import {
   AFFILIATE_GUARDRAILS,
+  AFFILIATE_PROGRAMS,
   AFFILIATE_RECOMMENDATIONS,
+  getAffiliateProgram,
   getAffiliateSummary
 } from "@/lib/affiliate-recommendations";
 
@@ -88,44 +90,79 @@ export default function FormationsPage() {
           </article>
           <article className="rounded-xl border border-border bg-white p-4 shadow-sm">
             <Scale size={17} className="text-primary" />
-            <p className="mt-3 text-2xl font-black text-foreground">{summary.sponsored}</p>
-            <p className="mt-1 text-xs font-black uppercase tracking-wide text-muted-foreground">Sponsors actifs</p>
+            <p className="mt-3 text-2xl font-black text-foreground">{summary.programs}</p>
+            <p className="mt-1 text-xs font-black uppercase tracking-wide text-muted-foreground">Programmes reels</p>
           </article>
         </section>
 
         <section className="mt-8 grid gap-4 md:grid-cols-2">
-          {AFFILIATE_RECOMMENDATIONS.map((item) => (
-            <article key={item.id} className="rounded-xl border border-border bg-white p-5 shadow-sm">
-              <div className="flex items-start justify-between gap-3">
-                <item.icon size={19} className="mt-1 shrink-0 text-primary" />
-                <span className="rounded-full bg-primary/10 px-3 py-1 text-[11px] font-black uppercase tracking-wide text-primary">
-                  {item.payoutReadiness}
-                </span>
-              </div>
-              <h2 className="mt-4 text-xl font-black leading-tight text-foreground">{item.title}</h2>
-              <p className="mt-2 text-sm font-semibold leading-relaxed text-muted-foreground">{item.value}</p>
-              <div className="mt-4 grid gap-2 border-t border-border pt-4 text-xs font-bold leading-relaxed text-muted-foreground">
-                <p>Audience : {item.audience}</p>
-                <p>Modele revenu : {item.revenueModel}</p>
-                <p>Confiance : {item.trustScore}/100</p>
-              </div>
-              <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <span className="inline-flex w-fit items-center gap-2 rounded-full border border-border bg-muted/30 px-3 py-1 text-[11px] font-black uppercase tracking-wide text-muted-foreground">
-                  <Sparkles size={12} />
-                  {item.sponsored ? "Lien sponsorise" : "Recommandation interne"}
-                </span>
+          {AFFILIATE_RECOMMENDATIONS.map((item) => {
+            const program = getAffiliateProgram(item.primaryProgramId);
+
+            return (
+              <article key={item.id} className="rounded-xl border border-border bg-white p-5 shadow-sm">
+                <div className="flex items-start justify-between gap-3">
+                  <item.icon size={19} className="mt-1 shrink-0 text-primary" />
+                  <span className="rounded-full bg-primary/10 px-3 py-1 text-[11px] font-black uppercase tracking-wide text-primary">
+                    {item.payoutReadiness}
+                  </span>
+                </div>
+                <h2 className="mt-4 text-xl font-black leading-tight text-foreground">{item.title}</h2>
+                <p className="mt-2 text-sm font-semibold leading-relaxed text-muted-foreground">{item.value}</p>
+                <div className="mt-4 grid gap-2 border-t border-border pt-4 text-xs font-bold leading-relaxed text-muted-foreground">
+                  <p>Audience : {item.audience}</p>
+                  <p>Modele revenu : {item.revenueModel}</p>
+                  {program && <p>Programme cible : {program.name}</p>}
+                  <p>Confiance : {item.trustScore}/100</p>
+                </div>
+                <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                  <span className="inline-flex w-fit items-center gap-2 rounded-full border border-border bg-muted/30 px-3 py-1 text-[11px] font-black uppercase tracking-wide text-muted-foreground">
+                    <Sparkles size={12} />
+                    {item.sponsored ? "Lien sponsorise" : "Recommandation interne"}
+                  </span>
+                  <a
+                    href={`/formations/${item.id}`}
+                    data-analytics-source="affiliate_recommendation"
+                    data-analytics-label={item.id}
+                    className="inline-flex h-10 items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-black text-primary-foreground transition-transform hover:-translate-y-0.5"
+                  >
+                    Analyser
+                    <ArrowRight size={15} />
+                  </a>
+                </div>
+              </article>
+            );
+          })}
+        </section>
+
+        <section className="mt-8 rounded-xl border border-border bg-white p-5 shadow-sm">
+          <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+            <div>
+              <p className="text-xs font-black uppercase tracking-widest text-primary">Vrais partenaires a activer</p>
+              <h2 className="mt-2 text-2xl font-black text-foreground">Programmes verifies pour transformer le trafic en commissions.</h2>
+            </div>
+            <p className="max-w-xl text-sm font-semibold leading-relaxed text-muted-foreground">
+              Les liens ci-dessous servent a demander l'affiliation. Les liens de commission personnels doivent ensuite etre ajoutes dans l'environnement de production.
+            </p>
+          </div>
+
+          <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+            {AFFILIATE_PROGRAMS.map((program) => (
+              <article key={program.id} className="rounded-xl border border-border bg-muted/30 p-4">
+                <p className="text-sm font-black text-foreground">{program.name}</p>
+                <p className="mt-2 text-xs font-bold leading-relaxed text-muted-foreground">{program.bestFor}</p>
+                <p className="mt-3 text-xs font-black text-primary">{program.commission}</p>
                 <a
-                  href={`/formations/${item.id}`}
-                  data-analytics-source="affiliate_recommendation"
-                  data-analytics-label={item.id}
-                  className="inline-flex h-10 items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-black text-primary-foreground transition-transform hover:-translate-y-0.5"
+                  href={program.applyUrl}
+                  rel="nofollow sponsored"
+                  className="mt-4 inline-flex h-9 items-center justify-center gap-2 rounded-xl border border-border bg-white px-3 text-xs font-black text-foreground transition-colors hover:bg-accent"
                 >
-                  Analyser
-                  <ArrowRight size={15} />
+                  Demander l'affiliation
+                  <ArrowRight size={13} />
                 </a>
-              </div>
-            </article>
-          ))}
+              </article>
+            ))}
+          </div>
         </section>
 
         <section className="mt-8 rounded-xl border border-border bg-foreground p-6 text-white">

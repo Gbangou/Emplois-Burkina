@@ -1,5 +1,16 @@
 import { BookOpenCheck, FileText, Languages, Laptop, type LucideIcon } from "lucide-react";
 
+export type AffiliateProgram = {
+  id: "coursera" | "udemy" | "edx" | "skillshare" | "grammarly" | "fiverr";
+  name: string;
+  applyUrl: string;
+  network: string;
+  bestFor: string;
+  commission: string;
+  payout: string;
+  status: "ready_to_apply" | "apply_first" | "configure_tracking";
+};
+
 export type AffiliateRecommendation = {
   id: string;
   title: string;
@@ -14,8 +25,72 @@ export type AffiliateRecommendation = {
   icon: LucideIcon;
   href: string;
   partnerEnv: string;
+  primaryProgramId: AffiliateProgram["id"];
   sponsored: boolean;
 };
+
+export const AFFILIATE_PROGRAMS: AffiliateProgram[] = [
+  {
+    id: "coursera",
+    name: "Coursera Affiliate Program",
+    applyUrl: "https://www.coursera.org/about/affiliates",
+    network: "Impact",
+    bestFor: "Certificats professionnels, Excel, data, anglais, business et competences internationales.",
+    commission: "Jusqu'a 45% selon produit et performance.",
+    payout: "Via Impact apres validation du programme.",
+    status: "ready_to_apply"
+  },
+  {
+    id: "udemy",
+    name: "Udemy Affiliate Program",
+    applyUrl: "https://www.udemy.com/affiliate/",
+    network: "Impact",
+    bestFor: "Cours abordables, bureautique, anglais, CV, tech, productivite et preparation metier.",
+    commission: "Commission competitive sur achats valides.",
+    payout: "Via Impact avec liens profonds et assets de campagne.",
+    status: "ready_to_apply"
+  },
+  {
+    id: "edx",
+    name: "edX Affiliate Program",
+    applyUrl: "https://www.edx.org/affiliate-program",
+    network: "Impact",
+    bestFor: "Certificats verifies, Excel, IT, business, data et cours universitaires reconnus.",
+    commission: "10% standard, 5% pour sites coupon/remise.",
+    payout: "Via Impact ; cookie annonce de 60 jours.",
+    status: "ready_to_apply"
+  },
+  {
+    id: "skillshare",
+    name: "Skillshare Affiliates",
+    applyUrl: "https://www.skillshare.com/en/affiliates",
+    network: "Impact",
+    bestFor: "Design, portfolio, creativite, freelance, presentation et competences projet.",
+    commission: "20% jusqu'a 34 USD par nouveau client.",
+    payout: "Via Impact, paiement mensuel selon conditions du programme.",
+    status: "ready_to_apply"
+  },
+  {
+    id: "grammarly",
+    name: "Grammarly Affiliate Program",
+    applyUrl: "https://www.grammarly.com/affiliates",
+    network: "Impact",
+    bestFor: "Correction anglais, CV, lettres, emails professionnels et candidatures internationales.",
+    commission: "Structure competitive et bonus selon activation.",
+    payout: "Via Impact apres approbation du compte affilié.",
+    status: "ready_to_apply"
+  },
+  {
+    id: "fiverr",
+    name: "Fiverr Affiliate Program",
+    applyUrl: "https://www.fiverr.com/partnerships/affiliates",
+    network: "Fiverr Affiliates",
+    bestFor: "Freelance, remote, logo, portfolio, services digitaux et economie creator.",
+    commission: "25% a 100% du premier achat + 10% revenue share sur 12 mois selon offre.",
+    payout: "Paiement apres seuil et facture selon le programme Fiverr.",
+    status: "ready_to_apply"
+  }
+];
 
 export const AFFILIATE_RECOMMENDATIONS: AffiliateRecommendation[] = [
   {
@@ -37,6 +112,7 @@ export const AFFILIATE_RECOMMENDATIONS: AffiliateRecommendation[] = [
     icon: FileText,
     href: "/services?service=cv-ats#demande",
     partnerEnv: "EMPLOIS_BURKINA_AFFILIATE_CV_ATS_URL",
+    primaryProgramId: "grammarly",
     sponsored: false
   },
   {
@@ -58,6 +134,7 @@ export const AFFILIATE_RECOMMENDATIONS: AffiliateRecommendation[] = [
     icon: Languages,
     href: "/services?service=entretien#demande",
     partnerEnv: "EMPLOIS_BURKINA_AFFILIATE_ENGLISH_URL",
+    primaryProgramId: "coursera",
     sponsored: false
   },
   {
@@ -79,6 +156,7 @@ export const AFFILIATE_RECOMMENDATIONS: AffiliateRecommendation[] = [
     icon: Laptop,
     href: "/international",
     partnerEnv: "EMPLOIS_BURKINA_AFFILIATE_REMOTE_URL",
+    primaryProgramId: "fiverr",
     sponsored: false
   },
   {
@@ -100,6 +178,7 @@ export const AFFILIATE_RECOMMENDATIONS: AffiliateRecommendation[] = [
     icon: BookOpenCheck,
     href: "/guides",
     partnerEnv: "EMPLOIS_BURKINA_AFFILIATE_OFFICE_URL",
+    primaryProgramId: "udemy",
     sponsored: false
   }
 ];
@@ -119,6 +198,7 @@ export function getAffiliateSummary() {
   return {
     count: AFFILIATE_RECOMMENDATIONS.length,
     averageTrust: Math.round(totalTrust / AFFILIATE_RECOMMENDATIONS.length),
+    programs: AFFILIATE_PROGRAMS.length,
     ready,
     sponsored
   };
@@ -126,6 +206,10 @@ export function getAffiliateSummary() {
 
 export function getAffiliateRecommendation(id: string) {
   return AFFILIATE_RECOMMENDATIONS.find((item) => item.id === id);
+}
+
+export function getAffiliateProgram(id: AffiliateProgram["id"]) {
+  return AFFILIATE_PROGRAMS.find((program) => program.id === id);
 }
 
 export function getAffiliateDestination(id: string) {

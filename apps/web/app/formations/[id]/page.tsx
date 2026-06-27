@@ -7,6 +7,7 @@ import { SiteHeader } from "@/components/site-header";
 import {
   AFFILIATE_GUARDRAILS,
   AFFILIATE_RECOMMENDATIONS,
+  getAffiliateProgram,
   getAffiliateRecommendation
 } from "@/lib/affiliate-recommendations";
 
@@ -50,6 +51,7 @@ export default async function FormationDetailPage({ params }: FormationDetailPro
   }
 
   const adsenseClient = process.env.NEXT_PUBLIC_ADSENSE_CLIENT || process.env.ADSENSE_CLIENT;
+  const program = getAffiliateProgram(item.primaryProgramId);
   const url = `https://emplois-burkina.com/formations/${item.id}`;
   const jsonLd = {
     "@context": "https://schema.org",
@@ -115,6 +117,13 @@ export default async function FormationDetailPage({ params }: FormationDetailPro
               <WalletCards size={18} className="text-primary" />
               <p className="mt-4 text-sm font-black text-foreground">Chemin revenu</p>
               <p className="mt-2 text-sm font-semibold leading-relaxed text-muted-foreground">{item.revenueModel}</p>
+              {program && (
+                <div className="mt-4 rounded-xl border border-border bg-white p-3">
+                  <p className="text-xs font-black uppercase tracking-wide text-primary">{program.network}</p>
+                  <p className="mt-1 text-sm font-black text-foreground">{program.name}</p>
+                  <p className="mt-1 text-xs font-bold leading-relaxed text-muted-foreground">{program.commission}</p>
+                </div>
+              )}
               <a
                 href={`/api/affiliate/${item.id}`}
                 rel={item.sponsored ? "sponsored" : undefined}
@@ -198,6 +207,20 @@ export default async function FormationDetailPage({ params }: FormationDetailPro
               ))}
             </div>
           </div>
+          {program && (
+            <div className="rounded-xl border border-border bg-white p-5 shadow-sm">
+              <GraduationCap size={18} className="text-primary" />
+              <h2 className="mt-4 text-base font-black text-foreground">Programme a demander</h2>
+              <p className="mt-2 text-sm font-semibold leading-relaxed text-muted-foreground">{program.bestFor}</p>
+              <a
+                href={program.applyUrl}
+                rel="nofollow sponsored"
+                className="mt-4 inline-flex h-10 w-full items-center justify-center gap-2 rounded-xl border border-border text-sm font-black text-foreground transition-colors hover:bg-accent"
+              >
+                Candidater <ArrowRight size={14} />
+              </a>
+            </div>
+          )}
           <div className="rounded-xl border border-border bg-muted/30 p-5">
             <WalletCards size={18} className="text-primary" />
             <h2 className="mt-4 text-base font-black text-foreground">Conversion</h2>

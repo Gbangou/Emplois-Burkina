@@ -1,5 +1,6 @@
 import { ArrowLeft, Bot, Gauge, ShieldCheck } from "lucide-react";
 import { AutomationCommandCenter } from "@/components/automation-command-center";
+import { AffiliatePartnerBoard } from "@/components/affiliate-partner-board";
 import { MarketIntelligencePanel } from "@/components/market-intelligence-panel";
 import { ModerationBoard } from "@/components/moderation-board";
 import { ScrapingCommandCenter } from "@/components/scraping-command-center";
@@ -98,6 +99,8 @@ export default async function OperationsPage() {
       <RevenueSignalBoard signals={revenueSignals} />
 
       <RevenueFunnelBoard signals={revenueSignals} orders={serviceOrders} />
+
+      <AffiliatePartnerBoard />
 
       <ServiceOrderBoard summary={serviceOrders} payment={paymentReadiness} />
 
