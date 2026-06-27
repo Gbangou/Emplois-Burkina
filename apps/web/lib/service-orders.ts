@@ -52,6 +52,15 @@ export type ServiceOrderSummary = {
   }>;
 };
 
+export type PublicServiceOrderPaymentStatus = {
+  id: string;
+  serviceName: string;
+  amountFcfa: number;
+  status: ServiceOrderStatus;
+  externalStatus?: ServiceOrderExternalPayment["status"];
+  updatedAt: string;
+};
+
 const cwd = process.cwd().replace(/\\/g, "/");
 const root = cwd.endsWith("apps/web") || cwd.endsWith("apps\\web") ? join(process.cwd(), "..", "..") : process.cwd();
 const runtimeDir = join(root, "data/runtime");
@@ -235,4 +244,24 @@ export async function getServiceOrderSummary(): Promise<ServiceOrderSummary> {
 
 export function findServiceProduct(serviceId: string | undefined) {
   return SERVICE_PRODUCTS.find((item) => item.id === serviceId);
+}
+
+export async function getPublicServiceOrderPaymentStatus(
+  orderId: string | undefined
+): Promise<PublicServiceOrderPaymentStatus | null> {
+  const cleanOrderId = cleanOrderField(orderId, 80);
+  if (!cleanOrderId) return null;
+
+  const orders = await readServiceOrders();
+  const order = orders.find((item) => item.id === cleanOrderId);
+  if (!order) return null;
+
+  return {
+    id: order.id,
+    serviceName: order.serviceName,
+    amountFcfa: order.amountFcfa,
+    status: order.status,
+    externalStatus: order.externalPayment?.status,
+    updatedAt: order.externalPayment?.updatedAt || order.paymentProof?.submittedAt || order.createdAt
+  };
 }

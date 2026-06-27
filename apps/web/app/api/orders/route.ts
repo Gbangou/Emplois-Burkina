@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
         depositId: order.externalPayment.depositId,
         amountFcfa: order.amountFcfa,
         reason: `${service.name} - Emplois Burkina`,
-        returnPath: `/services?service=${encodeURIComponent(service.id)}#paiement`
+        returnPath: `/paiement/retour?order=${encodeURIComponent(order.id)}`
       });
 
       if (page.ok) {
