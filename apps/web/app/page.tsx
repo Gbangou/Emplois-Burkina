@@ -7,17 +7,26 @@ import {
   CheckCircle,
   CircleDollarSign,
   Globe,
+  GraduationCap,
+  Hammer,
+  HeartPulse,
+  Landmark,
   Layers3,
   MapPin,
+  Pickaxe,
   Rss,
   Share2,
   ShieldCheck,
+  ShoppingBag,
   Sparkles,
   TrendingUp,
-  Zap
+  Wheat,
+  Zap,
+  type LucideIcon
 } from "lucide-react";
 
 import { HomeHero } from "@/components/home-hero";
+import { HomeScrapingPulse } from "@/components/home-scraping-pulse";
 import { LiveTicker } from "@/components/live-ticker";
 import { SiteHeader } from "@/components/site-header";
 import { Badge } from "@/components/ui/badge";
@@ -25,17 +34,17 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { getHomeData } from "@/lib/data";
 
-const CATEGORIES = [
-  { label: "ONG / Humanitaire", color: "bg-blue-100 text-blue-800 hover:bg-blue-200", icon: "🌍" },
-  { label: "Informatique / Tech", color: "bg-violet-100 text-violet-800 hover:bg-violet-200", icon: "💻" },
-  { label: "Finance / Comptabilité", color: "bg-emerald-100 text-emerald-800 hover:bg-emerald-200", icon: "📊" },
-  { label: "BTP / Génie civil", color: "bg-orange-100 text-orange-800 hover:bg-orange-200", icon: "🏗️" },
-  { label: "Santé / Médical", color: "bg-red-100 text-red-800 hover:bg-red-200", icon: "🏥" },
-  { label: "Education / Formation", color: "bg-yellow-100 text-yellow-800 hover:bg-yellow-200", icon: "📚" },
-  { label: "Agriculture", color: "bg-lime-100 text-lime-800 hover:bg-lime-200", icon: "🌾" },
-  { label: "Commerce / Vente", color: "bg-pink-100 text-pink-800 hover:bg-pink-200", icon: "🛒" },
-  { label: "Mines / Géologie", color: "bg-stone-100 text-stone-800 hover:bg-stone-200", icon: "⛏️" },
-  { label: "Droit / Juridique", color: "bg-indigo-100 text-indigo-800 hover:bg-indigo-200", icon: "⚖️" }
+const CATEGORIES: Array<{ label: string; color: string; icon: LucideIcon }> = [
+  { label: "ONG / Humanitaire", color: "bg-blue-100 text-blue-800 hover:bg-blue-200", icon: Globe },
+  { label: "Informatique / Tech", color: "bg-violet-100 text-violet-800 hover:bg-violet-200", icon: Bot },
+  { label: "Finance / Comptabilité", color: "bg-emerald-100 text-emerald-800 hover:bg-emerald-200", icon: TrendingUp },
+  { label: "BTP / Génie civil", color: "bg-orange-100 text-orange-800 hover:bg-orange-200", icon: Hammer },
+  { label: "Santé / Médical", color: "bg-red-100 text-red-800 hover:bg-red-200", icon: HeartPulse },
+  { label: "Education / Formation", color: "bg-yellow-100 text-yellow-800 hover:bg-yellow-200", icon: GraduationCap },
+  { label: "Agriculture", color: "bg-lime-100 text-lime-800 hover:bg-lime-200", icon: Wheat },
+  { label: "Commerce / Vente", color: "bg-pink-100 text-pink-800 hover:bg-pink-200", icon: ShoppingBag },
+  { label: "Mines / Géologie", color: "bg-stone-100 text-stone-800 hover:bg-stone-200", icon: Pickaxe },
+  { label: "Droit / Juridique", color: "bg-indigo-100 text-indigo-800 hover:bg-indigo-200", icon: Landmark }
 ];
 
 const HOW_IT_WORKS = [
@@ -99,7 +108,7 @@ function ConfidenceDot({ score }: { score: number }) {
 }
 
 export default async function HomePage() {
-  const { featured, summary, urgent, stream } = await getHomeData();
+  const { automation, featured, scraping, summary, urgent, stream } = await getHomeData();
 
   return (
     <div className="min-h-screen bg-background">
@@ -125,13 +134,15 @@ export default async function HomePage() {
                 href={`/jobs?category=${encodeURIComponent(cat.label)}`}
                 className={`shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-black transition-all hover:scale-105 hover:shadow-sm ${cat.color}`}
               >
-                <span className="text-sm leading-none">{cat.icon}</span>
+                <cat.icon size={13} />
                 {cat.label}
               </a>
             ))}
           </div>
         </div>
       </section>
+
+      <HomeScrapingPulse scraping={scraping} automation={automation} />
 
       {/* ── FEATURED JOBS ──────────────────────────────── */}
       <section className="container py-14">
