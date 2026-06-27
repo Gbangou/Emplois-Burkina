@@ -8,6 +8,7 @@ import {
   getAffiliateProgram,
   getAffiliateSummary
 } from "@/lib/affiliate-recommendations";
+import { FORMATION_INTENT_PAGES } from "@/lib/formation-intents";
 
 export const metadata: Metadata = {
   title: "Formations utiles et outils candidats | Emplois Burkina",
@@ -161,6 +162,31 @@ export default function FormationsPage() {
                   <ArrowRight size={13} />
                 </a>
               </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="mt-8 rounded-xl border border-border bg-white p-5 shadow-sm">
+          <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+            <div>
+              <p className="text-xs font-black uppercase tracking-widest text-primary">Pages SEO a forte intention</p>
+              <h2 className="mt-2 text-2xl font-black text-foreground">Parcours qui peuvent attirer du trafic et convertir.</h2>
+            </div>
+            <p className="max-w-xl text-sm font-semibold leading-relaxed text-muted-foreground">
+              Chaque parcours relie une recherche precise a une recommandation, un service optionnel et des programmes partenaires.
+            </p>
+          </div>
+
+          <div className="mt-5 grid gap-3 md:grid-cols-2">
+            {FORMATION_INTENT_PAGES.map((page) => (
+              <a key={page.slug} href={`/formations/parcours/${page.slug}`} className="group rounded-xl border border-border bg-muted/30 p-4 transition-colors hover:border-primary hover:bg-white">
+                <p className="text-sm font-black leading-snug text-foreground group-hover:text-primary">{page.title}</p>
+                <p className="mt-2 text-xs font-bold leading-relaxed text-muted-foreground">{page.description}</p>
+                <div className="mt-3 flex items-center justify-between text-xs font-black text-primary">
+                  <span>Ouvrir le parcours</span>
+                  <ArrowRight size={13} />
+                </div>
+              </a>
             ))}
           </div>
         </section>

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { AFFILIATE_RECOMMENDATIONS } from "@/lib/affiliate-recommendations";
+import { FORMATION_INTENT_PAGES } from "@/lib/formation-intents";
 import { GUIDES } from "@/lib/guides";
 import { MARKET_PAGES } from "@/lib/market-pages";
 import { SITE_URL } from "@/lib/seo";
@@ -8,6 +9,7 @@ export async function GET() {
   const guideLinks = GUIDES.map((guide) => `- [${guide.title}](${SITE_URL}/guides/${guide.slug}): ${guide.description}`).join("\n");
   const marketLinks = MARKET_PAGES.map((page) => `- [${page.title}](${SITE_URL}/marches/${page.slug}): ${page.description}`).join("\n");
   const formationLinks = AFFILIATE_RECOMMENDATIONS.map((item) => `- [${item.title}](${SITE_URL}/formations/${item.id}): ${item.value}`).join("\n");
+  const formationIntentLinks = FORMATION_INTENT_PAGES.map((page) => `- [${page.title}](${SITE_URL}/formations/parcours/${page.slug}): ${page.description}`).join("\n");
 
   const body = `# Emplois Burkina
 
@@ -35,6 +37,10 @@ ${marketLinks}
 ## Formations et recommandations utiles
 
 ${formationLinks}
+
+## Parcours formation SEO
+
+${formationIntentLinks}
 
 ## Flux publics
 
