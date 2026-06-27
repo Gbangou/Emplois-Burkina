@@ -9,7 +9,8 @@ type ServiceOrderBoardProps = {
 
 const STATUS_LABEL: Record<ServiceOrderStatus, string> = {
   draft: "Brouillon",
-  awaiting_payment: "Paiement attendu"
+  awaiting_payment: "Paiement attendu",
+  payment_submitted: "Paiement signale"
 };
 
 function formatFcfa(value: number) {
@@ -49,9 +50,10 @@ export function ServiceOrderBoard({ summary, payment }: ServiceOrderBoardProps) 
         </p>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-4">
+      <div className="grid gap-4 md:grid-cols-5">
         <Metric label="Commandes" value={summary.totalOrders} icon={ShoppingBag} />
         <Metric label="Paiements attendus" value={summary.awaitingPayment} icon={Clock3} />
+        <Metric label="Paiements signales" value={summary.paymentSubmitted} icon={CreditCard} />
         <Metric label="Mobile money a suivre" value={summary.mobileMoneyPending} icon={Smartphone} />
         <Metric label="Revenu attendu" value={`${formatFcfa(summary.expectedRevenueFcfa)} FCFA`} icon={Banknote} />
       </div>
