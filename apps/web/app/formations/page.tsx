@@ -32,7 +32,7 @@ const itemListJsonLd = {
     "@type": "ListItem",
     position: index + 1,
     name: item.title,
-    url: `https://emplois-burkina.com${item.href}`
+    url: `https://emplois-burkina.com/formations/${item.id}`
   }))
 };
 
@@ -115,13 +115,12 @@ export default function FormationsPage() {
                   {item.sponsored ? "Lien sponsorise" : "Recommandation interne"}
                 </span>
                 <a
-                  href={item.href}
-                  rel={item.sponsored ? "sponsored" : undefined}
+                  href={`/formations/${item.id}`}
                   data-analytics-source="affiliate_recommendation"
                   data-analytics-label={item.id}
                   className="inline-flex h-10 items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-black text-primary-foreground transition-transform hover:-translate-y-0.5"
                 >
-                  Voir la solution
+                  Analyser
                   <ArrowRight size={15} />
                 </a>
               </div>

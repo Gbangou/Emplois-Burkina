@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { getJobs } from "@/lib/data";
+import { AFFILIATE_RECOMMENDATIONS } from "@/lib/affiliate-recommendations";
 import { GUIDES } from "@/lib/guides";
 import { MARKET_PAGES } from "@/lib/market-pages";
 import { isIndexableJob } from "@/lib/seo";
@@ -52,5 +53,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.83
   }));
 
-  return [...staticRoutes, ...guideRoutes, ...marketRoutes, ...jobRoutes];
+  const formationRoutes: MetadataRoute.Sitemap = AFFILIATE_RECOMMENDATIONS.map((item) => ({
+    url: `${BASE}/formations/${item.id}`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.81
+  }));
+
+  return [...staticRoutes, ...guideRoutes, ...marketRoutes, ...formationRoutes, ...jobRoutes];
 }
