@@ -1,6 +1,7 @@
-import { ArrowRight, FileCheck2, FileText, Sparkles } from "lucide-react";
+import { ArrowRight, FileCheck2, FileText, GraduationCap, Sparkles } from "lucide-react";
 import type { JobOpportunity } from "@emplois-burkina/domain";
 import { Card, CardContent } from "@/components/ui/card";
+import { getBestFormationIntentForJob } from "@/lib/formation-intents";
 
 type JobConversionCardProps = {
   job: JobOpportunity;
@@ -12,6 +13,7 @@ function serviceHref(service: "cv-ats" | "lettre") {
 
 export function JobConversionCard({ job }: JobConversionCardProps) {
   const target = [job.title, job.company, job.city].filter(Boolean).join(" - ");
+  const formationIntent = getBestFormationIntentForJob(job);
 
   return (
     <Card className="border-primary/20 bg-primary/5">
@@ -61,6 +63,20 @@ export function JobConversionCard({ job }: JobConversionCardProps) {
             </span>
             <ArrowRight size={13} className="text-primary" />
           </a>
+          {formationIntent && (
+            <a
+              href={`/formations/parcours/${formationIntent.slug}`}
+              data-analytics-source="job_detail_conversion"
+              data-analytics-label={`formation_intent:${formationIntent.slug}`}
+              className="flex items-center justify-between gap-3 rounded-xl border border-border bg-white px-3 py-2.5 text-sm font-black text-foreground transition-colors hover:border-primary"
+            >
+              <span className="flex items-center gap-2">
+                <GraduationCap size={14} className="text-primary" />
+                Formation utile pour cette offre
+              </span>
+              <ArrowRight size={13} className="text-primary" />
+            </a>
+          )}
         </div>
       </CardContent>
     </Card>

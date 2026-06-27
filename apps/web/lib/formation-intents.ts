@@ -106,3 +106,54 @@ export const FORMATION_INTENT_PAGES: FormationIntentPage[] = [
 export function getFormationIntentPage(slug: string) {
   return FORMATION_INTENT_PAGES.find((page) => page.slug === slug);
 }
+
+type JobLike = {
+  title?: string | null;
+  company?: string | null;
+  city?: string | null;
+  category?: string | null;
+  type?: string | null;
+  tags?: string[] | null;
+};
+
+function normalize(value: string) {
+  return value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
+const INTENT_MATCHERS: Array<{ slug: string; terms: string[] }> = [
+  {
+    slug: "formation-excel-emploi-administratif",
+    terms: ["administratif", "assistant", "secretaire", "rh", "comptable", "finance", "bureau", "operation", "excel", "gestion"]
+  },
+  {
+    slug: "anglais-entretien-ong-burkina",
+    terms: ["ong", "humanitaire", "international", "projet", "anglais", "development", "un", "onu", "remote"]
+  },
+  {
+    slug: "cv-ats-ong-banque-mines",
+    terms: ["banque", "mine", "mines", "finance", "audit", "ong", "projet", "coordinateur", "responsable", "manager"]
+  },
+  {
+    slug: "remote-freelance-debutant-afrique",
+    terms: ["remote", "freelance", "distance", "online", "digital", "tech", "informatique", "data", "support", "developpeur"]
+  }
+];
+
+export function getBestFormationIntentForJob(job: JobLike) {
+  const haystack = normalize([
+    job.title,
+    job.company,
+    job.city,
+    job.category,
+    job.type,
+    ...(job.tags || [])
+  ].filter(Boolean).join(" "));
+
+  const scored = INTENT_MATCHERS.map((matcher) => ({
+    slug: matcher.slug,
+    score: matcher.terms.reduce((sum, term) => sum + (haystack.includes(normalize(term)) ? 1 : 0), 0)
+  })).sort((a, b) => b.score - a.score);
+
+  const best = scored[0];
+  return getFormationIntentPage(best && best.score > 0 ? best.slug : "cv-ats-ong-banque-mines");
+}

@@ -134,7 +134,8 @@ function buildFunnel(pageViews: AnalyticsEvent[], conversionClicks: AnalyticsEve
   const affiliateClicks = conversionClicks.filter((event) =>
     startsWithAny(event.target, ["/formations"]) ||
     event.source?.startsWith("affiliate_recommendation") ||
-    event.source?.startsWith("affiliate_redirect")
+    event.source?.startsWith("affiliate_redirect") ||
+    event.source?.includes("formation_intent")
   ).length;
   const alertClicks = conversionClicks.filter((event) => startsWithAny(event.target, ["/alertes"])).length;
   const orderSignals = conversionClicks.filter((event) => event.source?.startsWith("service_order")).length;
@@ -209,7 +210,9 @@ function buildNextActions(input: {
   }
 
   const affiliateSource = input.topSources.find((source) =>
-    source.source.startsWith("affiliate_recommendation") || source.source.startsWith("affiliate_redirect")
+    source.source.startsWith("affiliate_recommendation") ||
+    source.source.startsWith("affiliate_redirect") ||
+    source.source.includes("formation_intent")
   );
   if (affiliateSource) {
     actions.push({
