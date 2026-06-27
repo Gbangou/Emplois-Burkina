@@ -1,6 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
-import { buildPaymentInstructions } from "@/lib/payment";
-import { appendServiceOrder, buildServiceOrder, cleanOrderField, findServiceProduct, readServiceOrders } from "@/lib/service-orders";
+import { buildPaymentInstructions, createPawaPayPaymentPage, getPaymentMode } from "@/lib/payment";
+import {
+  appendServiceOrder,
+  buildServiceOrder,
+  cleanOrderField,
+  findServiceProduct,
+  readServiceOrders,
+  updateServiceOrderExternalPayment
+} from "@/lib/service-orders";
 
 const ADMIN_SECRET = process.env.EMPLOIS_BURKINA_ADMIN_TOKEN;
 
@@ -23,6 +30,26 @@ export async function POST(req: NextRequest) {
     const order = buildServiceOrder(service, body);
     await appendServiceOrder(order);
     const payment = buildPaymentInstructions({ orderId: order.id, amountFcfa: order.amountFcfa });
+
+    if (getPaymentMode() === "pawapay_payment_page" && order.externalPayment?.depositId) {
+      const page = await createPawaPayPaymentPage({
+        depositId: order.externalPayment.depositId,
+        amountFcfa: order.amountFcfa,
+        reason: `${service.name} - Emplois Burkina`,
+        returnPath: `/services?service=${encodeURIComponent(service.id)}#paiement`
+      });
+
+      if (page.ok) {
+        payment.redirectUrl = page.redirectUrl;
+        await updateServiceOrderExternalPayment(order.id, {
+          ...order.externalPayment,
+          redirectUrl: page.redirectUrl,
+          status: "redirect_ready",
+          updatedAt: new Date().toISOString()
+        });
+      }
+    }
+
     return NextResponse.json({ ok: true, order, payment }, { headers: { "Cache-Control": "no-store" } });
   } catch {
     return NextResponse.json({ ok: false }, { status: 500, headers: { "Cache-Control": "no-store" } });

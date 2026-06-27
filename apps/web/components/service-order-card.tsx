@@ -11,12 +11,15 @@ type ServiceOrderCardProps = {
 type OrderState = "idle" | "loading" | "success" | "proof_loading" | "proof_sent";
 
 type PaymentInstructions = {
+  mode: "manual_mobile_money" | "pawapay_payment_page";
   provider: string;
   accountLabel: string;
   accountNumber?: string;
   reference: string;
   amountFcfa: number;
   status: "ready" | "needs_configuration";
+  redirectUrl?: string;
+  requiresProof: boolean;
   steps: string[];
 };
 
@@ -132,6 +135,15 @@ export function ServiceOrderCard({ service }: ServiceOrderCardProps) {
                 </p>
               ))}
             </div>
+            {payment.redirectUrl && (
+              <a
+                href={payment.redirectUrl}
+                className="mt-4 inline-flex h-10 w-full items-center justify-center gap-2 rounded-xl bg-emerald-700 px-4 text-sm font-black text-white transition-transform hover:-translate-y-0.5"
+              >
+                <WalletCards size={15} />
+                Payer maintenant avec pawaPay
+              </a>
+            )}
             {payment.accountNumber && (
               <>
                 <button
@@ -143,14 +155,14 @@ export function ServiceOrderCard({ service }: ServiceOrderCardProps) {
                   Copier numero + reference
                 </button>
 
-                {state === "proof_sent" ? (
+                {payment.requiresProof && state === "proof_sent" ? (
                   <div className="mt-4 rounded-xl border border-emerald-200 bg-emerald-100/70 p-4">
                     <p className="text-sm font-black text-emerald-950">Preuve recue</p>
                     <p className="mt-1 text-xs font-bold leading-relaxed text-emerald-900/75">
                       Votre paiement est signale. La commande passe dans la file de verification et de livraison.
                     </p>
                   </div>
-                ) : (
+                ) : payment.requiresProof ? (
                   <form action={submitProof} className="mt-4 rounded-xl border border-emerald-200 bg-white p-4" id="preuve-paiement">
                     <p className="text-sm font-black text-emerald-950">Signaler le paiement</p>
                     <p className="mt-1 text-xs font-bold leading-relaxed text-emerald-900/70">
@@ -178,7 +190,7 @@ export function ServiceOrderCard({ service }: ServiceOrderCardProps) {
                       {state === "proof_loading" ? "Envoi..." : "J'ai paye, envoyer la preuve"}
                     </button>
                   </form>
-                )}
+                ) : null}
               </>
             )}
           </div>

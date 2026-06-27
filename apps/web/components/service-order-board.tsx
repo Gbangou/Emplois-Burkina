@@ -114,7 +114,11 @@ export function ServiceOrderBoard({ summary, payment }: ServiceOrderBoardProps) 
             <div>
               <h3 className="text-sm font-black text-foreground">Configuration paiement</h3>
               <p className="mt-1 text-xs font-semibold leading-relaxed text-muted-foreground">
-                {payment.provider} - {payment.accountLabel}. Numero marchand {payment.hasAccountNumber ? "configure" : "non configure"}.
+                {payment.provider} - {payment.accountLabel}. Mode {payment.mode === "pawapay_payment_page" ? "agregateur" : "mobile money direct"}.
+              </p>
+              <p className="mt-1 text-[11px] font-bold leading-relaxed text-muted-foreground">
+                Numero marchand {payment.hasAccountNumber ? "configure" : "non configure"}.
+                Token agregateur {payment.hasAggregatorToken ? "configure" : "non configure"}.
               </p>
             </div>
           </div>

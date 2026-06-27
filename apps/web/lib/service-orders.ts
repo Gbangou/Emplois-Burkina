@@ -1,5 +1,6 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
+import { randomUUID } from "node:crypto";
 import { SERVICE_PRODUCTS, type ServiceProduct } from "@/lib/revenue";
 
 export type ServiceOrderStatus = "draft" | "awaiting_payment" | "payment_submitted";
@@ -9,6 +10,15 @@ export type ServiceOrderPaymentProof = {
   transactionId?: string;
   note?: string;
   submittedAt: string;
+};
+
+export type ServiceOrderExternalPayment = {
+  provider: "pawapay";
+  depositId: string;
+  redirectUrl?: string;
+  status: "created" | "redirect_ready" | "completed" | "failed" | "needs_attention";
+  providerTransactionId?: string;
+  updatedAt: string;
 };
 
 export type ServiceOrder = {
@@ -23,6 +33,7 @@ export type ServiceOrder = {
   email?: string;
   notes?: string;
   paymentProof?: ServiceOrderPaymentProof;
+  externalPayment?: ServiceOrderExternalPayment;
   createdAt: string;
 };
 
@@ -91,8 +102,63 @@ export function buildServiceOrder(service: ServiceProduct, body: Record<string, 
     phone: cleanOrderField(body.phone, 40),
     email: cleanOrderField(body.email, 160),
     notes: cleanOrderField(body.notes, 800),
+    externalPayment: process.env.EMPLOIS_BURKINA_PAYMENT_MODE === "pawapay_payment_page"
+      ? {
+          provider: "pawapay",
+          depositId: randomUUID(),
+          status: "created",
+          updatedAt: new Date().toISOString()
+        }
+      : undefined,
     createdAt: new Date().toISOString()
   };
+}
+
+export async function updateServiceOrderExternalPayment(
+  orderId: string | undefined,
+  externalPayment: ServiceOrderExternalPayment
+): Promise<ServiceOrder | null> {
+  const cleanOrderId = cleanOrderField(orderId, 80);
+  if (!cleanOrderId) return null;
+
+  const orders = await readServiceOrders();
+  const index = orders.findIndex((order) => order.id === cleanOrderId);
+  const existing = index === -1 ? undefined : orders[index];
+  if (!existing) return null;
+
+  const updated: ServiceOrder = { ...existing, externalPayment };
+  orders[index] = updated;
+  await writeServiceOrders(orders);
+  return updated;
+}
+
+export async function updateServiceOrderByDepositId(
+  depositId: string | undefined,
+  status: ServiceOrderExternalPayment["status"],
+  providerTransactionId?: string
+): Promise<ServiceOrder | null> {
+  const cleanDepositId = cleanOrderField(depositId, 120);
+  if (!cleanDepositId) return null;
+
+  const orders = await readServiceOrders();
+  const index = orders.findIndex((order) => order.externalPayment?.depositId === cleanDepositId);
+  const existing = index === -1 ? undefined : orders[index];
+  if (!existing?.externalPayment) return null;
+
+  const updated: ServiceOrder = {
+    ...existing,
+    status: status === "completed" ? "payment_submitted" : existing.status,
+    externalPayment: {
+      ...existing.externalPayment,
+      status,
+      providerTransactionId: cleanOrderField(providerTransactionId, 160),
+      updatedAt: new Date().toISOString()
+    }
+  };
+
+  orders[index] = updated;
+  await writeServiceOrders(orders);
+  return updated;
 }
 
 export async function submitServiceOrderPaymentProof(
