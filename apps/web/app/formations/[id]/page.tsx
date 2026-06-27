@@ -116,7 +116,7 @@ export default async function FormationDetailPage({ params }: FormationDetailPro
               <p className="mt-4 text-sm font-black text-foreground">Chemin revenu</p>
               <p className="mt-2 text-sm font-semibold leading-relaxed text-muted-foreground">{item.revenueModel}</p>
               <a
-                href={item.href}
+                href={`/api/affiliate/${item.id}`}
                 rel={item.sponsored ? "sponsored" : undefined}
                 data-analytics-source="affiliate_detail"
                 data-analytics-label={item.id}
@@ -205,7 +205,7 @@ export default async function FormationDetailPage({ params }: FormationDetailPro
               Le bon partenaire ou service doit generer une valeur mesurable sans bloquer les offres gratuites.
             </p>
             <a
-              href={item.href}
+              href={`/api/affiliate/${item.id}`}
               data-analytics-source="affiliate_sidebar"
               data-analytics-label={item.id}
               className="mt-4 inline-flex h-10 w-full items-center justify-center gap-2 rounded-xl border border-border bg-white text-sm font-black text-foreground transition-colors hover:bg-accent"

@@ -69,8 +69,17 @@ Sources :
 - WhatsApp Business Cloud API
 - Paiement Mobile Money via aggregateur local/regional
 - AdSense apres validation Google
+- URLs partenaires affiliation dans `EMPLOIS_BURKINA_AFFILIATE_*_URL`
 - Email transactionnel pour factures et relances
 - Analytics produit et erreurs
+
+## Affiliation quasi automatique
+
+Les pages `/formations/*` passent par `/api/affiliate/[id]`.
+Cette route enregistre le clic business puis redirige vers l'URL partenaire si elle
+est configuree. Si aucun partenaire n'est encore branche, l'utilisateur reste dans
+un parcours interne utile. Cela permet de signer un partenaire plus tard sans
+modifier le code, tout en conservant l'historique des clics.
 
 ## Priorite maintenant
 

@@ -13,6 +13,7 @@ export type AffiliateRecommendation = {
   payoutReadiness: "Pret" | "A negocier" | "A connecter";
   icon: LucideIcon;
   href: string;
+  partnerEnv: string;
   sponsored: boolean;
 };
 
@@ -35,6 +36,7 @@ export const AFFILIATE_RECOMMENDATIONS: AffiliateRecommendation[] = [
     payoutReadiness: "Pret",
     icon: FileText,
     href: "/services?service=cv-ats#demande",
+    partnerEnv: "EMPLOIS_BURKINA_AFFILIATE_CV_ATS_URL",
     sponsored: false
   },
   {
@@ -55,6 +57,7 @@ export const AFFILIATE_RECOMMENDATIONS: AffiliateRecommendation[] = [
     payoutReadiness: "A negocier",
     icon: Languages,
     href: "/services?service=entretien#demande",
+    partnerEnv: "EMPLOIS_BURKINA_AFFILIATE_ENGLISH_URL",
     sponsored: false
   },
   {
@@ -75,6 +78,7 @@ export const AFFILIATE_RECOMMENDATIONS: AffiliateRecommendation[] = [
     payoutReadiness: "A connecter",
     icon: Laptop,
     href: "/international",
+    partnerEnv: "EMPLOIS_BURKINA_AFFILIATE_REMOTE_URL",
     sponsored: false
   },
   {
@@ -95,6 +99,7 @@ export const AFFILIATE_RECOMMENDATIONS: AffiliateRecommendation[] = [
     payoutReadiness: "A negocier",
     icon: BookOpenCheck,
     href: "/guides",
+    partnerEnv: "EMPLOIS_BURKINA_AFFILIATE_OFFICE_URL",
     sponsored: false
   }
 ];
@@ -121,4 +126,23 @@ export function getAffiliateSummary() {
 
 export function getAffiliateRecommendation(id: string) {
   return AFFILIATE_RECOMMENDATIONS.find((item) => item.id === id);
+}
+
+export function getAffiliateDestination(id: string) {
+  const item = getAffiliateRecommendation(id);
+  if (!item) return null;
+
+  const configured = process.env[item.partnerEnv];
+  if (configured) {
+    try {
+      const url = new URL(configured);
+      if (url.protocol === "https:" || url.protocol === "http:") {
+        return { item, href: url.toString(), external: true };
+      }
+    } catch {
+      return { item, href: item.href, external: false };
+    }
+  }
+
+  return { item, href: item.href, external: false };
 }

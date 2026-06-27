@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { mkdir, readFile, writeFile } from "node:fs/promises";
-import { dirname } from "node:path";
+import { readFile } from "node:fs/promises";
 
-import { ANALYTICS_EVENTS_PATH, type AnalyticsEvent, type AnalyticsEventType } from "@/lib/revenue-signals";
+import { ANALYTICS_EVENTS_PATH, appendAnalyticsEvent, type AnalyticsEvent, type AnalyticsEventType } from "@/lib/revenue-signals";
 
 const ADMIN_SECRET = process.env.EMPLOIS_BURKINA_ADMIN_TOKEN;
 const TYPES: AnalyticsEventType[] = ["page_view", "conversion_click", "lead_submit"];
@@ -28,26 +27,17 @@ async function readEvents(): Promise<AnalyticsEvent[]> {
   }
 }
 
-async function writeEvent(event: AnalyticsEvent) {
-  const events = await readEvents();
-  events.push(event);
-  await mkdir(dirname(ANALYTICS_EVENTS_PATH), { recursive: true });
-  await writeFile(ANALYTICS_EVENTS_PATH, JSON.stringify(events.slice(-5000), null, 2), "utf8");
-}
-
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json() as Partial<AnalyticsEvent>;
     const type = TYPES.includes(body.type as AnalyticsEventType) ? body.type as AnalyticsEventType : "page_view";
     const path = clean(body.path, 180) || "/";
 
-    await writeEvent({
-      id: `evt_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+    await appendAnalyticsEvent({
       type,
       path,
       target: clean(body.target, 220),
-      source: clean(body.source, 120),
-      createdAt: new Date().toISOString()
+      source: clean(body.source, 120)
     });
 
     return NextResponse.json({ ok: true }, { headers: { "Cache-Control": "no-store" } });

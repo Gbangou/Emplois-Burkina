@@ -1,5 +1,5 @@
-import { readFile } from "node:fs/promises";
-import { join } from "node:path";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { dirname, join } from "node:path";
 
 export type AnalyticsEventType = "page_view" | "conversion_click" | "lead_submit";
 
@@ -50,6 +50,17 @@ async function readEvents(): Promise<AnalyticsEvent[]> {
   } catch {
     return [];
   }
+}
+
+export async function appendAnalyticsEvent(event: Omit<AnalyticsEvent, "id" | "createdAt">) {
+  const events = await readEvents();
+  events.push({
+    ...event,
+    id: `evt_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+    createdAt: new Date().toISOString()
+  });
+  await mkdir(dirname(ANALYTICS_EVENTS_PATH), { recursive: true });
+  await writeFile(ANALYTICS_EVENTS_PATH, JSON.stringify(events.slice(-5000), null, 2), "utf8");
 }
 
 export async function getRevenueSignals(): Promise<RevenueSignals> {
@@ -120,7 +131,11 @@ function buildFunnel(pageViews: AnalyticsEvent[], conversionClicks: AnalyticsEve
   const pricingViews = pageViews.filter((event) => startsWithAny(event.path, ["/grille-tarifaire"])).length;
   const affiliateViews = pageViews.filter((event) => startsWithAny(event.path, ["/formations"])).length;
   const serviceClicks = conversionClicks.filter((event) => startsWithAny(event.target, ["/services", "/grille-tarifaire"])).length;
-  const affiliateClicks = conversionClicks.filter((event) => startsWithAny(event.target, ["/formations"]) || event.source?.startsWith("affiliate_recommendation")).length;
+  const affiliateClicks = conversionClicks.filter((event) =>
+    startsWithAny(event.target, ["/formations"]) ||
+    event.source?.startsWith("affiliate_recommendation") ||
+    event.source?.startsWith("affiliate_redirect")
+  ).length;
   const alertClicks = conversionClicks.filter((event) => startsWithAny(event.target, ["/alertes"])).length;
   const orderSignals = conversionClicks.filter((event) => event.source?.startsWith("service_order")).length;
   const serviceSurfaceViews = jobViews + toolViews + serviceViews + pricingViews + affiliateViews;
@@ -193,7 +208,9 @@ function buildNextActions(input: {
     });
   }
 
-  const affiliateSource = input.topSources.find((source) => source.source.startsWith("affiliate_recommendation"));
+  const affiliateSource = input.topSources.find((source) =>
+    source.source.startsWith("affiliate_recommendation") || source.source.startsWith("affiliate_redirect")
+  );
   if (affiliateSource) {
     actions.push({
       title: "Brancher les meilleurs partenaires formation",
