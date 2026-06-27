@@ -25,7 +25,22 @@
       "name": "Alerte WhatsApp",
       "short_name": "Alertes",
       "description": "Activer une alerte",
-      "url": "/jobs#alertes"
+      "url": "/alertes",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Test CV ATS",
+      "short_name": "CV ATS",
+      "description": "Tester rapidement un CV",
+      "url": "/outils",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Services candidats",
+      "short_name": "Services",
+      "description": "CV, lettre et entretien",
+      "url": "/services",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
     }
   ]
 }

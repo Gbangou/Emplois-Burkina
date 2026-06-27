@@ -7,6 +7,7 @@ import { Toaster } from "@/components/toaster";
 import { AuthProvider } from "@/components/auth-provider";
 import { RevenueAnalytics } from "@/components/revenue-analytics";
 import { AdSenseScript } from "@/components/adsense-script";
+import { PwaInstallPrompt } from "@/components/pwa-install-prompt";
 
 export const metadata: Metadata = {
   title: { default: "Emplois Burkina — Emploi & Recrutement au Burkina Faso", template: "%s | Emplois Burkina" },
@@ -87,6 +88,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <MobileBottomDock />
             <ScrollToTop />
             <RevenueAnalytics />
+            <PwaInstallPrompt />
           </Toaster>
           <script
             dangerouslySetInnerHTML={{

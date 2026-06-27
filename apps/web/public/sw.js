@@ -1,5 +1,5 @@
-const CACHE = "emplois-burkina-v1";
-const STATIC = ["/", "/jobs", "/annonceurs", "/offline"];
+const CACHE = "emplois-burkina-v2";
+const STATIC = ["/", "/jobs", "/alertes", "/outils", "/services", "/grille-tarifaire", "/offline"];
 
 self.addEventListener("install", (e) => {
   e.waitUntil(
