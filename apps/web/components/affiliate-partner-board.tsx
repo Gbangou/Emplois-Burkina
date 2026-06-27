@@ -1,5 +1,10 @@
 import { ArrowUpRight, BadgeCheck, Link2, WalletCards } from "lucide-react";
-import { AFFILIATE_PROGRAMS, AFFILIATE_RECOMMENDATIONS } from "@/lib/affiliate-recommendations";
+import {
+  AFFILIATE_APPLICATION_PROFILE,
+  AFFILIATE_ENV_VARS,
+  AFFILIATE_PROGRAMS,
+  AFFILIATE_RECOMMENDATIONS
+} from "@/lib/affiliate-recommendations";
 
 function configured(envName: string) {
   return Boolean(process.env[envName]);
@@ -41,8 +46,47 @@ export function AffiliatePartnerBoard() {
         <article className="rounded-xl border border-border bg-muted/30 p-4">
           <p className="text-xs font-black uppercase tracking-wide text-muted-foreground">Action prioritaire</p>
           <p className="mt-2 text-sm font-bold leading-relaxed text-muted-foreground">
-            Demander Impact, puis renseigner les URLs `EMPLOIS_BURKINA_AFFILIATE_*_URL`.
+            Demander Impact, puis renseigner les URLs EMPLOIS_BURKINA_AFFILIATE_*_URL.
           </p>
+        </article>
+      </div>
+
+      <div className="mt-4 grid gap-4 lg:grid-cols-[0.9fr_1.1fr]">
+        <article className="rounded-xl border border-border bg-foreground p-5 text-white shadow-sm">
+          <p className="text-xs font-black uppercase tracking-widest text-white/70">Dossier de candidature</p>
+          <h3 className="mt-2 text-xl font-black">{AFFILIATE_APPLICATION_PROFILE.siteName}</h3>
+          <p className="mt-3 text-sm font-semibold leading-relaxed text-white/70">
+            {AFFILIATE_APPLICATION_PROFILE.pitch}
+          </p>
+          <div className="mt-4 grid gap-2 text-xs font-bold leading-relaxed text-white/70">
+            <p>Site: {AFFILIATE_APPLICATION_PROFILE.siteUrl}</p>
+            <p>Audience: {AFFILIATE_APPLICATION_PROFILE.audience}</p>
+            <p>Positionnement: {AFFILIATE_APPLICATION_PROFILE.positioning}</p>
+          </div>
+        </article>
+
+        <article className="rounded-xl border border-border bg-white p-5 shadow-sm">
+          <p className="text-xs font-black uppercase tracking-widest text-primary">Checklist activation</p>
+          <div className="mt-4 grid gap-3 sm:grid-cols-2">
+            {AFFILIATE_APPLICATION_PROFILE.trafficChannels.map((channel) => (
+              <p key={channel} className="rounded-xl border border-border bg-muted/30 p-3 text-xs font-bold leading-relaxed text-muted-foreground">
+                {channel}
+              </p>
+            ))}
+            {AFFILIATE_APPLICATION_PROFILE.compliance.map((rule) => (
+              <p key={rule} className="rounded-xl border border-border bg-muted/30 p-3 text-xs font-bold leading-relaxed text-muted-foreground">
+                {rule}
+              </p>
+            ))}
+          </div>
+          <div className="mt-4 rounded-xl border border-border bg-muted/30 p-3">
+            <p className="text-xs font-black uppercase tracking-wide text-muted-foreground">Variables a remplir apres approbation</p>
+            <div className="mt-2 grid gap-1 text-xs font-bold text-muted-foreground">
+              {AFFILIATE_ENV_VARS.map((envName) => (
+                <p key={envName}>{envName}</p>
+              ))}
+            </div>
+          </div>
         </article>
       </div>
 

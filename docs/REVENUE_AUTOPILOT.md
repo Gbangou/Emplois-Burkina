@@ -99,6 +99,11 @@ Variables a renseigner apres approbation :
 - `EMPLOIS_BURKINA_AFFILIATE_REMOTE_URL`
 - `EMPLOIS_BURKINA_AFFILIATE_OFFICE_URL`
 
+Quand une URL est configuree, `/api/affiliate/[id]` ajoute automatiquement
+`utm_source=emplois-burkina`, `utm_medium=affiliate` et
+`utm_campaign=<recommendation>` si ces parametres ne sont pas deja presents.
+Les parametres de tracking du reseau affilié restent conserves.
+
 ## Priorite maintenant
 
 1. Mettre PostgreSQL manage en production.

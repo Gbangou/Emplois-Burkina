@@ -11,6 +11,16 @@ export type AffiliateProgram = {
   status: "ready_to_apply" | "apply_first" | "configure_tracking";
 };
 
+export type AffiliateApplicationProfile = {
+  siteName: string;
+  siteUrl: string;
+  audience: string;
+  trafficChannels: string[];
+  positioning: string;
+  compliance: string[];
+  pitch: string;
+};
+
 export type AffiliateRecommendation = {
   id: string;
   title: string;
@@ -90,6 +100,34 @@ export const AFFILIATE_PROGRAMS: AffiliateProgram[] = [
     payout: "Paiement apres seuil et facture selon le programme Fiverr.",
     status: "ready_to_apply"
   }
+];
+
+export const AFFILIATE_APPLICATION_PROFILE: AffiliateApplicationProfile = {
+  siteName: "Emplois Burkina",
+  siteUrl: "https://emplois-burkina.com",
+  audience: "Candidats, jeunes diplomes, professionnels, freelances, profils ONG, remote et administratifs au Burkina Faso et en Afrique francophone.",
+  trafficChannels: [
+    "SEO sur offres d'emploi, concours, villes, metiers, guides CV et pages formations.",
+    "Alertes WhatsApp, partage social, flux RSS/JSON et pages marche indexables.",
+    "Contenu evergreen : CV ATS, anglais entretien, remote, bureautique et candidatures ONG."
+  ],
+  positioning:
+    "Plateforme emploi gratuite pour les candidats, avec recommandations marquees, services optionnels et contenus utiles pour ameliorer les candidatures.",
+  compliance: [
+    "Pas de promesse d'emploi, de visa ou de revenu garanti.",
+    "Recommandations clairement marquees et reliees a une valeur candidat.",
+    "Tracking first-party minimal, sans revente de donnees personnelles.",
+    "Sources, politiques de confidentialite et contenus conformes aux moteurs de recherche."
+  ],
+  pitch:
+    "Emplois Burkina aide les candidats a trouver des offres gratuites et a ameliorer leurs candidatures. Nous souhaitons recommander des formations et outils pertinents a notre audience emploi, avec une presentation transparente et des liens affilies clairement marques."
+};
+
+export const AFFILIATE_ENV_VARS = [
+  "EMPLOIS_BURKINA_AFFILIATE_CV_ATS_URL",
+  "EMPLOIS_BURKINA_AFFILIATE_ENGLISH_URL",
+  "EMPLOIS_BURKINA_AFFILIATE_REMOTE_URL",
+  "EMPLOIS_BURKINA_AFFILIATE_OFFICE_URL"
 ];
 
 export const AFFILIATE_RECOMMENDATIONS: AffiliateRecommendation[] = [
@@ -221,6 +259,9 @@ export function getAffiliateDestination(id: string) {
     try {
       const url = new URL(configured);
       if (url.protocol === "https:" || url.protocol === "http:") {
+        if (!url.searchParams.has("utm_source")) url.searchParams.set("utm_source", "emplois-burkina");
+        if (!url.searchParams.has("utm_medium")) url.searchParams.set("utm_medium", "affiliate");
+        if (!url.searchParams.has("utm_campaign")) url.searchParams.set("utm_campaign", item.id);
         return { item, href: url.toString(), external: true };
       }
     } catch {
