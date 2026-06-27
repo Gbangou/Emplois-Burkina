@@ -1,4 +1,4 @@
-import { ArrowRight, BriefcaseBusiness, FileCheck2, MousePointerClick, ShoppingBag, WalletCards } from "lucide-react";
+import { ArrowRight, BriefcaseBusiness, FileCheck2, GraduationCap, MousePointerClick, ShoppingBag, WalletCards } from "lucide-react";
 import type { RevenueSignals } from "@/lib/revenue-signals";
 import type { ServiceOrderSummary } from "@/lib/service-orders";
 
@@ -42,10 +42,11 @@ export function RevenueFunnelBoard({ signals, orders }: RevenueFunnelBoardProps)
         </p>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-5">
+      <div className="grid gap-4 md:grid-cols-3 xl:grid-cols-6">
         <Step label="Vues offres" value={funnel.jobViews} icon={BriefcaseBusiness} />
         <Step label="Vues outils" value={funnel.toolViews} icon={FileCheck2} />
         <Step label="Vues services" value={funnel.serviceViews + funnel.pricingViews} icon={WalletCards} />
+        <Step label="Vues formation" value={funnel.affiliateViews} icon={GraduationCap} />
         <Step label="Clics services" value={funnel.serviceClicks} icon={MousePointerClick} />
         <Step label="Commandes" value={orders.totalOrders} icon={ShoppingBag} />
       </div>
@@ -56,6 +57,7 @@ export function RevenueFunnelBoard({ signals, orders }: RevenueFunnelBoardProps)
           <p className="mt-2 text-3xl font-black text-foreground">{funnel.serviceClickRate}%</p>
           <p className="mt-2 text-xs font-semibold leading-relaxed text-muted-foreground">
             Clics vers services ou grille tarifaire depuis les surfaces monetisables.
+            Clics affiliation detectes: <strong className="text-foreground">{funnel.affiliateClicks}</strong>.
           </p>
         </div>
         <div className="rounded-xl border border-border bg-muted/30 p-4">

@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 
-const TRACKED_PREFIXES = ["/services", "/grille-tarifaire", "/jobs", "/guides", "/marches", "/outils", "/revenus", "/alertes"];
+const TRACKED_PREFIXES = ["/services", "/grille-tarifaire", "/jobs", "/guides", "/marches", "/outils", "/formations", "/revenus", "/alertes"];
 
 function sendEvent(payload: { type: "page_view" | "conversion_click" | "lead_submit"; path: string; target?: string; source?: string }) {
   const body = JSON.stringify(payload);

@@ -23,7 +23,9 @@ export type RevenueSignals = {
     toolViews: number;
     serviceViews: number;
     pricingViews: number;
+    affiliateViews: number;
     serviceClicks: number;
+    affiliateClicks: number;
     alertClicks: number;
     orderSignals: number;
     serviceClickRate: number;
@@ -116,17 +118,21 @@ function buildFunnel(pageViews: AnalyticsEvent[], conversionClicks: AnalyticsEve
   const toolViews = pageViews.filter((event) => startsWithAny(event.path, ["/outils"])).length;
   const serviceViews = pageViews.filter((event) => startsWithAny(event.path, ["/services"])).length;
   const pricingViews = pageViews.filter((event) => startsWithAny(event.path, ["/grille-tarifaire"])).length;
+  const affiliateViews = pageViews.filter((event) => startsWithAny(event.path, ["/formations"])).length;
   const serviceClicks = conversionClicks.filter((event) => startsWithAny(event.target, ["/services", "/grille-tarifaire"])).length;
+  const affiliateClicks = conversionClicks.filter((event) => startsWithAny(event.target, ["/formations"]) || event.source?.startsWith("affiliate_recommendation")).length;
   const alertClicks = conversionClicks.filter((event) => startsWithAny(event.target, ["/alertes"])).length;
   const orderSignals = conversionClicks.filter((event) => event.source?.startsWith("service_order")).length;
-  const serviceSurfaceViews = jobViews + toolViews + serviceViews + pricingViews;
+  const serviceSurfaceViews = jobViews + toolViews + serviceViews + pricingViews + affiliateViews;
 
   return {
     jobViews,
     toolViews,
     serviceViews,
     pricingViews,
+    affiliateViews,
     serviceClicks,
+    affiliateClicks,
     alertClicks,
     orderSignals: orderSignals + leadSubmits.filter((event) => event.source?.includes("service")).length,
     serviceClickRate: serviceSurfaceViews ? Math.round((serviceClicks / serviceSurfaceViews) * 1000) / 10 : 0
@@ -183,6 +189,15 @@ function buildNextActions(input: {
     actions.push({
       title: "Prioriser le paiement Mobile Money pour les services",
       reason: "Les services recoivent des clics. Le prochain levier revenu est de reduire la friction paiement/livraison.",
+      priority: "high"
+    });
+  }
+
+  const affiliateSource = input.topSources.find((source) => source.source.startsWith("affiliate_recommendation"));
+  if (affiliateSource) {
+    actions.push({
+      title: "Brancher les meilleurs partenaires formation",
+      reason: `${affiliateSource.source} montre une intention affiliation. Priorite aux partenaires verifiables, tracking propre et disclosure sponsorisee.`,
       priority: "high"
     });
   }

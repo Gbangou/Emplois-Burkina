@@ -510,7 +510,7 @@ export default async function HomePage() {
               </p>
             </div>
             {[
-              { title: "Candidats", links: [["Explorer les offres", "/jobs"], ["Alertes WhatsApp", "/#alertes"], ["Offres urgentes", "/jobs?sort=deadline"]] },
+              { title: "Candidats", links: [["Explorer les offres", "/jobs"], ["Formations utiles", "/formations"], ["Alertes WhatsApp", "/#alertes"], ["Offres urgentes", "/jobs?sort=deadline"]] },
               { title: "Recruteurs", links: [["Publier une annonce", "/annonceurs"], ["Mon espace", "/recruteur"], ["Grille tarifaire", "/grille-tarifaire"]] },
               { title: "Plateforme", links: [["Comparatif", "/comparatif"], ["Opérations", "/operations"], ["Automation", "/automation"], ["Politique", "/privacy"]] }
             ].map((col) => (

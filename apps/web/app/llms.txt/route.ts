@@ -18,6 +18,7 @@ Emplois Burkina est une application moderne pour trouver des offres d'emploi, co
 - [Guides candidats](${SITE_URL}/guides)
 - [Pages marche emploi](${SITE_URL}/marches)
 - [International et remote](${SITE_URL}/international)
+- [Formations et outils recommandes](${SITE_URL}/formations)
 - [Services candidats optionnels](${SITE_URL}/services)
 - [Politique de confidentialite](${SITE_URL}/privacy)
 

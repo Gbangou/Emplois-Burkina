@@ -36,6 +36,13 @@
       "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
     },
     {
+      "name": "Formations utiles",
+      "short_name": "Formations",
+      "description": "Voir les formations et outils recommandes",
+      "url": "/formations",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
       "name": "Services candidats",
       "short_name": "Services",
       "description": "CV, lettre et entretien",
