@@ -281,6 +281,14 @@ export function findServiceProduct(serviceId: string | undefined) {
   return SERVICE_PRODUCTS.find((item) => item.id === serviceId);
 }
 
+export async function getServiceOrderById(orderId: string | undefined): Promise<ServiceOrder | null> {
+  const cleanOrderId = cleanOrderField(orderId, 80);
+  if (!cleanOrderId) return null;
+
+  const orders = await readServiceOrders();
+  return orders.find((order) => order.id === cleanOrderId) || null;
+}
+
 export async function getPublicServiceOrderPaymentStatus(
   orderId: string | undefined
 ): Promise<PublicServiceOrderPaymentStatus | null> {

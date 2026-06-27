@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { CheckCircle2, Clock3, FileCheck2, PackageCheck, ShieldCheck, Sparkles } from "lucide-react";
 import { MarkDeliveredButton } from "@/components/mark-delivered-button";
 import type { ServiceDeliveryOverview } from "@/lib/service-delivery";
@@ -85,6 +86,12 @@ export function ServiceDeliveryBoard({ overview }: ServiceDeliveryBoardProps) {
                   </div>
                 </div>
                 <div className="mt-3 flex justify-end">
+                  <Link
+                    href={`/operations/services/${encodeURIComponent(item.id)}`}
+                    className="mr-2 inline-flex h-9 shrink-0 items-center justify-center rounded-lg border border-border bg-white px-3 text-xs font-black text-foreground transition-transform hover:-translate-y-0.5"
+                  >
+                    Ouvrir livraison
+                  </Link>
                   <MarkDeliveredButton orderId={item.id} />
                 </div>
               </article>

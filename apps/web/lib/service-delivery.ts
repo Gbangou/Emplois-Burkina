@@ -62,7 +62,7 @@ export const SERVICE_DELIVERY_TEMPLATES: ServiceDeliveryTemplate[] = [
   }
 ];
 
-function templateFor(serviceId: ServiceOrder["serviceId"]) {
+export function getServiceDeliveryTemplate(serviceId: ServiceOrder["serviceId"]) {
   return SERVICE_DELIVERY_TEMPLATES.find((template) => template.serviceId === serviceId) || SERVICE_DELIVERY_TEMPLATES[0]!;
 }
 
@@ -82,7 +82,7 @@ export async function getServiceDeliveryOverview(): Promise<ServiceDeliveryOverv
   const deliveredOrders = orders.filter((order) => order.status === "delivered");
 
   const queue = paidOrders.slice(0, 8).map((order) => {
-    const template = templateFor(order.serviceId);
+    const template = getServiceDeliveryTemplate(order.serviceId);
     return {
       id: order.id,
       serviceId: order.serviceId,
@@ -107,5 +107,27 @@ export async function getServiceDeliveryOverview(): Promise<ServiceDeliveryOverv
       : 0,
     queue,
     templates: SERVICE_DELIVERY_TEMPLATES
+  };
+}
+
+export function buildServiceDeliveryMessage(order: ServiceOrder) {
+  const template = getServiceDeliveryTemplate(order.serviceId);
+  const name = order.name || "Bonjour";
+  return [
+    `${name}, votre commande ${order.serviceName} est en preparation sur Emplois Burkina.`,
+    `Reference: ${order.id.slice(0, 18).toUpperCase()}.`,
+    `Livrables prevus: ${template.deliverables.join(", ")}.`,
+    "Merci de garder cette reference pour le suivi. Les offres restent gratuites; ce service est optionnel."
+  ].join("\n");
+}
+
+export function buildServiceDeliveryBrief(order: ServiceOrder) {
+  const template = getServiceDeliveryTemplate(order.serviceId);
+  return {
+    title: `${order.serviceName} - ${order.id.slice(0, 18).toUpperCase()}`,
+    summary: order.notes || "Aucun detail candidat fourni. Demander le poste vise, le CV actuel et le delai souhaite avant livraison.",
+    deliverables: template.deliverables,
+    qualityChecks: template.qualityChecks,
+    targetHours: template.targetHours
   };
 }
