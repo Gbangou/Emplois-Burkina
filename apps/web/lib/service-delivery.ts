@@ -23,6 +23,8 @@ export type ServiceDeliveryQueueItem = {
 
 export type ServiceDeliveryOverview = {
   readyToDeliver: number;
+  delivered: number;
+  deliveredRevenueFcfa: number;
   targetRevenueFcfa: number;
   averageTargetHours: number;
   queue: ServiceDeliveryQueueItem[];
@@ -77,6 +79,7 @@ export async function getServiceDeliveryOverview(): Promise<ServiceDeliveryOverv
   const paidOrders = orders
     .filter((order) => order.status === "payment_submitted")
     .sort((a, b) => new Date(paidAt(b)).getTime() - new Date(paidAt(a)).getTime());
+  const deliveredOrders = orders.filter((order) => order.status === "delivered");
 
   const queue = paidOrders.slice(0, 8).map((order) => {
     const template = templateFor(order.serviceId);
@@ -96,6 +99,8 @@ export async function getServiceDeliveryOverview(): Promise<ServiceDeliveryOverv
 
   return {
     readyToDeliver: paidOrders.length,
+    delivered: deliveredOrders.length,
+    deliveredRevenueFcfa: deliveredOrders.reduce((sum, order) => sum + order.amountFcfa, 0),
     targetRevenueFcfa: paidOrders.reduce((sum, order) => sum + order.amountFcfa, 0),
     averageTargetHours: queue.length
       ? Math.round(queue.reduce((sum, item) => sum + item.targetHours, 0) / queue.length)

@@ -3,7 +3,7 @@ import { join } from "node:path";
 import { randomUUID } from "node:crypto";
 import { SERVICE_PRODUCTS, type ServiceProduct } from "@/lib/revenue";
 
-export type ServiceOrderStatus = "draft" | "awaiting_payment" | "payment_submitted";
+export type ServiceOrderStatus = "draft" | "awaiting_payment" | "payment_submitted" | "delivered";
 
 export type ServiceOrderPaymentProof = {
   senderPhone?: string;
@@ -21,6 +21,11 @@ export type ServiceOrderExternalPayment = {
   updatedAt: string;
 };
 
+export type ServiceOrderDelivery = {
+  deliveredAt: string;
+  note?: string;
+};
+
 export type ServiceOrder = {
   id: string;
   serviceId: ServiceProduct["id"];
@@ -34,6 +39,7 @@ export type ServiceOrder = {
   notes?: string;
   paymentProof?: ServiceOrderPaymentProof;
   externalPayment?: ServiceOrderExternalPayment;
+  delivery?: ServiceOrderDelivery;
   createdAt: string;
 };
 
@@ -41,6 +47,7 @@ export type ServiceOrderSummary = {
   totalOrders: number;
   awaitingPayment: number;
   paymentSubmitted: number;
+  delivered: number;
   draft: number;
   expectedRevenueFcfa: number;
   mobileMoneyPending: number;
@@ -200,6 +207,32 @@ export async function submitServiceOrderPaymentProof(
   return updated;
 }
 
+export async function markServiceOrderDelivered(
+  orderId: string | undefined,
+  body: Record<string, unknown> = {}
+): Promise<ServiceOrder | null> {
+  const cleanOrderId = cleanOrderField(orderId, 80);
+  if (!cleanOrderId) return null;
+
+  const orders = await readServiceOrders();
+  const index = orders.findIndex((order) => order.id === cleanOrderId);
+  const existing = index === -1 ? undefined : orders[index];
+  if (!existing) return null;
+
+  const updated: ServiceOrder = {
+    ...existing,
+    status: "delivered",
+    delivery: {
+      deliveredAt: new Date().toISOString(),
+      note: cleanOrderField(body.note, 500)
+    }
+  };
+
+  orders[index] = updated;
+  await writeServiceOrders(orders);
+  return updated;
+}
+
 export async function getServiceOrderSummary(): Promise<ServiceOrderSummary> {
   const orders = await readServiceOrders();
   const topServiceMap = new Map<string, { serviceName: string; count: number; amountFcfa: number }>();
@@ -217,12 +250,14 @@ export async function getServiceOrderSummary(): Promise<ServiceOrderSummary> {
 
   const awaitingPaymentOrders = orders.filter((order) => order.status === "awaiting_payment");
   const paymentSubmittedOrders = orders.filter((order) => order.status === "payment_submitted");
+  const deliveredOrders = orders.filter((order) => order.status === "delivered");
   const revenuePipelineOrders = [...awaitingPaymentOrders, ...paymentSubmittedOrders];
 
   return {
     totalOrders: orders.length,
     awaitingPayment: awaitingPaymentOrders.length,
     paymentSubmitted: paymentSubmittedOrders.length,
+    delivered: deliveredOrders.length,
     draft: orders.filter((order) => order.status === "draft").length,
     expectedRevenueFcfa: revenuePipelineOrders.reduce((sum, order) => sum + order.amountFcfa, 0),
     mobileMoneyPending: revenuePipelineOrders.filter((order) => order.paymentMethod === "mobile_money").length,

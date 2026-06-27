@@ -1,4 +1,5 @@
 import { CheckCircle2, Clock3, FileCheck2, PackageCheck, ShieldCheck, Sparkles } from "lucide-react";
+import { MarkDeliveredButton } from "@/components/mark-delivered-button";
 import type { ServiceDeliveryOverview } from "@/lib/service-delivery";
 
 type ServiceDeliveryBoardProps = {
@@ -42,9 +43,10 @@ export function ServiceDeliveryBoard({ overview }: ServiceDeliveryBoardProps) {
         </p>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid gap-4 md:grid-cols-4">
         <Metric label="A livrer" value={overview.readyToDeliver} icon={PackageCheck} />
         <Metric label="Revenu a servir" value={`${formatFcfa(overview.targetRevenueFcfa)} FCFA`} icon={CheckCircle2} />
+        <Metric label="Services livres" value={overview.delivered} icon={FileCheck2} />
         <Metric label="Delai moyen cible" value={overview.averageTargetHours ? `${overview.averageTargetHours}h` : "0h"} icon={Clock3} />
       </div>
 
@@ -82,6 +84,9 @@ export function ServiceDeliveryBoard({ overview }: ServiceDeliveryBoardProps) {
                     </ul>
                   </div>
                 </div>
+                <div className="mt-3 flex justify-end">
+                  <MarkDeliveredButton orderId={item.id} />
+                </div>
               </article>
             )) : (
               <p className="text-xs font-semibold leading-relaxed text-muted-foreground">
@@ -97,6 +102,10 @@ export function ServiceDeliveryBoard({ overview }: ServiceDeliveryBoardProps) {
             <h3 className="text-sm font-black text-foreground">Modeles de livraison</h3>
           </div>
           <div className="mt-3 grid gap-2">
+            <div className="rounded-lg border border-emerald-200 bg-emerald-50 p-3">
+              <p className="text-[11px] font-black uppercase tracking-wide text-emerald-900/65">Revenu livre trace</p>
+              <p className="mt-1 text-lg font-black text-emerald-950">{formatFcfa(overview.deliveredRevenueFcfa)} FCFA</p>
+            </div>
             {overview.templates.map((template) => (
               <article key={template.serviceId} className="rounded-lg border border-border bg-muted/30 p-3">
                 <div className="flex items-center justify-between gap-3">
