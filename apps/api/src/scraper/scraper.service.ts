@@ -1,7 +1,7 @@
 import { Injectable, Logger } from "@nestjs/common";
 import { Cron, CronExpression } from "@nestjs/schedule";
 import { spawn } from "node:child_process";
-import { existsSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync, mkdirSync, unlinkSync } from "node:fs";
 import { join } from "node:path";
 
 const ROOT = join(__dirname, "..", "..", "..", "..");
@@ -18,6 +18,33 @@ type ScraperState = {
   failureCount: number;
   nextRunAt?: string;
   currentStep?: string;
+  currentReason?: string;
+  startedAt?: string;
+  finishedAt?: string;
+  durationMs?: number;
+  steps?: ScraperStepState[];
+  summary?: ScraperSummary;
+};
+
+type ScraperStepState = {
+  label: string;
+  script: string;
+  status: "pending" | "running" | "success" | "failed";
+  startedAt?: string;
+  finishedAt?: string;
+  durationMs?: number;
+  error?: string;
+};
+
+type ScraperSummary = {
+  curatedJobs: number;
+  rawItems: number;
+  sources: number;
+  validatedJobs: number;
+  reviewJobs: number;
+  generatedAt: string;
+  stale: boolean;
+  freshnessMinutes?: number;
 };
 
 const PIPELINE = [
@@ -29,6 +56,10 @@ const PIPELINE = [
   { label: "Queue reseaux sociaux", script: "scripts/generate-social-queue.mjs" },
   { label: "Rapport automation", script: "scripts/generate-automation-report.mjs" }
 ];
+
+function emptySteps(): ScraperStepState[] {
+  return PIPELINE.map((step) => ({ ...step, status: "pending" }));
+}
 
 @Injectable()
 export class ScraperService {
@@ -64,15 +95,52 @@ export class ScraperService {
 
   private unlock() {
     try {
-      const { unlinkSync } = require("node:fs");
       unlinkSync(LOCK_FILE);
     } catch { /* already gone */ }
+  }
+
+  private readJsonArray(path: string): unknown[] {
+    try {
+      const parsed = JSON.parse(readFileSync(join(ROOT, path), "utf8")) as unknown;
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
+    }
+  }
+
+  private buildSummary(lastSuccessAt?: string): ScraperSummary {
+    const jobs = this.readJsonArray(join("data", "curated-jobs.json")) as Array<{ status?: string }>;
+    const rawItems = this.readJsonArray(join("data", "raw-items.json"));
+    const sources = this.readJsonArray(join("data", "sources.json"));
+    const lastSuccess = lastSuccessAt ? new Date(lastSuccessAt).getTime() : 0;
+    const freshnessMinutes = lastSuccess ? Math.round((Date.now() - lastSuccess) / 60000) : undefined;
+
+    return {
+      curatedJobs: jobs.length,
+      rawItems: rawItems.length,
+      sources: sources.length,
+      validatedJobs: jobs.filter((job) => job.status === "validated").length,
+      reviewJobs: jobs.filter((job) => job.status === "needs_review").length,
+      generatedAt: new Date().toISOString(),
+      stale: freshnessMinutes === undefined || freshnessMinutes > 180,
+      freshnessMinutes
+    };
+  }
+
+  private updateStep(label: string, patch: Partial<ScraperStepState>) {
+    const state = this.readState();
+    const steps = state.steps?.length ? state.steps : emptySteps();
+    this.writeState({
+      steps: steps.map((step) => step.label === label ? { ...step, ...patch } : step)
+    });
   }
 
   private runScript(label: string, script: string): Promise<void> {
     return new Promise((resolve, reject) => {
       this.logger.log(`[Scraper] ${label}…`);
+      const startedAt = new Date().toISOString();
       this.writeState({ currentStep: label });
+      this.updateStep(label, { status: "running", startedAt, error: "" });
 
       const child = spawn(process.execPath, [script], {
         cwd: ROOT,
@@ -84,18 +152,35 @@ export class ScraperService {
       child.stderr?.on("data", (d: Buffer) => process.stderr.write(d));
 
       child.on("exit", (code) => {
-        if (code === 0) resolve();
-        else reject(new Error(`${label} exited with code ${code}`));
+        const finishedAt = new Date().toISOString();
+        const durationMs = new Date(finishedAt).getTime() - new Date(startedAt).getTime();
+        if (code === 0) {
+          this.updateStep(label, { status: "success", finishedAt, durationMs });
+          resolve();
+        } else {
+          const error = `${label} exited with code ${code}`;
+          this.updateStep(label, { status: "failed", finishedAt, durationMs, error });
+          reject(new Error(error));
+        }
       });
 
-      child.on("error", reject);
+      child.on("error", (error) => {
+        const finishedAt = new Date().toISOString();
+        this.updateStep(label, {
+          status: "failed",
+          finishedAt,
+          durationMs: new Date(finishedAt).getTime() - new Date(startedAt).getTime(),
+          error: error.message
+        });
+        reject(error);
+      });
     });
   }
 
-  async runPipeline(reason = "cron") {
+  async runPipeline(reason = "cron"): Promise<{ started: boolean; reason: string; state: ScraperState }> {
     if (this.running || this.isLocked()) {
       this.logger.log(`[Scraper] Skip (${reason}) — already running`);
-      return;
+      return { started: false, reason: "already_running", state: this.getState() };
     }
 
     this.running = true;
@@ -108,7 +193,13 @@ export class ScraperService {
       status: "running",
       lastRunAt: startedAt,
       runCount: state.runCount + 1,
-      currentStep: "démarrage"
+      currentStep: "demarrage",
+      currentReason: reason,
+      startedAt,
+      finishedAt: "",
+      durationMs: 0,
+      steps: emptySteps(),
+      summary: this.buildSummary(state.lastSuccessAt)
     });
 
     try {
@@ -117,27 +208,37 @@ export class ScraperService {
       }
 
       const now = new Date().toISOString();
+      const durationMs = new Date(now).getTime() - new Date(startedAt).getTime();
       this.writeState({
         status: "success",
         lastSuccessAt: now,
         successCount: state.successCount + 1,
         currentStep: "",
-        lastError: ""
+        lastError: "",
+        finishedAt: now,
+        durationMs,
+        summary: this.buildSummary(now)
       });
       this.logger.log(`[Scraper] Pipeline terminé avec succès`);
     } catch (err) {
       const msg = (err as Error).message;
+      const now = new Date().toISOString();
       this.writeState({
         status: "failed",
         lastError: msg,
         failureCount: state.failureCount + 1,
-        currentStep: ""
+        currentStep: "",
+        finishedAt: now,
+        durationMs: new Date(now).getTime() - new Date(startedAt).getTime(),
+        summary: this.buildSummary(state.lastSuccessAt)
       });
       this.logger.error(`[Scraper] Pipeline échoué: ${msg}`);
     } finally {
       this.running = false;
       this.unlock();
     }
+
+    return { started: true, reason, state: this.getState() };
   }
 
   // Toutes les 45 minutes
@@ -149,6 +250,15 @@ export class ScraperService {
   }
 
   getState(): ScraperState {
-    return this.readState();
+    const state = this.readState();
+    return {
+      ...state,
+      steps: state.steps?.length ? state.steps : emptySteps(),
+      summary: state.summary || this.buildSummary(state.lastSuccessAt)
+    };
+  }
+
+  canStart() {
+    return !this.running && !this.isLocked();
   }
 }
