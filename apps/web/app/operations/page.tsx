@@ -10,6 +10,7 @@ import { SourceGovernanceBoard } from "@/components/source-governance-board";
 import { RevenueSignalBoard } from "@/components/revenue-signal-board";
 import { RevenueFunnelBoard } from "@/components/revenue-funnel-board";
 import { RevenueOpportunityBoard } from "@/components/revenue-opportunity-board";
+import { ServiceDeliveryBoard } from "@/components/service-delivery-board";
 import { ServiceOrderBoard } from "@/components/service-order-board";
 import { getAutomationOverview, getMarketIntelligence, getModerationQueue, getScrapingOverview } from "@/lib/data";
 import { getPaymentReadiness } from "@/lib/payment";
@@ -17,11 +18,12 @@ import { getRevenueSignals } from "@/lib/revenue-signals";
 import { getRevenueOpportunities } from "@/lib/revenue-opportunities";
 import { getScrapingBusinessPlan } from "@/lib/scraping-business";
 import { getSearchComplianceReport } from "@/lib/search-compliance";
+import { getServiceDeliveryOverview } from "@/lib/service-delivery";
 import { getServiceOrderSummary } from "@/lib/service-orders";
 import { getSourceGovernance } from "@/lib/source-governance";
 
 export default async function OperationsPage() {
-  const [automation, intelligence, scraping, moderationQueue, sourceGovernance, revenueSignals, serviceOrders, scrapingBusiness] = await Promise.all([
+  const [automation, intelligence, scraping, moderationQueue, sourceGovernance, revenueSignals, serviceOrders, serviceDelivery, scrapingBusiness] = await Promise.all([
     getAutomationOverview(),
     getMarketIntelligence(),
     getScrapingOverview(),
@@ -29,6 +31,7 @@ export default async function OperationsPage() {
     getSourceGovernance(),
     getRevenueSignals(),
     getServiceOrderSummary(),
+    getServiceDeliveryOverview(),
     getScrapingBusinessPlan()
   ]);
   const searchCompliance = getSearchComplianceReport();
@@ -108,6 +111,8 @@ export default async function OperationsPage() {
       <AffiliatePartnerBoard />
 
       <ServiceOrderBoard summary={serviceOrders} payment={paymentReadiness} />
+
+      <ServiceDeliveryBoard overview={serviceDelivery} />
 
       <SearchComplianceBoard report={searchCompliance} />
 
