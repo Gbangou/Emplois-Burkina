@@ -9,10 +9,12 @@ import { SearchComplianceBoard } from "@/components/search-compliance-board";
 import { SourceGovernanceBoard } from "@/components/source-governance-board";
 import { RevenueSignalBoard } from "@/components/revenue-signal-board";
 import { RevenueFunnelBoard } from "@/components/revenue-funnel-board";
+import { RevenueOpportunityBoard } from "@/components/revenue-opportunity-board";
 import { ServiceOrderBoard } from "@/components/service-order-board";
 import { getAutomationOverview, getMarketIntelligence, getModerationQueue, getScrapingOverview } from "@/lib/data";
 import { getPaymentReadiness } from "@/lib/payment";
 import { getRevenueSignals } from "@/lib/revenue-signals";
+import { getRevenueOpportunities } from "@/lib/revenue-opportunities";
 import { getScrapingBusinessPlan } from "@/lib/scraping-business";
 import { getSearchComplianceReport } from "@/lib/search-compliance";
 import { getServiceOrderSummary } from "@/lib/service-orders";
@@ -31,6 +33,7 @@ export default async function OperationsPage() {
   ]);
   const searchCompliance = getSearchComplianceReport();
   const paymentReadiness = getPaymentReadiness();
+  const revenueOpportunities = getRevenueOpportunities(revenueSignals);
 
   return (
     <main>
@@ -99,6 +102,8 @@ export default async function OperationsPage() {
       <RevenueSignalBoard signals={revenueSignals} />
 
       <RevenueFunnelBoard signals={revenueSignals} orders={serviceOrders} />
+
+      <RevenueOpportunityBoard opportunities={revenueOpportunities} />
 
       <AffiliatePartnerBoard />
 

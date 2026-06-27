@@ -3,7 +3,9 @@ import type { Metadata } from "next";
 
 import { SiteHeader } from "@/components/site-header";
 import { PassiveRevenueModelBoard } from "@/components/passive-revenue-model-board";
+import { RevenueOpportunityBoard } from "@/components/revenue-opportunity-board";
 import { PASSIVE_REVENUE_MODELS, PASSIVE_REVENUE_PRIORITIES } from "@/lib/passive-revenue-models";
+import { getRevenueOpportunities } from "@/lib/revenue-opportunities";
 import { NEXT_REVENUE_WORK, REVENUE_ASSUMPTIONS, REVENUE_SCENARIOS } from "@/lib/revenue-projections";
 import { getRevenueSignals } from "@/lib/revenue-signals";
 
@@ -22,6 +24,7 @@ const CHANNELS = [
 
 export default async function RevenueProjectionsPage() {
   const signals = await getRevenueSignals();
+  const opportunities = getRevenueOpportunities(signals);
 
   return (
     <div className="min-h-screen bg-background">
@@ -103,6 +106,8 @@ export default async function RevenueProjectionsPage() {
       </section>
 
       <PassiveRevenueModelBoard models={PASSIVE_REVENUE_MODELS} priorities={PASSIVE_REVENUE_PRIORITIES} />
+
+      <RevenueOpportunityBoard opportunities={opportunities} />
 
       <section className="border-y border-border bg-muted/30 py-10">
         <div className="container">
