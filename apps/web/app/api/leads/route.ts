@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { writeFile, readFile, mkdir } from "node:fs/promises";
 import { join } from "node:path";
+import { executeProductionDatabase, queryProductionDatabase } from "@/lib/server-database";
 
 type Lead = {
   id: string;
@@ -36,6 +37,35 @@ function isAdmin(req: NextRequest) {
 }
 
 async function readLeads(): Promise<Lead[]> {
+  const dbLeads = await queryProductionDatabase<{
+    id: string;
+    lead_type: string;
+    contact: string | null;
+    payload: Partial<Lead>;
+    created_at: Date;
+  }>(
+    `select id::text, lead_type, contact, payload, created_at
+     from lead_events
+     order by created_at desc
+     limit 2000`
+  );
+
+  if (dbLeads) {
+    return dbLeads.map((row) => ({
+      id: row.payload.id || row.id,
+      type: row.payload.type || row.lead_type,
+      phone: row.payload.phone || row.contact || undefined,
+      email: row.payload.email,
+      query: row.payload.query,
+      city: row.payload.city,
+      category: row.payload.category,
+      name: row.payload.name,
+      company: row.payload.company,
+      message: row.payload.message,
+      createdAt: row.payload.createdAt || row.created_at.toISOString()
+    }));
+  }
+
   try {
     const content = await readFile(join(root, "data/runtime/leads-modern.json"), "utf8");
     return JSON.parse(content) as Lead[];
@@ -45,6 +75,19 @@ async function readLeads(): Promise<Lead[]> {
 }
 
 async function writeLead(lead: Lead): Promise<void> {
+  const saved = await executeProductionDatabase(
+    `insert into lead_events (lead_type, contact, payload, estimated_value_fcfa, status)
+     values ($1, $2, $3::jsonb, $4, 'new')`,
+    [
+      lead.type,
+      lead.phone || lead.email || null,
+      lead,
+      lead.type.includes("service") || lead.message ? 3000 : 0
+    ]
+  );
+
+  if (saved) return;
+
   const leads = await readLeads();
   leads.push(lead);
   await mkdir(join(root, "data/runtime"), { recursive: true });

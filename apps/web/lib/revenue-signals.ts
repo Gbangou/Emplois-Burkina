@@ -1,5 +1,6 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
+import { executeProductionDatabase, queryProductionDatabase } from "@/lib/server-database";
 
 export type AnalyticsEventType = "page_view" | "conversion_click" | "lead_submit";
 
@@ -43,7 +44,31 @@ const root = (cwd.endsWith("apps/web") || cwd.endsWith("apps\\web"))
 
 export const ANALYTICS_EVENTS_PATH = join(root, "data/runtime/analytics-events.json");
 
-async function readEvents(): Promise<AnalyticsEvent[]> {
+export async function readAnalyticsEvents(): Promise<AnalyticsEvent[]> {
+  const dbEvents = await queryProductionDatabase<{
+    id: string;
+    event_type: AnalyticsEventType;
+    page_path: string | null;
+    payload: Partial<AnalyticsEvent>;
+    created_at: Date | string;
+  }>(
+    `select id::text, event_type, page_path, payload, created_at
+     from page_events
+     order by created_at desc
+     limit 5000`
+  );
+
+  if (dbEvents) {
+    return dbEvents.map((event) => ({
+      id: event.payload.id || event.id,
+      type: event.event_type,
+      path: event.page_path || event.payload.path || "/",
+      target: event.payload.target,
+      source: event.payload.source,
+      createdAt: event.payload.createdAt || new Date(event.created_at).toISOString()
+    }));
+  }
+
   try {
     const content = await readFile(ANALYTICS_EVENTS_PATH, "utf8");
     return JSON.parse(content) as AnalyticsEvent[];
@@ -53,18 +78,28 @@ async function readEvents(): Promise<AnalyticsEvent[]> {
 }
 
 export async function appendAnalyticsEvent(event: Omit<AnalyticsEvent, "id" | "createdAt">) {
-  const events = await readEvents();
-  events.push({
+  const analyticsEvent = {
     ...event,
     id: `evt_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
     createdAt: new Date().toISOString()
-  });
+  };
+
+  const saved = await executeProductionDatabase(
+    `insert into page_events (event_type, page_path, payload)
+     values ($1, $2, $3::jsonb)`,
+    [analyticsEvent.type, analyticsEvent.path, analyticsEvent]
+  );
+
+  if (saved) return;
+
+  const events = await readAnalyticsEvents();
+  events.push(analyticsEvent);
   await mkdir(dirname(ANALYTICS_EVENTS_PATH), { recursive: true });
   await writeFile(ANALYTICS_EVENTS_PATH, JSON.stringify(events.slice(-5000), null, 2), "utf8");
 }
 
 export async function getRevenueSignals(): Promise<RevenueSignals> {
-  const events = await readEvents();
+  const events = await readAnalyticsEvents();
   const pageViews = events.filter((event) => event.type === "page_view");
   const conversionClicks = events.filter((event) => event.type === "conversion_click");
   const leadSubmits = events.filter((event) => event.type === "lead_submit");

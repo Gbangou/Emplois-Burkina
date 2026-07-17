@@ -206,6 +206,21 @@ create table if not exists payments (
   created_at timestamptz not null default now()
 );
 
+create table if not exists service_orders (
+  id text primary key,
+  service_id text not null,
+  service_name text not null,
+  amount_fcfa integer not null default 0,
+  status text not null,
+  payment_method text not null default 'mobile_money',
+  customer_name text,
+  customer_phone text,
+  customer_email text,
+  payload jsonb not null default '{}',
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
 create table if not exists invoices (
   id uuid primary key default gen_random_uuid(),
   customer_name text not null,
@@ -267,6 +282,7 @@ create index if not exists subscribers_phone_idx on subscribers(phone);
 create index if not exists employer_orders_status_idx on employer_orders(status);
 create index if not exists campaigns_status_idx on campaigns(status);
 create index if not exists lead_events_status_idx on lead_events(status);
+create index if not exists service_orders_status_idx on service_orders(status, created_at desc);
 create index if not exists source_runs_source_idx on source_runs(source_id, started_at desc);
 create index if not exists seo_pages_indexable_idx on seo_pages(is_indexable, page_type);
 create index if not exists indexing_submissions_status_idx on indexing_submissions(status, engine);

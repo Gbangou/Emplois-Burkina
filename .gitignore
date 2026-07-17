@@ -14,3 +14,8 @@ data/social/
 Thumbs.db
 
 .vercel
+
+.env*
+
+.agents/
+skills-lock.json

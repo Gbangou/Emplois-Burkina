@@ -2,6 +2,7 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { randomUUID } from "node:crypto";
 import { SERVICE_PRODUCTS, type ServiceProduct } from "@/lib/revenue";
+import { executeProductionDatabase, queryProductionDatabase } from "@/lib/server-database";
 
 export type ServiceOrderStatus = "draft" | "awaiting_payment" | "payment_submitted" | "delivered";
 
@@ -86,6 +87,42 @@ export function priceToFcfa(value: string) {
 }
 
 export async function readServiceOrders(): Promise<ServiceOrder[]> {
+  const dbOrders = await queryProductionDatabase<{
+    id: string;
+    service_id: string;
+    service_name: string;
+    amount_fcfa: number;
+    status: ServiceOrderStatus;
+    payment_method: "mobile_money";
+    customer_name: string | null;
+    customer_phone: string | null;
+    customer_email: string | null;
+    payload: ServiceOrder;
+    created_at: Date | string;
+  }>(
+    `select id, service_id, service_name, amount_fcfa, status, payment_method,
+            customer_name, customer_phone, customer_email, payload, created_at
+     from service_orders
+     order by created_at asc
+     limit 2000`
+  );
+
+  if (dbOrders) {
+    return dbOrders.map((row) => ({
+      ...row.payload,
+      id: row.payload.id || row.id,
+      serviceId: row.payload.serviceId || row.service_id,
+      serviceName: row.payload.serviceName || row.service_name,
+      amountFcfa: row.payload.amountFcfa || row.amount_fcfa,
+      status: row.payload.status || row.status,
+      paymentMethod: row.payload.paymentMethod || row.payment_method,
+      name: row.payload.name || row.customer_name || undefined,
+      phone: row.payload.phone || row.customer_phone || undefined,
+      email: row.payload.email || row.customer_email || undefined,
+      createdAt: row.payload.createdAt || new Date(row.created_at).toISOString()
+    }));
+  }
+
   try {
     const content = await readFile(SERVICE_ORDERS_FILE, "utf8");
     const orders = JSON.parse(content) as ServiceOrder[];
@@ -96,14 +133,54 @@ export async function readServiceOrders(): Promise<ServiceOrder[]> {
 }
 
 export async function appendServiceOrder(order: ServiceOrder) {
+  const stored = await writeServiceOrderToDatabase(order);
+  if (stored) return;
+
   const orders = await readServiceOrders();
   orders.push(order);
   await writeServiceOrders(orders);
 }
 
 async function writeServiceOrders(orders: ServiceOrder[]) {
+  const stored = await Promise.all(orders.map((order) => writeServiceOrderToDatabase(order)));
+  if (stored.length > 0 && stored.every(Boolean)) return;
+
   await mkdir(runtimeDir, { recursive: true });
   await writeFile(SERVICE_ORDERS_FILE, JSON.stringify(orders.slice(-2000), null, 2), "utf8");
+}
+
+async function writeServiceOrderToDatabase(order: ServiceOrder) {
+  return executeProductionDatabase(
+    `insert into service_orders (
+       id, service_id, service_name, amount_fcfa, status, payment_method,
+       customer_name, customer_phone, customer_email, payload, created_at, updated_at
+     )
+     values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10::jsonb, $11, now())
+     on conflict (id) do update set
+       service_id = excluded.service_id,
+       service_name = excluded.service_name,
+       amount_fcfa = excluded.amount_fcfa,
+       status = excluded.status,
+       payment_method = excluded.payment_method,
+       customer_name = excluded.customer_name,
+       customer_phone = excluded.customer_phone,
+       customer_email = excluded.customer_email,
+       payload = excluded.payload,
+       updated_at = now()`,
+    [
+      order.id,
+      order.serviceId,
+      order.serviceName,
+      order.amountFcfa,
+      order.status,
+      order.paymentMethod,
+      order.name || null,
+      order.phone || null,
+      order.email || null,
+      order,
+      order.createdAt
+    ]
+  );
 }
 
 export function buildServiceOrder(service: ServiceProduct, body: Record<string, unknown>): ServiceOrder {
