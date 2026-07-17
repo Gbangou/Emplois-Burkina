@@ -12,3 +12,5 @@ data/social/
 *.log
 .DS_Store
 Thumbs.db
+
+.vercel
