@@ -8,7 +8,7 @@ dist/
 !.env.example
 data/runtime/
 data/social/
-indexnow-key.txt
+/indexnow-key.txt
 *.log
 .DS_Store
 Thumbs.db

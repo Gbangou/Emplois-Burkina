@@ -231,11 +231,18 @@ Le script cree `indexnow-key.txt` localement et soumet les URLs de
 
 ## Prochaines etapes recommandees
 
-1. Ajouter une page admin de detail offre avec edition persistante SQLite.
-2. Ajouter comptes recruteurs/admin avec sessions securisees.
-3. Brancher WhatsApp Business et paiements mobile money.
-4. Ajouter validation automatique de liens morts et dates expirees.
-5. Preparer migration PostgreSQL/Supabase pour le deploiement cloud.
+1. Lancer une beta publique gratuite avec GitHub + Vercel/Cloudflare + Neon.
+2. Configurer les variables de production et le paiement Mobile Money manuel.
+3. Activer les workflows GitHub Actions pour verifier et rafraichir le contenu.
+4. Ajouter Search Console, Bing Webmaster Tools et soumettre `sitemap.xml`.
+5. Migrer les derniers stockages runtime critiques vers PostgreSQL.
+
+Guides operationnels :
+
+- `docs/FREE_LAUNCH_RUNBOOK.md`
+- `docs/UPDATE_WORKFLOW.md`
+- `docs/DEPLOY_CLICK_BY_CLICK.md`
+- `docs/TRAFFIC_VISIBILITY_AUTOMATION.md`
 
 ## Documents importants
 

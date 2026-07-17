@@ -1,0 +1,33 @@
+name: IndexNow Submission
+
+on:
+  schedule:
+    - cron: "43 5 * * *"
+  workflow_dispatch:
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    env:
+      INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+      EMPLOIS_BURKINA_BASE_URL: ${{ secrets.EMPLOIS_BURKINA_BASE_URL }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.14.0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Submit URLs
+        run: pnpm run seo:indexnow
